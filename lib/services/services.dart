@@ -74,10 +74,10 @@ String apiHead = //"https://api.s-mart.su";
     "https://api.myasofaktura.ru";
 
 class OrderProcessProvider {
-  String _orderProcessListUrl;
+  late String _orderProcessListUrl;
 
   Future<OrderProcessListModel> orderProcessResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     // String token2 = "9b4b9170-c94f-46df-acd4-286c81e3d943";
     _orderProcessListUrl =
@@ -103,8 +103,8 @@ class OrderProcessProvider {
 class VacancyListProvider {
   String _vacancyListUrl = "$apiHead/clients/api/vacancy";
 
-  Future<VacancyListModel> getVacancyListResponse({@required int page}) async {
-    String _token = await loadToken();
+  Future<VacancyListModel> getVacancyListResponse({required int page}) async {
+    String? _token = await loadToken();
     _vacancyListUrl += "?api_token=$_token&page=$page";
 
     final response = await http.get(
@@ -125,9 +125,10 @@ class VacancyListProvider {
 class BonusesListProvider {
   BonusesListProvider();
 
-  Future<List<BonusesListDataModel>> BonusesListForPaginationResponse(
-      {@required int currentPage}) async {
-    String token = await loadToken();
+  Future<List<BonusesListDataModel>> BonusesListForPaginationResponse({
+    required int currentPage,
+  }) async {
+    String? token = await loadToken();
     String url =
         "$apiHead/clients/api/profile/client-bonus-transactions?api_token=$token&order_by[created_at]=desc&page=$currentPage";
     final response =
@@ -165,10 +166,8 @@ class OnboardingListProvider {
 }
 
 class BannersProvider {
-  String _bannersListUrl;
-
   Future<BannersListModel> bannersResponse() async {
-    _bannersListUrl =
+    final String _bannersListUrl =
         "$apiHead/clients/api/banners?where[0][0]=enabled&where[0][1]=%3D&where[0][2]=t&per_page=100&order_by[number]=asc";
     final respone = await http.get(
       Uri.parse(_bannersListUrl),
@@ -185,10 +184,10 @@ class BannersProvider {
 }
 
 class StoriesProvider {
-  String _storiesListUrl;
+  late String _storiesListUrl;
 
   Future<StoriesListModel> storiesResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     _storiesListUrl =
         "$apiHead/clients/api/stories?order_by[created_at]=asc&api_token=$token&per_page=1000";
     final respone = await http.get(
@@ -210,7 +209,7 @@ class AddressesClientProvider {
   String _clienAddressUrl = "$apiHead/clients/api/profile/delivery-addresses";
 
   Future<AddressesClientListModel> clientAddressResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     _clienAddressUrl += "?api_token=$token";
     _clienAddressUrl += "&order_by[updated_at]=desc";
 
@@ -237,16 +236,17 @@ class AddressesClientProvider {
     }
   }
 
-  Future<bool> addClientAddressResponse(
-      {String title,
-      String city,
-      String street,
-      String house,
-      String floor,
-      String entrance,
-      String apartmentNumber,
-      String intercomCode}) async {
-    String token = await loadToken();
+  Future<bool> addClientAddressResponse({
+    String? title,
+    String? city,
+    String? street,
+    String? house,
+    String? floor,
+    String? entrance,
+    String? apartmentNumber,
+    String? intercomCode,
+  }) async {
+    String? token = await loadToken();
     _clienAddressUrl += "?api_token=$token";
     final response = await http.post(Uri.parse(_clienAddressUrl), headers: {
       "Accept": "application/json"
@@ -287,17 +287,17 @@ class AddressesClientProvider {
   }
 
   Future<bool> changeClientAddressResponse({
-    @required String addressUuid,
-    String title,
-    String city,
-    String street,
-    String house,
-    String floor,
-    String entrance,
-    String apartmentNumber,
-    String intercomCode,
+    required String addressUuid,
+    String? title,
+    String? city,
+    String? street,
+    String? house,
+    String? floor,
+    String? entrance,
+    String? apartmentNumber,
+    String? intercomCode,
   }) async {
-    String token = await loadToken();
+    String? token = await loadToken();
     _clienAddressUrl += "/{$addressUuid}?api_token=$token";
 
     final response = await http.put(Uri.parse(_clienAddressUrl), headers: {
@@ -350,8 +350,8 @@ class AddressesClientProvider {
     }
   }
 
-  Future<bool> deleteClientAddressResponse({@required String addressId}) async {
-    String token = await loadToken();
+  Future<bool> deleteClientAddressResponse({required String addressId}) async {
+    String? token = await loadToken();
     _clienAddressUrl += "/{$addressId}?api_token=$token";
     final response = await http.delete(Uri.parse(_clienAddressUrl),
         headers: {"Accept": "application/json"});
@@ -371,9 +371,11 @@ class AssortmentBrandsProvider {
   //TODO1 heart
   String _assortBrandsUrl = "$apiHead/clients/api/assortment-brands";
 
-  Future<AssortmentBrandsListmodel> getAssortmentBrandsResponse(
-      {@required int page, String searchText}) async {
-    String token = await loadToken();
+  Future<AssortmentBrandsListmodel> getAssortmentBrandsResponse({
+    required int page,
+    String? searchText,
+  }) async {
+    String? token = await loadToken();
     _assortBrandsUrl += "?api_token=$token&page=$page&order_by[name] = asc";
     if (searchText != null) {
       _assortBrandsUrl +=
@@ -396,8 +398,8 @@ class AssortmentBrandsProvider {
 class ImInShopProvider {
   String imInShopUrl = "$apiHead/clients/api/profile/promotion/in-the-shop";
   Future<ImInShopModel> getImInShopListResponse() async {
-    String token = await loadToken();
-    String shopUuid = await loadShopUuid();
+    String? token = await loadToken();
+    String? shopUuid = await loadShopUuid();
     imInShopUrl += "?api_token=$token&store_uuid=$shopUuid";
     final response = await http.get(
       Uri.parse(imInShopUrl),
@@ -414,8 +416,8 @@ class ImInShopProvider {
   }
 
   Future<String> turnOnImInShop() async {
-    String token = await loadToken();
-    String shopUuid = await loadShopUuid();
+    String? token = await loadToken();
+    String? shopUuid = await loadShopUuid();
     if (shopUuid == null || shopUuid == "") {
       return "notStoreChoose";
     }
@@ -424,7 +426,7 @@ class ImInShopProvider {
         headers: {"Accept": "application/json"});
     log('post turnOnImInShop:::::::::: ' + imInShopUrl);
     print('store_uuid:: ' + shopUuid);
-    print('api_token:: ' + token);
+    print('api_token:: ' + (token ?? ''));
     if (response.statusCode == 204 || response.statusCode == 400) {
       return "true";
     } else if (response.statusCode == 401) {
@@ -439,7 +441,7 @@ class ImInShopProvider {
 class CreditCardsProvider {
   String creditCardsUrl = "$apiHead/clients/api/profile/credit-cards";
   Future<CreditCardsListModel> getCreditCardsListResponce() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     creditCardsUrl += "?api_token=$token";
     final response = await http.get(Uri.parse(creditCardsUrl),
         headers: {"Accept": "application/json"});
@@ -455,8 +457,8 @@ class CreditCardsProvider {
     }
   }
 
-  Future<bool> deleteCreditCardResponse({@required String cardUuid}) async {
-    String token = await loadToken();
+  Future<bool> deleteCreditCardResponse({required String cardUuid}) async {
+    String? token = await loadToken();
     creditCardsUrl += "/{$cardUuid}?api_token=$token";
     final response = await http.delete(Uri.parse(creditCardsUrl),
         headers: {"Accept": "application/json"});
@@ -469,7 +471,7 @@ class CreditCardsProvider {
   }
 
   Future<UrlForCreditCardLinkModel> getUrlForCreditCardLinkResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     creditCardsUrl += "/link?api_token=$token";
     final response = await http.get(Uri.parse(creditCardsUrl),
         headers: {"Accept": "application/json"});
@@ -484,8 +486,8 @@ class CreditCardsProvider {
   }
 
   Future<bool> setSuccessStatusOfLinkingCardResponse(
-      {@required String orderId}) async {
-    String token = await loadToken();
+      {required String orderId}) async {
+    String? token = await loadToken();
     creditCardsUrl += "/link/success?api_token=$token&orderId=$orderId";
     final response = await http.get(Uri.parse(creditCardsUrl),
         headers: {"Accept": "application/json"});
@@ -498,8 +500,8 @@ class CreditCardsProvider {
   }
 
   Future<bool> setSErrorStatusOfLinkingCardResponse(
-      {@required String orderId}) async {
-    String token = await loadToken();
+      {required String orderId}) async {
+    String? token = await loadToken();
     creditCardsUrl += "/link/error?api_token=$token&orderId=$orderId";
     final response = await http.get(Uri.parse(creditCardsUrl),
         headers: {"Accept": "application/json"});
@@ -517,7 +519,7 @@ class PromoDescriptionsProvider {
   String promoDescriptionsUrl = "$apiHead/clients/api/promo-descriptions";
   Future<List<PromoDescriptionsDataModel>> getPromoDescriptionsResponse(
       int page) async {
-    String token = await loadToken();
+    String? token = await loadToken();
     promoDescriptionsUrl +=
         "?where[0][0]=is_hidden&where[0][1]==&where[0][2]=false&api_token=$token&page=$page";
     final response = await http.get(Uri.parse(promoDescriptionsUrl),
@@ -534,7 +536,7 @@ class PromoDescriptionsProvider {
 
   Future<PromoDescriptionsDataModel>
       getDiverseFoodDescriptionsResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     promoDescriptionsUrl +=
         "?where[0][0]=name&where[0][1]==&where[0][2]=Разнообразное питание&api_token=$token";
     final response = await http.get(Uri.parse(promoDescriptionsUrl),
@@ -550,7 +552,7 @@ class PromoDescriptionsProvider {
   }
 
   Future<FavoriteProductTitleModel> favoritePrductTitleRequest() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     promoDescriptionsUrl +=
         "?api_token=$token&where[0][0]=name&where[0][1]==&where[0][2]=Любимый продукт";
     final response = await http.get(Uri.parse(promoDescriptionsUrl),
@@ -569,10 +571,10 @@ class PromoDescriptionsProvider {
 
 //get contacts
 class SmartContactsProvider {
-  String _url;
+  late String _url;
   Future<SmartContactsModel> getContactsResponse() async {
     _url = "$apiHead/clients/api/contacts";
-    String token = await loadToken();
+    String? token = await loadToken();
     _url += "?api_token=$token";
     final response = await http.get(
       Uri.parse(_url),
@@ -589,7 +591,7 @@ class SmartContactsProvider {
 
   Future<SocialsListModel> getSocialsListResponse() async {
     _url = "$apiHead/clients/api/social";
-    String token = await loadToken();
+    String? token = await loadToken();
     _url += "?api_token=$token";
     final response = await http.get(
       Uri.parse(_url),
@@ -607,11 +609,11 @@ class SmartContactsProvider {
 
 //класс геокодинга
 class GeocodingProvider {
-  String geocodingUrl;
+  late String geocodingUrl;
 
   Future<GeocodingModel> getGeocodingReverseResponse(
-      {@required Point latLng}) async {
-    String token = await loadToken();
+      {required Point latLng}) async {
+    String? token = await loadToken();
     geocodingUrl =
         "$apiHead/clients/api/geocode/reverse?api_token=$token&longitude=${latLng.longitude}&latitude=${latLng.latitude}";
     final response = await http.get(
@@ -628,9 +630,8 @@ class GeocodingProvider {
     }
   }
 
-  Future<GeocodingModel> getGeocodingResponse(
-      {@required String address}) async {
-    String token = await loadToken();
+  Future<GeocodingModel> getGeocodingResponse({required String address}) async {
+    String? token = await loadToken();
     geocodingUrl =
         "$apiHead/clients/api/geocode?api_token=$token&address=$address";
     final response = await http
@@ -652,7 +653,7 @@ class DiverseFoodProvider {
 
   Future<DiverseFoodPersentListModel>
       getImInShopPersentListModelResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
 
     String diverseFoodUrl =
         "$apiHead/clients/api/promo-diverse-food-settings?api_token=$token";
@@ -672,7 +673,7 @@ class DiverseFoodProvider {
   }
 
   Future<DiverseFoodStatsModel> diverseFoodStatsResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     String currentMonth =
         "${DateTime.now().year}-${DateTime.now().month > 9 ? DateTime.now().month : "0${DateTime.now().month}"}";
     _diverseFoodUrl +=
@@ -693,7 +694,7 @@ class DiverseFoodProvider {
 
   Future<DiverseFoodPresentDiscountModel>
       diverseFoodPresentDiscountResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     _diverseFoodUrl += "discounts?api_token=$token&where[0][0]=start_at&" +
         "where[0][1]=<&where[0][2]=now()&where[1][0]=end_at&where[1][1]=>&where[1][2]=now()";
     final response = await http.get(
@@ -714,7 +715,7 @@ class DiverseFoodProvider {
 
   Future<DiverseFoodFutureDiscountModel>
       diverseFoodFutureDiscountResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     _diverseFoodUrl += "settings/future-level?api_token=$token";
     final response = await http.get(
       Uri.parse(_diverseFoodUrl),
@@ -733,8 +734,8 @@ class DiverseFoodProvider {
   }
 
   Future<DiverseFoodAssortmentListModel> diverseFoodAssortmentListResponse(
-      {@required bool isRated, @required int page}) async {
-    String token = await loadToken();
+      {required bool isRated, required int page}) async {
+    String? token = await loadToken();
     _diverseFoodUrl =
         "$apiHead/clients/api/profile/purchases-month?api_token=$token&page=$page";
     if (isRated) {
@@ -769,8 +770,8 @@ class FavoriteProductProvider {
 
   // get favorite product
   Future<FavoriteProductModel> getFavoriteProductResponse() async {
-    String token = await loadToken();
-    String shopUuid = await loadShopUuid();
+    String? token = await loadToken();
+    String? shopUuid = await loadShopUuid();
     favoriteProductUrl += "?api_token=$token&per_page=20&store_uuid=$shopUuid";
     favoriteProductUrl +=
         "&where[0][0]=active_to&where[0][1]=>&where[0][2]=$nowTime";
@@ -792,8 +793,8 @@ class FavoriteProductProvider {
   //set favorite product
 
   Future<String> setFavoriteProductResponse(
-      {@required String assortmentUuid, @required String variantUuid}) async {
-    String token = await loadToken();
+      {required String assortmentUuid, required String variantUuid}) async {
+    String? token = await loadToken();
 
     favoriteProductUrl =
         "$apiHead/clients/api/profile/promo-favorite-assortment-variants/$variantUuid/activate";
@@ -820,7 +821,7 @@ class FavoriteProductProvider {
   //get variant uuid
   Future<FavoriteProductVariantUuidModel>
       getFavoriteProductVariantUuidResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     favoriteProductUrl =
         "$apiHead/clients/api/profile/promo-favorite-assortment-variants?api_token=$token";
     favoriteProductUrl +=
@@ -845,12 +846,12 @@ class FavoriteProductProvider {
 
 //класс для рекомендаций
 class RecomendationProvider {
-  String recomendationUrl;
+  late String recomendationUrl;
 
   Future<List<AssortmentsListModel>> getRecomendationListResponse(
-      {@required int page}) async {
-    String token = await loadToken();
-    String shopUuid = await loadShopUuid();
+      {required int page}) async {
+    String? token = await loadToken();
+    String? shopUuid = await loadShopUuid();
 
     recomendationUrl = shopUuid == null || shopUuid == ""
         ? '$apiHead/clients/api/assortments?&page=$page'
@@ -881,8 +882,8 @@ class NotificationsProvider {
   String notificationsUrl = "$apiHead/clients/api/profile/notifications";
 
   Future<NotificationsListModel> getNotificationListResponse(
-      {@required int page}) async {
-    String token = await loadToken();
+      {required int page}) async {
+    String? token = await loadToken();
     final response = await http.get(
       Uri.parse(notificationsUrl + "?api_token=$token&page=$page"),
       headers: {"Accept": "application/json"},
@@ -900,16 +901,16 @@ class NotificationsProvider {
 
 // класс для заказов (order)
 class OrderProvider {
-  String body;
-  String token;
+  String? body;
+  String? token;
   String orderUrl = "$apiHead/clients/api/profile/orders";
 
   Future<bool> setRatingForAssortmentInOrderResponse(
-      {@required String orderUuid,
-      @required String orderProductUuid,
-      @required double value,
-      @required String comment}) async {
-    String token = await loadToken();
+      {required String orderUuid,
+      required String orderProductUuid,
+      required double value,
+      required String comment}) async {
+    String? token = await loadToken();
     String urlOrderMark = "$orderUrl/products/$orderProductUuid/set-rating";
     final response = await http.post(
       Uri.parse(urlOrderMark),
@@ -934,7 +935,7 @@ class OrderProvider {
 
   // получить список заказов
   Future<OrderListModel> getOrderListResponse(int page) async {
-    String token = await loadToken();
+    String? token = await loadToken();
     orderUrl += "?api_token=$token&page=$page&order_by[created_at]=desc";
 
     final response = await http.get(Uri.parse(orderUrl), headers: {
@@ -952,7 +953,7 @@ class OrderProvider {
 
   //get Детали Заказа
   Future<OrderDetailsAndCalculateResponseModel> orderDetailseResponse({
-    @required String orderId,
+    required String orderId,
   }) async {
     token = await loadToken();
     orderUrl = "$orderUrl/$orderId?api_token=$token";
@@ -989,7 +990,7 @@ class OrderProvider {
     List<ProductModelForOrderRequest>? productModelForOrderRequestList,
   }) async {
     token = await loadToken();
-    String storeUuid = await loadShopUuid();
+    String? storeUuid = await loadShopUuid();
     body = json.encode({
       "api_token": token,
       "order": {
@@ -1053,7 +1054,7 @@ class OrderProvider {
     required List<ProductModelForOrderRequest>? productModelForOrderRequestList,
   }) async {
     token = await loadToken();
-    String storeUuid = await loadShopUuid();
+    String? storeUuid = await loadShopUuid();
     body = json.encode({
       "api_token": token,
       "order": {
@@ -1066,7 +1067,7 @@ class OrderProvider {
           "paid_bonus": subtractBonusesCount,
       },
       "products": List<dynamic>.from(
-          productModelForOrderRequestList.map((x) => x.toJson()))
+          productModelForOrderRequestList?.map((x) => x.toJson()) ?? [])
     });
     String url = "$orderUrl/calculate";
     final response = await http.post(Uri.parse(url), body: (body), headers: {
@@ -1074,7 +1075,7 @@ class OrderProvider {
       'Content-Type': 'application/json'
     });
     log('--url 🛒📖orderCalculateResponse post 🟡:: ' + url);
-    print('--body 🛒📖:: ' + body);
+    print('--body 🛒📖:: ' + (body ?? ''));
     print('--response 🛒📖:: ' + response.body);
 
     if (response.statusCode == 200) {
@@ -1113,7 +1114,7 @@ class OrderProvider {
 // класс для корзины
 class BasketProvider {
   String basketUrl = "$apiHead/clients/api/profile/shopping-cart";
-  String token;
+  late String? token;
 
   Future<bool> fillBasketFromORderResponse(String orderUuid) async {
     token = await loadToken();
@@ -1131,7 +1132,7 @@ class BasketProvider {
 
   Future<BasketListModel> getBasketListResponse() async {
     token = await loadToken();
-    String shopUuid = await loadShopUuid();
+    String? shopUuid = await loadShopUuid();
 
     basketUrl += "/assortments?api_token=$token";
     if (shopUuid != null) {
@@ -1206,12 +1207,12 @@ class BasketProvider {
   }
 
   Future<bool> updateProductInBasket(
-      {String productUuid, double quantity}) async {
+      {String? productUuid, double? quantity}) async {
     token = await loadToken();
     final response =
         await http.post(Uri.parse(basketUrl + "/assortments/update"), body: {
       'uuid': productUuid.toString(),
-      'quantity': quantity.toStringAsFixed(2),
+      'quantity': quantity?.toStringAsFixed(2),
       'api_token': token
     }, headers: {
       'Accept': 'application/json'
@@ -1222,7 +1223,7 @@ class BasketProvider {
     print('body: uuid:: ' +
         productUuid.toString() +
         ', quantity:: ' +
-        quantity.toStringAsFixed(2));
+        (quantity?.toStringAsFixed(2) ?? ''));
     if (response.statusCode == 204) {
       return true;
     } else {
@@ -1250,11 +1251,11 @@ class SetRatingForAssortmentProvider {
   String _url = "";
 
   Future<bool> setRatingForAssortmentResponse(
-      {@required String receiptUuid,
-      @required String receiptLineUuid,
-      @required double value,
-      @required String comment}) async {
-    String token = await loadToken();
+      {required String receiptUuid,
+      required String receiptLineUuid,
+      required double value,
+      required String comment}) async {
+    String? token = await loadToken();
     _url =
         "$apiHead/clients/api/profile/receipts/$receiptUuid/lines/$receiptLineUuid/set-rating?api_token=$token&value=${value.toStringAsFixed(0)}&comment=$comment";
     final response = await http.put(
@@ -1273,9 +1274,11 @@ class SetRatingForAssortmentProvider {
 
 //get assortment comments
 class AssrtmentCommentsProvider {
-  Future<AssortmentCommentsModel> getAssortmentCommentsResponse(
-      {@required String assortmentUuid, @required int perPage}) async {
-    String token = await loadToken();
+  Future<AssortmentCommentsModel> getAssortmentCommentsResponse({
+    required String assortmentUuid,
+    required int perPage,
+  }) async {
+    String? token = await loadToken();
     String url =
         "$apiHead/clients/api/rating-scores/assortments/clients?where[0][0]=assortment_uuid&where[0][1]=like&where[0][1]=$assortmentUuid&per_page=$perPage";
     if (token != "guest") {
@@ -1297,7 +1300,7 @@ class AssrtmentCommentsProvider {
 }
 
 class GetCodeByPhoneProvider {
-  Future<bool> getAuthResponse({@required String phone}) async {
+  Future<bool> getAuthResponse({required String phone}) async {
     final response = await http.post(
         Uri.parse("$apiHead/clients/api/auth/login-via-phone"),
         body: {"phone": phone},
@@ -1315,8 +1318,10 @@ class GetCodeByPhoneProvider {
 }
 
 class GetTokenByPhoneProvider {
-  Future<String> getTokenResponse(
-      {@required String phone, @required String code}) async {
+  Future<String> getTokenResponse({
+    required String phone,
+    required String code,
+  }) async {
     final response = await http.post(
         Uri.parse("$apiHead/clients/api/auth/login-via-phone"),
         body: {'phone': phone, 'code': code},
@@ -1339,9 +1344,9 @@ class GetTokenByPhoneProvider {
 
 //stores class
 class ShopsListProvider {
-  Future<AddressesShopModel> getNearbyStoreModel(
-      {@required Point position}) async {
-    String token = await loadToken();
+  Future<AddressesShopModel?> getNearbyStoreModel(
+      {required Point position}) async {
+    String? token = await loadToken();
     String url = '$apiHead/clients/api/stores/find-nearby';
     if (token != null) {
       url += "?api_token=$token";
@@ -1369,14 +1374,15 @@ class ShopsListProvider {
     }
   }
 
-  Future<AddressesShopListModel> getShopsList(
-      {bool hasParking,
-      bool hasReadyMeals,
-      bool hasAtms,
-      bool isfavorite,
-      bool isOpenNow,
-      String searchText}) async {
-    String token = await loadToken();
+  Future<AddressesShopListModel> getShopsList({
+    bool? hasParking,
+    bool? hasReadyMeals,
+    bool? hasAtms,
+    bool? isfavorite,
+    bool? isOpenNow,
+    String? searchText,
+  }) async {
+    String? token = await loadToken();
     String url =
         '$apiHead/clients/api/stores?per_page=1000&order_by[address]=asc';
     if (token != 'guest') {
@@ -1413,7 +1419,7 @@ class ShopsListProvider {
 // get shop details
 class ShopDetailsProvider {
   Future<AddressesShopModel> getShopDetails(String uuid) async {
-    String token = await loadToken();
+    String? token = await loadToken();
     String url = '$apiHead/clients/api/stores/{$uuid}';
 
     if (token != 'guest') {
@@ -1432,15 +1438,15 @@ class ShopDetailsProvider {
 }
 
 class CatalogsProvider {
-  final String catalogUuid;
-  final int currentPage;
+  final String? catalogUuid;
+  final int? currentPage;
 
   CatalogsProvider({this.currentPage, this.catalogUuid});
 
   Future<List<CatalogListModel>> getCatalogsForPagination() async {
     Response response;
-    String token = await loadToken();
-    String shopUuid = await loadShopUuid();
+    String? token = await loadToken();
+    String? shopUuid = await loadShopUuid();
     String url =
         "$apiHead/clients/api/catalogs?where[0][0]=assortments_count_in_store&where[0][1]=%3E&where[0][2]=0&page=$currentPage&order_by[sort_number]=asc&order_by[name]=asc&per_page=200";
     if (token != "guest") {
@@ -1541,8 +1547,8 @@ class AssortmentsProvider {
   Future<List<AssortmentsListModel>> getAssortmentsForImInShop({
     required List<String> assortmentsUuidList,
   }) async {
-    String token = await loadToken();
-    String shopUuid = await loadShopUuid();
+    String? token = await loadToken();
+    String? shopUuid = await loadShopUuid();
     String _urlForImInShopList = shopUuid == null || shopUuid == ""
         ? '$apiHead/clients/api/assortments?page=$currentPage&per_page=20&order_by[name]=asc'
         : '$apiHead/clients/api/stores/$shopUuid/assortments?page=$currentPage&per_page=20&order_by[name]=asc';
@@ -1578,9 +1584,9 @@ class AssortmentsProvider {
     print(
         '----------------------------------------------------------------------------------------');
     log('========== !!!!!!!!!! getAssortmentsForPagination subcatalogUuid = $subcatalogUuid');
-    String token = await loadToken();
+    String? token = await loadToken();
     //=>
-    String shopUuid = await loadShopUuid();
+    String? shopUuid = await loadShopUuid();
     String _url = shopUuid == null || shopUuid == ""
         ? '$apiHead/clients/api/assortments?page=$currentPage&per_page=20&order_by[name]=asc'
         : '$apiHead/clients/api/stores/$shopUuid/assortments?page=$currentPage&per_page=20&order_by[name]=asc';
@@ -1621,10 +1627,10 @@ class AssortmentsProvider {
         _url += "&where[3][0]=properties&where[3][1]=in&where[3][2][0]=%D0%A0%D0%B5%D0%BA%D0%BE%D0%BC%D" +
             "0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D1%8F&where[3][2][1]=%D0%94%D0%B0";
       }
-      if (brandName != null && brandName.isNotEmpty) {
+      if (brandName != null && brandName?.isNotEmpty == true) {
         _url += "&where[4][0]=assortment_brand_uuid&where[4][1]=in";
-        for (var i = 0; i < brandName.length; i++) {
-          _url += "&where[4][2][$i]=${brandName[i]}";
+        for (var i = 0; i < brandName!.length; i++) {
+          _url += "&where[4][2][$i]=${brandName![i]}";
         }
       }
       if (uuidForAllProductsInCatalog != null) {
@@ -1636,10 +1642,10 @@ class AssortmentsProvider {
         _url += "&where[6][0]=has_yellow_price&where[6][1]==&where[6][2]=true";
       }
 
-      if (activeTagsList != null && activeTagsList.isNotEmpty) {
-        for (int i = 0; i < activeTagsList.length; i++) {
+      if (activeTagsList != null && activeTagsList?.isNotEmpty == true) {
+        for (int i = 0; i < activeTagsList!.length; i++) {
           _url = _url +
-              '&where[${i + 7}][0]=tags&where[${i + 7}][1]=like&where[${i + 7}][2]=${activeTagsList[i]}';
+              '&where[${i + 7}][0]=tags&where[${i + 7}][1]=like&where[${i + 7}][2]=${activeTagsList![i]}';
         }
       }
       if (token != "guest") {
@@ -1663,8 +1669,8 @@ class AssortmentsProvider {
   }
 
   Future<AssortmentsModel> getAssortments() async {
-    String token = await loadToken();
-    String shopUuid = await loadShopUuid();
+    String? token = await loadToken();
+    String? shopUuid = await loadShopUuid();
     String url = shopUuid == null || shopUuid == ""
         ? '$apiHead/clients/api/assortments?page=$currentPage'
         : '$apiHead/clients/api/stores/{$shopUuid}/assortments?page=$currentPage';
@@ -1685,10 +1691,10 @@ class AssortmentsProvider {
       url +=
           "&where[3][0]=assortment_brand_name&where[3][1]=ilike&where[3][2]=%$brandName%";
     }
-    if (activeTagsList != null && activeTagsList.isNotEmpty) {
-      for (int i = 0; i < activeTagsList.length; i++) {
+    if (activeTagsList != null && activeTagsList?.isNotEmpty == true) {
+      for (int i = 0; i < activeTagsList!.length; i++) {
         url = url +
-            '&where[${i + 4}][0]=tags&where[${i + 4}][1]=like&where[${i + 4}][2]=${activeTagsList[i]}';
+            '&where[${i + 4}][0]=tags&where[${i + 4}][1]=like&where[${i + 4}][2]=${activeTagsList![i]}';
       }
     }
     if (barcodes != null) {
@@ -1722,7 +1728,7 @@ class AssortmentsProvider {
 
 class TagsProvider {
   Future<TagsModel> getTags() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     String tagsUrl = '$apiHead/clients/api/tags';
     if (token != "guest") {
       tagsUrl +=
@@ -1744,10 +1750,10 @@ class TagsProvider {
 class AddShopToFavoriteProvider {
   final String storeUuid;
 
-  AddShopToFavoriteProvider({@required this.storeUuid});
+  AddShopToFavoriteProvider({required this.storeUuid});
 
   Future<bool> getisAddShopTofavoriteresponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     final response = await http.post(
       Uri.parse('$apiHead/clients/api/profile/favorite-stores'),
       body: {'store_uuid': storeUuid, 'api_token': token},
@@ -1767,10 +1773,10 @@ class AddShopToFavoriteProvider {
 class DeleteShopToFavoriteProvider {
   final String storeUuid;
 
-  DeleteShopToFavoriteProvider({@required this.storeUuid});
+  DeleteShopToFavoriteProvider({required this.storeUuid});
 
   Future<bool> getisDeleteShopTofavoriteresponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     final response = await http.delete(
       Uri.parse(
           '$apiHead/clients/api/profile/favorite-stores/$storeUuid?api_token=$token'),
@@ -1789,11 +1795,11 @@ class DeleteShopToFavoriteProvider {
 class ProductDetailsProvider {
   final String uuid;
 
-  ProductDetailsProvider({@required this.uuid});
+  ProductDetailsProvider({required this.uuid});
 
   Future<ProductDetailsModel> getProductDetailsResponse() async {
-    String token = await loadToken();
-    String shopUuid = await loadShopUuid();
+    String? token = await loadToken();
+    String? shopUuid = await loadShopUuid();
     String url = '$apiHead/clients/api/assortments/$uuid';
     if (token != "guest") {
       url = url + "?api_token=$token";
@@ -1823,11 +1829,13 @@ class AddDeleteProductToFavoriteProvider {
   final String productUuid;
   final bool isLiked;
 
-  AddDeleteProductToFavoriteProvider(
-      {@required this.isLiked, @required this.productUuid});
+  AddDeleteProductToFavoriteProvider({
+    required this.isLiked,
+    required this.productUuid,
+  });
 
   Future<String> getisAddProductTofavoriteResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     final response = isLiked == false
         ? await http.post(
             Uri.parse(
@@ -1857,10 +1865,10 @@ class AddDeleteProductToFavoriteProvider {
 
 //Get Profile data
 class ProfileProvider {
-  String _profileUrl;
+  late String _profileUrl;
 
   Future<DeleteProfileModel> deleteProfileResponse() async {
-    String _token = await loadToken();
+    String? _token = await loadToken();
     _profileUrl = "$apiHead/clients/api/profile";
 
     final respone = await http.delete(Uri.parse(_profileUrl), headers: {
@@ -1880,13 +1888,13 @@ class ProfileProvider {
 
   Future<bool> loginResponse() async {
     FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-    String pushToken;
+    String? pushToken;
     try {
       pushToken = await firebaseMessaging.getToken();
     } catch (e) {
       return false;
     }
-    String token = await loadToken();
+    String? token = await loadToken();
     _profileUrl = "$apiHead/clients/api/profile/push-tokens?api_token=$token";
     final response = await http.post(Uri.parse(_profileUrl),
         headers: {'Accept': 'application/json'}, body: {"token": pushToken});
@@ -1900,13 +1908,13 @@ class ProfileProvider {
 
   Future<bool> logoutResponse() async {
     FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-    String pushToken;
+    String? pushToken;
     try {
       pushToken = await firebaseMessaging.getToken();
     } catch (e) {
       return false;
     }
-    String token = await loadToken();
+    String? token = await loadToken();
     _profileUrl =
         "$apiHead/clients/api/profile/push-tokens/$pushToken?api_token=$token";
     final response = await http.delete(Uri.parse(_profileUrl),
@@ -1919,8 +1927,8 @@ class ProfileProvider {
     }
   }
 
-  Future<String> getPurchasesSumResponse({@required int days}) async {
-    String token = await loadToken();
+  Future<String> getPurchasesSumResponse({required int days}) async {
+    String? token = await loadToken();
     String purchasesSumUrl =
         "$apiHead/clients/api/profile/purchases-sum?api_token=$token&days=$days";
     final response = await http.get(Uri.parse(purchasesSumUrl),
@@ -1936,7 +1944,7 @@ class ProfileProvider {
   }
 
   Future<ProfileModel> getProfileResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     final response = await http.get(
         Uri.parse('$apiHead/clients/api/profile?api_token=$token'),
         headers: {'Accept': 'application/json'});
@@ -1972,17 +1980,17 @@ class ProfileProvider {
 
 //change profile data
 class ProfileUpdateDataProvider {
-  final String uuid;
-  final String phone;
-  final String birthdayDate;
-  final String name;
-  final int consentToServiceNewsletter;
-  final int consentToReceivePromotionalMailings;
-  final String email;
-  final String sex;
-  final String selectedStoreUserUuid;
-  final int isAgreeWithDiverseFoodPromo;
-  final String appVersion;
+  final String? uuid;
+  final String? phone;
+  final String? birthdayDate;
+  final String? name;
+  final int? consentToServiceNewsletter;
+  final int? consentToReceivePromotionalMailings;
+  final String? email;
+  final String? sex;
+  final String? selectedStoreUserUuid;
+  final int? isAgreeWithDiverseFoodPromo;
+  final String? appVersion;
 
   ProfileUpdateDataProvider(
       {this.isAgreeWithDiverseFoodPromo,
@@ -1999,8 +2007,8 @@ class ProfileUpdateDataProvider {
 
   Future<bool> getProfileChangeRsponse() async {
     log('📡 Отправляем PUT для обновления профиля с selected_store_user_uuid: $selectedStoreUserUuid');
-    String token = await loadToken();
-    String phoneFromShared = await loadPhone();
+    String? token = await loadToken();
+    String? phoneFromShared = await loadPhone();
 
     final response = await http.put(
         Uri.parse("$apiHead/clients/api/profile?api_token=$token"),
@@ -2058,7 +2066,7 @@ class ProfileUpdateDataProvider {
 //get Shopping lists!
 class ShoppingListsProvider {
   Future<ShoppingListsModel> getShoppingListsResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     final response = await http.get(
         Uri.parse(
             '$apiHead/clients/api/profile/shopping-lists?api_token=$token'),
@@ -2078,9 +2086,9 @@ class ShoppingListsProvider {
 //get shopping list details
 class ShoppingListDetailsProvider {
   Future<ShoppingListDeatailsModel> getShoppingListDetailsResponse(
-      {@required String shoppingListUuid}) async {
-    String token = await loadToken();
-    String shopUuid = await loadShopUuid();
+      {required String shoppingListUuid}) async {
+    String? token = await loadToken();
+    String? shopUuid = await loadShopUuid();
     String shoppingListDetailsUrl =
         "$apiHead/clients/api/profile/shopping-lists/$shoppingListUuid?api_token=$token";
 
@@ -2104,8 +2112,8 @@ class ShoppingListDetailsProvider {
 //create new shopping list
 class CreateNewShoppingListProvider {
   Future<bool> getCreateShoppingListResponse(
-      {@required String shoppingListName}) async {
-    String token = await loadToken();
+      {required String shoppingListName}) async {
+    String? token = await loadToken();
     final response = await http.post(
         Uri.parse('$apiHead/clients/api/profile/shopping-lists'),
         headers: {"Accept": "application/json"},
@@ -2121,11 +2129,11 @@ class CreateNewShoppingListProvider {
   }
 
   Future<bool> updateShoppingListResponse(
-      {@required String shoppingListName,
-      List<double> assortmentsQuantity,
-      List<double> assortmentsUuid,
-      @required String shoppingListsUuid}) async {
-    String token = await loadToken();
+      {required String shoppingListName,
+      List<double>? assortmentsQuantity,
+      List<double>? assortmentsUuid,
+      required String shoppingListsUuid}) async {
+    String? token = await loadToken();
     String _url =
         '$apiHead/clients/api/profile/shopping-lists/{$shoppingListsUuid}';
 
@@ -2146,8 +2154,8 @@ class CreateNewShoppingListProvider {
 // delete Shopping list
 class DeleteShoppingListProvider {
   Future<bool> getDeleteShoppingListResponse(
-      {@required String shoppingListsUuid}) async {
-    String token = await loadToken();
+      {required String shoppingListsUuid}) async {
+    String? token = await loadToken();
     final response = await http.delete(
       Uri.parse(
           "$apiHead/clients/api/profile/shopping-lists/{$shoppingListsUuid}?api_token=$token"),
@@ -2165,11 +2173,12 @@ class DeleteShoppingListProvider {
 
 //add product to shopping list
 class AddProductToShopingListProvider {
-  Future<bool> getAddProducttoShoppingListRespone(
-      {@required String shoppingListsUuid,
-      @required String assortmentUuid,
-      @required int quantity}) async {
-    String token = await loadToken();
+  Future<bool> getAddProducttoShoppingListRespone({
+    required String shoppingListsUuid,
+    required String assortmentUuid,
+    required int quantity,
+  }) async {
+    String? token = await loadToken();
     final response = await http.post(
       Uri.parse(
           "$apiHead/clients/api/profile/shopping-lists/{$shoppingListsUuid}/assortments"),
@@ -2195,10 +2204,11 @@ class AddProductToShopingListProvider {
 
 //Delete product to shopping list
 class DeleteProductToShopingListProvider {
-  Future<bool> getDeleteProducttoShoppingListRespone(
-      {@required String shoppingListsUuid,
-      @required String assortmentUuid}) async {
-    String token = await loadToken();
+  Future<bool> getDeleteProducttoShoppingListRespone({
+    required String shoppingListsUuid,
+    required String assortmentUuid,
+  }) async {
+    String? token = await loadToken();
     final response = await http.delete(
       Uri.parse(
           "$apiHead/clients/api/profile/shopping-lists/{$shoppingListsUuid}/assortments/{$assortmentUuid}?api_token=$token"),
@@ -2217,7 +2227,7 @@ class DeleteProductToShopingListProvider {
 //get shopping check list
 class ShoppingCheckListProvider {
   Future<ShoppingCheckListModel> getShoppingCheckListResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     final response = await http.get(
       Uri.parse(
           '$apiHead/clients/api/profile/receipts?api_token=$token&where[0][0]=refund_by_receipt_uuid&where[0][1]=is null&order_by[created_at]=desc'),
@@ -2235,9 +2245,10 @@ class ShoppingCheckListProvider {
   }
 
   Future<List<ShoppingCheckListDataModel>>
-      getShoppingCheckListForPaginationResponse(
-          {@required int currentPage}) async {
-    String token = await loadToken();
+      getShoppingCheckListForPaginationResponse({
+    required int currentPage,
+  }) async {
+    String? token = await loadToken();
     final response = await http.get(
       Uri.parse(
           '$apiHead/clients/api/profile/receipts?api_token=$token&page=$currentPage&where[0][0]=refund_by_receipt_uuid&where[0][1]=is null&order_by[created_at]=desc'),
@@ -2258,7 +2269,7 @@ class ShoppingCheckListProvider {
 // get loyalty cards
 class LoyaltyCardsListProvider {
   Future<LoyaltyCardsListModel> getLoyaltyCardsListResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     final response = await http.get(
       Uri.parse('$apiHead/clients/api/profile/loyalty-cards?api_token=$token'),
       headers: {"Accept": "application/json"},
@@ -2281,9 +2292,10 @@ class Asd<St> {}
 class CheckDetailsProvider {
   String _url = "";
 
-  Future<CheckDetailsModel> getCheckDetailsResponse(
-      {@required String receiptUuid}) async {
-    String token = await loadToken();
+  Future<CheckDetailsModel> getCheckDetailsResponse({
+    required String receiptUuid,
+  }) async {
+    String? token = await loadToken();
     _url =
         '$apiHead/clients/api/profile/receipts/{$receiptUuid}?api_token=$token';
     final response = await http.get(
@@ -2304,9 +2316,10 @@ class CheckDetailsProvider {
 class CheckDetailsProductsProvider {
   String _url = "";
 
-  Future<CheckDetailsProductsModel> getCheckDetailsProductsResponse(
-      {@required String receiptUuid}) async {
-    String token = await loadToken();
+  Future<CheckDetailsProductsModel> getCheckDetailsProductsResponse({
+    required String receiptUuid,
+  }) async {
+    String? token = await loadToken();
 
     _url =
         '$apiHead/clients/api/profile/receipts/{$receiptUuid}/lines?api_token=$token';
@@ -2328,11 +2341,11 @@ class CheckDetailsProductsProvider {
 
 // Рецепты
 class ReceiptsListProvider {
-  String body;
+  String? body;
 
   Future<ReceiptsListModel> getReceiptsList(String currentPage) async {
-    String token = await loadToken();
-    String storeUuid = await loadShopUuid();
+    String? token = await loadToken();
+    String? storeUuid = await loadShopUuid();
     String _url =
         "$apiHead/clients/api/meal-receipts?api_token=$token&page=$currentPage&per_page=10&order_by%5Bsection%5D=asc&store_uuid=$storeUuid";
     final response = await http.get(
@@ -2365,7 +2378,7 @@ class ReceiptsListProvider {
   // }
 
   Future<UniqueReceipts> getReceiptsUniqueSections() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     String _url =
         "$apiHead/clients/api/meal-receipts-unique-sections?api_token=$token";
     final response = await http.get(
@@ -2383,7 +2396,7 @@ class ReceiptsListProvider {
   }
 
   Future<SingleRecipeDataModel> getSingleReceipt(String uuid) async {
-    String token = await loadToken();
+    String? token = await loadToken();
     String _url = "$apiHead/clients/api/meal-receipts/$uuid/?api_token=$token";
     final response = await http
         .get(Uri.parse(_url), headers: {"Accept": "application/json"});
@@ -2398,7 +2411,7 @@ class ReceiptsListProvider {
 
   Future<bool> toggleLikeStory(String uuid, bool isFavorite) async {
     //это вообще лайк для сториса рецепта а не избранное
-    String token = await loadToken();
+    String? token = await loadToken();
     String _url =
         "$apiHead/clients/api/meal-receipts/$uuid/reaction?api_token=$token";
     final response = await http.post(Uri.parse(_url),
@@ -2422,11 +2435,13 @@ class AddOrDeleteReceiptsToFavoriteProvider {
   final String mealReceiptUuid;
   final bool isFavorite;
 
-  AddOrDeleteReceiptsToFavoriteProvider(
-      {@required this.isFavorite, @required this.mealReceiptUuid});
+  AddOrDeleteReceiptsToFavoriteProvider({
+    required this.isFavorite,
+    required this.mealReceiptUuid,
+  });
 
   Future<String> addOrDeleteReceiptsToFavoriteResponse() async {
-    String token = await loadToken();
+    String? token = await loadToken();
     final response = isFavorite == true
         ? await http.delete(
             Uri.parse(
@@ -2454,25 +2469,25 @@ class AddOrDeleteReceiptsToFavoriteProvider {
   }
 }
 
-Future<String> loadToken() async {
+Future<String?> loadToken() async {
   SharedPreferences _shared = await SharedPreferences.getInstance();
   log('loadToken::: 🐝 ${_shared.getString(SharedKeys.token)}');
   return _shared.getString(SharedKeys.token);
 }
 
-Future<String> loadShopUuid() async {
+Future<String?> loadShopUuid() async {
   SharedPreferences _shared = await SharedPreferences.getInstance();
   log('loadShopUuid::: 🐝 ${_shared.getString(SharedKeys.shopUuid)}');
   return _shared.getString(SharedKeys.shopUuid);
 }
 
-Future<String> loadShopName() async {
+Future<String?> loadShopName() async {
   SharedPreferences _shared = await SharedPreferences.getInstance();
   log('loadShopName::: 🐝 ${_shared.getString(SharedKeys.shopAddress)}');
   return _shared.getString(SharedKeys.shopAddress);
 }
 
-Future<String> loadPhone() async {
+Future<String?> loadPhone() async {
   SharedPreferences _shared = await SharedPreferences.getInstance();
   log('loadPhone::: 🐝 ${_shared.getString(SharedKeys.phone)}');
   return _shared.getString(SharedKeys.phone);
