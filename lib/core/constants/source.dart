@@ -2,7 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:smart/core/constants/text_styles.dart';
 
-const String playMarketAppUrl = "https://play.google.com/store/apps/details?id=com.smartshopapp.android";
+const String playMarketAppUrl =
+    "https://play.google.com/store/apps/details?id=com.smartshopapp.android";
 const String appStoreAppUrl =
     "https://apps.apple.com/ru/app/s-mart-%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0-%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D0%BE%D0%B2/id1590156795";
 //***** redesigne colors ******
@@ -129,10 +130,14 @@ var orangeTextColor = Color.fromRGBO(178, 0, 12, 0.67);
 
 var profileGreyTextStyle = appTextStyle(color: Colors.grey, fontSize: 14);
 var notEmptyHintTextStyle = appTextStyle(color: blackColor, fontSize: 18);
-var notEmptyHintTextStyleForNumbers = TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w300);
-var hintTextStyle = appTextStyle(color: Color.fromRGBO(0, 0, 0, 0.1), fontSize: 18);
-var hintTextStyleForNumbers = TextStyle(color: Color.fromRGBO(0, 0, 0, 0.1), fontSize: 18);
-var profileOrangeText = appTextStyle(color: orangeTextColor, fontWeight: FontWeight.w500, fontSize: 14);
+var notEmptyHintTextStyleForNumbers =
+    TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w300);
+var hintTextStyle =
+    appTextStyle(color: Color.fromRGBO(0, 0, 0, 0.1), fontSize: 18);
+var hintTextStyleForNumbers =
+    TextStyle(color: Color.fromRGBO(0, 0, 0, 0.1), fontSize: 18);
+var profileOrangeText = appTextStyle(
+    color: orangeTextColor, fontWeight: FontWeight.w500, fontSize: 14);
 
 //TEXT
 
@@ -142,11 +147,13 @@ double screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 double screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 //***********1 poin of size***********
 
-double pointOfHeght(BuildContext context, int points) => 667 / (MediaQuery.of(context).size.height) * points;
+double pointOfHeght(BuildContext context, int points) =>
+    667 / (MediaQuery.of(context).size.height) * points;
 
-double pointOfWidth(BuildContext context, int points) => (9375 / MediaQuery.of(context).size.width) * points;
+double pointOfWidth(BuildContext context, int points) =>
+    (9375 / MediaQuery.of(context).size.width) * points;
 
-List<String> getAssortmentUnitId({@required String assortmentUnitId}) {
+List<String> getAssortmentUnitId({required String assortmentUnitId}) {
   switch (assortmentUnitId) {
     case "package":
       return ["Упаковка", "упак"];
@@ -172,7 +179,7 @@ DateTime dateTimeConverter(String date) {
   return DateTime.parse(date.replaceAll("+0300", "+0000"));
 }
 
-String getMonthName({int month, bool isOfMode}) {
+String getMonthName({int? month, bool? isOfMode}) {
   if (isOfMode == null || isOfMode == false) {
     switch (month) {
       case 1:
@@ -279,25 +286,26 @@ String getMonthName({int month, bool isOfMode}) {
 }
 
 //Height and width with ratio by device sizes
-double widthRatio({@required double size, @required BuildContext context}) {
+double widthRatio({required double size, required BuildContext context}) {
   return (screenWidth(context) / (375 / size));
 }
 
-double heightRatio({@required double size, @required BuildContext context}) {
+double heightRatio({required double size, required BuildContext context}) {
   return (screenHeight(context) / (800 / size));
 }
 
 // class for romove scroll glow
 class MyBehavior extends ScrollBehavior {
   @override
-  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
     return child;
   }
 }
 
 // quick extension for convert sctring to double
 extension StringToDouble on String {
-  double toDouble() {
+  double? toDouble() {
     return double.tryParse(this);
   }
 
@@ -305,13 +313,13 @@ extension StringToDouble on String {
   //   return DateTime.
   // }
 
-  int toInt() {
+  int? toInt() {
     return int.tryParse(this);
   }
 }
 
 extension removeNulles on double {
-  num removeAfterPointNulles() {
+  num? removeAfterPointNulles() {
     if (this != null) {
       if (this % 1 == 0)
         return this.toInt();
