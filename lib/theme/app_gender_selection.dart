@@ -6,17 +6,18 @@ import 'package:smart/core/constants/text_styles.dart';
 
 class AppGenderSelection extends StatefulWidget {
   final String gender;
-  AppGenderSelection({@required this.gender});
+  AppGenderSelection({required this.gender});
 
   @override
-  State<AppGenderSelection> createState() => _AppGenderSelectionState(gender: gender);
+  State<AppGenderSelection> createState() =>
+      _AppGenderSelectionState(gender: gender);
 }
 
 class _AppGenderSelectionState extends State<AppGenderSelection> {
-  String _genderChoose;
+  late String _genderChoose;
   final String gender;
 
-  _AppGenderSelectionState({this.gender});
+  _AppGenderSelectionState({required this.gender});
 
   @override
   void initState() {
@@ -43,7 +44,8 @@ class _AppGenderSelectionState extends State<AppGenderSelection> {
             width: widthRatio(size: 102, context: context),
             height: heightRatio(size: 34, context: context),
             decoration: BoxDecoration(
-              border: Border.all(color: _genderChoose == 'male' ? newRedDark : newGrey),
+              border: Border.all(
+                  color: _genderChoose == 'male' ? newRedDark : newGrey),
               borderRadius: BorderRadius.circular(5),
               color: _genderChoose == 'male' ? newRedDark : Colors.white,
             ),
@@ -69,7 +71,8 @@ class _AppGenderSelectionState extends State<AppGenderSelection> {
             width: widthRatio(size: 102, context: context),
             height: heightRatio(size: 34, context: context),
             decoration: BoxDecoration(
-              border: Border.all(color: _genderChoose == 'female' ? newRedDark : newGrey),
+              border: Border.all(
+                  color: _genderChoose == 'female' ? newRedDark : newGrey),
               borderRadius: BorderRadius.circular(5),
               color: _genderChoose == 'female' ? newRedDark : Colors.white,
             ),

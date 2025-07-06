@@ -19,7 +19,7 @@ class TagsEmptyState extends TagsState {}
 
 class TagsLoadedState extends TagsState {
   final TagsModel tagsModel;
-  TagsLoadedState({this.tagsModel});
+  TagsLoadedState({required this.tagsModel});
 }
 
 class TagsBloc extends Bloc<TagsEvent, TagsState> {

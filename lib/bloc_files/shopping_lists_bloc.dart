@@ -1,6 +1,4 @@
 //Events
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/shopping_lists_model.dart';
 import 'package:smart/repositories/shopping_lists_repository.dart';
@@ -22,7 +20,7 @@ class ShoppingListsLoadingState extends ShoppingListsState {}
 
 class ShoppingListsLoadedState extends ShoppingListsState {
   final ShoppingListsModel shoppingListsModel;
-  ShoppingListsLoadedState({@required this.shoppingListsModel});
+  ShoppingListsLoadedState({required this.shoppingListsModel});
 }
 
 class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {

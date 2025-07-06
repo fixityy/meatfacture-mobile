@@ -1,5 +1,4 @@
 //events
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/create_order_response_model.dart';
 import 'package:smart/models/product_model_for_order_request.dart';
@@ -21,29 +20,30 @@ class OrderCreatedLoadEvent extends OrderCreatedEvent {
   final String orderDeliveryTypeId;
   final String orderPaymentTypeId;
   final List<ProductModelForOrderRequest> productModelForOrderRequestList;
-  final int subtractBonusesCount;
+  final int? subtractBonusesCount;
 
-  OrderCreatedLoadEvent(
-      {this.subtractBonusesCount,
-      @required this.clientCreditCardUuid,
-      @required this.address,
-      @required this.clientComment,
-      @required this.clientEmail,
-      @required this.floor,
-      @required this.entrance,
-      @required this.apartmentNumber,
-      @required this.intercomCode,
-      @required this.plannedDeliveryDatetimeFrom,
-      @required this.plannedDeliveryDatetimeTo,
-      @required this.orderDeliveryTypeId,
-      @required this.orderPaymentTypeId,
-      @required this.productModelForOrderRequestList});
+  OrderCreatedLoadEvent({
+    this.subtractBonusesCount,
+    required this.clientCreditCardUuid,
+    required this.address,
+    required this.clientComment,
+    required this.clientEmail,
+    required this.floor,
+    required this.entrance,
+    required this.apartmentNumber,
+    required this.intercomCode,
+    required this.plannedDeliveryDatetimeFrom,
+    required this.plannedDeliveryDatetimeTo,
+    required this.orderDeliveryTypeId,
+    required this.orderPaymentTypeId,
+    required this.productModelForOrderRequestList,
+  });
 }
 
 class OrderException implements Exception {
   final String errorText;
 
-  OrderException({@required this.errorText});
+  OrderException({required this.errorText});
 }
 
 //states
@@ -63,7 +63,7 @@ class OrderCreatedTooFarForAddressErrorState extends OrderCreatedState {
 class OrderCreatedLoadedState extends OrderCreatedState {
   final OrderCreateResponseModel orderCreateResponseModel;
 
-  OrderCreatedLoadedState({@required this.orderCreateResponseModel});
+  OrderCreatedLoadedState({required this.orderCreateResponseModel});
 }
 
 class OrderCreatedBloc extends Bloc<OrderCreatedEvent, OrderCreatedState> {
@@ -74,7 +74,8 @@ class OrderCreatedBloc extends Bloc<OrderCreatedEvent, OrderCreatedState> {
     if (event is OrderCreatedLoadEvent) {
       yield OrderCreatedLoadingState();
       try {
-        final OrderCreateResponseModel _orderCreateResponseModel = await OrderProvider().createOrderResponse(
+        final OrderCreateResponseModel _orderCreateResponseModel =
+            await OrderProvider().createOrderResponse(
           subtractBonusesCount: event.subtractBonusesCount,
           clientCreditCardUuid: event.clientCreditCardUuid,
           address: event.address,
@@ -88,14 +89,17 @@ class OrderCreatedBloc extends Bloc<OrderCreatedEvent, OrderCreatedState> {
           orderPaymentTypeId: event.orderPaymentTypeId,
           plannedDeliveryDatetimeFrom: event.plannedDeliveryDatetimeFrom,
           plannedDeliveryDatetimeTo: event.plannedDeliveryDatetimeTo,
-          productModelForOrderRequestList: event.productModelForOrderRequestList,
+          productModelForOrderRequestList:
+              event.productModelForOrderRequestList,
         );
-        yield OrderCreatedLoadedState(orderCreateResponseModel: _orderCreateResponseModel);
+        yield OrderCreatedLoadedState(
+            orderCreateResponseModel: _orderCreateResponseModel);
       } on OrderException catch (e) {
         yield OrderCreatedTooFarForAddressErrorState(errorText: e);
       } catch (e) {
         yield OrderCreatedTooFarForAddressErrorState(
-            errorText: 'Не смогли произвести списание средств за заказ. Повторите попытку или обретитесь за поддержкой в Банк');
+            errorText:
+                'Не смогли произвести списание средств за заказ. Повторите попытку или обретитесь за поддержкой в Банк');
       }
     }
   }

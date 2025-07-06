@@ -1,6 +1,4 @@
 //Events
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/assortments_list_model.dart';
@@ -16,7 +14,7 @@ class RecomendationsNextPageEvent extends RecomendationsEvent {}
 
 abstract class RecomendationsState {
   final List<AssortmentsListModel> recomList;
-  RecomendationsState({@required this.recomList});
+  RecomendationsState({required this.recomList});
 }
 
 class RecomendationsInitState extends RecomendationsState {
@@ -24,29 +22,35 @@ class RecomendationsInitState extends RecomendationsState {
 }
 
 class RecomendationsLoadingState extends RecomendationsState {
-  RecomendationsLoadingState({@required List<AssortmentsListModel> recomList}) : super(recomList: recomList);
+  RecomendationsLoadingState({required List<AssortmentsListModel> recomList})
+      : super(recomList: recomList);
 }
 
 class RecomendationsErrorState extends RecomendationsState {
-  RecomendationsErrorState({@required List<AssortmentsListModel> recomList}) : super(recomList: recomList);
+  RecomendationsErrorState({required List<AssortmentsListModel> recomList})
+      : super(recomList: recomList);
 }
 
 class RecomendationsEmptyState extends RecomendationsState {
-  RecomendationsEmptyState({@required List<AssortmentsListModel> recomsList}) : super(recomList: recomsList);
+  RecomendationsEmptyState({required List<AssortmentsListModel> recomsList})
+      : super(recomList: recomsList);
 }
 
 class RecomendationsLoadedState extends RecomendationsState {
-  RecomendationsLoadedState({@required List<AssortmentsListModel> recomList}) : super(recomList: recomList);
+  RecomendationsLoadedState({required List<AssortmentsListModel> recomList})
+      : super(recomList: recomList);
 }
 
-class RecomendationsBloc extends Bloc<RecomendationsEvent, RecomendationsState> {
+class RecomendationsBloc
+    extends Bloc<RecomendationsEvent, RecomendationsState> {
   RecomendationsBloc() : super(RecomendationsInitState());
   List<AssortmentsListModel> recomList = [];
   int currentPage = 1;
   int limit = 20;
 
   @override
-  Stream<RecomendationsState> mapEventToState(RecomendationsEvent event) async* {
+  Stream<RecomendationsState> mapEventToState(
+      RecomendationsEvent event) async* {
     if (event is RecomendationsLoadEvent) {
       yield RecomendationsLoadingState(recomList: recomList);
       try {
@@ -78,7 +82,8 @@ class RecomendationsBloc extends Bloc<RecomendationsEvent, RecomendationsState> 
   }
 
   Future<List<AssortmentsListModel>> getRecomendationsFromRepository() async {
-    final recomendationProducts = await RecomendationProvider().getRecomendationListResponse(page: currentPage);
+    final recomendationProducts = await RecomendationProvider()
+        .getRecomendationListResponse(page: currentPage);
     recomendationProducts.removeWhere((e) => e.quantityInClientCart > 0);
     return recomendationProducts;
   }

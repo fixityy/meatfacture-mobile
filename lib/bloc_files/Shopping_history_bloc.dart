@@ -1,6 +1,5 @@
 //events
 
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/shopping_check_list_model.dart';
 import 'package:smart/repositories/shopping_check_list_repository.dart';
@@ -28,7 +27,7 @@ class ShoppingHistoryOrdersLoadingState extends ShoppingHisoryState {}
 
 class ShoppingHistoryCheckListLoadedState extends ShoppingHisoryState {
   final ShoppingCheckListModel shoppingCheckListModel;
-  ShoppingHistoryCheckListLoadedState({@required this.shoppingCheckListModel});
+  ShoppingHistoryCheckListLoadedState({required this.shoppingCheckListModel});
 }
 
 class ShoppingHistoryOrdersListLoadedState extends ShoppingHisoryState {
@@ -36,16 +35,21 @@ class ShoppingHistoryOrdersListLoadedState extends ShoppingHisoryState {
   // ShoppingHistoryOrdersListLoadedState({@required this.orderListModel});
 }
 
-class ShoppingHistoryBloc extends Bloc<ShoppingHisoryEvent, ShoppingHisoryState> {
+class ShoppingHistoryBloc
+    extends Bloc<ShoppingHisoryEvent, ShoppingHisoryState> {
   ShoppingHistoryBloc() : super(ShoppingHistoryEmptytState());
 
   @override
-  Stream<ShoppingHisoryState> mapEventToState(ShoppingHisoryEvent event) async* {
+  Stream<ShoppingHisoryState> mapEventToState(
+      ShoppingHisoryEvent event) async* {
     if (event is ShoppingHistoryCheckListEvent) {
       yield ShoppingHistoryCheckLoadingState();
       try {
-        ShoppingCheckListModel shoppingCheckListModel = await ShoppingCheckListRepository().getShoppingCheckListFromRepository();
-        yield ShoppingHistoryCheckListLoadedState(shoppingCheckListModel: shoppingCheckListModel);
+        ShoppingCheckListModel shoppingCheckListModel =
+            await ShoppingCheckListRepository()
+                .getShoppingCheckListFromRepository();
+        yield ShoppingHistoryCheckListLoadedState(
+            shoppingCheckListModel: shoppingCheckListModel);
       } catch (_) {
         yield ShoppingHistoryErrorState();
       }

@@ -1,6 +1,4 @@
 //events
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/order_calculate_response_model.dart';
 import 'package:smart/services/services.dart';
@@ -10,7 +8,7 @@ abstract class HistoryOrderDetailsEvent {}
 class HistoryOrderDetailsLoadEvent extends HistoryOrderDetailsEvent {
   final String orderId;
 
-  HistoryOrderDetailsLoadEvent({@required this.orderId});
+  HistoryOrderDetailsLoadEvent({required this.orderId});
 }
 
 //states
@@ -27,7 +25,9 @@ class HistoryOrderDetailsLoadedState extends HistoryOrderDetailsState {
   final OrderDetailsAndCalculateResponseModel
       orderDetailsAndCalculateResponseModel;
 
-  HistoryOrderDetailsLoadedState({this.orderDetailsAndCalculateResponseModel});
+  HistoryOrderDetailsLoadedState({
+    required this.orderDetailsAndCalculateResponseModel,
+  });
 }
 
 //bloc class

@@ -1,6 +1,4 @@
 //events
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/geocoding_model.dart';
 import 'package:smart/services/services.dart';
@@ -9,9 +7,12 @@ import 'package:yandex_mapkit/yandex_mapkit.dart';
 abstract class GeocodingEvent {}
 
 class GeocodingLoadEvent extends GeocodingEvent {
-  final String address;
-  final Point latLngOfAddress;
-  GeocodingLoadEvent({this.address, this.latLngOfAddress});
+  final String? address;
+  final Point? latLngOfAddress;
+  GeocodingLoadEvent({
+    this.address,
+    this.latLngOfAddress,
+  });
 }
 
 //satates
@@ -30,8 +31,8 @@ class GeocodingLoadedState extends GeocodingState {
   final bool isReverse;
 
   GeocodingLoadedState({
-    @required this.isReverse,
-    @required this.geocodingModel,
+    required this.isReverse,
+    required this.geocodingModel,
   });
 }
 
@@ -46,10 +47,10 @@ class Geocodingbloc extends Bloc<GeocodingEvent, GeocodingState> {
         GeocodingModel _geocodingModel;
         if (event.address != null) {
           _geocodingModel = await GeocodingProvider()
-              .getGeocodingResponse(address: event.address);
+              .getGeocodingResponse(address: event.address!);
         } else {
           _geocodingModel = await GeocodingProvider()
-              .getGeocodingReverseResponse(latLng: event.latLngOfAddress);
+              .getGeocodingReverseResponse(latLng: event.latLngOfAddress!);
         }
 
         if (_geocodingModel.data.isEmpty) {

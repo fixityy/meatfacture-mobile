@@ -1,5 +1,4 @@
 //events
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/check_details_model.dart';
 import 'package:smart/models/check_details_products_model.dart';
@@ -10,7 +9,7 @@ abstract class HistoryCheckDetailsEvent {}
 
 class HistoryCheckDetailsLoadEvent extends HistoryCheckDetailsEvent {
   final String receiptUuid;
-  HistoryCheckDetailsLoadEvent({this.receiptUuid});
+  HistoryCheckDetailsLoadEvent({required this.receiptUuid});
 }
 
 //states
@@ -26,9 +25,10 @@ class HistoryCheckDetailsErrorState extends HistoryCheckDetailsState {}
 class HistoryCheckDetailsLoadedState extends HistoryCheckDetailsState {
   final CheckDetailsModel checkDetailsModel;
   final CheckDetailsProductsModel checkDetailsProductsModel;
-  HistoryCheckDetailsLoadedState(
-      {@required this.checkDetailsProductsModel,
-      @required this.checkDetailsModel});
+  HistoryCheckDetailsLoadedState({
+    required this.checkDetailsProductsModel,
+    required this.checkDetailsModel,
+  });
 }
 
 class HistoryCheckDetailsBloc

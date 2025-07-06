@@ -1,6 +1,5 @@
 //event
 
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/url_for_credit_carde_link_model.dart';
 import 'package:smart/services/services.dart';
@@ -22,7 +21,7 @@ class UrlForCreditCardLinkErrorState extends UrlForCreditCardLinkState {}
 class UrlForCreditCardLinkLoadState extends UrlForCreditCardLinkState {
   final UrlForCreditCardLinkModel urlForCreditCardLinkModel;
 
-  UrlForCreditCardLinkLoadState({@required this.urlForCreditCardLinkModel});
+  UrlForCreditCardLinkLoadState({required this.urlForCreditCardLinkModel});
 }
 
 //bloc

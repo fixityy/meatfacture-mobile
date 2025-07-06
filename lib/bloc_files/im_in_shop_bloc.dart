@@ -1,5 +1,4 @@
 //events
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/im_in_shop_model.dart';
 import 'package:smart/services/services.dart';
@@ -25,7 +24,7 @@ class ImInShopOldTokenState extends ImInShopState {}
 class ImInShopLoadedState extends ImInShopState {
   final ImInShopModel imInShopModel;
 
-  ImInShopLoadedState({@required this.imInShopModel});
+  ImInShopLoadedState({required this.imInShopModel});
 }
 
 //bloc class
@@ -45,7 +44,8 @@ class ImInShopBloc extends Bloc<ImInShopEvent, ImInShopState> {
       } else if (_imInShopResponse == "old token") {
         yield ImInShopOldTokenState();
       } else {
-        ImInShopModel _imInShopModel = await ImInShopProvider().getImInShopListResponse();
+        ImInShopModel _imInShopModel =
+            await ImInShopProvider().getImInShopListResponse();
         yield ImInShopLoadedState(imInShopModel: _imInShopModel);
       }
     } catch (e) {

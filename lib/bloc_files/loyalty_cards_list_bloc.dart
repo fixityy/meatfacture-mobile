@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/loyalty_cards_list_model.dart';
 import 'package:smart/repositories/loyalty_cards_list_repository.dart';
@@ -22,8 +21,10 @@ class LoyaltyCardsListLoadedState extends LoyaltyCardsListState {
   final LoyaltyCardsListModel loyaltyCardsListModel;
   final String purchasesSum;
 
-  LoyaltyCardsListLoadedState(
-      {@required this.purchasesSum, @required this.loyaltyCardsListModel});
+  LoyaltyCardsListLoadedState({
+    required this.purchasesSum,
+    required this.loyaltyCardsListModel,
+  });
 }
 
 class LoyaltyCardsListBloc
