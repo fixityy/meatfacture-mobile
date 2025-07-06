@@ -1513,17 +1513,17 @@ class CatalogsProvider {
 
 //получить продукты
 class AssortmentsProvider {
-  final String catalogUuid;
-  final bool isFavorite;
-  final String barcodes;
-  final List<String> brandName;
+  final String? catalogUuid;
+  final bool? isFavorite;
+  final String? barcodes;
+  final List<String>? brandName;
 
   final int currentPage;
-  final List<String> activeTagsList;
-  final String searchText;
-  final bool isRecommendations;
+  final List<String>? activeTagsList;
+  final String? searchText;
+  final bool? isRecommendations;
   final uuidForAllProductsInCatalog;
-  final bool isPromoAssortment;
+  final bool? isPromoAssortment;
 
   AssortmentsProvider({
     this.uuidForAllProductsInCatalog,
@@ -1532,14 +1532,15 @@ class AssortmentsProvider {
     this.barcodes,
     this.isRecommendations,
     this.isFavorite,
-    @required this.currentPage,
+    required this.currentPage,
     this.activeTagsList,
     this.catalogUuid,
     this.searchText,
   });
 
-  Future<List<AssortmentsListModel>> getAssortmentsForImInShop(
-      {@required List<String> assortmentsUuidList}) async {
+  Future<List<AssortmentsListModel>> getAssortmentsForImInShop({
+    required List<String> assortmentsUuidList,
+  }) async {
     String token = await loadToken();
     String shopUuid = await loadShopUuid();
     String _urlForImInShopList = shopUuid == null || shopUuid == ""
@@ -1567,9 +1568,10 @@ class AssortmentsProvider {
     }
   }
 
-  Future<List<AssortmentsListModel>> getAssortmentsForPagination(
-      {bool isAllSubcatalogsWithoutFavorite = false,
-      String subcatalogUuid}) async {
+  Future<List<AssortmentsListModel>> getAssortmentsForPagination({
+    bool isAllSubcatalogsWithoutFavorite = false,
+    String? subcatalogUuid,
+  }) async {
     print(
         '========== !!!!!!!!!! getAssortmentsForPagination subcatalogUuid:::::::::::::::::::::::');
     print('$subcatalogUuid');

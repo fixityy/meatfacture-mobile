@@ -3,7 +3,7 @@ import 'package:smart/core/constants/source.dart';
 
 class CustomLoadableScreen extends StatefulWidget {
   CustomLoadableScreen({
-    @required this.child,
+    required this.child,
     this.loading = false,
   });
 

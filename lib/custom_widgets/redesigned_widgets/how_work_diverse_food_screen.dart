@@ -11,7 +11,8 @@ class HowWorkDiverseFoodScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DiverseFoodBloc _diverseFoodBloc = BlocProvider.of(context);
-    return BlocBuilder<DiverseFoodBloc, DiverseFoodState>(builder: (context, state) {
+    return BlocBuilder<DiverseFoodBloc, DiverseFoodState>(
+        builder: (context, state) {
       if (state is DiverseFoodLoadedState) {
         return Container(
             height: double.infinity,
@@ -43,7 +44,10 @@ class HowWorkDiverseFoodScreen extends StatelessWidget {
                       ),
                       Text(
                         "howWorkDiscountText".tr(),
-                        style: appHeadersTextStyle(fontSize: heightRatio(size: 22, context: context), fontWeight: FontWeight.w700, color: Colors.white),
+                        style: appHeadersTextStyle(
+                            fontSize: heightRatio(size: 22, context: context),
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white),
                       ),
                     ],
                   ),
@@ -53,15 +57,19 @@ class HowWorkDiverseFoodScreen extends StatelessWidget {
                   flex: 1,
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                      topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                      topLeft: Radius.circular(
+                          heightRatio(size: 15, context: context)),
+                      topRight: Radius.circular(
+                          heightRatio(size: 15, context: context)),
                     ),
                     child: Container(
                       color: Colors.white,
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            SizedBox(height: heightRatio(size: 25, context: context)),
+                            SizedBox(
+                                height:
+                                    heightRatio(size: 25, context: context)),
                             ...state.diverseFoodPersentListModel.data
                                 .map((element) => _percentCard(
                                     purchasesCount: element.countPurchases,
@@ -77,7 +85,8 @@ class HowWorkDiverseFoodScreen extends StatelessWidget {
                               child: Text(
                                 "diverseFoodDescOnBottomSheetText".tr(),
                                 style: appLabelTextStyle(
-                                  fontSize: heightRatio(size: 16, context: context),
+                                  fontSize:
+                                      heightRatio(size: 16, context: context),
                                   color: newBlackLight,
                                 ),
                               ),
@@ -88,17 +97,35 @@ class HowWorkDiverseFoodScreen extends StatelessWidget {
                               },
                               child: Container(
                                 margin: EdgeInsets.only(
-                                  top: heightRatio(size: heightRatio(size: 20, context: context), context: context),
-                                  bottom: heightRatio(size: heightRatio(size: 50, context: context), context: context),
-                                  left: widthRatio(size: widthRatio(size: 16, context: context), context: context),
-                                  right: widthRatio(size: widthRatio(size: 16, context: context), context: context),
+                                  top: heightRatio(
+                                      size: heightRatio(
+                                          size: 20, context: context),
+                                      context: context),
+                                  bottom: heightRatio(
+                                      size: heightRatio(
+                                          size: 50, context: context),
+                                      context: context),
+                                  left: widthRatio(
+                                      size: widthRatio(
+                                          size: 16, context: context),
+                                      context: context),
+                                  right: widthRatio(
+                                      size: widthRatio(
+                                          size: 16, context: context),
+                                      context: context),
                                 ),
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 5, context: context)), color: newRedDark),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        heightRatio(size: 5, context: context)),
+                                    color: newRedDark),
                                 alignment: Alignment.center,
                                 height: heightRatio(size: 53, context: context),
                                 child: Text(
                                   "Понятно",
-                                  style: appLabelTextStyle(fontSize: heightRatio(size: 18, context: context), color: whiteColor),
+                                  style: appLabelTextStyle(
+                                      fontSize: heightRatio(
+                                          size: 18, context: context),
+                                      color: whiteColor),
                                 ),
                               ),
                             ),
@@ -120,8 +147,10 @@ class HowWorkDiverseFoodScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
-                  decoration: BoxDecoration(color: colorBlack03, shape: BoxShape.circle),
+                  padding:
+                      EdgeInsets.all(widthRatio(size: 15, context: context)),
+                  decoration: BoxDecoration(
+                      color: colorBlack03, shape: BoxShape.circle),
                   child: SvgPicture.asset(
                     'assets/images/netErrorIcon.svg',
                     color: Colors.white,
@@ -130,7 +159,10 @@ class HowWorkDiverseFoodScreen extends StatelessWidget {
                 ),
                 SizedBox(height: heightRatio(size: 15, context: context)),
                 Text("errorText".tr(),
-                    style: appTextStyle(fontSize: heightRatio(size: 18, context: context), color: colorBlack06, fontWeight: FontWeight.w500)),
+                    style: appTextStyle(
+                        fontSize: heightRatio(size: 18, context: context),
+                        color: colorBlack06,
+                        fontWeight: FontWeight.w500)),
                 SizedBox(height: heightRatio(size: 10, context: context)),
                 InkWell(
                     onTap: () {
@@ -139,7 +171,10 @@ class HowWorkDiverseFoodScreen extends StatelessWidget {
                     child: Container(
                       color: Colors.transparent,
                       child: Text("tryAgainText".tr(),
-                          style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: mainColor, fontWeight: FontWeight.w500)),
+                          style: appTextStyle(
+                              fontSize: heightRatio(size: 14, context: context),
+                              color: mainColor,
+                              fontWeight: FontWeight.w500)),
                     ))
               ],
             ));
@@ -154,7 +189,12 @@ class HowWorkDiverseFoodScreen extends StatelessWidget {
 }
 
 // карточка процента
-Widget _percentCard({int percent, BuildContext context, int purchasesCount, int ratedCount}) {
+Widget _percentCard({
+  required int percent,
+  required BuildContext context,
+  required int purchasesCount,
+  required int ratedCount,
+}) {
   return Container(
     margin: EdgeInsets.symmetric(
       horizontal: widthRatio(size: 16, context: context),

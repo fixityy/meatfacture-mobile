@@ -5,12 +5,13 @@ import 'package:smart/features/catalog/subcatalog_screen.dart';
 
 class TagsListInAssortments extends StatelessWidget {
   final List<String> tagsList;
-  const TagsListInAssortments({Key key, @required this.tagsList}) : super(key: key);
+  const TagsListInAssortments({super.key, required this.tagsList});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 15, context: context)),
+      padding: EdgeInsets.symmetric(
+          horizontal: widthRatio(size: 15, context: context)),
       height: heightRatio(size: 30, context: context),
       child: ListView(
         scrollDirection: Axis.horizontal,
@@ -23,7 +24,7 @@ class TagsListInAssortments extends StatelessWidget {
 
 class _TagsItem extends StatelessWidget {
   final String tag;
-  const _TagsItem(this.tag, {Key key}) : super(key: key);
+  const _TagsItem(this.tag, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +45,11 @@ class _TagsItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: widthRatio(size: 8, context: context),
         ),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), color: greyForTegs),
-        child: Text(tag, style: appTextStyle(fontSize: heightRatio(size: 14, context: context))),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50), color: greyForTegs),
+        child: Text(tag,
+            style: appTextStyle(
+                fontSize: heightRatio(size: 14, context: context))),
       ),
     );
   }

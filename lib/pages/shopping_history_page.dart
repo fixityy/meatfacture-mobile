@@ -7,11 +7,13 @@ import 'package:smart/core/constants/source.dart';
 import 'package:smart/core/constants/text_styles.dart';
 
 class ShoppingHistoryPage extends StatelessWidget {
-  final GlobalKey<NavigatorState> historyNavKey;
-  final BuildContext outContext;
+  final GlobalKey<NavigatorState>? historyNavKey;
   final bool hasBack;
 
-  const ShoppingHistoryPage({@required this.historyNavKey, this.outContext, this.hasBack = false});
+  const ShoppingHistoryPage({
+    required this.historyNavKey,
+    this.hasBack = false,
+  });
 
   @override
   Widget build(BuildContext mainContext) {
@@ -30,7 +32,8 @@ class ShoppingHistoryPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(height: heightRatio(size: 8, context: context)),
+                        SizedBox(
+                            height: heightRatio(size: 8, context: context)),
                         hasBack
                             ? Row(
                                 children: [
@@ -39,36 +42,54 @@ class ShoppingHistoryPage extends StatelessWidget {
                                     onTap: () => Navigator.pop(mainContext),
                                     child: Icon(
                                       Icons.arrow_back_ios_new_rounded,
-                                      size: heightRatio(size: 22, context: context),
+                                      size: heightRatio(
+                                          size: 22, context: context),
                                       color: whiteColor,
                                     ),
                                   ),
-                                  SizedBox(width: widthRatio(size: 15, context: context)),
+                                  SizedBox(
+                                      width: widthRatio(
+                                          size: 15, context: context)),
                                   Text(
                                     'История покупок',
-                                    style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 22, context: context)),
+                                    style: appHeadersTextStyle(
+                                        color: Colors.white,
+                                        fontSize: heightRatio(
+                                            size: 22, context: context)),
                                   ),
                                 ],
                               )
                             : Text(
                                 'История покупок',
-                                style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 22, context: context)),
+                                style: appHeadersTextStyle(
+                                    color: Colors.white,
+                                    fontSize: heightRatio(
+                                        size: 22, context: context)),
                               ),
-                        SizedBox(height: heightRatio(size: 12, context: context)),
+                        SizedBox(
+                            height: heightRatio(size: 12, context: context)),
                         Expanded(
                           child: ClipRRect(
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                              topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                              topLeft: Radius.circular(
+                                  heightRatio(size: 15, context: context)),
+                              topRight: Radius.circular(
+                                  heightRatio(size: 15, context: context)),
                             ),
                             child: Container(
                               alignment: Alignment.center,
-                              padding: EdgeInsets.only(top: heightRatio(size: 20, context: context), left: widthRatio(size: 20, context: context), right: widthRatio(size: 20, context: context)),
+                              padding: EdgeInsets.only(
+                                  top: heightRatio(size: 20, context: context),
+                                  left: widthRatio(size: 20, context: context),
+                                  right:
+                                      widthRatio(size: 20, context: context)),
                               color: Colors.white,
                               child: Column(
                                 children: [
                                   SwitchButtonForShoppingHistoryPage(),
-                                  ShoppingHisoryContentWidget(hasBack: hasBack, mainContext: mainContext),
+                                  ShoppingHisoryContentWidget(
+                                      hasBack: hasBack,
+                                      mainContext: mainContext),
                                 ],
                               ),
                             ),
