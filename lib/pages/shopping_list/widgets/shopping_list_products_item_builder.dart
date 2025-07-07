@@ -17,14 +17,18 @@ import 'package:smart/core/constants/text_styles.dart';
 
 class ShoppinsListProductItemBuilder extends StatefulWidget {
   final ShoppingListDeatailsModel shoppingListDeatailsModel;
-  const ShoppinsListProductItemBuilder({@required this.shoppingListDeatailsModel});
+  const ShoppinsListProductItemBuilder({
+    required this.shoppingListDeatailsModel,
+  });
 
   @override
-  _ShoppinsListProductItemBuilderState createState() => _ShoppinsListProductItemBuilderState();
+  _ShoppinsListProductItemBuilderState createState() =>
+      _ShoppinsListProductItemBuilderState();
 }
 
-class _ShoppinsListProductItemBuilderState extends State<ShoppinsListProductItemBuilder> {
-  bool isinit;
+class _ShoppinsListProductItemBuilderState
+    extends State<ShoppinsListProductItemBuilder> {
+  late bool isinit;
   @override
   void initState() {
     isinit = true;
@@ -46,7 +50,9 @@ class _ShoppinsListProductItemBuilderState extends State<ShoppinsListProductItem
           padding: const EdgeInsets.only(left: 15, top: 25, bottom: 15),
           child: Text(
             'Всего: ${widget.shoppingListDeatailsModel.data.assortments.length} товара',
-            style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+            style: appHeadersTextStyle(
+                fontSize: heightRatio(size: 16, context: context),
+                color: newBlack),
           ),
         ),
         SizedBox(
@@ -54,8 +60,11 @@ class _ShoppinsListProductItemBuilderState extends State<ShoppinsListProductItem
             size: widget.shoppingListDeatailsModel.data.assortments.length == 1
                 ? 280.0
                 : widget.shoppingListDeatailsModel.data.assortments.length.isOdd
-                    ? 180.0 * widget.shoppingListDeatailsModel.data.assortments.length
-                    : 140.0 * widget.shoppingListDeatailsModel.data.assortments.length,
+                    ? 180.0 *
+                        widget.shoppingListDeatailsModel.data.assortments.length
+                    : 140.0 *
+                        widget
+                            .shoppingListDeatailsModel.data.assortments.length,
             context: context,
           ),
           child: GridView.builder(
@@ -69,14 +78,25 @@ class _ShoppinsListProductItemBuilderState extends State<ShoppinsListProductItem
               crossAxisCount: 2,
             ),
             itemBuilder: (context, index) => ShoppingListProductsItem(
-              uuid: widget.shoppingListDeatailsModel.data.assortments[index].uuid,
-              name: widget.shoppingListDeatailsModel.data.assortments[index].name,
-              thumbnail: widget.shoppingListDeatailsModel.data.assortments[index].images.isNotEmpty ? widget.shoppingListDeatailsModel.data.assortments[index].images[0].thumbnails.the1000X1000 : '',
-              currentPrice: widget.shoppingListDeatailsModel.data.assortments[index].currentPrice,
-              priceWithDiscount: widget.shoppingListDeatailsModel.data.assortments[index].priceWithDiscount,
-              assortmentUnitId: widget.shoppingListDeatailsModel.data.assortments[index].assortmentUnitId,
-              rating: widget.shoppingListDeatailsModel.data.assortments[index].rating,
-              isFavorite: widget.shoppingListDeatailsModel.data.assortments[index].isFavorite,
+              uuid:
+                  widget.shoppingListDeatailsModel.data.assortments[index].uuid,
+              name:
+                  widget.shoppingListDeatailsModel.data.assortments[index].name,
+              thumbnail: widget.shoppingListDeatailsModel.data
+                      .assortments[index].images.isNotEmpty
+                  ? widget.shoppingListDeatailsModel.data.assortments[index]
+                      .images[0].thumbnails.the1000X1000
+                  : '',
+              currentPrice: widget.shoppingListDeatailsModel.data
+                  .assortments[index].currentPrice,
+              priceWithDiscount: widget.shoppingListDeatailsModel.data
+                  .assortments[index].priceWithDiscount,
+              assortmentUnitId: widget.shoppingListDeatailsModel.data
+                  .assortments[index].assortmentUnitId,
+              rating: widget
+                  .shoppingListDeatailsModel.data.assortments[index].rating,
+              isFavorite: widget
+                  .shoppingListDeatailsModel.data.assortments[index].isFavorite,
             ),
           ),
           // child: ListView.builder(
@@ -362,32 +382,48 @@ class _ShoppinsListProductItemBuilderState extends State<ShoppinsListProductItem
           },
           child: Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
-            margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 15, context: context)),
+            padding: EdgeInsets.only(
+                top: heightRatio(size: 15, context: context),
+                bottom: heightRatio(size: 18, context: context)),
+            margin: EdgeInsets.symmetric(
+                horizontal: widthRatio(size: 15, context: context)),
             width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newBlack),
-            child: Text("addProductsToList".tr(), style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context))),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5), color: newBlack),
+            child: Text("addProductsToList".tr(),
+                style: appLabelTextStyle(
+                    color: Colors.white,
+                    fontSize: heightRatio(size: 16, context: context))),
           ),
         ),
         SizedBox(height: heightRatio(size: 12, context: context)),
         InkWell(
           onTap: () async {
             Fluttertoast.showToast(msg: "Подождите...");
-            if (!await BasketProvider().addShoppingListToBasket(widget.shoppingListDeatailsModel.data.uuid)) {
+            if (!await BasketProvider().addShoppingListToBasket(
+                widget.shoppingListDeatailsModel.data.uuid)) {
               Fluttertoast.showToast(msg: "errorText".tr());
             } else {
               _basketListBloc.add(BasketLoadEvent());
               _secondaryPageBloc.add(BasketPageLoadEvent());
-              Navigator.of(context).pushNamedAndRemoveUntil('', (Route<dynamic> route) => false);
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('', (Route<dynamic> route) => false);
             }
           },
           child: Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
-            margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 15, context: context)),
+            padding: EdgeInsets.only(
+                top: heightRatio(size: 15, context: context),
+                bottom: heightRatio(size: 18, context: context)),
+            margin: EdgeInsets.symmetric(
+                horizontal: widthRatio(size: 15, context: context)),
             width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
-            child: Text("Добавить все товары в корзину", style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context))),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5), color: newRedDark),
+            child: Text("Добавить все товары в корзину",
+                style: appLabelTextStyle(
+                    color: Colors.white,
+                    fontSize: heightRatio(size: 16, context: context))),
           ),
         ),
         SizedBox(height: heightRatio(size: 50, context: context)),
@@ -395,14 +431,15 @@ class _ShoppinsListProductItemBuilderState extends State<ShoppinsListProductItem
     );
   }
 
-  void initSlidableAnimation({BuildContext context}) async {
-    if (await prefs.getBool("hasShoppingListDetailsIn") == null || await prefs.getBool("hasShoppingListDetailsIn") == false) {
+  void initSlidableAnimation({required BuildContext context}) async {
+    if (await prefs.getBool("hasShoppingListDetailsIn") == null ||
+        await prefs.getBool("hasShoppingListDetailsIn") == false) {
       prefs.setBool("hasShoppingListDetailsIn", true);
       final slidable = Slidable.of(context);
-      slidable.open(actionType: SlideActionType.secondary);
+      slidable?.openEndActionPane();
       Timer(
         Duration(milliseconds: 1500),
-        () => slidable.close(),
+        () => slidable?.close(),
       );
     }
   }
