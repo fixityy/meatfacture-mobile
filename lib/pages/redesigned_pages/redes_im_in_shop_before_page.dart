@@ -17,15 +17,16 @@ import 'package:smart/core/constants/source.dart';
 import 'package:smart/core/constants/text_styles.dart';
 
 class RedesImInShopBeforePage extends StatefulWidget {
-  const RedesImInShopBeforePage({Key key});
+  const RedesImInShopBeforePage({super.key});
 
   @override
-  State<RedesImInShopBeforePage> createState() => _RedesImInShopBeforePageState();
+  State<RedesImInShopBeforePage> createState() =>
+      _RedesImInShopBeforePageState();
 }
 
 class _RedesImInShopBeforePageState extends State<RedesImInShopBeforePage> {
-  int selectedIndex;
-  String selectedUuid;
+  late int selectedIndex;
+  String? selectedUuid;
 
   @override
   void initState() {
@@ -68,8 +69,10 @@ class _RedesImInShopBeforePageState extends State<RedesImInShopBeforePage> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                    topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                    topLeft: Radius.circular(
+                        heightRatio(size: 15, context: context)),
+                    topRight: Radius.circular(
+                        heightRatio(size: 15, context: context)),
                   ),
                 ),
                 child: Stack(
@@ -77,7 +80,9 @@ class _RedesImInShopBeforePageState extends State<RedesImInShopBeforePage> {
                     SizedBox(
                       height: heightRatio(size: 283, context: context),
                       child: Center(
-                        child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(newRedDark)),
+                        child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(newRedDark)),
                       ),
                     ),
                   ],
@@ -97,7 +102,8 @@ class _RedesImInShopBeforePageState extends State<RedesImInShopBeforePage> {
     );
   }
 
-  Widget _buildLoadedScreen(List<AddressesShopModel> shopsList, ImInShopBloc imInShopBloc) {
+  Widget _buildLoadedScreen(
+      List<AddressesShopModel> shopsList, ImInShopBloc imInShopBloc) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: newRedDark,
@@ -112,8 +118,10 @@ class _RedesImInShopBeforePageState extends State<RedesImInShopBeforePage> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                    topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                    topLeft: Radius.circular(
+                        heightRatio(size: 15, context: context)),
+                    topRight: Radius.circular(
+                        heightRatio(size: 15, context: context)),
                   ),
                 ),
                 child: Stack(
@@ -121,20 +129,31 @@ class _RedesImInShopBeforePageState extends State<RedesImInShopBeforePage> {
                     SingleChildScrollView(
                       child: Container(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 17, context: context), vertical: heightRatio(size: 25, context: context)),
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  widthRatio(size: 17, context: context),
+                              vertical:
+                                  heightRatio(size: 25, context: context)),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 'Выберите магазин:',
-                                style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                                style: appHeadersTextStyle(
+                                    fontSize:
+                                        heightRatio(size: 16, context: context),
+                                    color: newBlack),
                               ),
                               SizedBox(
-                                height: (heightRatio(size: 120, context: context) * shopsList.length).toDouble(),
+                                height:
+                                    (heightRatio(size: 120, context: context) *
+                                            shopsList.length)
+                                        .toDouble(),
                                 child: ListView.builder(
                                   itemCount: shopsList.length,
-                                  itemBuilder: (BuildContext context, int index) {
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
                                     final store = shopsList[index];
                                     return InkWell(
                                       onTap: () {
@@ -146,12 +165,18 @@ class _RedesImInShopBeforePageState extends State<RedesImInShopBeforePage> {
                                         print(selectedUuid);
                                       },
                                       child: InitAddUserAddressItem(
-                                        isActive: selectedUuid != null ? store.uuid == selectedUuid : selectedIndex == index,
+                                        isActive: selectedUuid != null
+                                            ? store.uuid == selectedUuid
+                                            : selectedIndex == index,
                                         name: store.address,
                                         nameId: store.uuid,
-                                        time: '${store.workHoursFrom} - ${store.workHoursTill}',
+                                        time:
+                                            '${store.workHoursFrom} - ${store.workHoursTill}',
                                         price: store.deliveryPrice,
-                                        thumbnail: store.image != null ? store.image.thumbnails.the1000X1000 : '',
+                                        thumbnail: store.image != null
+                                            ? store
+                                                .image.thumbnails.the1000X1000
+                                            : '',
                                       ),
                                     );
                                   },
@@ -161,38 +186,63 @@ class _RedesImInShopBeforePageState extends State<RedesImInShopBeforePage> {
                                 onTap: () async {
                                   final selectedShop = shopsList[selectedIndex];
                                   // Обновляем выбранный магазин:
-                                  context.read<AddressesShopBloc>().add(SelectAddressShopEvent(shopUuid: selectedShop.uuid));
-                                  context.read<ProfileBloc>().add(ProfileUpdateDataEvent(selectedStoreUserUuid: selectedShop.uuid)); // Обновляем магазин в профиле вместо фриза
+                                  context.read<AddressesShopBloc>().add(
+                                      SelectAddressShopEvent(
+                                          shopUuid: selectedShop.uuid));
+                                  context.read<ProfileBloc>().add(
+                                      ProfileUpdateDataEvent(
+                                          selectedStoreUserUuid: selectedShop
+                                              .uuid)); // Обновляем магазин в профиле вместо фриза
                                   await Future.delayed(Duration(seconds: 1));
 
                                   // Обновляем адреса клиента:
-                                  context.read<AddressesClientBloc>().add(LoadedAddressesClientEvent()); //-
+                                  context
+                                      .read<AddressesClientBloc>()
+                                      .add(LoadedAddressesClientEvent()); //-
 
                                   // Обновляем состояние "Я в магазине" // TODO узнать у Ивана нужно ли менять в других местах состояние я в магазине при смене магазинов из других экранов
                                   imInShopBloc.add(ImInShopLoadEvent());
 
                                   // Сохраняем выбор магазина
-                                  await prefs.setString(SharedKeys.isChoosenAddressesForThisSessionIamInShop, 'yes');
+                                  await prefs.setString(
+                                      SharedKeys
+                                          .isChoosenAddressesForThisSessionIamInShop,
+                                      'yes');
 
                                   // Перезапрашиваем каталог и ассортимент товаров:
-                                  context.read<CatalogsBloc>().add(CatalogsLoadEvent()); //-
+                                  context
+                                      .read<CatalogsBloc>()
+                                      .add(CatalogsLoadEvent()); //-
                                   // context.read<AssortmentsListBloc>().add(AssortmentsListLoadEvent()); //-
 
                                   // Перезапрашиваем корзину
-                                  context.read<BasketListBloc>().add(BasketLoadEvent()); //-
+                                  context
+                                      .read<BasketListBloc>()
+                                      .add(BasketLoadEvent()); //-
 
-                                  print('RedesImInShopBeforePage 🏬 Выбранный магазин: ${selectedShop.uuid} - ${selectedShop.address}');
+                                  print(
+                                      'RedesImInShopBeforePage 🏬 Выбранный магазин: ${selectedShop.uuid} - ${selectedShop.address}');
 
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RedesImInShopPage()));
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              RedesImInShopPage()));
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
                                   width: MediaQuery.of(context).size.width,
-                                  height: heightRatio(size: 54, context: context),
-                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
+                                  height:
+                                      heightRatio(size: 54, context: context),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: newRedDark),
                                   child: Text(
                                     'Подтвердить',
-                                    style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                                    style: appLabelTextStyle(
+                                        color: Colors.white,
+                                        fontSize: heightRatio(
+                                            size: 16, context: context)),
                                   ),
                                 ),
                               ),
@@ -223,12 +273,16 @@ class _RedesImInShopBeforePageState extends State<RedesImInShopBeforePage> {
               onTap: () => Navigator.pop(context),
               child: Padding(
                 padding: const EdgeInsets.only(left: 15, right: 12.5),
-                child: Icon(Icons.arrow_back_ios_new_rounded, size: heightRatio(size: 25, context: context), color: whiteColor),
+                child: Icon(Icons.arrow_back_ios_new_rounded,
+                    size: heightRatio(size: 25, context: context),
+                    color: whiteColor),
               ),
             ),
             Text(
               "Я в магазине",
-              style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 22, context: context)),
+              style: appHeadersTextStyle(
+                  color: Colors.white,
+                  fontSize: heightRatio(size: 22, context: context)),
               textAlign: TextAlign.left,
             ),
           ],

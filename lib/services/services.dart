@@ -1170,7 +1170,7 @@ class BasketProvider {
     }
   }
 
-  Future<bool> addProductInBasket(String productUuid, double quantity) async {
+  Future<bool> addProductInBasket(String productUuid, double? quantity) async {
     token = await loadToken();
     basketUrl += "/assortments";
     final response = await http.post(Uri.parse(basketUrl), body: {

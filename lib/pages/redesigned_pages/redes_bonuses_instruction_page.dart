@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:smart/core/constants/source.dart';
 import 'package:smart/core/constants/text_styles.dart';
 
-Widget redesBonusesInstructionPage({@required String headerText, @required BuildContext context}) => Scaffold(
+Widget redesBonusesInstructionPage({
+  required String headerText,
+  required BuildContext context,
+}) =>
+    Scaffold(
       body: Container(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +40,8 @@ Widget redesBonusesInstructionPage({@required String headerText, @required Build
                         child: InkWell(
                           child: Container(
                             color: Colors.transparent,
-                            padding: EdgeInsets.only(left: widthRatio(size: 15, context: context)),
+                            padding: EdgeInsets.only(
+                                left: widthRatio(size: 15, context: context)),
                             child: Icon(
                               Icons.arrow_back_ios_new_rounded,
                               size: heightRatio(size: 25, context: context),
@@ -52,7 +57,10 @@ Widget redesBonusesInstructionPage({@required String headerText, @required Build
                       SizedBox(width: widthRatio(size: 10, context: context)),
                       Text(
                         headerText,
-                        style: appTextStyle(fontSize: heightRatio(size: 16, context: context), fontWeight: FontWeight.w700, color: whiteColor),
+                        style: appTextStyle(
+                            fontSize: heightRatio(size: 16, context: context),
+                            fontWeight: FontWeight.w700,
+                            color: whiteColor),
                       )
                     ],
                   ),
@@ -65,43 +73,63 @@ Widget redesBonusesInstructionPage({@required String headerText, @required Build
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Padding(
-                padding: EdgeInsets.only(left: widthRatio(size: 15, context: context), right: widthRatio(size: 15, context: context), bottom: heightRatio(size: 20, context: context)),
+                padding: EdgeInsets.only(
+                    left: widthRatio(size: 15, context: context),
+                    right: widthRatio(size: 15, context: context),
+                    bottom: heightRatio(size: 20, context: context)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "howToSavePointsText".tr() + "?",
-                      style: appTextStyle(fontWeight: FontWeight.w800, fontSize: heightRatio(size: 28, context: context)),
+                      style: appTextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontSize: heightRatio(size: 28, context: context)),
                     ),
                     SizedBox(height: heightRatio(size: 20, context: context)),
                     Text(
                       "getCashbackText".tr(),
-                      style: appTextStyle(fontWeight: FontWeight.w700, fontSize: heightRatio(size: 18, context: context)),
+                      style: appTextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: heightRatio(size: 18, context: context)),
                     ),
                     SizedBox(height: heightRatio(size: 20, context: context)),
                     Text(
                       "getCashbackDescriptionText".tr(),
-                      style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 14, context: context), color: colorBlack08),
+                      style: appTextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: heightRatio(size: 14, context: context),
+                          color: colorBlack08),
                     ),
                     SizedBox(height: heightRatio(size: 15, context: context)),
                     Text(
                       "toDoTasksText".tr(),
-                      style: appTextStyle(fontWeight: FontWeight.w700, fontSize: heightRatio(size: 18, context: context)),
+                      style: appTextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: heightRatio(size: 18, context: context)),
                     ),
                     SizedBox(height: heightRatio(size: 10, context: context)),
                     Text(
                       "toDoTasksDescriptionText".tr(),
-                      style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 14, context: context), color: colorBlack08),
+                      style: appTextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: heightRatio(size: 14, context: context),
+                          color: colorBlack08),
                     ),
                     SizedBox(height: heightRatio(size: 15, context: context)),
                     Text(
                       "followActivitiesText".tr(),
-                      style: appTextStyle(fontWeight: FontWeight.w700, fontSize: heightRatio(size: 18, context: context)),
+                      style: appTextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: heightRatio(size: 18, context: context)),
                     ),
                     SizedBox(height: heightRatio(size: 10, context: context)),
                     Text(
                       "followActivitiesDescriptionText".tr(),
-                      style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 14, context: context), color: colorBlack08),
+                      style: appTextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: heightRatio(size: 14, context: context),
+                          color: colorBlack08),
                     ),
                   ],
                 ),

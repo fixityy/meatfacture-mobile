@@ -7,14 +7,17 @@ import '../../custom_widgets/redesigned_widgets/story_page_view_item.dart';
 class StoryPage extends StatefulWidget {
   StoriesListModel storiesListModel;
   int initStory;
-  StoryPage({this.initStory, this.storiesListModel});
+  StoryPage({
+    required this.initStory,
+    required this.storiesListModel,
+  });
 
   @override
   State<StoryPage> createState() => _StoryPageState();
 }
 
 class _StoryPageState extends State<StoryPage> {
-  PageController _pageController;
+  late PageController _pageController;
   @override
   void initState() {
     super.initState();

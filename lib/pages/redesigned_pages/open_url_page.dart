@@ -9,8 +9,14 @@ import 'package:smart/core/constants/source.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-Widget openUrlPage({@required String url, @required CreditCardsListBloc cardsListBloc, @required BuildContext context, @required String orderId}) {
-  final Completer<WebViewController> _controller = Completer<WebViewController>();
+Widget openUrlPage({
+  required String url,
+  required CreditCardsListBloc cardsListBloc,
+  required BuildContext context,
+  required String orderId,
+}) {
+  final Completer<WebViewController> _controller =
+      Completer<WebViewController>();
 
   return Scaffold(
     body: SafeArea(
@@ -40,7 +46,9 @@ Widget openUrlPage({@required String url, @required CreditCardsListBloc cardsLis
               },
               onPageStarted: (url) async {}),
           Container(
-            margin: EdgeInsets.only(top: heightRatio(size: 10, context: context), left: widthRatio(size: 15, context: context)),
+            margin: EdgeInsets.only(
+                top: heightRatio(size: 10, context: context),
+                left: widthRatio(size: 15, context: context)),
             child: SafeArea(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
