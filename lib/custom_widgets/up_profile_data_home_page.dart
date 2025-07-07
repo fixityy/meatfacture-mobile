@@ -13,14 +13,18 @@ import 'package:smart/core/constants/source.dart';
 import 'package:smart/core/constants/text_styles.dart';
 
 class UpProfileDataHome extends StatelessWidget {
-  const UpProfileDataHome({Key key}) : super(key: key);
+  const UpProfileDataHome({super.key});
 
   @override
   Widget build(BuildContext context) {
-    LoyaltyCardsListBloc _loyaltyCardsListBloc = BlocProvider.of<LoyaltyCardsListBloc>(context);
-    CreditCardsListBloc _cardsListBloc = BlocProvider.of<CreditCardsListBloc>(context);
-    SecondaryPageBloc _secondaryPageBloc = BlocProvider.of<SecondaryPageBloc>(context);
-    AddressesShopBloc _addressesShopBloc = BlocProvider.of<AddressesShopBloc>(context);
+    LoyaltyCardsListBloc _loyaltyCardsListBloc =
+        BlocProvider.of<LoyaltyCardsListBloc>(context);
+    CreditCardsListBloc _cardsListBloc =
+        BlocProvider.of<CreditCardsListBloc>(context);
+    SecondaryPageBloc _secondaryPageBloc =
+        BlocProvider.of<SecondaryPageBloc>(context);
+    AddressesShopBloc _addressesShopBloc =
+        BlocProvider.of<AddressesShopBloc>(context);
 
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
@@ -47,13 +51,18 @@ class UpProfileDataHome extends StatelessWidget {
                       color: Colors.transparent,
                       child: Text(
                         state is ProfileLoadedState
-                            ? state.profileModel.data.filledProfileBonusesAdded != false
+                            ? state.profileModel.data
+                                        .filledProfileBonusesAdded !=
+                                    false
                                 ? state.profileModel.data.name != null
                                     ? state.profileModel.data.name
                                     : 'Заполните профиль'
                                 : 'Заполните профиль'
                             : '',
-                        style: appHeadersTextStyle(fontSize: heightRatio(size: 22, context: context), fontWeight: FontWeight.w700, color: Colors.white),
+                        style: appHeadersTextStyle(
+                            fontSize: heightRatio(size: 22, context: context),
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white),
                       ),
                     ),
                   ),
@@ -69,8 +78,10 @@ class UpProfileDataHome extends StatelessWidget {
                       },
                       child: Container(
                         padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: white03),
-                        child: SvgPicture.asset('assets/images/newProfile.svg', height: 20, width: 20),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: white03),
+                        child: SvgPicture.asset('assets/images/newProfile.svg',
+                            height: 20, width: 20),
                       ),
                     ),
                     SizedBox(width: widthRatio(size: 10, context: context)),
@@ -81,7 +92,9 @@ class UpProfileDataHome extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return SecondaryPage(upText: 'Уведомления', contentWidget: NotificationListWidget());
+                              return SecondaryPage(
+                                  upText: 'Уведомления',
+                                  contentWidget: NotificationListWidget());
                             },
                           ),
                         );
@@ -90,8 +103,10 @@ class UpProfileDataHome extends StatelessWidget {
                         height: 36,
                         width: 36,
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: white03),
-                        child: SvgPicture.asset('assets/images/newBellIcon.svg'),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: white03),
+                        child:
+                            SvgPicture.asset('assets/images/newBellIcon.svg'),
                       ),
                     ),
                   ],

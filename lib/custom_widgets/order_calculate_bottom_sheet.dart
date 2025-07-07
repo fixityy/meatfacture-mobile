@@ -24,19 +24,19 @@ class OrderCalculateBottomSheet extends StatelessWidget {
   final List<ProductModelForOrderRequest> productModelForOrderRequestList;
 
   const OrderCalculateBottomSheet({
-    @required this.address,
-    @required this.clientComment,
-    @required this.clientEmail,
-    @required this.floor,
-    @required this.entrance,
-    @required this.apartmentNumber,
-    @required this.intercomCode,
-    @required this.plannedDeliveryDatetimeFrom,
-    @required this.plannedDeliveryDatetimeTo,
-    @required this.orderDeliveryTypeId,
-    @required this.orderPaymentTypeId,
-    @required this.productModelForOrderRequestList,
-    @required this.clientCreditCardUuid,
+    required this.address,
+    required this.clientComment,
+    required this.clientEmail,
+    required this.floor,
+    required this.entrance,
+    required this.apartmentNumber,
+    required this.intercomCode,
+    required this.plannedDeliveryDatetimeFrom,
+    required this.plannedDeliveryDatetimeTo,
+    required this.orderDeliveryTypeId,
+    required this.orderPaymentTypeId,
+    required this.productModelForOrderRequestList,
+    required this.clientCreditCardUuid,
   });
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,8 @@ class OrderCalculateBottomSheet extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(heightRatio(size: 25, context: context)),
-              topRight: Radius.circular(heightRatio(size: 25, context: context)),
+              topRight:
+                  Radius.circular(heightRatio(size: 25, context: context)),
             ),
           ),
           builder: (BuildContext bc) {
@@ -59,7 +60,8 @@ class OrderCalculateBottomSheet extends StatelessWidget {
     }
 
     // ignore: close_sinks
-    OrderCreatedBloc _orderCreatedBloc = BlocProvider.of<OrderCreatedBloc>(context);
+    OrderCreatedBloc _orderCreatedBloc =
+        BlocProvider.of<OrderCreatedBloc>(context);
     return BlocBuilder<OrderCalculateBloc, OrderCalculateState>(
       builder: (context, state) {
         if (state is OrderCalculateLoadingState) {
@@ -81,7 +83,8 @@ class OrderCalculateBottomSheet extends StatelessWidget {
                 children: [
                   Text(
                     "Подтверждение стоимости",
-                    style: appHeadersTextStyle(fontSize: heightRatio(size: 21, context: context)),
+                    style: appHeadersTextStyle(
+                        fontSize: heightRatio(size: 21, context: context)),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: heightRatio(size: 30, context: context)),
@@ -90,11 +93,19 @@ class OrderCalculateBottomSheet extends StatelessWidget {
                     children: [
                       Text(
                         "Товаров на сумму:",
-                        style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                        style: appLabelTextStyle(
+                            fontSize: heightRatio(size: 16, context: context),
+                            color: newBlack),
                       ),
                       Text(
-                        state.orderCalculateResponseModel.data.totalPriceForProductsWithDiscount.toString() + " " + "rubleSignText".tr(),
-                        style: appTextStyle(fontWeight: FontWeight.w400, fontSize: heightRatio(size: 16, context: context)),
+                        state.orderCalculateResponseModel!.data
+                                .totalPriceForProductsWithDiscount
+                                .toString() +
+                            " " +
+                            "rubleSignText".tr(),
+                        style: appTextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: heightRatio(size: 16, context: context)),
                       )
                     ],
                   ),
@@ -104,43 +115,73 @@ class OrderCalculateBottomSheet extends StatelessWidget {
                     children: [
                       Text(
                         "Скидка по акциям:",
-                        style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                        style: appLabelTextStyle(
+                            fontSize: heightRatio(size: 16, context: context),
+                            color: newBlack),
                       ),
                       Text(
-                        "-" + state.orderCalculateResponseModel.data.totalDiscountForProducts.toString() + " " + "rubleSignText".tr(),
-                        style: appTextStyle(fontWeight: FontWeight.w400, fontSize: heightRatio(size: 16, context: context)),
+                        "-" +
+                            state.orderCalculateResponseModel!.data
+                                .totalDiscountForProducts
+                                .toString() +
+                            " " +
+                            "rubleSignText".tr(),
+                        style: appTextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: heightRatio(size: 16, context: context)),
                       )
                     ],
                   ),
                   SizedBox(height: heightRatio(size: 15, context: context)),
                   //списанно баллов
-                  if (state.orderCalculateResponseModel.data.paidBonus != null && state.orderCalculateResponseModel.data.paidBonus != 0)
+                  if (state.orderCalculateResponseModel!.data.paidBonus !=
+                          null &&
+                      state.orderCalculateResponseModel!.data.paidBonus != 0)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Списано ${state.orderCalculateResponseModel.data.paidBonus} бонусов",
-                          style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                          "Списано ${state.orderCalculateResponseModel!.data.paidBonus} бонусов",
+                          style: appLabelTextStyle(
+                              fontSize: heightRatio(size: 16, context: context),
+                              color: newBlack),
                         ),
                         Text(
-                          "-" + state.orderCalculateResponseModel.data.paidBonus.toString() + " " + "rubleSignText".tr(),
-                          style: appTextStyle(fontWeight: FontWeight.w400, fontSize: heightRatio(size: 16, context: context)),
+                          "-" +
+                              state.orderCalculateResponseModel!.data.paidBonus
+                                  .toString() +
+                              " " +
+                              "rubleSignText".tr(),
+                          style: appTextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize:
+                                  heightRatio(size: 16, context: context)),
                         )
                       ],
                     ),
 
                   SizedBox(height: heightRatio(size: 15, context: context)),
-                  if (state.orderCalculateResponseModel.data.orderDeliveryTypeId == "delivery")
+                  if (state.orderCalculateResponseModel!.data
+                          .orderDeliveryTypeId ==
+                      "delivery")
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Доставка:',
-                          style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                          style: appLabelTextStyle(
+                              fontSize: heightRatio(size: 16, context: context),
+                              color: newBlack),
                         ),
                         Text(
-                          state.orderCalculateResponseModel.data.deliveryPrice.toString() + " " + "rubleSignText".tr(),
-                          style: appTextStyle(fontWeight: FontWeight.w400, fontSize: heightRatio(size: 16, context: context)),
+                          state.orderCalculateResponseModel!.data.deliveryPrice
+                                  .toString() +
+                              " " +
+                              "rubleSignText".tr(),
+                          style: appTextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize:
+                                  heightRatio(size: 16, context: context)),
                         )
                       ],
                     )
@@ -150,11 +191,15 @@ class OrderCalculateBottomSheet extends StatelessWidget {
                       children: [
                         Text(
                           "pickupText".tr(),
-                          style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                          style: appLabelTextStyle(
+                              fontSize: heightRatio(size: 16, context: context),
+                              color: newBlack),
                         ),
                         Text(
                           "forFreeText".tr(),
-                          style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                          style: appLabelTextStyle(
+                              fontSize: heightRatio(size: 16, context: context),
+                              color: newBlack),
                         )
                       ],
                     ),
@@ -166,11 +211,18 @@ class OrderCalculateBottomSheet extends StatelessWidget {
                     children: [
                       Text(
                         "totalText".tr() + ":",
-                        style: appHeadersTextStyle(fontSize: heightRatio(size: 18, context: context), color: newBlack),
+                        style: appHeadersTextStyle(
+                            fontSize: heightRatio(size: 18, context: context),
+                            color: newBlack),
                       ),
                       Text(
-                        state.orderCalculateResponseModel.data.totalPrice.toString() + " " + "rubleSignText".tr(),
-                        style: appTextStyle(fontWeight: FontWeight.w700, fontSize: heightRatio(size: 18, context: context)),
+                        state.orderCalculateResponseModel!.data.totalPrice
+                                .toString() +
+                            " " +
+                            "rubleSignText".tr(),
+                        style: appTextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: heightRatio(size: 18, context: context)),
                       )
                     ],
                   ),
@@ -179,10 +231,17 @@ class OrderCalculateBottomSheet extends StatelessWidget {
                     onTap: () {
                       _orderCreatedBloc.add(
                         OrderCreatedLoadEvent(
-                          subtractBonusesCount:
-                              state.orderCalculateResponseModel.data.paidBonus == null || state.orderCalculateResponseModel.data.paidBonus == 0
-                                  ? null
-                                  : state.orderCalculateResponseModel.data.paidBonus,
+                          subtractBonusesCount: state
+                                          .orderCalculateResponseModel!
+                                          .data
+                                          .paidBonus ==
+                                      null ||
+                                  state.orderCalculateResponseModel!.data
+                                          .paidBonus ==
+                                      0
+                              ? null
+                              : state
+                                  .orderCalculateResponseModel!.data.paidBonus,
                           clientCreditCardUuid: clientCreditCardUuid,
                           address: address,
                           clientComment: clientComment,
@@ -191,21 +250,30 @@ class OrderCalculateBottomSheet extends StatelessWidget {
                           entrance: entrance,
                           apartmentNumber: apartmentNumber,
                           intercomCode: intercomCode,
-                          plannedDeliveryDatetimeFrom: plannedDeliveryDatetimeFrom,
+                          plannedDeliveryDatetimeFrom:
+                              plannedDeliveryDatetimeFrom,
                           plannedDeliveryDatetimeTo: plannedDeliveryDatetimeTo,
                           orderDeliveryTypeId: orderDeliveryTypeId,
                           orderPaymentTypeId: orderPaymentTypeId,
-                          productModelForOrderRequestList: productModelForOrderRequestList,
+                          productModelForOrderRequestList:
+                              productModelForOrderRequestList,
                         ),
                       );
                       _openOrderCreateBottomSheet();
                     },
                     child: Container(
                       alignment: Alignment.center,
-                      padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
+                      padding: EdgeInsets.only(
+                          top: heightRatio(size: 15, context: context),
+                          bottom: heightRatio(size: 18, context: context)),
                       width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
-                      child: Text("Подтвердить", style: appTextStyle(fontSize: heightRatio(size: 18, context: context), color: Colors.white)),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: newRedDark),
+                      child: Text("Подтвердить",
+                          style: appTextStyle(
+                              fontSize: heightRatio(size: 18, context: context),
+                              color: Colors.white)),
                     ),
                   ),
                   SizedBox(height: heightRatio(size: 30, context: context)),

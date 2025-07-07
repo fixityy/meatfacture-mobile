@@ -6,12 +6,17 @@ class ShimmerLoaderForVacancyList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[200],
+      baseColor: Colors.grey.shade200,
       highlightColor: Colors.white,
       child: GridView.builder(
         itemCount: 10,
-        padding: EdgeInsets.only(left: widthRatio(size: 15, context: context), right: widthRatio(size: 15, context: context), top: heightRatio(size: 5, context: context), bottom: heightRatio(size: 15, context: context)),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(childAspectRatio: 1, crossAxisCount: 1, mainAxisSpacing: 10),
+        padding: EdgeInsets.only(
+            left: widthRatio(size: 15, context: context),
+            right: widthRatio(size: 15, context: context),
+            top: heightRatio(size: 5, context: context),
+            bottom: heightRatio(size: 15, context: context)),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            childAspectRatio: 1, crossAxisCount: 1, mainAxisSpacing: 10),
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) => Container(
           decoration: BoxDecoration(
@@ -23,7 +28,8 @@ class ShimmerLoaderForVacancyList extends StatelessWidget {
                 blurRadius: 20,
               )
             ],
-            borderRadius: BorderRadius.circular(heightRatio(size: 20, context: context)),
+            borderRadius:
+                BorderRadius.circular(heightRatio(size: 20, context: context)),
           ),
         ),
       ),

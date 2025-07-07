@@ -6,19 +6,19 @@ import 'package:smart/core/constants/source.dart';
 
 class GenderDropDown extends StatefulWidget {
   final String sex;
-  GenderDropDown({@required this.sex});
+  GenderDropDown({required this.sex});
 
   @override
   _GenderDropDownState createState() => _GenderDropDownState(sex: sex);
 }
 
 class _GenderDropDownState extends State<GenderDropDown> {
-  String _genderChoose;
+  late String _genderChoose;
   final String sex;
 
-  List _gendrsList = ['Мужской', 'Женский'];
+  List<String> _gendrsList = ['Мужской', 'Женский'];
 
-  _GenderDropDownState({this.sex});
+  _GenderDropDownState({required this.sex});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _GenderDropDownState extends State<GenderDropDown> {
         underline: SizedBox(),
         onChanged: (newval) {
           setState(() {
-            _genderChoose = newval;
+            _genderChoose = newval!;
           });
           if (newval == "maleText".tr()) {
             _profileBloc.add(ProfileUpdateDataEvent(sex: "male"));
@@ -41,7 +41,8 @@ class _GenderDropDownState extends State<GenderDropDown> {
         value: _genderChoose,
         hint: Text(
           sex,
-          style: sex != "selectText".tr() ? notEmptyHintTextStyle : hintTextStyle,
+          style:
+              sex != "selectText".tr() ? notEmptyHintTextStyle : hintTextStyle,
         ),
         items: _gendrsList
             .map((valueItem) => DropdownMenuItem(

@@ -8,7 +8,11 @@ class SecondItemCard extends StatelessWidget {
   final String label;
   final String imageAsset;
 
-  const SecondItemCard({@required this.label, @required this.elipsColor, @required this.imageAsset});
+  const SecondItemCard({
+    required this.label,
+    required this.elipsColor,
+    required this.imageAsset,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,10 @@ class SecondItemCard extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 12, left: 15, right: 5),
                 child: Text(
                   label,
-                  style: GoogleFonts.raleway(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
+                  style: GoogleFonts.raleway(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
                 ),
               ),
             ),
@@ -45,7 +52,10 @@ class SecondItemCard extends StatelessWidget {
                         'assets/images/littleElips.svg',
                         color: elipsColor,
                       ),
-                      Positioned(left: 50, bottom: 10, child: SvgPicture.asset(imageAsset)),
+                      Positioned(
+                          left: 50,
+                          bottom: 10,
+                          child: SvgPicture.asset(imageAsset)),
                     ],
                   ),
                 ))

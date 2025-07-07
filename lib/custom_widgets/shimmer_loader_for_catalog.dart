@@ -9,7 +9,14 @@ class ShimmerLoaderForCatalog extends StatelessWidget {
   final double height;
   final double spaceY;
 
-  const ShimmerLoaderForCatalog({Key key, this.crossAxisCount = 3, this.childAspectRatio = 0.67, this.crossAxisSpacing = 11, this.height = 136, this.spaceY = 4}) : super(key: key);
+  const ShimmerLoaderForCatalog({
+    super.key,
+    this.crossAxisCount = 3,
+    this.childAspectRatio = 0.67,
+    this.crossAxisSpacing = 11,
+    this.height = 136,
+    this.spaceY = 4,
+  });
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -24,14 +31,15 @@ class ShimmerLoaderForCatalog extends StatelessWidget {
       ),
       itemCount: 4,
       itemBuilder: (context, index) => Shimmer.fromColors(
-        baseColor: Colors.grey[100],
+        baseColor: Colors.grey.shade100,
         highlightColor: Colors.white,
         child: Container(
           height: heightRatio(size: height, context: context),
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
             color: Colors.grey,
-            borderRadius: BorderRadius.circular(heightRatio(size: 5, context: context)),
+            borderRadius:
+                BorderRadius.circular(heightRatio(size: 5, context: context)),
           ),
         ),
       ),

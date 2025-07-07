@@ -9,7 +9,10 @@ import 'package:smart/core/constants/text_styles.dart';
 class ProfileSwitches extends StatefulWidget {
   final String switchText;
   bool check;
-  ProfileSwitches({@required this.switchText, @required this.check});
+  ProfileSwitches({
+    required this.switchText,
+    required this.check,
+  });
 
   @override
   _ProfileSwitchesState createState() => _ProfileSwitchesState();
@@ -35,10 +38,12 @@ class _ProfileSwitchesState extends State<ProfileSwitches> {
               widget.check = val;
             });
             if (widget.switchText == "serviceText".tr()) {
-              _profileBloc.add(ProfileUpdateDataEvent(consentToServiceNewsletter: val ? 1 : 0));
+              _profileBloc.add(ProfileUpdateDataEvent(
+                  consentToServiceNewsletter: val ? 1 : 0));
             }
             if (widget.switchText == "promoText".tr()) {
-              _profileBloc.add(ProfileUpdateDataEvent(consentToReceivePromotionalMailings: val ? 1 : 0));
+              _profileBloc.add(ProfileUpdateDataEvent(
+                  consentToReceivePromotionalMailings: val ? 1 : 0));
             }
           },
         ),

@@ -15,7 +15,11 @@ class StoreWillBeChangetBottomSheet extends StatelessWidget {
   final String newStoreAddress;
   final String newStoreLogo;
 
-  const StoreWillBeChangetBottomSheet({@required this.newStoreUuuid, @required this.newStoreAddress, @required this.newStoreLogo});
+  const StoreWillBeChangetBottomSheet({
+    required this.newStoreUuuid,
+    required this.newStoreAddress,
+    required this.newStoreLogo,
+  });
   @override
   Widget build(BuildContext context) {
     // ignore: close_sinks
@@ -41,31 +45,44 @@ class StoreWillBeChangetBottomSheet extends StatelessWidget {
           Text(
             "Адрес магазина будет изменен",
             textAlign: TextAlign.center,
-            style: appTextStyle(fontSize: heightRatio(size: 24, context: context), fontWeight: FontWeight.w500),
+            style: appTextStyle(
+                fontSize: heightRatio(size: 24, context: context),
+                fontWeight: FontWeight.w500),
           ),
           Text(
             "storeAddresswiilBeChangedTitleText".tr(),
             textAlign: TextAlign.center,
-            style: appTextStyle(fontSize: heightRatio(size: 18, context: context), fontWeight: FontWeight.w500),
+            style: appTextStyle(
+                fontSize: heightRatio(size: 18, context: context),
+                fontWeight: FontWeight.w500),
           ),
           InkWell(
             onTap: () async {
               await prefs.setString(SharedKeys.shopUuid, newStoreUuuid);
               await prefs.setString(SharedKeys.shopAddress, newStoreAddress);
               await prefs.setString(SharedKeys.shopLogo, newStoreLogo);
-              _profileBloc.add(ProfileUpdateDataEvent(selectedStoreUserUuid: newStoreUuuid));
+              _profileBloc.add(
+                  ProfileUpdateDataEvent(selectedStoreUserUuid: newStoreUuuid));
 
               _basketListBloc.add(BasketLoadEvent());
               _profileBloc.add(ProfileLoadEvent());
-              Navigator.of(context).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/login', (Route<dynamic> route) => false);
             },
             child: Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(vertical: heightRatio(size: 15, context: context)),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)), color: mainColor),
+              padding: EdgeInsets.symmetric(
+                  vertical: heightRatio(size: 15, context: context)),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                      heightRatio(size: 10, context: context)),
+                  color: mainColor),
               child: Text(
                 'ContinueText'.tr(),
-                style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 18, context: context), color: Colors.white),
+                style: appTextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: heightRatio(size: 18, context: context),
+                    color: Colors.white),
               ),
             ),
           ),

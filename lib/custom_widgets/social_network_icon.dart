@@ -6,7 +6,10 @@ import 'package:smart/core/constants/source.dart';
 class SocialNetworkIcon extends StatelessWidget {
   final Color bgColor;
   final String sNetwIconAsset;
-  const SocialNetworkIcon({@required this.bgColor, @required this.sNetwIconAsset});
+  const SocialNetworkIcon({
+    required this.bgColor,
+    required this.sNetwIconAsset,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,10 @@ class SocialNetworkIcon extends StatelessWidget {
       padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
       height: heightRatio(size: 60, context: context),
       width: widthRatio(size: 60, context: context),
-      decoration: BoxDecoration(color: bgColor, borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context))),
+      decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius:
+              BorderRadius.circular(heightRatio(size: 10, context: context))),
       child: Container(
         child: SvgPicture.asset(sNetwIconAsset),
       ),

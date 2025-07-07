@@ -14,23 +14,30 @@ import 'package:smart/core/constants/text_styles.dart';
 class OrderTypeSwitchButton extends StatelessWidget {
   final AddOrSubtractBonusesState addOrSubtractBonusesState;
   final int subtractBonuses;
-  final String paymentTypeChoose;
+  final String? paymentTypeChoose;
   final List<ProductModelForOrderRequest> productModelForOrderRequestList;
 
-  const OrderTypeSwitchButton({Key key, this.addOrSubtractBonusesState, this.subtractBonuses, this.paymentTypeChoose, this.productModelForOrderRequestList})
-      : super(key: key);
+  const OrderTypeSwitchButton({
+    super.key,
+    required this.addOrSubtractBonusesState,
+    required this.subtractBonuses,
+    required this.paymentTypeChoose,
+    required this.productModelForOrderRequestList,
+  });
 
   @override
   Widget build(BuildContext context) {
     OrderTypeBloc _orderTypeBloc = BlocProvider.of<OrderTypeBloc>(context);
-    AddOrSubtractBonusesBloc _addOrSubtractBonusesBloc = BlocProvider.of(context);
+    AddOrSubtractBonusesBloc _addOrSubtractBonusesBloc =
+        BlocProvider.of(context);
     OrderCalculateBloc _orderCalculateBloc = BlocProvider.of(context);
 
     return BlocBuilder<OrderTypeBloc, OrderTypeState>(
       builder: (context, state) {
         if (state is OrderTypePickupState) {
           return ClipRRect(
-            borderRadius: BorderRadius.circular(heightRatio(size: 12, context: context)),
+            borderRadius:
+                BorderRadius.circular(heightRatio(size: 12, context: context)),
             child: Container(
               height: 40,
               decoration: BoxDecoration(color: grey04),
@@ -47,7 +54,8 @@ class OrderTypeSwitchButton extends StatelessWidget {
                             OrderCalculateLoadEvent(
                               orderDeliveryTypeId: "delivery",
                               orderPaymentTypeId: paymentTypeChoose,
-                              productModelForOrderRequestList: productModelForOrderRequestList,
+                              productModelForOrderRequestList:
+                                  productModelForOrderRequestList,
                             ),
                           );
                           log("-------------------------------- нажали на ------ delivery ---------------------------------------");
@@ -59,7 +67,9 @@ class OrderTypeSwitchButton extends StatelessWidget {
                         child: Text(
                           'Доставка',
                           textAlign: TextAlign.center,
-                          style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context)),
+                          style: appHeadersTextStyle(
+                              fontSize:
+                                  heightRatio(size: 14, context: context)),
                         ),
                       ),
                     ),
@@ -68,13 +78,22 @@ class OrderTypeSwitchButton extends StatelessWidget {
                     child: Container(
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(-3, 4), blurRadius: 10, spreadRadius: 0)],
-                        borderRadius: BorderRadius.circular(heightRatio(size: 12, context: context)),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black12,
+                              offset: Offset(-3, 4),
+                              blurRadius: 10,
+                              spreadRadius: 0)
+                        ],
+                        borderRadius: BorderRadius.circular(
+                            heightRatio(size: 12, context: context)),
                         color: newRedDark,
                       ),
                       child: Text(
                         'pickupText'.tr(),
-                        style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), color: whiteColor),
+                        style: appHeadersTextStyle(
+                            fontSize: heightRatio(size: 14, context: context),
+                            color: whiteColor),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -85,7 +104,8 @@ class OrderTypeSwitchButton extends StatelessWidget {
           );
         } else {
           return ClipRRect(
-            borderRadius: BorderRadius.circular(heightRatio(size: 12, context: context)),
+            borderRadius:
+                BorderRadius.circular(heightRatio(size: 12, context: context)),
             child: Container(
               height: 40,
               decoration: BoxDecoration(color: grey04),
@@ -96,13 +116,22 @@ class OrderTypeSwitchButton extends StatelessWidget {
                     child: Container(
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(-3, 4), blurRadius: 10, spreadRadius: 0)],
-                        borderRadius: BorderRadius.circular(heightRatio(size: 12, context: context)),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black12,
+                              offset: Offset(-3, 4),
+                              blurRadius: 10,
+                              spreadRadius: 0)
+                        ],
+                        borderRadius: BorderRadius.circular(
+                            heightRatio(size: 12, context: context)),
                         color: newRedDark,
                       ),
                       child: Text(
                         'Доставка',
-                        style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), color: whiteColor),
+                        style: appHeadersTextStyle(
+                            fontSize: heightRatio(size: 14, context: context),
+                            color: whiteColor),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -117,7 +146,8 @@ class OrderTypeSwitchButton extends StatelessWidget {
                             OrderCalculateLoadEvent(
                               orderDeliveryTypeId: "pickup",
                               orderPaymentTypeId: paymentTypeChoose,
-                              productModelForOrderRequestList: productModelForOrderRequestList,
+                              productModelForOrderRequestList:
+                                  productModelForOrderRequestList,
                             ),
                           );
                           log("------------------------------ нажали на -------- pickup ---------------------------------------");
@@ -129,7 +159,9 @@ class OrderTypeSwitchButton extends StatelessWidget {
                         child: Text(
                           'pickupText'.tr(),
                           textAlign: TextAlign.center,
-                          style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context)),
+                          style: appHeadersTextStyle(
+                              fontSize:
+                                  heightRatio(size: 14, context: context)),
                         ),
                       ),
                     ),

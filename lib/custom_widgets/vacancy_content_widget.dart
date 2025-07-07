@@ -26,26 +26,44 @@ class VacancyContentWidget extends StatelessWidget {
             childAspectRatio: 1,
             crossAxisCount: 1,
           ),
-          padding: EdgeInsets.only(left: widthRatio(size: 15, context: context), right: widthRatio(size: 15, context: context), bottom: heightRatio(size: 15, context: context)),
+          padding: EdgeInsets.only(
+              left: widthRatio(size: 15, context: context),
+              right: widthRatio(size: 15, context: context),
+              bottom: heightRatio(size: 15, context: context)),
           itemBuilder: (context, vacancyContentWidget, index) => Container(
-                margin: EdgeInsets.only(top: heightRatio(size: 10, context: context)),
+                margin: EdgeInsets.only(
+                    top: heightRatio(size: 10, context: context)),
                 padding: EdgeInsets.all(widthRatio(size: 10, context: context)),
-                decoration: BoxDecoration(image: DecorationImage(image: new NetworkImage(vacancyContentWidget.logoFilePath), fit: BoxFit.cover), borderRadius: BorderRadius.circular(heightRatio(size: 20, context: context))),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image:
+                            new NetworkImage(vacancyContentWidget.logoFilePath),
+                        fit: BoxFit.cover),
+                    borderRadius: BorderRadius.circular(
+                        heightRatio(size: 20, context: context))),
                 child: InkWell(
                   onTap: () async {
-                    launchUrl(Uri.parse(vacancyContentWidget.url), mode: LaunchMode.externalApplication);
+                    launchUrl(Uri.parse(vacancyContentWidget.url),
+                        mode: LaunchMode.externalApplication);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: heightRatio(size: 14, context: context)),
+                        padding: EdgeInsets.symmetric(
+                            vertical: heightRatio(size: 14, context: context)),
                         alignment: Alignment.center,
                         child: Text(
                           'respondText'.tr(),
-                          style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 18, context: context)),
+                          style: appHeadersTextStyle(
+                              color: Colors.white,
+                              fontSize:
+                                  heightRatio(size: 18, context: context)),
                         ),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)), color: mainColor),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                heightRatio(size: 10, context: context)),
+                            color: mainColor),
                       ),
                     ],
                   ),
@@ -53,7 +71,8 @@ class VacancyContentWidget extends StatelessWidget {
               ),
           initialLoader: ShimmerLoaderForVacancyList(),
           pageFetch: (currentListSize) async {
-            VacancyListModel _vacancyListModel = await VacancyListProvider().getVacancyListResponse(page: i++);
+            VacancyListModel _vacancyListModel =
+                await VacancyListProvider().getVacancyListResponse(page: i++);
             return _vacancyListModel.data;
           },
           onEmpty: Center(
@@ -64,8 +83,10 @@ class VacancyContentWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
-                    decoration: BoxDecoration(color: colorBlack03, shape: BoxShape.circle),
+                    padding:
+                        EdgeInsets.all(widthRatio(size: 15, context: context)),
+                    decoration: BoxDecoration(
+                        color: colorBlack03, shape: BoxShape.circle),
                     child: SvgPicture.asset(
                       'assets/images/netErrorIcon.svg',
                       color: Colors.white,
@@ -73,16 +94,25 @@ class VacancyContentWidget extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: heightRatio(size: 15, context: context)),
-                  Text("errorText".tr(), style: appTextStyle(fontSize: heightRatio(size: 18, context: context), color: colorBlack06, fontWeight: FontWeight.w500)),
+                  Text("errorText".tr(),
+                      style: appTextStyle(
+                          fontSize: heightRatio(size: 18, context: context),
+                          color: colorBlack06,
+                          fontWeight: FontWeight.w500)),
                   SizedBox(height: heightRatio(size: 10, context: context)),
                   InkWell(
                       onTap: () {
                         i = 1;
-                        paginationViewkey.currentState.refresh();
+                        paginationViewkey.currentState?.refresh();
                       },
                       child: Container(
                         color: Colors.transparent,
-                        child: Text("tryAgainText".tr(), style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: mainColor, fontWeight: FontWeight.w500)),
+                        child: Text("tryAgainText".tr(),
+                            style: appTextStyle(
+                                fontSize:
+                                    heightRatio(size: 14, context: context),
+                                color: mainColor,
+                                fontWeight: FontWeight.w500)),
                       ))
                 ],
               ))),

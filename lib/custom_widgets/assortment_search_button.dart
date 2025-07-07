@@ -4,7 +4,7 @@ import 'package:smart/core/constants/source.dart';
 
 class AssortmentSearchButton extends StatelessWidget {
   final VoidCallback onTap;
-  const AssortmentSearchButton({Key key, this.onTap}) : super(key: key);
+  const AssortmentSearchButton({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

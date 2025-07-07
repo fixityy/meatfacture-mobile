@@ -11,7 +11,8 @@ class ShimmerLoaderForShopList extends StatelessWidget {
         SizedBox(height: heightRatio(size: 25, context: context)),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 18),
-          decoration: BoxDecoration(color: grey04, borderRadius: BorderRadius.circular(12)),
+          decoration: BoxDecoration(
+              color: grey04, borderRadius: BorderRadius.circular(12)),
           height: heightRatio(size: 40, context: context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -19,10 +20,14 @@ class ShimmerLoaderForShopList extends StatelessWidget {
               Expanded(
                 child: Container(
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 12, context: context))),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                          heightRatio(size: 12, context: context))),
                   child: Text(
                     'Списком',
-                    style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), color: Colors.black),
+                    style: appHeadersTextStyle(
+                        fontSize: heightRatio(size: 14, context: context),
+                        color: Colors.black),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -31,12 +36,15 @@ class ShimmerLoaderForShopList extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(heightRatio(size: 12, context: context)),
+                    borderRadius: BorderRadius.circular(
+                        heightRatio(size: 12, context: context)),
                     color: newRedDark,
                   ),
                   child: Text(
                     'На карте',
-                    style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), color: whiteColor),
+                    style: appHeadersTextStyle(
+                        fontSize: heightRatio(size: 14, context: context),
+                        color: whiteColor),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -46,12 +54,13 @@ class ShimmerLoaderForShopList extends StatelessWidget {
         ),
         SizedBox(height: heightRatio(size: 56, context: context)),
         Shimmer.fromColors(
-          baseColor: Colors.grey[200],
+          baseColor: Colors.grey.shade200,
           highlightColor: whiteColor,
           child: Column(
             children: [
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
                 height: heightRatio(size: 60, context: context),
                 decoration: BoxDecoration(
                   color: whiteColor,

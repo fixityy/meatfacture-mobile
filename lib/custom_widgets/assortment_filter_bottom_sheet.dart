@@ -13,23 +13,26 @@ import 'package:smart/features/catalog/subcatalog_screen.dart';
 
 // ignore: must_be_immutable
 class AssortmentFilterBottomSheet extends StatefulWidget {
-  final String subcatalogUuid;
-  final String catalogUuid;
+  final String? subcatalogUuid;
+  final String? catalogUuid;
 
   const AssortmentFilterBottomSheet({this.subcatalogUuid, this.catalogUuid});
 
   @override
-  _AssortmentFilterBottomSheetState createState() => _AssortmentFilterBottomSheetState();
+  _AssortmentFilterBottomSheetState createState() =>
+      _AssortmentFilterBottomSheetState();
 }
 
-class _AssortmentFilterBottomSheetState extends State<AssortmentFilterBottomSheet> {
+class _AssortmentFilterBottomSheetState
+    extends State<AssortmentFilterBottomSheet> {
   int i = 1;
   final TextEditingController searchTextController = TextEditingController();
   bool isFavorite = false;
   bool isYellowTags = false;
   @override
   Widget build(BuildContext context) {
-    AssortmentFiltersBloc _assortmentFiltersBloc = BlocProvider.of<AssortmentFiltersBloc>(context);
+    AssortmentFiltersBloc _assortmentFiltersBloc =
+        BlocProvider.of<AssortmentFiltersBloc>(context);
 
     return ClipRRect(
       borderRadius: BorderRadius.only(
@@ -37,7 +40,8 @@ class _AssortmentFilterBottomSheetState extends State<AssortmentFilterBottomShee
         topRight: Radius.circular(heightRatio(size: 15, context: context)),
       ),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 15, context: context)),
+        padding: EdgeInsets.symmetric(
+            horizontal: widthRatio(size: 15, context: context)),
         decoration: BoxDecoration(color: Colors.white),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,7 +49,9 @@ class _AssortmentFilterBottomSheetState extends State<AssortmentFilterBottomShee
             SizedBox(height: heightRatio(size: 25, context: context)),
             Text(
               'Укажите нужные фильтры',
-              style: appHeadersTextStyle(fontSize: heightRatio(size: 18, context: context), color: newBlack),
+              style: appHeadersTextStyle(
+                  fontSize: heightRatio(size: 18, context: context),
+                  color: newBlack),
             ),
             SizedBox(height: heightRatio(size: 30, context: context)),
             Row(
@@ -63,7 +69,9 @@ class _AssortmentFilterBottomSheetState extends State<AssortmentFilterBottomShee
                     SizedBox(width: widthRatio(size: 15, context: context)),
                     Text(
                       "shosenProducts2".tr(),
-                      style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                      style: appLabelTextStyle(
+                          fontSize: heightRatio(size: 16, context: context),
+                          color: newBlack),
                     ),
                   ],
                 ),
@@ -92,7 +100,9 @@ class _AssortmentFilterBottomSheetState extends State<AssortmentFilterBottomShee
                     SizedBox(width: widthRatio(size: 15, context: context)),
                     Text(
                       "yellowTagsText".tr(),
-                      style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                      style: appLabelTextStyle(
+                          fontSize: heightRatio(size: 16, context: context),
+                          color: newBlack),
                     ),
                   ],
                 ),
@@ -111,9 +121,11 @@ class _AssortmentFilterBottomSheetState extends State<AssortmentFilterBottomShee
               onTap: () {
                 if (isFavorite == false && isYellowTags == false) {
                   Navigator.pop(context);
-                  print('======================= IF  isFavorite == false && isYellowTags == false  ===============================');
+                  print(
+                      '======================= IF  isFavorite == false && isYellowTags == false  ===============================');
                 } else {
-                  print('=======================  isFavorite == false && isYellowTags == false  ELSE ===============================');
+                  print(
+                      '=======================  isFavorite == false && isYellowTags == false  ELSE ===============================');
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -136,13 +148,21 @@ class _AssortmentFilterBottomSheetState extends State<AssortmentFilterBottomShee
                     isYellowTags: isYellowTags,
                   ),
                 );
-                print('+++++++++++ _assortmentFiltersBloc.add(AssortmentFiltersLoadEvent(isFavorite: isFavorite))');
+                print(
+                    '+++++++++++ _assortmentFiltersBloc.add(AssortmentFiltersLoadEvent(isFavorite: isFavorite))');
               },
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: heightRatio(size: 16, context: context)),
+                padding: EdgeInsets.symmetric(
+                    vertical: heightRatio(size: 16, context: context)),
                 alignment: Alignment.center,
-                child: Text("Применить фильтры", style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: Colors.white)),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)), color: newRedDark),
+                child: Text("Применить фильтры",
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 16, context: context),
+                        color: Colors.white)),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                        heightRatio(size: 10, context: context)),
+                    color: newRedDark),
               ),
             ),
             SizedBox(height: heightRatio(size: 35, context: context)),

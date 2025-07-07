@@ -4,7 +4,9 @@ import 'package:smart/core/constants/text_styles.dart';
 
 class ProductDetailsTegsWidget extends StatelessWidget {
   final List<String> tagsList;
-  const ProductDetailsTegsWidget({@required this.tagsList});
+  const ProductDetailsTegsWidget({
+    required this.tagsList,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +34,18 @@ class ProductDetailsTegsWidget extends StatelessWidget {
                   margin: EdgeInsets.only(
                     right: widthRatio(size: 10, context: context),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 10, context: context)),
-                  decoration: BoxDecoration(color: greyForTegs, borderRadius: BorderRadius.circular(heightRatio(size: 50, context: context))),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: widthRatio(size: 10, context: context)),
+                  decoration: BoxDecoration(
+                      color: greyForTegs,
+                      borderRadius: BorderRadius.circular(
+                          heightRatio(size: 50, context: context))),
                   alignment: Alignment.center,
                   child: Text(
                     tagsList[index],
-                    style: appTextStyle(fontSize: heightRatio(size: 14, context: context), fontWeight: FontWeight.w400),
+                    style: appTextStyle(
+                        fontSize: heightRatio(size: 14, context: context),
+                        fontWeight: FontWeight.w400),
                   ),
                 );
               })),

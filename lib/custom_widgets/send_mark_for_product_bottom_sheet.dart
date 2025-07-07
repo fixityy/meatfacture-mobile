@@ -14,17 +14,25 @@ import 'package:smart/core/constants/text_styles.dart';
 class SendMarkForProductBottomSheet extends StatefulWidget {
   final String checkUuid;
   final String checkLineUuid;
-  final double rating;
-  final String comment;
+  final double? rating;
+  final String? comment;
   final String orderOrCheck;
 
-  const SendMarkForProductBottomSheet({@required this.checkLineUuid, @required this.checkUuid, this.rating, this.comment, @required this.orderOrCheck});
+  const SendMarkForProductBottomSheet({
+    required this.checkLineUuid,
+    required this.checkUuid,
+    this.rating,
+    this.comment,
+    required this.orderOrCheck,
+  });
 
   @override
-  _SendMarkForProductBottomSheetState createState() => _SendMarkForProductBottomSheetState();
+  _SendMarkForProductBottomSheetState createState() =>
+      _SendMarkForProductBottomSheetState();
 }
 
-class _SendMarkForProductBottomSheetState extends State<SendMarkForProductBottomSheet> {
+class _SendMarkForProductBottomSheetState
+    extends State<SendMarkForProductBottomSheet> {
   final TextEditingController commentTextController = TextEditingController();
   double myRating = 0;
   @override
@@ -32,18 +40,20 @@ class _SendMarkForProductBottomSheetState extends State<SendMarkForProductBottom
     super.initState();
 
     if (widget.rating != null) {
-      myRating = widget.rating;
+      myRating = widget.rating!;
     }
     if (widget.comment != null) {
-      commentTextController.text = widget.comment;
+      commentTextController.text = widget.comment!;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    HistoryOrdertDetailsBloc _historyOrdertDetailsBloc = BlocProvider.of(context);
+    HistoryOrdertDetailsBloc _historyOrdertDetailsBloc =
+        BlocProvider.of(context);
     DiverseFoodBloc _diverseFoodBloc = BlocProvider.of(context);
-    HistoryCheckDetailsBloc _historyCheckDetailsBloc = BlocProvider.of<HistoryCheckDetailsBloc>(context);
+    HistoryCheckDetailsBloc _historyCheckDetailsBloc =
+        BlocProvider.of<HistoryCheckDetailsBloc>(context);
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -73,7 +83,8 @@ class _SendMarkForProductBottomSheetState extends State<SendMarkForProductBottom
               ),
               SizedBox(height: heightRatio(size: 25, context: context)),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 40, context: context)),
+                margin: EdgeInsets.symmetric(
+                    horizontal: widthRatio(size: 40, context: context)),
                 alignment: Alignment.center,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,7 +95,9 @@ class _SendMarkForProductBottomSheetState extends State<SendMarkForProductBottom
                         if (widget.rating == null) setState(() => myRating = 1);
                       },
                       child: SvgPicture.asset(
-                        myRating > 0 ? 'assets/images/redes_star_big_active.svg' : 'assets/images/redes_star_big.svg',
+                        myRating > 0
+                            ? 'assets/images/redes_star_big_active.svg'
+                            : 'assets/images/redes_star_big.svg',
                         width: widthRatio(size: 30, context: context),
                         height: heightRatio(size: 30, context: context),
                       ),
@@ -95,7 +108,9 @@ class _SendMarkForProductBottomSheetState extends State<SendMarkForProductBottom
                         if (widget.rating == null) setState(() => myRating = 2);
                       },
                       child: SvgPicture.asset(
-                        myRating > 1 ? 'assets/images/redes_star_big_active.svg' : 'assets/images/redes_star_big.svg',
+                        myRating > 1
+                            ? 'assets/images/redes_star_big_active.svg'
+                            : 'assets/images/redes_star_big.svg',
                         width: widthRatio(size: 30, context: context),
                         height: heightRatio(size: 30, context: context),
                       ),
@@ -107,7 +122,9 @@ class _SendMarkForProductBottomSheetState extends State<SendMarkForProductBottom
                         if (widget.rating == null) setState(() => myRating = 3);
                       },
                       child: SvgPicture.asset(
-                        myRating > 2 ? 'assets/images/redes_star_big_active.svg' : 'assets/images/redes_star_big.svg',
+                        myRating > 2
+                            ? 'assets/images/redes_star_big_active.svg'
+                            : 'assets/images/redes_star_big.svg',
                         width: widthRatio(size: 30, context: context),
                         height: heightRatio(size: 30, context: context),
                       ),
@@ -118,7 +135,9 @@ class _SendMarkForProductBottomSheetState extends State<SendMarkForProductBottom
                         if (widget.rating == null) setState(() => myRating = 4);
                       },
                       child: SvgPicture.asset(
-                        myRating > 3 ? 'assets/images/redes_star_big_active.svg' : 'assets/images/redes_star_big.svg',
+                        myRating > 3
+                            ? 'assets/images/redes_star_big_active.svg'
+                            : 'assets/images/redes_star_big.svg',
                         width: widthRatio(size: 30, context: context),
                         height: heightRatio(size: 30, context: context),
                       ),
@@ -129,7 +148,9 @@ class _SendMarkForProductBottomSheetState extends State<SendMarkForProductBottom
                         if (widget.rating == null) setState(() => myRating = 5);
                       },
                       child: SvgPicture.asset(
-                        myRating > 4 ? 'assets/images/redes_star_big_active.svg' : 'assets/images/redes_star_big.svg',
+                        myRating > 4
+                            ? 'assets/images/redes_star_big_active.svg'
+                            : 'assets/images/redes_star_big.svg',
                         width: widthRatio(size: 30, context: context),
                         height: heightRatio(size: 30, context: context),
                       ),
@@ -143,7 +164,9 @@ class _SendMarkForProductBottomSheetState extends State<SendMarkForProductBottom
                 children: [
                   Text(
                     'Напишите отзыв о товаре',
-                    style: appLabelTextStyle(fontSize: heightRatio(size: 15, context: context), color: newBlack),
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 15, context: context),
+                        color: newBlack),
                   ),
                 ],
               ),
@@ -158,8 +181,11 @@ class _SendMarkForProductBottomSheetState extends State<SendMarkForProductBottom
                   decoration: InputDecoration(
                     // border: InputBorder.none,
                     hintText: 'Укажите ваш комментарий о данном товаре',
-                    hintStyle: appLabelTextStyle(color: colorBlack04, fontSize: heightRatio(size: 15, context: context)),
-                    border: OutlineInputBorder(borderSide: BorderSide(color: newGrey)),
+                    hintStyle: appLabelTextStyle(
+                        color: colorBlack04,
+                        fontSize: heightRatio(size: 15, context: context)),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: newGrey)),
                   ),
                 )
               else
@@ -169,7 +195,8 @@ class _SendMarkForProductBottomSheetState extends State<SendMarkForProductBottom
                   child: Text(
                     widget.comment ?? "",
                     textAlign: TextAlign.start,
-                    style: appLabelTextStyle(fontSize: heightRatio(size: 15, context: context)),
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 15, context: context)),
                   ),
                 ),
               SizedBox(height: heightRatio(size: 24, context: context)),
@@ -177,12 +204,17 @@ class _SendMarkForProductBottomSheetState extends State<SendMarkForProductBottom
                 onTap: () => Navigator.of(context).pop(),
                 child: Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
+                  padding: EdgeInsets.only(
+                      top: heightRatio(size: 15, context: context),
+                      bottom: heightRatio(size: 18, context: context)),
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newBlack),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5), color: newBlack),
                   child: Text(
                     'Отменить',
-                    style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                    style: appLabelTextStyle(
+                        color: Colors.white,
+                        fontSize: heightRatio(size: 16, context: context)),
                   ),
                 ),
               ),
@@ -190,18 +222,33 @@ class _SendMarkForProductBottomSheetState extends State<SendMarkForProductBottom
               widget.rating == null
                   ? InkWell(
                       onTap: () async {
-                        if (commentTextController.text.length >= 10 && myRating != 0) {
+                        if (commentTextController.text.length >= 10 &&
+                            myRating != 0) {
                           if (widget.orderOrCheck == "order") {
-                            if (await OrderProvider().setRatingForAssortmentInOrderResponse(orderUuid: widget.checkUuid, orderProductUuid: widget.checkLineUuid, value: myRating, comment: commentTextController.text)) {
+                            if (await OrderProvider()
+                                .setRatingForAssortmentInOrderResponse(
+                                    orderUuid: widget.checkUuid,
+                                    orderProductUuid: widget.checkLineUuid,
+                                    value: myRating,
+                                    comment: commentTextController.text)) {
                               _diverseFoodBloc.add(DiverseFoodLoadEvent());
-                              _historyOrdertDetailsBloc.add(HistoryOrderDetailsLoadEvent(orderId: widget.checkUuid));
+                              _historyOrdertDetailsBloc.add(
+                                  HistoryOrderDetailsLoadEvent(
+                                      orderId: widget.checkUuid));
                             } else {
                               showSnackBar(context, 'comment_error_text'.tr());
                             }
                           } else {
-                            if (await SetRatingForAssortmentProvider().setRatingForAssortmentResponse(receiptUuid: widget.checkUuid, receiptLineUuid: widget.checkLineUuid, value: myRating, comment: commentTextController.text)) {
+                            if (await SetRatingForAssortmentProvider()
+                                .setRatingForAssortmentResponse(
+                                    receiptUuid: widget.checkUuid,
+                                    receiptLineUuid: widget.checkLineUuid,
+                                    value: myRating,
+                                    comment: commentTextController.text)) {
                               _diverseFoodBloc.add(DiverseFoodLoadEvent());
-                              _historyCheckDetailsBloc.add(HistoryCheckDetailsLoadEvent(receiptUuid: widget.checkUuid));
+                              _historyCheckDetailsBloc.add(
+                                  HistoryCheckDetailsLoadEvent(
+                                      receiptUuid: widget.checkUuid));
                             } else {
                               showSnackBar(context, 'comment_error_text'.tr());
                             }
@@ -209,17 +256,25 @@ class _SendMarkForProductBottomSheetState extends State<SendMarkForProductBottom
 
                           Navigator.pop(context);
                         } else {
-                          Fluttertoast.showToast(msg: "moreThan10SymbolsText".tr());
+                          Fluttertoast.showToast(
+                              msg: "moreThan10SymbolsText".tr());
                         }
                       },
                       child: Container(
                         alignment: Alignment.center,
-                        padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
+                        padding: EdgeInsets.only(
+                            top: heightRatio(size: 15, context: context),
+                            bottom: heightRatio(size: 18, context: context)),
                         width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: newRedDark),
                         child: Text(
                           'Отправить отзыв',
-                          style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                          style: appLabelTextStyle(
+                              color: Colors.white,
+                              fontSize:
+                                  heightRatio(size: 16, context: context)),
                         ),
                       ),
                     )
