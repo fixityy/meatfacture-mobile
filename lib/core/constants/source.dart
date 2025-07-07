@@ -153,7 +153,7 @@ double pointOfHeght(BuildContext context, int points) =>
 double pointOfWidth(BuildContext context, int points) =>
     (9375 / MediaQuery.of(context).size.width) * points;
 
-List<String> getAssortmentUnitId({required String assortmentUnitId}) {
+List<String> getAssortmentUnitId({required String? assortmentUnitId}) {
   switch (assortmentUnitId) {
     case "package":
       return ["Упаковка", "упак"];

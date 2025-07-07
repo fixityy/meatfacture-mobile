@@ -10,7 +10,10 @@ class CatalogLevelsWidget extends StatelessWidget {
   final bool isFromFavCatalogsList;
   final CatalogListModel catalogListModel;
 
-  const CatalogLevelsWidget({this.catalogListModel, @required this.isFromFavCatalogsList});
+  const CatalogLevelsWidget({
+    required this.catalogListModel,
+    required this.isFromFavCatalogsList,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +22,14 @@ class CatalogLevelsWidget extends StatelessWidget {
       children: [
         Text(
           catalogListModel.name,
-          style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: Colors.black),
+          style: appHeadersTextStyle(
+              fontSize: heightRatio(size: 16, context: context),
+              color: Colors.black),
         ),
         SizedBox(height: 16),
-        if (catalogListModel.subcatalog != null && catalogListModel.subcatalog.length != null && catalogListModel.subcatalog.length > 0)
+        if (catalogListModel.subcatalog != null &&
+            catalogListModel.subcatalog!.length != null &&
+            catalogListModel.subcatalog!.length > 0)
           GridView.builder(
             padding: EdgeInsets.only(top: 0, bottom: 12),
             shrinkWrap: true,
@@ -34,7 +41,7 @@ class CatalogLevelsWidget extends StatelessWidget {
             ),
             itemCount: catalogListModel.subcatalog?.length ?? 0,
             itemBuilder: (context, subIndex) {
-              var subCatalog = catalogListModel.subcatalog[subIndex];
+              var subCatalog = catalogListModel.subcatalog![subIndex];
               return InkWell(
                 onTap: () {
                   Navigator.push(

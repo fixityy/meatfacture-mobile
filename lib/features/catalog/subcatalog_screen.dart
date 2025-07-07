@@ -80,8 +80,8 @@ class _SubcatalogScreenState extends State<SubcatalogScreen>
 
   FocusNode _focusNodeForSearch = new FocusNode();
   final ScrollController scrollController = ScrollController();
-  AssortmentsListBloc assortmentsListBloc;
-  bool isFirstStart = prefs.getBool(SharedKeys.isFirstStart);
+  final AssortmentsListBloc assortmentsListBloc = AssortmentsListBloc();
+  bool isFirstStart = prefs.getBool(SharedKeys.isFirstStart) ?? true;
 
   @override
   void initState() {
@@ -108,9 +108,9 @@ class _SubcatalogScreenState extends State<SubcatalogScreen>
     });
   }
 
-  Timer _timer;
+  Timer? _timer;
   bool isLoading = true;
-  String currentSubCatalogUuid;
+  late String currentSubCatalogUuid;
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +184,6 @@ class _SubcatalogScreenState extends State<SubcatalogScreen>
             children: [
               BlocBuilder<AssortmentsListBloc, AssortmentsListState>(
                 builder: (context, state) {
-                  assortmentsListBloc = BlocProvider.of(context);
                   if (state is AssortmentsListInitState) {
                     print('AssortmentsListInitState one time');
                     if (widget.isFinalLevel ||
@@ -337,7 +336,7 @@ class _SubcatalogScreenState extends State<SubcatalogScreen>
                                                           });
 
                                                           if (_timer != null) {
-                                                            _timer.cancel();
+                                                            _timer?.cancel();
                                                           }
                                                           _timer = Timer(
                                                               Duration(
@@ -535,7 +534,7 @@ class _SubcatalogScreenState extends State<SubcatalogScreen>
                               ),
                               child: widget.isSearchPage &&
                                       (widget.searchText == null ||
-                                          widget.searchText.isEmpty)
+                                          widget.searchText!.isEmpty)
                                   ? Container(color: whiteColor)
                                   : Container(
                                       color: whiteColor,
