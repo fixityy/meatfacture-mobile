@@ -8,7 +8,12 @@ class OrderProcessItem extends StatelessWidget {
   final String icon;
   final bool isActive;
 
-  const OrderProcessItem({Key key, this.title, this.icon, this.isActive}) : super(key: key);
+  const OrderProcessItem({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.isActive,
+  });
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -34,7 +39,8 @@ class OrderProcessItem extends StatelessWidget {
           SizedBox(height: heightRatio(size: 10, context: context)),
           Text(
             title,
-            style: appLabelTextStyle(fontSize: 12, color: isActive ? newBlack : newGrey6),
+            style: appLabelTextStyle(
+                fontSize: 12, color: isActive ? newBlack : newGrey6),
             textAlign: TextAlign.center,
           ),
         ],
