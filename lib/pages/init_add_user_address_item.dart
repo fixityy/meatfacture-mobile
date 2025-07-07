@@ -6,9 +6,9 @@ import 'package:smart/core/constants/text_styles.dart';
 class InitAddUserAddressItem extends StatelessWidget {
   final bool isActive;
   final String name;
-  final String nameId;
+  final String? nameId;
   final String time;
-  final String price;
+  final String? price;
   final String thumbnail;
 
   const InitAddUserAddressItem({

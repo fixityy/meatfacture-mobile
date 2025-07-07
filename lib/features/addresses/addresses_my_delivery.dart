@@ -58,7 +58,7 @@ class _AddressesMyDeliveryState extends State<AddressesMyDelivery> {
     if (selectedStoreUuid == null) {
       final shopState = context.read<AddressesShopBloc>().state;
       if (shopState is LoadedAddressesShopState) {
-        selectedStoreUuid = widget.uuid ?? shopState.selectedShop.uuid;
+        selectedStoreUuid = widget.uuid ?? shopState.selectedShop?.uuid;
       }
     }
     SelectedPayCardAndAddressForOrderBloc
@@ -274,9 +274,10 @@ class _AddressesMyDeliveryState extends State<AddressesMyDelivery> {
                                                           index]
                                                       .city);
                                                   log(clientAddressState
-                                                      .clientAddressModelList[
-                                                          index]
-                                                      .street);
+                                                          .clientAddressModelList[
+                                                              index]
+                                                          .street ??
+                                                      '');
                                                   // context.read<ClientAddressBloc>().add(SelectClientAddressEvent(selectedUuid));
                                                 }),
                                                 child: InitAddMyAddressItem(
