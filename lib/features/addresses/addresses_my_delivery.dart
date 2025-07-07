@@ -27,21 +27,28 @@ import 'package:collection/collection.dart';
 // Мои адреса доставки
 // 1) из общего каталога -> InitAddUserAddressListIndependent -> AddressesMyDelivery
 class AddressesMyDelivery extends StatefulWidget {
-  final String cardUuid;
-  final String orderType;
-  final String payType;
-  final String uuid;
-  final String payCardNumber;
-  final List<ProductModelForOrderRequest> productModelForOrderRequestList;
-  final int subtractBonusesCount;
-  const AddressesMyDelivery(
-      {this.cardUuid, this.orderType, this.productModelForOrderRequestList, this.uuid, this.payType, this.payCardNumber, this.subtractBonusesCount});
+  final String? cardUuid;
+  final String? orderType;
+  final String? payType;
+  final String? uuid;
+  final String? payCardNumber;
+  final List<ProductModelForOrderRequest>? productModelForOrderRequestList;
+  final int? subtractBonusesCount;
+  const AddressesMyDelivery({
+    this.cardUuid,
+    this.orderType,
+    this.productModelForOrderRequestList,
+    this.uuid,
+    this.payType,
+    this.payCardNumber,
+    this.subtractBonusesCount,
+  });
   @override
   State<AddressesMyDelivery> createState() => _AddressesMyDeliveryState();
 }
 
 class _AddressesMyDeliveryState extends State<AddressesMyDelivery> {
-  String selectedStoreUuid;
+  String? selectedStoreUuid;
   String newStoreAddress = "";
   String oldStoreCity = "";
   int selectedIndex = 0;
@@ -54,15 +61,20 @@ class _AddressesMyDeliveryState extends State<AddressesMyDelivery> {
         selectedStoreUuid = widget.uuid ?? shopState.selectedShop.uuid;
       }
     }
-    SelectedPayCardAndAddressForOrderBloc _selectedPayCardAndAddressForOrderBloc = BlocProvider.of(context);
-    return BlocBuilder<SelectedPayCardAndAddressForOrderBloc, SelectedPayCardAndAddressForOrderState>(builder: (context, state) {
+    SelectedPayCardAndAddressForOrderBloc
+        _selectedPayCardAndAddressForOrderBloc = BlocProvider.of(context);
+    return BlocBuilder<SelectedPayCardAndAddressForOrderBloc,
+        SelectedPayCardAndAddressForOrderState>(builder: (context, state) {
       if (state is SelectedPayCardAndAddressForOrderLoadedState) {
         return BlocBuilder<AddressesClientBloc, ClientAddressState>(
           builder: (context, clientAddressState) {
             if (clientAddressState is LoadingClientAddressState) {
               return Container(
                 height: screenHeight(context) / 2,
-                child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(mainColor))),
+                child: Center(
+                    child: CircularProgressIndicator(
+                        valueColor:
+                            new AlwaysStoppedAnimation<Color>(mainColor))),
               );
             }
             if (clientAddressState is LoadedClientAddressState) {
@@ -74,61 +86,93 @@ class _AddressesMyDeliveryState extends State<AddressesMyDelivery> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: heightRatio(size: 5, context: context)),
+                        SizedBox(
+                            height: heightRatio(size: 5, context: context)),
                         Padding(
-                          padding: EdgeInsets.only(left: widthRatio(size: 16, context: context)),
+                          padding: EdgeInsets.only(
+                              left: widthRatio(size: 16, context: context)),
                           child: Text(
                             "Мои адреса доставки",
-                            style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 22, context: context)),
+                            style: appHeadersTextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    heightRatio(size: 22, context: context)),
                             textAlign: TextAlign.left,
                           ),
                         ),
-                        SizedBox(height: heightRatio(size: 16, context: context)),
+                        SizedBox(
+                            height: heightRatio(size: 16, context: context)),
                         Expanded(
                           child: Container(
                             alignment: Alignment.topLeft,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                                  topRight: Radius.circular(heightRatio(size: 15, context: context))),
+                                  topLeft: Radius.circular(
+                                      heightRatio(size: 15, context: context)),
+                                  topRight: Radius.circular(
+                                      heightRatio(size: 15, context: context))),
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(top: heightRatio(size: 20, context: context)),
+                                  margin: EdgeInsets.only(
+                                      top: heightRatio(
+                                          size: 20, context: context)),
                                   child: Text("orderAddressText".tr(),
-                                      style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 24, context: context))),
+                                      style: appTextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: heightRatio(
+                                              size: 24, context: context))),
                                 ),
                                 SvgPicture.asset(
                                   'assets/images/addressIsEmptyIcon.svg',
                                   color: colorBlack03,
-                                  height: heightRatio(size: 50, context: context),
+                                  height:
+                                      heightRatio(size: 50, context: context),
                                 ),
-                                SizedBox(height: heightRatio(size: 10, context: context)),
+                                SizedBox(
+                                    height: heightRatio(
+                                        size: 10, context: context)),
                                 Text("noAddressesAddedText".tr(),
-                                    style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: colorBlack04, fontWeight: FontWeight.w500)),
+                                    style: appTextStyle(
+                                        fontSize: heightRatio(
+                                            size: 14, context: context),
+                                        color: colorBlack04,
+                                        fontWeight: FontWeight.w500)),
                                 InkWell(
                                   onTap: () async {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => InitAddUserAddress(heightOfBottomNavBar: 60, isNewAddress: true),
+                                          builder: (context) =>
+                                              InitAddUserAddress(
+                                                  heightOfBottomNavBar: 60,
+                                                  isNewAddress: true),
                                         ));
                                   },
                                   child: Container(
-                                    margin: EdgeInsets.all(widthRatio(size: 15, context: context)),
-                                    padding: EdgeInsets.symmetric(vertical: heightRatio(size: 15, context: context)),
+                                    margin: EdgeInsets.all(
+                                        widthRatio(size: 15, context: context)),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: heightRatio(
+                                            size: 15, context: context)),
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       border: Border.all(color: mainColor),
-                                      borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)),
+                                      borderRadius: BorderRadius.circular(
+                                          heightRatio(
+                                              size: 10, context: context)),
                                     ),
                                     child: Text(
                                       "Добавить новый",
-                                      style: appTextStyle(color: mainColor, fontWeight: FontWeight.w500, fontSize: heightRatio(size: 18, context: context)),
+                                      style: appTextStyle(
+                                          color: mainColor,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: heightRatio(
+                                              size: 18, context: context)),
                                     ),
                                   ),
                                 ),
@@ -148,24 +192,32 @@ class _AddressesMyDeliveryState extends State<AddressesMyDelivery> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: heightRatio(size: 5, context: context)),
+                        SizedBox(
+                            height: heightRatio(size: 5, context: context)),
                         Padding(
-                          padding: EdgeInsets.only(left: widthRatio(size: 16, context: context)),
+                          padding: EdgeInsets.only(
+                              left: widthRatio(size: 16, context: context)),
                           child: Text(
                             "Мои адреса доставки",
-                            style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 22, context: context)),
+                            style: appHeadersTextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    heightRatio(size: 22, context: context)),
                             textAlign: TextAlign.left,
                           ),
                         ),
-                        SizedBox(height: heightRatio(size: 16, context: context)),
+                        SizedBox(
+                            height: heightRatio(size: 16, context: context)),
                         Expanded(
                           child: Container(
                             alignment: Alignment.topLeft,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                                  topRight: Radius.circular(heightRatio(size: 15, context: context))),
+                                  topLeft: Radius.circular(
+                                      heightRatio(size: 15, context: context)),
+                                  topRight: Radius.circular(
+                                      heightRatio(size: 15, context: context))),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,34 +225,66 @@ class _AddressesMyDeliveryState extends State<AddressesMyDelivery> {
                               children: [
                                 SizedBox(height: 16),
                                 Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 16, context: context)),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: widthRatio(
+                                          size: 16, context: context)),
                                   child: Text(
                                     'Выберите адрес доставки',
-                                    style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                                    style: appHeadersTextStyle(
+                                        fontSize: heightRatio(
+                                            size: 16, context: context),
+                                        color: newBlack),
                                   ),
                                 ),
                                 Expanded(
                                   child: Builder(
                                     builder: (context) {
-                                      oldStoreCity = clientAddressState.clientAddressModelList[0].city;
+                                      oldStoreCity = clientAddressState
+                                          .clientAddressModelList[0].city;
                                       return ListView(
-                                        children: clientAddressState.clientAddressModelList.mapIndexed(
+                                        children: clientAddressState
+                                            .clientAddressModelList
+                                            .mapIndexed(
                                           (index, address) {
                                             return Padding(
-                                              padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 17, context: context)),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: widthRatio(
+                                                      size: 17,
+                                                      context: context)),
                                               child: GestureDetector(
                                                 onTap: () => setState(() {
                                                   selectedIndex = index;
-                                                  selectedStoreUuid = clientAddressState.clientAddressModelList[index].uuid;
-                                                  newStoreAddress = clientAddressState.clientAddressModelList[index].city;
+                                                  selectedStoreUuid =
+                                                      clientAddressState
+                                                          .clientAddressModelList[
+                                                              index]
+                                                          .uuid;
+                                                  newStoreAddress =
+                                                      clientAddressState
+                                                          .clientAddressModelList[
+                                                              index]
+                                                          .city;
                                                   log(index.toString());
-                                                  log(clientAddressState.clientAddressModelList[index].uuid);
-                                                  log(clientAddressState.clientAddressModelList[index].city);
-                                                  log(clientAddressState.clientAddressModelList[index].street);
+                                                  log(clientAddressState
+                                                      .clientAddressModelList[
+                                                          index]
+                                                      .uuid);
+                                                  log(clientAddressState
+                                                      .clientAddressModelList[
+                                                          index]
+                                                      .city);
+                                                  log(clientAddressState
+                                                      .clientAddressModelList[
+                                                          index]
+                                                      .street);
                                                   // context.read<ClientAddressBloc>().add(SelectClientAddressEvent(selectedUuid));
                                                 }),
                                                 child: InitAddMyAddressItem(
-                                                  isActive: clientAddressState.clientAddressModelList[index].uuid == selectedStoreUuid,
+                                                  isActive: clientAddressState
+                                                          .clientAddressModelList[
+                                                              index]
+                                                          .uuid ==
+                                                      selectedStoreUuid,
                                                   address:
                                                       "${clientAddressState.clientAddressModelList[index].city}, ${clientAddressState.clientAddressModelList[index].street} ${clientAddressState.clientAddressModelList[index].house == null ? "" : clientAddressState.clientAddressModelList[index].house} ${clientAddressState.clientAddressModelList[index].apartmentNumber == null ? "" : "к${clientAddressState.clientAddressModelList[index].apartmentNumber}"}",
                                                 ),
@@ -215,56 +299,80 @@ class _AddressesMyDeliveryState extends State<AddressesMyDelivery> {
                                 GestureDetector(
                                   onTap: () async {
                                     Fluttertoast.showToast(msg: "Подождите...");
-                                    final selectedAddress = clientAddressState.clientAddressModelList[selectedIndex];
-                                    _selectedPayCardAndAddressForOrderBloc.add(SelectedPayCardAndAddressForOrderLoadEvent(
+                                    final selectedAddress = clientAddressState
+                                        .clientAddressModelList[selectedIndex];
+                                    _selectedPayCardAndAddressForOrderBloc.add(
+                                        SelectedPayCardAndAddressForOrderLoadEvent(
                                       addressindex: 0,
                                       payType: state.payType,
                                       cardUuid: state.cardUuid,
                                       orderType: state.orderType,
                                       addressForDelivery:
                                           "${selectedAddress.city}, ${selectedAddress.street} ${selectedAddress.house ?? ""} ${selectedAddress.apartmentNumber == null ? "" : "к${selectedAddress.apartmentNumber}"}",
-                                      apartmentNumber: selectedAddress.apartmentNumber,
+                                      apartmentNumber:
+                                          selectedAddress.apartmentNumber,
                                       floor: selectedAddress.floor,
                                       entrance: selectedAddress.entrance,
-                                      intercomCode: selectedAddress.intercomCode,
+                                      intercomCode:
+                                          selectedAddress.intercomCode,
                                       payCardNumber: widget.payCardNumber,
                                     ));
 
-                                    await AddressesClientProvider().changeClientAddressResponse(
+                                    await AddressesClientProvider()
+                                        .changeClientAddressResponse(
                                       city: selectedAddress.city,
                                       street: selectedAddress.street,
                                       house: selectedAddress.house,
-                                      apartmentNumber: selectedAddress.apartmentNumber.toString(),
-                                      entrance: selectedAddress.entrance.toString(),
+                                      apartmentNumber: selectedAddress
+                                          .apartmentNumber
+                                          .toString(),
+                                      entrance:
+                                          selectedAddress.entrance.toString(),
                                       floor: selectedAddress.floor.toString(),
-                                      intercomCode: selectedAddress.intercomCode,
+                                      intercomCode:
+                                          selectedAddress.intercomCode,
                                       title: selectedAddress.title,
                                       addressUuid: selectedAddress.uuid,
                                     );
 
                                     // Обновляем адреса клиента:
-                                    context.read<AddressesClientBloc>().add(SelectAddressesClientEvent(selectedStoreUuid));
+                                    context.read<AddressesClientBloc>().add(
+                                        SelectAddressesClientEvent(
+                                            selectedStoreUuid));
                                     log('🏠 Новый адрес::::::::: ${selectedAddress.uuid} ----- ${selectedAddress.title}');
-                                    await Future.delayed(Duration(milliseconds: 300));
+                                    await Future.delayed(
+                                        Duration(milliseconds: 300));
 
                                     // Список адресов меняется же на серваке, выбранный становится первым + на всякий -> обновляем его:
                                     // context.read<AddressesClientBloc>().add(LoadedAddressesClientEvent());
 
                                     log('Старый: $oldStoreCity');
                                     log('Новый: $newStoreAddress');
-                                    if (newStoreAddress != "" && newStoreAddress != oldStoreCity) {
+                                    if (newStoreAddress != "" &&
+                                        newStoreAddress != oldStoreCity) {
                                       log('📍📍 Город доставки у клиента изменился и поэтому запрашиваем магазины и ставим выбранным первый из списка:');
-                                      context
-                                          .read<AddressesShopBloc>()
-                                          .add(ListAddressesShopEvent(notNeedToAskLocationAgain: true, isSetNearestAsSelected: true));
-                                      await Future.delayed(Duration(milliseconds: 1500));
-                                      String finalSelectedShopUuid = prefs.getString(SharedKeys.shopUuid);
+                                      context.read<AddressesShopBloc>().add(
+                                          ListAddressesShopEvent(
+                                              notNeedToAskLocationAgain: true,
+                                              isSetNearestAsSelected: true));
+                                      await Future.delayed(
+                                          Duration(milliseconds: 1500));
+                                      String? finalSelectedShopUuid =
+                                          prefs.getString(SharedKeys.shopUuid);
                                       log('🔄 Отправляем событие ProfileUpdateDataEvent с UUID магазина: $finalSelectedShopUuid');
-                                      context.read<ProfileBloc>().add(ProfileUpdateDataEvent(selectedStoreUserUuid: finalSelectedShopUuid));
-                                      await Future.delayed(Duration(milliseconds: 500));
+                                      context.read<ProfileBloc>().add(
+                                          ProfileUpdateDataEvent(
+                                              selectedStoreUserUuid:
+                                                  finalSelectedShopUuid));
+                                      await Future.delayed(
+                                          Duration(milliseconds: 500));
                                       // Перезапрашиваем каталог:
-                                      context.read<CatalogRebuildCubit>().rebuild();
-                                      context.read<CatalogsBloc>().add(CatalogsLoadEvent());
+                                      context
+                                          .read<CatalogRebuildCubit>()
+                                          .rebuild();
+                                      context
+                                          .read<CatalogsBloc>()
+                                          .add(CatalogsLoadEvent());
                                       // context.read<AssortmentsListBloc>().add(AssortmentsListLoadEvent());
 
                                       // Перезапрашиваем корзину (так как цены и доступность могут измениться)
@@ -274,64 +382,99 @@ class _AddressesMyDeliveryState extends State<AddressesMyDelivery> {
                                     log('ПЕРЕКАЛЬКУЛЯЦИЯ так как адрес изменился'); //стоимость доставки же может изменится
                                     context.read<OrderCalculateBloc>().add(
                                           OrderCalculateLoadEvent(
-                                            subtractBonusesCount: widget.subtractBonusesCount,
+                                            subtractBonusesCount:
+                                                widget.subtractBonusesCount,
                                             orderDeliveryTypeId: "delivery",
                                             orderPaymentTypeId: widget.payType,
-                                            productModelForOrderRequestList: widget.productModelForOrderRequestList,
+                                            productModelForOrderRequestList: widget
+                                                .productModelForOrderRequestList,
                                           ),
                                         );
                                     Navigator.pop(context);
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
-                                    margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 15, context: context)),
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: widthRatio(
+                                            size: 15, context: context)),
                                     width: MediaQuery.of(context).size.width,
-                                    height: heightRatio(size: 54, context: context),
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
+                                    height:
+                                        heightRatio(size: 54, context: context),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: newRedDark),
                                     child: Text(
                                       'Подтвердить адрес',
-                                      style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                                      style: appLabelTextStyle(
+                                          color: Colors.white,
+                                          fontSize: heightRatio(
+                                              size: 16, context: context)),
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: heightRatio(size: 8, context: context)),
+                                SizedBox(
+                                    height:
+                                        heightRatio(size: 8, context: context)),
                                 GestureDetector(
                                   onTap: () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => InitAddUserAddress(heightOfBottomNavBar: 60, isNewAddress: true),
+                                        builder: (context) =>
+                                            InitAddUserAddress(
+                                                heightOfBottomNavBar: 60,
+                                                isNewAddress: true),
                                       ),
                                     );
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
-                                    margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 15, context: context)),
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: widthRatio(
+                                            size: 15, context: context)),
                                     width: MediaQuery.of(context).size.width,
-                                    height: heightRatio(size: 54, context: context),
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newBlack),
+                                    height:
+                                        heightRatio(size: 54, context: context),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: newBlack),
                                     child: Text(
                                       "Добавить новый адрес",
-                                      style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                                      style: appLabelTextStyle(
+                                          color: Colors.white,
+                                          fontSize: heightRatio(
+                                              size: 16, context: context)),
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: heightRatio(size: 8, context: context)),
+                                SizedBox(
+                                    height:
+                                        heightRatio(size: 8, context: context)),
                                 GestureDetector(
                                   onTap: () => Navigator.pop(context),
                                   child: Container(
                                     alignment: Alignment.center,
-                                    margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 15, context: context)),
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: widthRatio(
+                                            size: 15, context: context)),
                                     width: MediaQuery.of(context).size.width,
-                                    height: heightRatio(size: 54, context: context),
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newBlack),
+                                    height:
+                                        heightRatio(size: 54, context: context),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: newBlack),
                                     child: Text(
                                       'Вернуться назад',
-                                      style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                                      style: appLabelTextStyle(
+                                          color: Colors.white,
+                                          fontSize: heightRatio(
+                                              size: 16, context: context)),
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: heightRatio(size: 30, context: context)),
+                                SizedBox(
+                                    height: heightRatio(
+                                        size: 30, context: context)),
                               ],
                             ),
                           ),
@@ -351,10 +494,13 @@ class _AddressesMyDeliveryState extends State<AddressesMyDelivery> {
                   children: [
                     SizedBox(height: heightRatio(size: 5, context: context)),
                     Padding(
-                      padding: EdgeInsets.only(left: widthRatio(size: 16, context: context)),
+                      padding: EdgeInsets.only(
+                          left: widthRatio(size: 16, context: context)),
                       child: Text(
                         "Мои адреса доставки",
-                        style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 22, context: context)),
+                        style: appHeadersTextStyle(
+                            color: Colors.white,
+                            fontSize: heightRatio(size: 22, context: context)),
                         textAlign: TextAlign.left,
                       ),
                     ),
@@ -365,8 +511,10 @@ class _AddressesMyDeliveryState extends State<AddressesMyDelivery> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                            topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                            topLeft: Radius.circular(
+                                heightRatio(size: 15, context: context)),
+                            topRight: Radius.circular(
+                                heightRatio(size: 15, context: context)),
                           ),
                         ),
                         child: Center(

@@ -11,7 +11,15 @@ class InitAddUserAddressItem extends StatelessWidget {
   final String price;
   final String thumbnail;
 
-  const InitAddUserAddressItem({Key key, @required this.isActive, @required this.name, @required this.time, @required this.price, @required this.thumbnail, @required this.nameId}) : super(key: key);
+  const InitAddUserAddressItem({
+    super.key,
+    required this.isActive,
+    required this.name,
+    required this.time,
+    required this.price,
+    required this.thumbnail,
+    required this.nameId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +27,20 @@ class InitAddUserAddressItem extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: isActive ? newRedDark : Colors.transparent),
         color: whiteColor,
-        borderRadius: BorderRadius.circular(heightRatio(size: 5, context: context)),
-        boxShadow: [BoxShadow(color: newShadow, offset: Offset(2, 2), blurRadius: 4, spreadRadius: 0)],
+        borderRadius:
+            BorderRadius.circular(heightRatio(size: 5, context: context)),
+        boxShadow: [
+          BoxShadow(
+              color: newShadow,
+              offset: Offset(2, 2),
+              blurRadius: 4,
+              spreadRadius: 0)
+        ],
       ),
       margin: EdgeInsets.only(top: heightRatio(size: 20, context: context)),
-      padding: EdgeInsets.symmetric(vertical: heightRatio(size: 13, context: context), horizontal: widthRatio(size: 9, context: context)),
+      padding: EdgeInsets.symmetric(
+          vertical: heightRatio(size: 13, context: context),
+          horizontal: widthRatio(size: 9, context: context)),
       child: Row(
         children: [
           thumbnail != ""
@@ -36,7 +53,8 @@ class InitAddUserAddressItem extends StatelessWidget {
               : SizedBox(width: widthRatio(size: 51.5, context: context)),
           SizedBox(width: widthRatio(size: 7, context: context)),
           Container(
-            width: MediaQuery.of(context).size.width - widthRatio(size: 114, context: context),
+            width: MediaQuery.of(context).size.width -
+                widthRatio(size: 114, context: context),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -84,10 +102,16 @@ class InitAddUserAddressItem extends StatelessWidget {
                         children: <TextSpan>[
                           TextSpan(
                             text: '$price ',
-                            style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), color: newRedDark),
+                            style: appLabelTextStyle(
+                                fontSize:
+                                    heightRatio(size: 12, context: context),
+                                color: newRedDark),
                           ),
                           TextSpan(
-                            style: appTextStyle(fontSize: heightRatio(size: 12, context: context), color: newRedDark),
+                            style: appTextStyle(
+                                fontSize:
+                                    heightRatio(size: 12, context: context),
+                                color: newRedDark),
                             text: '₽',
                           ),
                         ],

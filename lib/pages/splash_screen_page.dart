@@ -7,7 +7,7 @@ import 'package:smart/bloc_files/reg_page_bloc.dart';
 import 'package:smart/bloc_files/secondary_pages_bloc.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,9 @@ class SplashScreen extends StatelessWidget {
         builder: (context, currentState) => Container(
           width: double.maxFinite,
           decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage("assets/images/splash-bg.jpg"), fit: BoxFit.fill),
+            image: DecorationImage(
+                image: AssetImage("assets/images/splash-bg.jpg"),
+                fit: BoxFit.fill),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.max,

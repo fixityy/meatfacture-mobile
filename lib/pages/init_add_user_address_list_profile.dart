@@ -18,15 +18,21 @@ import 'package:smart/core/constants/text_styles.dart';
 class InitAddUserAddressListProfile extends StatefulWidget {
   final List<AddressesShopModel> findNearbyStoreDataModelList;
   final Function(String shopUuid, String shopAddress, String shopLogo) onSave;
-  const InitAddUserAddressListProfile({Key key, @required this.findNearbyStoreDataModelList, @required this.onSave}) : super(key: key);
+  const InitAddUserAddressListProfile({
+    super.key,
+    required this.findNearbyStoreDataModelList,
+    required this.onSave,
+  });
 
   @override
-  State<InitAddUserAddressListProfile> createState() => _InitAddUserAddressListProfileState();
+  State<InitAddUserAddressListProfile> createState() =>
+      _InitAddUserAddressListProfileState();
 }
 
-class _InitAddUserAddressListProfileState extends State<InitAddUserAddressListProfile> {
-  int selectedIndex;
-  String selectedUuid;
+class _InitAddUserAddressListProfileState
+    extends State<InitAddUserAddressListProfile> {
+  late int selectedIndex;
+  String? selectedUuid;
 
   @override
   void initState() {
@@ -34,7 +40,8 @@ class _InitAddUserAddressListProfileState extends State<InitAddUserAddressListPr
     selectedIndex = 0;
     final shopState = context.read<AddressesShopBloc>().state;
     if (shopState is LoadedAddressesShopState) {
-      selectedUuid = shopState.selectedShop?.uuid ?? widget.findNearbyStoreDataModelList.first.uuid;
+      selectedUuid = shopState.selectedShop?.uuid ??
+          widget.findNearbyStoreDataModelList.first.uuid;
     }
   }
 
@@ -51,16 +58,22 @@ class _InitAddUserAddressListProfileState extends State<InitAddUserAddressListPr
             children: [
               SizedBox(height: heightRatio(size: 5, context: context)),
               Padding(
-                padding: EdgeInsets.only(left: widthRatio(size: 17, context: context)),
+                padding: EdgeInsets.only(
+                    left: widthRatio(size: 17, context: context)),
                 child: Text(
                   "Адрес доставки",
-                  style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 22, context: context)),
+                  style: appHeadersTextStyle(
+                      color: Colors.white,
+                      fontSize: heightRatio(size: 22, context: context)),
                   textAlign: TextAlign.left,
                 ),
               ),
               SizedBox(height: heightRatio(size: 12, context: context)),
               InkWell(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddressesMyDelivery())),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddressesMyDelivery())),
                 child: Row(
                   children: [
                     SizedBox(width: widthRatio(size: 16, context: context)),
@@ -73,7 +86,13 @@ class _InitAddUserAddressListProfileState extends State<InitAddUserAddressListPr
                     SizedBox(width: widthRatio(size: 12, context: context)),
                     Expanded(
                       child: Text(
-                        selectedUuid != null ? widget.findNearbyStoreDataModelList.firstWhere((store) => store.uuid == selectedUuid, orElse: () => null)?.address ?? "notSelectedText".tr() : "notSelectedText".tr(),
+                        selectedUuid != null
+                            ? widget.findNearbyStoreDataModelList
+                                    .firstWhere(
+                                        (store) => store.uuid == selectedUuid)
+                                    ?.address ??
+                                "notSelectedText".tr()
+                            : "notSelectedText".tr(),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: appLabelTextStyle(
@@ -106,8 +125,10 @@ class _InitAddUserAddressListProfileState extends State<InitAddUserAddressListPr
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                      topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                      topLeft: Radius.circular(
+                          heightRatio(size: 15, context: context)),
+                      topRight: Radius.circular(
+                          heightRatio(size: 15, context: context)),
                     ),
                   ),
                   child: Stack(
@@ -115,21 +136,35 @@ class _InitAddUserAddressListProfileState extends State<InitAddUserAddressListPr
                       SingleChildScrollView(
                         child: Container(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 17, context: context), vertical: heightRatio(size: 25, context: context)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    widthRatio(size: 17, context: context),
+                                vertical:
+                                    heightRatio(size: 25, context: context)),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   'Эти магазины доставляют к вам',
-                                  style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                                  style: appHeadersTextStyle(
+                                      fontSize: heightRatio(
+                                          size: 16, context: context),
+                                      color: newBlack),
                                 ),
                                 SizedBox(
-                                  height: (heightRatio(size: 110, context: context) * widget.findNearbyStoreDataModelList.length).toDouble(),
+                                  height: (heightRatio(
+                                              size: 110, context: context) *
+                                          widget.findNearbyStoreDataModelList
+                                              .length)
+                                      .toDouble(),
                                   child: ListView.builder(
-                                    itemCount: widget.findNearbyStoreDataModelList.length,
-                                    itemBuilder: (BuildContext context, int index) {
-                                      AddressesShopModel store = widget.findNearbyStoreDataModelList[index];
+                                    itemCount: widget
+                                        .findNearbyStoreDataModelList.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      AddressesShopModel store = widget
+                                          .findNearbyStoreDataModelList[index];
                                       return InkWell(
                                         onTap: () {
                                           selectedUuid = store.uuid;
@@ -139,12 +174,19 @@ class _InitAddUserAddressListProfileState extends State<InitAddUserAddressListPr
                                           setState(() {});
                                         },
                                         child: InitAddUserAddressItem(
-                                          isActive: selectedUuid != null ? store.uuid == selectedUuid : selectedIndex == index,
-                                          name: '${store.organizationName}, ${store.address}',
+                                          isActive: selectedUuid != null
+                                              ? store.uuid == selectedUuid
+                                              : selectedIndex == index,
+                                          name:
+                                              '${store.organizationName}, ${store.address}',
                                           nameId: store.uuid,
-                                          time: '${store.workHoursFrom} - ${store.workHoursTill}',
+                                          time:
+                                              '${store.workHoursFrom} - ${store.workHoursTill}',
                                           price: store.deliveryPrice,
-                                          thumbnail: store.image != null ? store.image.thumbnails.the1000X1000 : '',
+                                          thumbnail: store.image != null
+                                              ? store
+                                                  .image.thumbnails.the1000X1000
+                                              : '',
                                         ),
                                       );
                                     },
@@ -152,36 +194,58 @@ class _InitAddUserAddressListProfileState extends State<InitAddUserAddressListPr
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    final selectedShop = widget.findNearbyStoreDataModelList[selectedIndex];
+                                    final selectedShop =
+                                        widget.findNearbyStoreDataModelList[
+                                            selectedIndex];
                                     widget.onSave(
                                       selectedShop.uuid,
                                       selectedShop.address,
-                                      selectedShop.image != null && selectedShop.image != "" ? selectedShop.image.thumbnails.the1000X1000 : "",
+                                      selectedShop.image != null &&
+                                              selectedShop.image != ""
+                                          ? selectedShop
+                                              .image.thumbnails.the1000X1000
+                                          : "",
                                     );
                                     // Обновляем выбранный магазин:
-                                    context.read<AddressesShopBloc>().add(SelectAddressShopEvent(shopUuid: selectedShop.uuid));
+                                    context.read<AddressesShopBloc>().add(
+                                        SelectAddressShopEvent(
+                                            shopUuid: selectedShop.uuid));
 
                                     // Обновляем адреса клиента:
-                                    context.read<AddressesClientBloc>().add(LoadedAddressesClientEvent());
+                                    context
+                                        .read<AddressesClientBloc>()
+                                        .add(LoadedAddressesClientEvent());
 
                                     // Перезапрашиваем каталог
-                                    context.read<CatalogsBloc>().add(CatalogsLoadEvent());
+                                    context
+                                        .read<CatalogsBloc>()
+                                        .add(CatalogsLoadEvent());
                                     // context.read<AssortmentsListBloc>().add(AssortmentsListLoadEvent());
 
                                     // Перезапрашиваем корзину (так как цены и доступность могут измениться)
-                                    context.read<BasketListBloc>().add(BasketLoadEvent());
+                                    context
+                                        .read<BasketListBloc>()
+                                        .add(BasketLoadEvent());
 
                                     Navigator.pop(context);
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
-                                    margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 37, context: context)),
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: widthRatio(
+                                            size: 37, context: context)),
                                     width: MediaQuery.of(context).size.width,
-                                    height: heightRatio(size: 54, context: context),
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
+                                    height:
+                                        heightRatio(size: 54, context: context),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: newRedDark),
                                     child: Text(
                                       'Подтвердить',
-                                      style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                                      style: appLabelTextStyle(
+                                          color: Colors.white,
+                                          fontSize: heightRatio(
+                                              size: 16, context: context)),
                                     ),
                                   ),
                                 ),

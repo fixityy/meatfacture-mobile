@@ -1,6 +1,5 @@
 //events
 import 'dart:developer';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart/core/constants/shared_keys.dart';
@@ -12,7 +11,7 @@ abstract class AddressesClientEvent {}
 class LoadedAddressesClientEvent extends AddressesClientEvent {}
 
 class SelectAddressesClientEvent extends AddressesClientEvent {
-  final String addressUuid;
+  final String? addressUuid;
   SelectAddressesClientEvent(this.addressUuid);
 }
 
@@ -28,16 +27,16 @@ class LoadingClientAddressState extends ClientAddressState {}
 
 class LoadedClientAddressState extends ClientAddressState {
   final List<AddressClientModel> clientAddressModelList;
-  final AddressClientModel selectedAddress;
+  final AddressClientModel? selectedAddress;
 
   LoadedClientAddressState({
-    @required this.clientAddressModelList,
+    required this.clientAddressModelList,
     this.selectedAddress,
   });
 
   LoadedClientAddressState copyWith({
-    List<AddressClientModel> addresses,
-    AddressClientModel selectedAddress,
+    List<AddressClientModel>? addresses,
+    AddressClientModel? selectedAddress,
   }) {
     return LoadedClientAddressState(
       clientAddressModelList: addresses ?? this.clientAddressModelList,
@@ -46,13 +45,14 @@ class LoadedClientAddressState extends ClientAddressState {
   }
 }
 
-class AddressesClientBloc extends Bloc<AddressesClientEvent, ClientAddressState> {
+class AddressesClientBloc
+    extends Bloc<AddressesClientEvent, ClientAddressState> {
   final SharedPreferences prefs;
   final AddressesClientProvider addressProvider;
 
   AddressesClientBloc({
-    @required this.prefs,
-    @required this.addressProvider,
+    required this.prefs,
+    required this.addressProvider,
   }) : super(InitialClientAddressState());
 
   @override
@@ -74,10 +74,8 @@ class AddressesClientBloc extends Bloc<AddressesClientEvent, ClientAddressState>
       final addresses = response.data;
 
       final savedUuid = prefs.getString(SharedKeys.myAddressUuid);
-      final selected = addresses.firstWhere(
-        (a) => a.uuid == savedUuid,
-        orElse: () => addresses.isNotEmpty ? addresses.first : null,
-      );
+      final selected = addresses.firstWhere((a) => a.uuid == savedUuid) ??
+          (addresses.isNotEmpty ? addresses.first : null);
 
       yield LoadedClientAddressState(
         clientAddressModelList: addresses,
@@ -97,12 +95,11 @@ class AddressesClientBloc extends Bloc<AddressesClientEvent, ClientAddressState>
 
       final newSelected = currentState.clientAddressModelList.firstWhere(
         (a) => a.uuid == event.addressUuid,
-        orElse: () => null,
       );
 
       if (newSelected != null) {
         log('💾 setString myAddressUuid: ${event.addressUuid} / newSelected: $newSelected');
-        await prefs.setString(SharedKeys.myAddressUuid, event.addressUuid);
+        await prefs.setString(SharedKeys.myAddressUuid, event.addressUuid!);
         yield currentState.copyWith(selectedAddress: newSelected);
       }
     }

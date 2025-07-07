@@ -17,18 +17,20 @@ import 'package:webview_flutter/webview_flutter.dart';
 class CreditCardsLinkPage extends StatelessWidget {
   final String topText;
 
-  const CreditCardsLinkPage({@required this.topText});
+  const CreditCardsLinkPage({required this.topText});
   @override
   Widget build(BuildContext context) {
     // ignore: close_sinks
     // SecondaryPageBloc _bottomNavBloc =
     //     BlocProvider.of<SecondaryPageBloc>(context);
     // ignore: close_sinks
-    LoyaltyCardsListBloc _loyaltyCardsListBloc = BlocProvider.of<LoyaltyCardsListBloc>(context);
+    LoyaltyCardsListBloc _loyaltyCardsListBloc =
+        BlocProvider.of<LoyaltyCardsListBloc>(context);
     // ignore: close_sinks
     ProfileBloc _profileBloc = BlocProvider.of<ProfileBloc>(context);
     // ignore: close_sinks
-    CreditCardsListBloc _cardsListBloc = BlocProvider.of<CreditCardsListBloc>(context);
+    CreditCardsListBloc _cardsListBloc =
+        BlocProvider.of<CreditCardsListBloc>(context);
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -38,7 +40,9 @@ class CreditCardsLinkPage extends StatelessWidget {
         children: [
           SafeArea(
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: heightRatio(size: 15, context: context), horizontal: widthRatio(size: 20, context: context)),
+              padding: EdgeInsets.symmetric(
+                  vertical: heightRatio(size: 15, context: context),
+                  horizontal: widthRatio(size: 20, context: context)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -53,7 +57,12 @@ class CreditCardsLinkPage extends StatelessWidget {
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerLeft,
-                      child: Text(topText, textAlign: TextAlign.left, style: appTextStyle(fontWeight: FontWeight.w600, fontSize: heightRatio(size: 14, context: context))),
+                      child: Text(topText,
+                          textAlign: TextAlign.left,
+                          style: appTextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize:
+                                  heightRatio(size: 14, context: context))),
                     ),
                   ),
                   Expanded(child: SizedBox())
@@ -65,7 +74,8 @@ class CreditCardsLinkPage extends StatelessWidget {
             child: Container(
               alignment: Alignment.center,
               color: Colors.white,
-              child: BlocBuilder<UrlForCreditCardLinkBloc, UrlForCreditCardLinkState>(
+              child: BlocBuilder<UrlForCreditCardLinkBloc,
+                  UrlForCreditCardLinkState>(
                 builder: (context, state) {
                   if (state is UrlForCreditCardLinkLoadingState) {
                     return CircularProgressIndicator(
@@ -73,7 +83,7 @@ class CreditCardsLinkPage extends StatelessWidget {
                     );
                   }
                   if (state is UrlForCreditCardLinkLoadState) {
-                    WebViewController _webViewController;
+                    late WebViewController _webViewController;
                     return WebView(
                       initialUrl: state.urlForCreditCardLinkModel.data.formUrl,
                       onWebViewCreated: (controller) {
@@ -81,17 +91,26 @@ class CreditCardsLinkPage extends StatelessWidget {
                       },
                       javascriptMode: JavascriptMode.unrestricted,
                       onPageStarted: (progress) async {
-                        if (await _webViewController.currentUrl().then((value) => value.contains("success"))) {
-                          if (await CreditCardsProvider().setSuccessStatusOfLinkingCardResponse(orderId: state.urlForCreditCardLinkModel.data.orderId)) {
+                        if (await _webViewController.currentUrl().then(
+                            (value) => value?.contains("success") == true)) {
+                          if (await CreditCardsProvider()
+                              .setSuccessStatusOfLinkingCardResponse(
+                                  orderId: state.urlForCreditCardLinkModel.data
+                                      .orderId)) {
                             _cardsListBloc.add(CreditCardsListLoadEvent());
                             Navigator.pop(context);
                           }
                         }
 
-                        if (await _webViewController.currentUrl().then((value) => value.contains("error"))) {
+                        if (await _webViewController.currentUrl().then(
+                            (value) => value?.contains("error") == true)) {
                           Fluttertoast.showToast(msg: "CardLinkErrorText".tr());
-                          if (await CreditCardsProvider().setSErrorStatusOfLinkingCardResponse(orderId: state.urlForCreditCardLinkModel.data.orderId)) {
-                            _loyaltyCardsListBloc.add(LoyaltyCardsListLoadEvent());
+                          if (await CreditCardsProvider()
+                              .setSErrorStatusOfLinkingCardResponse(
+                                  orderId: state.urlForCreditCardLinkModel.data
+                                      .orderId)) {
+                            _loyaltyCardsListBloc
+                                .add(LoyaltyCardsListLoadEvent());
                             _profileBloc.add(ProfileLoadEvent());
                             _cardsListBloc.add(CreditCardsListLoadEvent());
                             // print("****" + await _webViewController.currentUrl());

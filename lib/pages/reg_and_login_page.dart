@@ -8,7 +8,7 @@ import 'package:smart/core/constants/source.dart';
 import 'package:smart/core/constants/text_styles.dart';
 
 class RegAndLoginPAge extends StatefulWidget {
-  const RegAndLoginPAge({Key key}) : super(key: key);
+  const RegAndLoginPAge({super.key});
 
   @override
   State<RegAndLoginPAge> createState() => _RegAndLoginPAgeState();
@@ -25,7 +25,9 @@ class _RegAndLoginPAgeState extends State<RegAndLoginPAge> {
           elevation: 0,
           shadowColor: Colors.white,
           title: Row(
-            mainAxisAlignment: currentState is LoginWidget ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
+            mainAxisAlignment: currentState is LoginWidget
+                ? MainAxisAlignment.spaceBetween
+                : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               currentState is LoginWidget
@@ -45,7 +47,11 @@ class _RegAndLoginPAgeState extends State<RegAndLoginPAge> {
                     )
                   : Container(
                       alignment: Alignment.center,
-                      child: Text("codeFromMessegeText".tr(), style: appTextStyle(color: Colors.black, fontSize: heightRatio(size: 17, context: context), fontWeight: FontWeight.w500)),
+                      child: Text("codeFromMessegeText".tr(),
+                          style: appTextStyle(
+                              color: Colors.black,
+                              fontSize: heightRatio(size: 17, context: context),
+                              fontWeight: FontWeight.w500)),
                     ),
               SizedBox(width: widthRatio(size: 20, context: context))
             ],
