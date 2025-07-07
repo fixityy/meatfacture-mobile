@@ -12,8 +12,8 @@ String notificationsListModelToJson(NotificationsListModel data) =>
 
 class NotificationsListModel {
   NotificationsListModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<NotificationsListDataModel> data;
@@ -34,10 +34,10 @@ class NotificationsListModel {
 
 class NotificationsListDataModel {
   NotificationsListDataModel({
-    this.id,
-    this.type,
-    this.data,
-    this.createdAt,
+    required this.id,
+    required this.type,
+    required this.data,
+    required this.createdAt,
     this.readAt,
   });
 
@@ -67,9 +67,9 @@ class NotificationsListDataModel {
 
 class NotificationsDataModel {
   NotificationsDataModel({
-    this.title,
-    this.body,
-    this.meta,
+    required this.title,
+    required this.body,
+    required this.meta,
   });
 
   String title;
@@ -95,14 +95,14 @@ class NotificationsDataModel {
 
 class DataMeta {
   DataMeta({
-    this.type,
-    this.id,
+    required this.type,
+    required this.id,
     this.url,
   });
 
   String type;
   String id;
-  String url;
+  String? url;
 
   factory DataMeta.fromJson(Map<String, dynamic> json) => DataMeta(
         type: json["type"],
@@ -119,12 +119,12 @@ class DataMeta {
 
 class NotificationsListModelMeta {
   NotificationsListModelMeta({
-    this.currentPage,
-    this.from,
-    this.lastPage,
-    this.perPage,
-    this.to,
-    this.total,
+    required this.currentPage,
+    required this.from,
+    required this.lastPage,
+    required this.perPage,
+    required this.to,
+    required this.total,
   });
 
   int currentPage;

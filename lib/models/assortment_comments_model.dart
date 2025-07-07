@@ -2,12 +2,12 @@ import 'package:smart/models/meta_model.dart';
 
 class AssortmentCommentsModel {
   AssortmentCommentsModel({
-    this.data,
+    required this.data,
     this.meta,
   });
 
   List<AssortmentCommentsDataModel> data;
-  MetaModel meta;
+  MetaModel? meta;
 
   factory AssortmentCommentsModel.fromJson(Map<String, dynamic> json) =>
       AssortmentCommentsModel(
@@ -18,19 +18,19 @@ class AssortmentCommentsModel {
 
   Map<String, dynamic> toJson() => {
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
-        "meta": meta.toJson(),
+        "meta": meta?.toJson(),
       };
 }
 
 class AssortmentCommentsDataModel {
   AssortmentCommentsDataModel({
-    this.createdAt,
-    this.assortmentUuid,
-    this.assortmentName,
-    this.value,
-    this.comment,
-    this.clientUuid,
-    this.clientName,
+    required this.createdAt,
+    required this.assortmentUuid,
+    required this.assortmentName,
+    required this.value,
+    required this.comment,
+    required this.clientUuid,
+    required this.clientName,
   });
 
   String createdAt;

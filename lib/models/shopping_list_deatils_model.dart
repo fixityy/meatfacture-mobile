@@ -2,7 +2,7 @@ import 'package:smart/models/shopping_list_details_data_model.dart';
 
 class ShoppingListDeatailsModel {
   ShoppingListDeatailsModel({
-    this.data,
+    required this.data,
   });
 
   ShoppingListDetailsDataModel data;

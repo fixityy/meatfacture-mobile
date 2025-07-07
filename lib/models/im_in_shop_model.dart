@@ -2,7 +2,7 @@ import 'package:smart/models/Assortments_image_model.dart';
 
 class ImInShopModel {
   ImInShopModel({
-    this.data,
+    required this.data,
   });
 
   Data data;
@@ -18,17 +18,17 @@ class ImInShopModel {
 
 class Data {
   Data({
-    this.uuid,
-    this.storeUuid,
-    this.storeName,
+    required this.uuid,
+    required this.storeUuid,
+    required this.storeName,
     this.discountPercent,
-    this.products,
+    required this.products,
   });
 
   String uuid;
   String storeUuid;
   String storeName;
-  double discountPercent;
+  double? discountPercent;
   List<Product> products;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -53,20 +53,20 @@ class Data {
 
 class Product {
   Product({
-    this.uuid,
-    this.name,
+    required this.uuid,
+    required this.name,
     this.rating,
-    this.images,
-    this.price,
-    this.priceWithDiscount,
-    this.discountType,
-    this.discountTypeColor,
-    this.discountTypeName,
+    required this.images,
+    required this.price,
+    required this.priceWithDiscount,
+    required this.discountType,
+    required this.discountTypeColor,
+    required this.discountTypeName,
     this.quantity,
-    this.assortmentUnitId,
-    this.quantityInClientCart,
-    this.totalBonus,
-    this.weight,
+    required this.assortmentUnitId,
+    required this.quantityInClientCart,
+    required this.totalBonus,
+    required this.weight,
   });
 
   String uuid;
@@ -76,11 +76,11 @@ class Product {
   String discountTypeColor;
   String weight;
   String name;
-  RatingForImInShopModel rating;
+  RatingForImInShopModel? rating;
   List<ImageModel> images;
   double price;
   double priceWithDiscount;
-  double quantity;
+  double? quantity;
   double quantityInClientCart;
   String assortmentUnitId;
   int totalBonus;
@@ -119,7 +119,7 @@ class Product {
         "discount-type": discountType,
         "discount-type-name": discountTypeName,
         "name": name,
-        "rating": rating == null ? null : rating.toJson(),
+        "rating": rating == null ? null : rating!.toJson(),
         "images": List<dynamic>.from(images.map((x) => x.toJson())),
         "price": price,
         "price_with_discount": priceWithDiscount,
@@ -129,14 +129,14 @@ class Product {
 
 class RatingForImInShopModel {
   RatingForImInShopModel({
-    this.uuid,
-    this.referenceType,
-    this.referenceId,
-    this.ratingTypeId,
+    required this.uuid,
+    required this.referenceType,
+    required this.referenceId,
+    required this.ratingTypeId,
     this.value,
     this.additionalAttributes,
-    this.createdAt,
-    this.updatedAt,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   String uuid;

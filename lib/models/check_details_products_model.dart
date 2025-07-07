@@ -2,7 +2,7 @@ import 'package:smart/models/assortments_thumbnails_model.dart';
 
 class CheckDetailsProductsModel {
   CheckDetailsProductsModel({
-    this.data,
+    required this.data,
   });
 
   List<CheckDetailsProductsDataModel> data;
@@ -19,48 +19,49 @@ class CheckDetailsProductsModel {
 }
 
 class CheckDetailsProductsDataModel {
-  CheckDetailsProductsDataModel(
-      {this.uuid,
-      this.assortmentUuid,
-      this.assortmentName,
-      this.quantity,
-      this.total,
-      this.rating,
-      this.ratingComment,
-      this.assortmentImages,
-      this.originalPrice,
-      this.assortmentRating,
-      this.price,
-      this.discountableType,
-      this.discountTypeColor,
-      this.discountTypeName,
-      this.discount,
-      this.totalDiscount,
-      this.assortmentUnitId,
-      this.paidBonus,
-      this.totalBonus,
-      this.assortmentWeight});
+  CheckDetailsProductsDataModel({
+    required this.uuid,
+    required this.assortmentUuid,
+    required this.assortmentName,
+    required this.quantity,
+    required this.total,
+    this.rating,
+    required this.ratingComment,
+    required this.assortmentImages,
+    this.originalPrice,
+    this.assortmentRating,
+    this.price,
+    required this.discountableType,
+    required this.discountTypeColor,
+    required this.discountTypeName,
+    required this.discount,
+    this.totalDiscount,
+    required this.assortmentUnitId,
+    this.paidBonus,
+    this.totalBonus,
+    this.assortmentWeight,
+  });
 
   String uuid;
   String assortmentUuid;
   String assortmentName;
   double quantity;
   String total;
-  double rating;
-  String ratingComment;
-  double assortmentRating;
+  double? rating;
+  String? ratingComment;
+  double? assortmentRating;
   List<HistoryCheckAssortmentImage> assortmentImages;
-  double originalPrice;
-  double price;
-  String discountableType;
-  String discountTypeColor;
-  String discountTypeName;
+  num? originalPrice;
+  double? price;
+  String? discountableType;
+  String? discountTypeColor;
+  String? discountTypeName;
   String discount;
-  double totalDiscount;
+  num? totalDiscount;
   String assortmentUnitId;
-  double paidBonus;
-  double totalBonus;
-  double assortmentWeight;
+  double? paidBonus;
+  double? totalBonus;
+  double? assortmentWeight;
 
   factory CheckDetailsProductsDataModel.fromJson(Map<String, dynamic> json) =>
       CheckDetailsProductsDataModel(
@@ -116,9 +117,9 @@ class CheckDetailsProductsDataModel {
 
 class HistoryCheckAssortmentImage {
   HistoryCheckAssortmentImage({
-    this.uuid,
-    this.path,
-    this.thumbnails,
+    required this.uuid,
+    required this.path,
+    required this.thumbnails,
   });
 
   String uuid;

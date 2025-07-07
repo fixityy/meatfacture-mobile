@@ -1,8 +1,12 @@
 import 'package:smart/models/shopping_lists_assortment_model.dart';
 
 class ShoppingListDataModel {
-  ShoppingListDataModel(
-      {this.uuid, this.name, this.assortments, this.addingcheck});
+  ShoppingListDataModel({
+    required this.uuid,
+    required this.name,
+    required this.assortments,
+    required this.addingcheck,
+  });
 
   String uuid;
   String name;

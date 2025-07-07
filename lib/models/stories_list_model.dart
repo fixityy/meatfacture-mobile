@@ -3,15 +3,17 @@ import 'package:smart/core/constants/source.dart';
 
 class StoriesListModel {
   StoriesListModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<StoriesListDataModel> data;
   MetaModel meta;
 
-  factory StoriesListModel.fromJson(Map<String, dynamic> json) => StoriesListModel(
-        data: List<StoriesListDataModel>.from(json["data"].map((x) => StoriesListDataModel.fromJson(x))),
+  factory StoriesListModel.fromJson(Map<String, dynamic> json) =>
+      StoriesListModel(
+        data: List<StoriesListDataModel>.from(
+            json["data"].map((x) => StoriesListDataModel.fromJson(x))),
         meta: MetaModel.fromJson(json["meta"]),
       );
 
@@ -23,11 +25,11 @@ class StoriesListModel {
 
 class StoriesListDataModel {
   StoriesListDataModel({
-    this.id,
-    this.name,
-    this.logoFilePath,
-    this.tabs,
-    this.createdAt,
+    required this.id,
+    required this.name,
+    required this.logoFilePath,
+    required this.tabs,
+    required this.createdAt,
   });
 
   int id;
@@ -36,11 +38,13 @@ class StoriesListDataModel {
   List<TabModel> tabs;
   String createdAt;
 
-  factory StoriesListDataModel.fromJson(Map<String, dynamic> json) => StoriesListDataModel(
+  factory StoriesListDataModel.fromJson(Map<String, dynamic> json) =>
+      StoriesListDataModel(
         id: json["id"],
         name: json["name"],
         logoFilePath: json["logo_file_path"],
-        tabs: List<TabModel>.from(json["tabs"].map((x) => TabModel.fromJson(x))),
+        tabs:
+            List<TabModel>.from(json["tabs"].map((x) => TabModel.fromJson(x))),
         createdAt: json["created_at"],
       );
 
@@ -54,7 +58,16 @@ class StoriesListDataModel {
 }
 
 class TabModel {
-  TabModel({this.id, this.title, this.text, this.duration, this.buttonTitle, this.url, this.logoFilePath, this.textColor});
+  TabModel({
+    required this.id,
+    required this.title,
+    required this.text,
+    required this.duration,
+    required this.buttonTitle,
+    required this.url,
+    required this.logoFilePath,
+    required this.textColor,
+  });
 
   int id;
   String title;

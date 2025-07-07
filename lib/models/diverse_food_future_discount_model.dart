@@ -3,7 +3,7 @@ class DiverseFoodFutureDiscountModel {
     this.data,
   });
 
-  DiverseFoodFutureDiscountDataModel data;
+  DiverseFoodFutureDiscountDataModel? data;
 
   factory DiverseFoodFutureDiscountModel.fromJson(Map<String, dynamic> json) =>
       DiverseFoodFutureDiscountModel(
@@ -13,17 +13,17 @@ class DiverseFoodFutureDiscountModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "data": data.toJson(),
+        "data": data?.toJson(),
       };
 }
 
 class DiverseFoodFutureDiscountDataModel {
   DiverseFoodFutureDiscountDataModel({
-    this.uuid,
-    this.countPurchases,
-    this.countRatingScores,
-    this.discountPercent,
-    this.isEnabled,
+    required this.uuid,
+    required this.countPurchases,
+    required this.countRatingScores,
+    required this.discountPercent,
+    required this.isEnabled,
   });
 
   String uuid;

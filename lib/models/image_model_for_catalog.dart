@@ -2,9 +2,9 @@ import 'package:smart/models/assortments_thumbnails_model.dart';
 
 class ImageModelForCatalog {
   ImageModelForCatalog({
-    this.uuid,
-    this.path,
-    this.thumbnails,
+    required this.uuid,
+    required this.path,
+    required this.thumbnails,
   });
 
   String uuid;

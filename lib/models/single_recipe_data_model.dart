@@ -4,12 +4,14 @@ class SingleRecipeDataModel {
   Data data;
 
   SingleRecipeDataModel({
-    this.data,
+    required this.data,
   });
 
-  factory SingleRecipeDataModel.fromJson(String str) => SingleRecipeDataModel.fromMap(json.decode(str));
+  factory SingleRecipeDataModel.fromJson(String str) =>
+      SingleRecipeDataModel.fromMap(json.decode(str));
 
-  factory SingleRecipeDataModel.fromMap(Map<String, dynamic> json) => SingleRecipeDataModel(
+  factory SingleRecipeDataModel.fromMap(Map<String, dynamic> json) =>
+      SingleRecipeDataModel(
         data: Data.fromMap(json["data"]),
       );
 }
@@ -31,20 +33,20 @@ class Data {
   String updatedAt;
 
   Data({
-    this.uuid,
-    this.name,
-    this.section,
-    this.title,
-    this.description,
-    this.ingredients,
-    this.duration,
-    this.isFavorite,
-    this.clientLikeValue,
-    this.filePath,
-    this.assortments,
-    this.tabs,
-    this.createdAt,
-    this.updatedAt,
+    required this.uuid,
+    required this.name,
+    required this.section,
+    required this.title,
+    required this.description,
+    required this.ingredients,
+    required this.duration,
+    required this.isFavorite,
+    required this.clientLikeValue,
+    required this.filePath,
+    required this.assortments,
+    required this.tabs,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory Data.fromJson(String str) => Data.fromMap(json.decode(str));
@@ -55,12 +57,14 @@ class Data {
         section: json["section"],
         title: json["title"],
         description: json["description"],
-        ingredients: List<Ingredient>.from(json["ingredients"].map((x) => Ingredient.fromMap(x))),
+        ingredients: List<Ingredient>.from(
+            json["ingredients"].map((x) => Ingredient.fromMap(x))),
         duration: json["duration"],
         isFavorite: json["is_favorite"],
         clientLikeValue: json["client_like_value"],
         filePath: json["file_path"],
-        assortments: List<Assortment>.from(json["assortments"].map((x) => Assortment.fromMap(x))),
+        assortments: List<Assortment>.from(
+            json["assortments"].map((x) => Assortment.fromMap(x))),
         tabs: List<Tab>.from(json["tabs"].map((x) => Tab.fromMap(x))),
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
@@ -77,16 +81,17 @@ class Assortment {
   int quantity;
 
   Assortment({
-    this.uuid,
-    this.name,
-    this.assortmentUnitId,
-    this.weight,
-    this.rating,
-    this.images,
-    this.quantity,
+    required this.uuid,
+    required this.name,
+    required this.assortmentUnitId,
+    required this.weight,
+    required this.rating,
+    required this.images,
+    required this.quantity,
   });
 
-  factory Assortment.fromJson(String str) => Assortment.fromMap(json.decode(str));
+  factory Assortment.fromJson(String str) =>
+      Assortment.fromMap(json.decode(str));
 
   factory Assortment.fromMap(Map<String, dynamic> json) => Assortment(
         uuid: json["uuid"],
@@ -105,9 +110,9 @@ class Image {
   Thumbnails thumbnails;
 
   Image({
-    this.uuid,
-    this.path,
-    this.thumbnails,
+    required this.uuid,
+    required this.path,
+    required this.thumbnails,
   });
 
   factory Image.fromJson(String str) => Image.fromMap(json.decode(str));
@@ -123,10 +128,11 @@ class Thumbnails {
   String the1000X1000;
 
   Thumbnails({
-    this.the1000X1000,
+    required this.the1000X1000,
   });
 
-  factory Thumbnails.fromJson(String str) => Thumbnails.fromMap(json.decode(str));
+  factory Thumbnails.fromJson(String str) =>
+      Thumbnails.fromMap(json.decode(str));
 
   factory Thumbnails.fromMap(Map<String, dynamic> json) => Thumbnails(
         the1000X1000: json["1000x1000"],
@@ -138,11 +144,12 @@ class Ingredient {
   String quantity;
 
   Ingredient({
-    this.name,
-    this.quantity,
+    required this.name,
+    required this.quantity,
   });
 
-  factory Ingredient.fromJson(String str) => Ingredient.fromMap(json.decode(str));
+  factory Ingredient.fromJson(String str) =>
+      Ingredient.fromMap(json.decode(str));
 
   factory Ingredient.fromMap(Map<String, dynamic> json) => Ingredient(
         name: json["name"],
@@ -164,17 +171,17 @@ class Tab {
   String updatedAt;
 
   Tab({
-    this.uuid,
-    this.title,
-    this.text,
-    this.textColor,
-    this.duration,
-    this.sequence,
-    this.buttonTitle,
-    this.url,
-    this.filePath,
-    this.createdAt,
-    this.updatedAt,
+    required this.uuid,
+    required this.title,
+    required this.text,
+    required this.textColor,
+    required this.duration,
+    required this.sequence,
+    required this.buttonTitle,
+    required this.url,
+    required this.filePath,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory Tab.fromJson(String str) => Tab.fromMap(json.decode(str));

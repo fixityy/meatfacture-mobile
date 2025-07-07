@@ -2,8 +2,8 @@ import 'package:smart/models/meta_model.dart';
 
 class SocialsListModel {
   SocialsListModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<SocialsListDataModel> data;
@@ -24,13 +24,13 @@ class SocialsListModel {
 
 class SocialsListDataModel {
   SocialsListDataModel({
-    this.uuid,
-    this.title,
-    this.sortNumber,
-    this.url,
-    this.logoFileUuid,
-    this.logoFilePath,
-    this.createdAt,
+    required this.uuid,
+    required this.title,
+    required this.sortNumber,
+    required this.url,
+    required this.logoFileUuid,
+    required this.logoFilePath,
+    required this.createdAt,
   });
 
   String uuid;

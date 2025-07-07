@@ -3,15 +3,16 @@ import 'package:smart/models/meta_model.dart';
 
 class CatalogsModel {
   CatalogsModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<CatalogListModel> data;
   MetaModel meta;
 
   factory CatalogsModel.fromJson(Map<String, dynamic> json) => CatalogsModel(
-        data: List<CatalogListModel>.from(json["data"].map((x) => CatalogListModel.fromJson(x))),
+        data: List<CatalogListModel>.from(
+            json["data"].map((x) => CatalogListModel.fromJson(x))),
         meta: MetaModel.fromJson(json["meta"]),
       );
 

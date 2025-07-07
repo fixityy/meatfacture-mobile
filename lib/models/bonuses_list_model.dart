@@ -2,8 +2,8 @@ import 'package:smart/models/meta_model.dart';
 
 class BonusesListModel {
   BonusesListModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<BonusesListDataModel> data;
@@ -24,21 +24,21 @@ class BonusesListModel {
 
 class BonusesListDataModel {
   BonusesListDataModel({
-    this.uuid,
-    this.clientUuid,
+    required this.uuid,
+    required this.clientUuid,
     this.relatedReferenceId,
     this.relatedReferenceType,
-    this.reason,
-    this.quantityOld,
-    this.quantityNew,
-    this.quantityDelta,
-    this.createdAt,
+    required this.reason,
+    required this.quantityOld,
+    required this.quantityNew,
+    required this.quantityDelta,
+    required this.createdAt,
   });
 
   String uuid;
   String clientUuid;
-  String relatedReferenceId;
-  String relatedReferenceType;
+  String? relatedReferenceId;
+  String? relatedReferenceType;
   String reason;
   int quantityOld;
   int quantityNew;

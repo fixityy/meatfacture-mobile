@@ -29,18 +29,19 @@
 import 'package:smart/models/loyalty_card_type.dart';
 
 class ShoppingCheckListDataModel {
-  ShoppingCheckListDataModel(
-      {this.uuid,
-      this.id,
-      this.total,
-      this.createdAt,
-      this.storeBrandName,
-      this.storeAddress,
-      this.receiptLinesCount,
-      this.loyaltyCardTypes,
-      this.bonusToCharge,
-      this.paidBonus,
-      this.totalBonus});
+  ShoppingCheckListDataModel({
+    required this.uuid,
+    required this.id,
+    required this.total,
+    required this.createdAt,
+    required this.storeBrandName,
+    required this.storeAddress,
+    required this.receiptLinesCount,
+    required this.loyaltyCardTypes,
+    required this.bonusToCharge,
+    required this.paidBonus,
+    required this.totalBonus,
+  });
 
   String uuid;
   int id;

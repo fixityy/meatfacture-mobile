@@ -1,6 +1,6 @@
 class DiverseFoodStatsModel {
   DiverseFoodStatsModel({
-    this.data,
+    required this.data,
   });
 
   List<DiverseFoodStatsDataModel> data;
@@ -18,13 +18,13 @@ class DiverseFoodStatsModel {
 
 class DiverseFoodStatsDataModel {
   DiverseFoodStatsDataModel({
-    this.uuid,
-    this.month,
-    this.clientUuid,
-    this.purchasedCount,
-    this.ratedCount,
-    this.createdAt,
-    this.updatedAt,
+    required this.uuid,
+    required this.month,
+    required this.clientUuid,
+    required this.purchasedCount,
+    required this.ratedCount,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   String uuid;

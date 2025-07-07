@@ -15,53 +15,58 @@ class AssortmentsListModel {
     this.discountType,
     this.discountTypeColor,
     this.discountTypeName,
-    this.isFavorite,
+    this.isFavorite = false,
     this.tags,
     this.currentPrice,
     this.productsQuantity,
     this.priceWithDiscount,
     this.assortmentUnitId,
-    this.isPromoFavorite,
+    this.isPromoFavorite = false,
     this.quantityInClientCart,
     this.totalBonus,
-    this.hasYellowPrice,
+    this.hasYellowPrice = false,
     this.isShow = false,
     this.isEmpty = false,
   });
 
-  String uuid;
+  String? uuid;
 
-  String discountTypeName;
-  String discountType;
-  String discountTypeColor;
+  String? discountTypeName;
+  String? discountType;
+  String? discountTypeColor;
 
-  String catalogUuid;
-  String catalogName;
-  String name;
-  String shortName;
-  String assortmentUnitId;
-  double quantityInClientCart;
-  String weight;
-  String volume;
+  String? catalogUuid;
+  String? catalogName;
+  String? name;
+  String? shortName;
+  String? assortmentUnitId;
+  double? quantityInClientCart;
+  String? weight;
+  String? volume;
   bool hasYellowPrice;
   dynamic rating;
-  List<ImageModel> images;
+  List<ImageModel>? images;
   dynamic manufacturer;
   bool isFavorite;
-  double priceWithDiscount;
+  double? priceWithDiscount;
   bool isPromoFavorite;
-  List<dynamic> tags;
-  String currentPrice;
+  List<dynamic>? tags;
+  String? currentPrice;
   var productsQuantity;
-  double totalBonus;
+  double? totalBonus;
   bool isbasketAdding = false;
   bool isShow;
   bool isEmpty;
 
-  factory AssortmentsListModel.fromJson(Map<String, dynamic> json) => AssortmentsListModel(
-        quantityInClientCart: json["quantity_in_client_cart"] != null ? double.parse(json["quantity_in_client_cart"].toString()) : null,
+  factory AssortmentsListModel.fromJson(Map<String, dynamic> json) =>
+      AssortmentsListModel(
+        quantityInClientCart: json["quantity_in_client_cart"] != null
+            ? double.parse(json["quantity_in_client_cart"].toString())
+            : null,
         hasYellowPrice: json["has_yellow_price"],
-        totalBonus: json["total_bonus"] == null ? null : double.parse(json["total_bonus"].toString()),
+        totalBonus: json["total_bonus"] == null
+            ? null
+            : double.parse(json["total_bonus"].toString()),
         isPromoFavorite: json["is_promo_favorite"],
         assortmentUnitId: json["assortment_unit_id"],
         uuid: json["uuid"],
@@ -75,8 +80,11 @@ class AssortmentsListModel {
         weight: json["weight"],
         volume: json["volume"],
         rating: json["rating"],
-        priceWithDiscount: json["price_with_discount"] == null ? null : double.parse(json["price_with_discount"].toString()),
-        images: List<ImageModel>.from(json["images"].map((x) => ImageModel.fromJson(x))),
+        priceWithDiscount: json["price_with_discount"] == null
+            ? null
+            : double.parse(json["price_with_discount"].toString()),
+        images: List<ImageModel>.from(
+            json["images"].map((x) => ImageModel.fromJson(x))),
         manufacturer: json["manufacturer"],
         isFavorite: json["is_favorite"],
         tags: List<dynamic>.from(json["tags"].map((x) => x)),
@@ -100,10 +108,10 @@ class AssortmentsListModel {
         "volume": volume,
         "rating": rating,
         "quantity_in_client_cart": quantityInClientCart,
-        "images": List<dynamic>.from(images.map((x) => x.toJson())),
+        "images": List<dynamic>.from(images!.map((x) => x.toJson())),
         "manufacturer": manufacturer,
         "is_favorite": isFavorite,
-        "tags": List<dynamic>.from(tags.map((x) => x)),
+        "tags": List<dynamic>.from(tags!.map((x) => x)),
         "price_with_discount": priceWithDiscount,
         "current_price": currentPrice,
         "products_quantity": productsQuantity,

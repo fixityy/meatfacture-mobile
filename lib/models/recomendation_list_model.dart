@@ -3,8 +3,8 @@ import 'package:smart/models/meta_model.dart';
 
 class RecomendationListModel {
   RecomendationListModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<AssortmentsListModel> data;

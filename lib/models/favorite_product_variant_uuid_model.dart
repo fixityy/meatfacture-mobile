@@ -2,8 +2,8 @@ import 'package:smart/models/meta_model.dart';
 
 class FavoriteProductVariantUuidModel {
   FavoriteProductVariantUuidModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<FavoriteProductVariantUuidDataModel> data;
@@ -24,11 +24,11 @@ class FavoriteProductVariantUuidModel {
 
 class FavoriteProductVariantUuidDataModel {
   FavoriteProductVariantUuidDataModel({
-    this.uuid,
-    this.clientUuid,
-    this.canBeActivatedTill,
-    this.createdAt,
-    this.updatedAt,
+    required this.uuid,
+    required this.clientUuid,
+    required this.canBeActivatedTill,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   String uuid;

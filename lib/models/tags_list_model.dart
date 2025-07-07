@@ -1,9 +1,9 @@
 class TagsListModel {
   TagsListModel({
-    this.uuid,
-    this.name,
-    this.fixedInFilters,
-    this.createdAt,
+    required this.uuid,
+    required this.name,
+    required this.fixedInFilters,
+    required this.createdAt,
   });
 
   String uuid;

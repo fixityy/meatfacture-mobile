@@ -7,7 +7,7 @@ String geocodingModelToJson(GeocodingModel data) => json.encode(data.toJson());
 
 class GeocodingModel {
   GeocodingModel({
-    this.data,
+    required this.data,
   });
 
   List<GeocodingDataModel> data;
@@ -23,37 +23,38 @@ class GeocodingModel {
 }
 
 class GeocodingDataModel {
-   GeocodingDataModel({
-        this.providedBy,
-        this.latitude,
-        this.longitude,
-        this.bounds,
-        this.streetNumber,
-        this.streetName,
-        this.postalCode,
-        this.locality,
-        this.subLocality,
-        this.adminLevels,
-        this.country,
-        this.countryCode,
-        this.timezone,
-    });
+  GeocodingDataModel({
+    this.providedBy,
+    this.latitude,
+    this.longitude,
+    this.bounds,
+    this.streetNumber,
+    this.streetName,
+    this.postalCode,
+    this.locality,
+    this.subLocality,
+    this.adminLevels,
+    this.country,
+    this.countryCode,
+    this.timezone,
+  });
 
-    String providedBy;
-    double latitude;
-    double longitude;
-    BoundsModel bounds;
-    dynamic streetNumber;
-    dynamic streetName;
-    dynamic postalCode;
-    String locality;
-    dynamic subLocality;
-    dynamic adminLevels;
-    String country;
-    String countryCode;
-    dynamic timezone;
+  String? providedBy;
+  double? latitude;
+  double? longitude;
+  BoundsModel? bounds;
+  dynamic streetNumber;
+  dynamic streetName;
+  dynamic postalCode;
+  String? locality;
+  dynamic subLocality;
+  dynamic adminLevels;
+  String? country;
+  String? countryCode;
+  dynamic timezone;
 
-    factory GeocodingDataModel.fromJson(Map<String, dynamic> json) => GeocodingDataModel(
+  factory GeocodingDataModel.fromJson(Map<String, dynamic> json) =>
+      GeocodingDataModel(
         providedBy: json["providedBy"],
         latitude: json["latitude"].toDouble(),
         longitude: json["longitude"].toDouble(),
@@ -67,13 +68,13 @@ class GeocodingDataModel {
         country: json["country"],
         countryCode: json["countryCode"],
         timezone: json["timezone"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "providedBy": providedBy,
         "latitude": latitude,
         "longitude": longitude,
-        "bounds": bounds.toJson(),
+        "bounds": bounds?.toJson(),
         "streetNumber": streetNumber,
         "streetName": streetName,
         "postalCode": postalCode,
@@ -83,58 +84,58 @@ class GeocodingDataModel {
         "country": country,
         "countryCode": countryCode,
         "timezone": timezone,
-    };
+      };
 }
 
 class AdminLevelModel {
   AdminLevelModel({
-        this.name,
-        this.code,
-        this.level,
-    });
+    this.name,
+    this.code,
+    this.level,
+  });
 
-    String name;
-    String code;
-    int level;
+  String? name;
+  String? code;
+  int? level;
 
-    factory AdminLevelModel.fromJson(Map<String, dynamic> json) => AdminLevelModel(
+  factory AdminLevelModel.fromJson(Map<String, dynamic> json) =>
+      AdminLevelModel(
         name: json["name"],
         code: json["code"],
         level: json["level"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "name": name,
         "code": code,
         "level": level,
-    };
+      };
 }
 
 class BoundsModel {
   BoundsModel({
-        this.south,
-        this.west,
-        this.north,
-        this.east,
-    });
+    this.south,
+    this.west,
+    this.north,
+    this.east,
+  });
 
-    double south;
-    double west;
-    double north;
-    double east;
+  double? south;
+  double? west;
+  double? north;
+  double? east;
 
-    factory BoundsModel.fromJson(Map<String, dynamic> json) => BoundsModel(
+  factory BoundsModel.fromJson(Map<String, dynamic> json) => BoundsModel(
         south: json["south"].toDouble(),
         west: json["west"].toDouble(),
         north: json["north"].toDouble(),
         east: json["east"].toDouble(),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "south": south,
         "west": west,
         "north": north,
         "east": east,
-    };
-
+      };
 }
