@@ -16,15 +16,16 @@ import 'package:smart/theme/app_alert.dart';
 
 class RecipesScreenCardWidget extends StatefulWidget {
   final Datum recipe;
-  final Function(String uuid, bool isFavorite) onFavoriteChanged;
-  const RecipesScreenCardWidget({this.recipe, this.onFavoriteChanged});
+  final Function(String uuid, bool isFavorite)? onFavoriteChanged;
+  const RecipesScreenCardWidget({required this.recipe, this.onFavoriteChanged});
 
   @override
-  State<RecipesScreenCardWidget> createState() => _RecipesScreenCardWidgetState();
+  State<RecipesScreenCardWidget> createState() =>
+      _RecipesScreenCardWidgetState();
 }
 
 class _RecipesScreenCardWidgetState extends State<RecipesScreenCardWidget> {
-  bool isActive;
+  late bool isActive;
 
   @override
   void initState() {
@@ -40,7 +41,7 @@ class _RecipesScreenCardWidgetState extends State<RecipesScreenCardWidget> {
 
   Future<String> loadToken() async {
     SharedPreferences _shared = await SharedPreferences.getInstance();
-    return _shared.getString(SharedKeys.token);
+    return _shared.getString(SharedKeys.token)!;
   }
 
   void loginOrRegWarning(BuildContext context) {
@@ -63,7 +64,11 @@ class _RecipesScreenCardWidgetState extends State<RecipesScreenCardWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => RecipeDetailScreen(recipe: widget.recipe))) as bool;
+        final result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    RecipeDetailScreen(recipe: widget.recipe))) as bool;
         if (result != null) {
           isActive = result;
           setState(() {});
@@ -78,9 +83,12 @@ class _RecipesScreenCardWidgetState extends State<RecipesScreenCardWidget> {
               width: widthRatio(size: 161, context: context),
               height: heightRatio(size: 104, context: context),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(heightRatio(size: 7, context: context)),
+                borderRadius: BorderRadius.circular(
+                    heightRatio(size: 7, context: context)),
                 image: DecorationImage(
-                  image: NetworkImage(widget.recipe.filePath != null ? widget.recipe.filePath : ''),
+                  image: NetworkImage(widget.recipe.filePath != null
+                      ? widget.recipe.filePath!
+                      : ''),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -95,13 +103,19 @@ class _RecipesScreenCardWidgetState extends State<RecipesScreenCardWidget> {
                             height: heightRatio(size: 18, context: context),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(2), topRight: Radius.zero, bottomRight: Radius.circular(5), bottomLeft: Radius.circular(2)),
+                                  topLeft: Radius.circular(2),
+                                  topRight: Radius.zero,
+                                  bottomRight: Radius.circular(5),
+                                  bottomLeft: Radius.circular(2)),
                               color: newRedDark,
                             ),
                             alignment: Alignment.center,
                             child: Text(
                               '${widget.recipe.duration} мин',
-                              style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 10, context: context)),
+                              style: appLabelTextStyle(
+                                  color: Colors.white,
+                                  fontSize:
+                                      heightRatio(size: 10, context: context)),
                             ),
                           ),
                         )
@@ -125,27 +139,37 @@ class _RecipesScreenCardWidgetState extends State<RecipesScreenCardWidget> {
                             });
                             AppAlert.show(
                               context: context,
-                              message: 'Рецепт “${widget.recipe.name != null ? widget.recipe.name : ''}” был добавлен в “Сохраненные рецепты”',
+                              message:
+                                  'Рецепт “${widget.recipe.name != null ? widget.recipe.name : ''}” был добавлен в “Сохраненные рецепты”',
                               sec: 3,
                               svgName: 'newCart.svg',
                             );
                           }
                           var _likeResponse =
-                              await AddOrDeleteReceiptsToFavoriteProvider(isFavorite: !widget.recipe.isFavorite, mealReceiptUuid: widget.recipe.uuid)
+                              await AddOrDeleteReceiptsToFavoriteProvider(
+                                      isFavorite: !widget.recipe.isFavorite,
+                                      mealReceiptUuid: widget.recipe.uuid)
                                   .addOrDeleteReceiptsToFavoriteResponse();
                           if (_likeResponse == "old token") {
-                            AuthPageBloc authPageBloc = BlocProvider.of(context);
-                            BlocProvider.of<BasicPageBloc>(context)?.add(ProfilePage.logout(regBloc: authPageBloc, basicPageBloc: BlocProvider.of(context)));
+                            AuthPageBloc authPageBloc =
+                                BlocProvider.of(context);
+                            BlocProvider.of<BasicPageBloc>(context)?.add(
+                                ProfilePage.logout(
+                                    regBloc: authPageBloc,
+                                    basicPageBloc: BlocProvider.of(context)));
                           }
 
                           if (widget.onFavoriteChanged != null) {
-                            widget.onFavoriteChanged(widget.recipe.uuid, isActive);
+                            widget.onFavoriteChanged!(
+                                widget.recipe.uuid, isActive);
                           }
                         } else {
                           loginOrRegWarning(context);
                         }
                       },
-                      child: SvgPicture.asset(isActive ? 'assets/images/newHeartRLactive.svg' : 'assets/images/newHeartRL.svg'),
+                      child: SvgPicture.asset(isActive
+                          ? 'assets/images/newHeartRLactive.svg'
+                          : 'assets/images/newHeartRL.svg'),
                     ),
                   ),
                 ],

@@ -6,7 +6,7 @@ import 'package:smart/core/constants/text_styles.dart';
 import 'package:smart/features/recipes/recipes_detail_screen.dart';
 
 class RecipesCardWidget extends StatelessWidget {
-  const RecipesCardWidget({this.recipe});
+  const RecipesCardWidget({required this.recipe});
 //сторисы
   final Datum recipe;
 
@@ -14,7 +14,10 @@ class RecipesCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => RecipeDetailScreen(recipe: recipe)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => RecipeDetailScreen(recipe: recipe)));
       },
       child: SizedBox(
         width: widthRatio(size: 161, context: context),
@@ -25,15 +28,18 @@ class RecipesCardWidget extends StatelessWidget {
               width: widthRatio(size: 161, context: context),
               height: heightRatio(size: 104, context: context),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(heightRatio(size: 7, context: context)),
+                borderRadius: BorderRadius.circular(
+                    heightRatio(size: 7, context: context)),
                 image: DecorationImage(
-                  image: NetworkImage(recipe.filePath != null ? recipe.filePath : ''),
+                  image: NetworkImage(
+                      recipe.filePath != null ? recipe.filePath! : ''),
                   fit: BoxFit.fill,
                 ),
               ),
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(heightRatio(size: 7, context: context)),
+                  borderRadius: BorderRadius.circular(
+                      heightRatio(size: 7, context: context)),
                   color: colorBlack06,
                 ),
                 alignment: Alignment.center,

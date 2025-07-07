@@ -4,7 +4,7 @@ import 'package:smart/features/recipes/recipe_story_screen.dart';
 import 'models/receipts_list_model.dart' as receiptsListModel;
 
 class RecipeStoriesScreen extends StatefulWidget {
-  const RecipeStoriesScreen({@required this.recipe});
+  const RecipeStoriesScreen({required this.recipe});
 
   final receiptsListModel.Datum recipe;
 

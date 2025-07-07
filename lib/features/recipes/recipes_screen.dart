@@ -14,15 +14,15 @@ import "package:smart/features/recipes/widgets/recipe_category_item.dart";
 
 class RecipesScreen extends StatefulWidget {
   final bool isPop;
-  final Function(String recipeUuid, bool isFavorite) onRecipeUpdated;
-  const RecipesScreen({key, Key, this.onRecipeUpdated, this.isPop = true});
+  final Function(String recipeUuid, bool isFavorite)? onRecipeUpdated;
+  const RecipesScreen({super.key, this.onRecipeUpdated, this.isPop = true});
 
   @override
   State<RecipesScreen> createState() => _RecipesScreenState();
 }
 
 class _RecipesScreenState extends State<RecipesScreen> {
-  String selectedSection;
+  String? selectedSection;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,9 @@ class _RecipesScreenState extends State<RecipesScreen> {
             if (selectedSection == null) {
               return state.receiptsList.data;
             } else {
-              return state.receiptsList.data.where((recipe) => recipe.section == selectedSection).toList();
+              return state.receiptsList.data
+                  .where((recipe) => recipe.section == selectedSection)
+                  .toList();
             }
           }
 
@@ -55,35 +57,48 @@ class _RecipesScreenState extends State<RecipesScreen> {
                           onTap: () {
                             widget.isPop
                                 ? Navigator.pop(context)
-                                : Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                                : Navigator.pushAndRemoveUntil(context,
+                                    MaterialPageRoute(
                                     builder: (context) {
                                       return CatalogScreen(
-                                        catalogNavKey: GlobalKey<NavigatorState>(),
-                                        paginationViewkey: GlobalKey<PaginationViewState>(),
+                                        catalogNavKey:
+                                            GlobalKey<NavigatorState>(),
+                                        paginationViewkey:
+                                            GlobalKey<PaginationViewState>(),
                                       );
                                     },
                                   ), (route) => false);
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(left: 0, right: 40),
-                            child: Icon(Icons.arrow_back_ios_new_rounded, size: heightRatio(size: 25, context: context), color: whiteColor),
+                            child: Icon(Icons.arrow_back_ios_new_rounded,
+                                size: heightRatio(size: 25, context: context),
+                                color: whiteColor),
                           ),
                         ),
                       ),
                       Text(
                         "Рецепты",
-                        style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 22, context: context)),
+                        style: appHeadersTextStyle(
+                            color: Colors.white,
+                            fontSize: heightRatio(size: 22, context: context)),
                         textAlign: TextAlign.left,
                       ),
                       Row(
                         children: [
                           InkWell(
-                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RecipesSearchScreen())),
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        RecipesSearchScreen())),
                             child: Container(
                               width: widthRatio(size: 36, context: context),
                               height: heightRatio(size: 36, context: context),
-                              padding: EdgeInsets.all(widthRatio(size: 8, context: context)),
-                              decoration: BoxDecoration(shape: BoxShape.circle, color: white03),
+                              padding: EdgeInsets.all(
+                                  widthRatio(size: 8, context: context)),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle, color: white03),
                               child: SvgPicture.asset(
                                 'assets/images/searchIcon.svg',
                                 height: heightRatio(size: 20, context: context),
@@ -92,10 +107,16 @@ class _RecipesScreenState extends State<RecipesScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: widthRatio(size: 8, context: context)),
+                          SizedBox(
+                              width: widthRatio(size: 8, context: context)),
                           InkWell(
                             onTap: () async {
-                              final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => RecipesFavoritesScreen())) as List<Datum>;
+                              final result = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              RecipesFavoritesScreen()))
+                                  as List<Datum>;
                               if (result != null) {
                                 state.receiptsList.data = List.from(result);
                                 setState(() {});
@@ -104,8 +125,10 @@ class _RecipesScreenState extends State<RecipesScreen> {
                             child: Container(
                               width: widthRatio(size: 36, context: context),
                               height: heightRatio(size: 36, context: context),
-                              padding: EdgeInsets.all(widthRatio(size: 8, context: context)),
-                              decoration: BoxDecoration(shape: BoxShape.circle, color: white03),
+                              padding: EdgeInsets.all(
+                                  widthRatio(size: 8, context: context)),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle, color: white03),
                               child: SvgPicture.asset(
                                 'assets/images/newHeartContur.svg',
                                 height: heightRatio(size: 20, context: context),
@@ -114,7 +137,8 @@ class _RecipesScreenState extends State<RecipesScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: widthRatio(size: 17, context: context)),
+                          SizedBox(
+                              width: widthRatio(size: 17, context: context)),
                         ],
                       ),
                     ],
@@ -126,8 +150,10 @@ class _RecipesScreenState extends State<RecipesScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                          topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                          topLeft: Radius.circular(
+                              heightRatio(size: 15, context: context)),
+                          topRight: Radius.circular(
+                              heightRatio(size: 15, context: context)),
                         ),
                       ),
                       child: Column(
@@ -135,7 +161,11 @@ class _RecipesScreenState extends State<RecipesScreen> {
                         children: [
                           state.sectionsList.data.isNotEmpty
                               ? SingleChildScrollView(
-                                  padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 10, context: context), vertical: heightRatio(size: 20, context: context)),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: widthRatio(
+                                          size: 10, context: context),
+                                      vertical: heightRatio(
+                                          size: 20, context: context)),
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
                                     children: [
@@ -151,7 +181,8 @@ class _RecipesScreenState extends State<RecipesScreen> {
                                           .map<Widget>(
                                             (e) => RecipeCategoryItem(
                                               title: e.section,
-                                              isActive: e.section == selectedSection,
+                                              isActive:
+                                                  e.section == selectedSection,
                                               onTap: (section) {
                                                 setState(() {
                                                   selectedSection = e.section;
@@ -166,10 +197,13 @@ class _RecipesScreenState extends State<RecipesScreen> {
                               : SizedBox.shrink(),
                           Expanded(
                             child: GridView.builder(
-                              padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 16, context: context)),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal:
+                                      widthRatio(size: 16, context: context)),
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
                                 childAspectRatio: 1.15,
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 11,

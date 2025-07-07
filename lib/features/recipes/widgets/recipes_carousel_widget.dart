@@ -5,11 +5,12 @@ import 'package:smart/features/recipes/widgets/recipe_card_widget.dart';
 
 class RecipesCarousel extends StatelessWidget {
   final ReceiptsListModel receiptsList;
-  const RecipesCarousel({this.receiptsList});
+  const RecipesCarousel({required this.receiptsList});
 
   @override
   Widget build(BuildContext context) {
-    List<Datum> filteredData = receiptsList.data.where((item) => !item.isFavorite).toList();
+    List<Datum> filteredData =
+        receiptsList.data.where((item) => !item.isFavorite).toList();
     return Container(
       alignment: Alignment.centerLeft,
       color: Colors.transparent,
@@ -17,7 +18,8 @@ class RecipesCarousel extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 16, context: context)),
+          padding: EdgeInsets.symmetric(
+              horizontal: widthRatio(size: 16, context: context)),
           scrollDirection: Axis.horizontal,
           itemCount: filteredData.length > 10 ? 10 : filteredData.length,
           shrinkWrap: true,
@@ -25,7 +27,8 @@ class RecipesCarousel extends StatelessWidget {
           separatorBuilder: (context, index) => SizedBox(
             width: widthRatio(size: 11, context: context),
           ),
-          itemBuilder: (context, index) => RecipesCardWidget(recipe: filteredData[index]),
+          itemBuilder: (context, index) =>
+              RecipesCardWidget(recipe: filteredData[index]),
         ),
       ),
     );
