@@ -63,14 +63,15 @@ class DeleteProfileBloc extends Bloc<DeleteProfileEvent, DeleteProfileState> {
         yield DeleteProfileLoadedState(_deleteProfileModel);
         Navigator.pop(event.context);
         _showProfileDeleteDescription(
-            _deleteProfileModel.data.markDeletedAt, event.context);
+            _deleteProfileModel.data?.markDeletedAt, event.context);
       } catch (e) {
         yield DeleteProfileErrorState();
       }
     }
   }
 
-  _showProfileDeleteDescription(String markDeletedAt, BuildContext cont) async {
+  _showProfileDeleteDescription(
+      String? markDeletedAt, BuildContext cont) async {
     prefs = await SharedPreferences.getInstance();
     String number = await prefs.getString(SharedKeys.callCenterNumber)!;
     Navigator.push(

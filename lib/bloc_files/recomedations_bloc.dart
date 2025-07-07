@@ -84,7 +84,7 @@ class RecomendationsBloc
   Future<List<AssortmentsListModel>> getRecomendationsFromRepository() async {
     final recomendationProducts = await RecomendationProvider()
         .getRecomendationListResponse(page: currentPage);
-    recomendationProducts.removeWhere((e) => e.quantityInClientCart > 0);
+    recomendationProducts.removeWhere((e) => e.quantityInClientCart! > 0);
     return recomendationProducts;
   }
 }
