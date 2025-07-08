@@ -18,13 +18,14 @@ class FavCatalogsList extends StatefulWidget {
 class _FavCatalogsListState extends State<FavCatalogsList> {
   final ScrollController scrollController = ScrollController();
 
-  CatalogsBloc catalogsBloc;
+  late CatalogsBloc catalogsBloc;
 
   @override
   void initState() {
     super.initState();
     scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
         catalogsBloc.add(CatalogstNextPageEvent());
       }
     });
@@ -34,7 +35,8 @@ class _FavCatalogsListState extends State<FavCatalogsList> {
   Widget build(BuildContext context) {
     catalogsBloc = BlocProvider.of(context);
     TagsBloc _tagsBloc = BlocProvider.of(context);
-    AssortmentRecommendationBloc _assortmentRecommendationBloc = BlocProvider.of<AssortmentRecommendationBloc>(context);
+    AssortmentRecommendationBloc _assortmentRecommendationBloc =
+        BlocProvider.of<AssortmentRecommendationBloc>(context);
 
     return RefreshIndicator(
       color: newRedDark,
@@ -55,8 +57,10 @@ class _FavCatalogsListState extends State<FavCatalogsList> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
-                    decoration: BoxDecoration(color: colorBlack03, shape: BoxShape.circle),
+                    padding:
+                        EdgeInsets.all(widthRatio(size: 15, context: context)),
+                    decoration: BoxDecoration(
+                        color: colorBlack03, shape: BoxShape.circle),
                     child: SvgPicture.asset(
                       'assets/images/netErrorIcon.svg',
                       color: Colors.white,
@@ -64,23 +68,33 @@ class _FavCatalogsListState extends State<FavCatalogsList> {
                     ),
                   ),
                   SizedBox(height: heightRatio(size: 15, context: context)),
-                  Text("errorText".tr(), style: appTextStyle(fontSize: heightRatio(size: 18, context: context), color: colorBlack06, fontWeight: FontWeight.w500)),
+                  Text("errorText".tr(),
+                      style: appTextStyle(
+                          fontSize: heightRatio(size: 18, context: context),
+                          color: colorBlack06,
+                          fontWeight: FontWeight.w500)),
                   SizedBox(height: heightRatio(size: 10, context: context)),
                   InkWell(
                     onTap: () {
-                      _assortmentRecommendationBloc.add(AssortmentRecommendationsLoadEvent());
+                      _assortmentRecommendationBloc
+                          .add(AssortmentRecommendationsLoadEvent());
                       _tagsBloc.add(TagsloadEvent());
                     },
                     child: Container(
                       color: Colors.transparent,
-                      child: Text("tryAgainText".tr(), style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: mainColor, fontWeight: FontWeight.w500)),
+                      child: Text("tryAgainText".tr(),
+                          style: appTextStyle(
+                              fontSize: heightRatio(size: 14, context: context),
+                              color: mainColor,
+                              fontWeight: FontWeight.w500)),
                     ),
                   ),
                 ],
               ),
             );
           }
-          state.catalogsList.removeWhere((element) => element.name == "Упаковка");
+          state.catalogsList
+              .removeWhere((element) => element.name == "Упаковка");
           return ListView(
             padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
             children: state.catalogsList.map<Widget>((catalog) {
