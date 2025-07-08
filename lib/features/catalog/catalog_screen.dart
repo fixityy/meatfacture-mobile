@@ -171,7 +171,7 @@ class _CatalogScreenState extends State<CatalogScreen>
                                               is LoadedAddressesShopState &&
                                           shopState.selectedShop != null) {
                                         shopAddress =
-                                            shopState.selectedShop.address;
+                                            shopState.selectedShop!.address;
                                       }
                                       return Text(
                                         shopAddress,

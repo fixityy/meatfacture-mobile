@@ -86,8 +86,8 @@ class CatalogAddressConfirmationDialog extends StatelessWidget {
                   builder: (context, shopState) {
                     if (shopState is LoadedAddressesShopState &&
                         shopState.selectedShop != null) {
-                      shopUuid = shopState.selectedShop.uuid;
-                      shopAddress = shopState.selectedShop.address;
+                      shopUuid = shopState.selectedShop!.uuid;
+                      shopAddress = shopState.selectedShop!.address;
                       shopLogo = shopState
                           .selectedShop!.image?.thumbnails?.the1000X1000;
                     } else {

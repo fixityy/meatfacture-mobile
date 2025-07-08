@@ -76,12 +76,12 @@ class _CatalogProductWidgetState extends State<CatalogProductWidget> {
               if (basketState is BasketLoadedState &&
                   _secondaryPageBloc.state is SecondaryBasketPageState) {
                 for (var i = 0;
-                    i < basketState.basketListModel.data.length;
+                    i < basketState.basketListModel.data!.length;
                     i++) {
                   if (widget.assortmentsListModel.uuid ==
-                      basketState.basketListModel.data[i].assortment.uuid) {
+                      basketState.basketListModel.data![i].assortment.uuid) {
                     widget.assortmentsListModel.quantityInClientCart =
-                        basketState.basketListModel.data[i].quantity;
+                        basketState.basketListModel.data![i].quantity;
                     break;
                   } else {
                     widget.assortmentsListModel.quantityInClientCart = 0;
