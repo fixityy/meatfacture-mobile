@@ -84,7 +84,7 @@ HomeDiverseFoodCardButton() => BlocBuilder<ProfileBloc, ProfileState>(
                               // если пользователь еще не участвует в разннобр питании:
                               if (profileState is ProfileLoadedState &&
                                   profileState.profileModel.data
-                                          .isAgreeWithDiverseFoodPromo ==
+                                          ?.isAgreeWithDiverseFoodPromo ==
                                       false)
                                 Text(
                                   "diverseFoodDescriptionText".tr(),
@@ -142,7 +142,7 @@ HomeDiverseFoodCardButton() => BlocBuilder<ProfileBloc, ProfileState>(
                       HomeDiverseFoodCardButtonShimmer(),
                     if (profileState is ProfileLoadedState &&
                         profileState.profileModel.data
-                                .isAgreeWithDiverseFoodPromo ==
+                                ?.isAgreeWithDiverseFoodPromo ==
                             true &&
                         diverseFoodState is DiverseFoodLoadedState &&
                         diverseFoodState.diverseFoodPersentListModel.data !=

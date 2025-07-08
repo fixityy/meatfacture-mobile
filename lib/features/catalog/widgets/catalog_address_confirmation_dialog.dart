@@ -143,8 +143,8 @@ class CatalogAddressConfirmationDialog extends StatelessWidget {
                 onTap: () async {
                   final profileState = context.read<ProfileBloc>().state;
                   if (profileState is ProfileLoadedState) {
-                    log('🏪 Выбранный магазин в профиле: ${profileState.profileModel.data.selectedStoreAddress}');
-                    if (profileState.profileModel.data.selectedStoreAddress ==
+                    log('🏪 Выбранный магазин в профиле: ${profileState.profileModel.data?.selectedStoreAddress}');
+                    if (profileState.profileModel.data?.selectedStoreAddress ==
                         null) {
                       log('🏪🏪🏪');
                       context.read<ProfileBloc>().add(ProfileUpdateDataEvent(

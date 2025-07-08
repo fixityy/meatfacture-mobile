@@ -94,7 +94,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           }
 
           await ProfileUpdateDataProvider(
-                  phone: profileModel.data.phone,
+                  phone: profileModel.data?.phone,
                   appVersion: _versionAndPlatform)
               .getProfileChangeRsponse();
           yield ProfileLoadedState(profileModel: profileModel);

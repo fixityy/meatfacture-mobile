@@ -345,7 +345,7 @@ class _MainPageState extends State<MainPage> {
 
                         if (currentNavState is SecondaryCatalogPageState) {
                           if (profileState is ProfileLoadedState &&
-                              profileState.profileModel.data
+                              profileState.profileModel.data!
                                       .selectedStoreUserUuid !=
                                   null &&
                               await _naviagtorKeys["catalogPageKey"]!

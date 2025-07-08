@@ -21,7 +21,7 @@ class AddressesSelectNearestShopBottomSheet extends StatelessWidget {
 
     return BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
       if (state is ProfileLoadedState) {
-        if (state.profileModel.data.selectedStoreUserUuid != null) {
+        if (state.profileModel.data!.selectedStoreUserUuid != null) {
           SchedulerBinding.instance.addPostFrameCallback((_) {
             Navigator.pop(context);
             Navigator.pop(context);
