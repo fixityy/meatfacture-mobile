@@ -16,7 +16,7 @@ class Banners extends StatelessWidget {
       builder: (context, state) {
         if (state is BannersLoading) {
           return Shimmer.fromColors(
-            baseColor: Colors.grey[100],
+            baseColor: Colors.grey[100]!,
             highlightColor: Colors.white,
             child: Container(
               height: heightRatio(size: 165, context: context),
@@ -33,7 +33,8 @@ class Banners extends StatelessWidget {
         } else if (state is BannersLoaded && state.banners.data.isNotEmpty) {
           final slides = state.banners.data;
           return ClipRRect(
-            borderRadius: BorderRadius.circular(heightRatio(size: 12, context: context)),
+            borderRadius:
+                BorderRadius.circular(heightRatio(size: 12, context: context)),
             child: SizedBox(
               height: heightRatio(size: 165, context: context),
               child: slides.length > 1
@@ -45,7 +46,8 @@ class Banners extends StatelessWidget {
                               autoPlay: true,
                               height: heightRatio(size: 165, context: context),
                               autoPlayCurve: Curves.fastOutSlowIn,
-                              autoPlayAnimationDuration: const Duration(milliseconds: 500),
+                              autoPlayAnimationDuration:
+                                  const Duration(milliseconds: 500),
                               autoPlayInterval: const Duration(seconds: 5),
                               viewportFraction: 1,
                               onPageChanged: (index, reason) {
@@ -66,7 +68,8 @@ class Banners extends StatelessWidget {
                         Positioned(
                           bottom: 10,
                           child: SizedBox(
-                            width: MediaQuery.of(context).size.width - widthRatio(size: 40, context: context),
+                            width: MediaQuery.of(context).size.width -
+                                widthRatio(size: 40, context: context),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: List.generate(

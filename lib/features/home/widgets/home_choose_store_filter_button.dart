@@ -10,11 +10,20 @@ import '../../../custom_widgets/assortment_filter_button.dart';
 
 class HomeChooseStoreFilterButton extends StatefulWidget {
   @override
-  _HomeChooseStoreFilterButtonState createState() => _HomeChooseStoreFilterButtonState();
+  _HomeChooseStoreFilterButtonState createState() =>
+      _HomeChooseStoreFilterButtonState();
 }
 
-class _HomeChooseStoreFilterButtonState extends State<HomeChooseStoreFilterButton> {
-  void _openShopsFiltersBottomSheet({BuildContext context, bool hasParking, bool hasAtms, bool hasReadyMeals, bool isOpenNow, bool isfavorite}) {
+class _HomeChooseStoreFilterButtonState
+    extends State<HomeChooseStoreFilterButton> {
+  void _openShopsFiltersBottomSheet({
+    required BuildContext context,
+    required bool hasParking,
+    required bool hasAtms,
+    required bool hasReadyMeals,
+    required bool isOpenNow,
+    required bool isfavorite,
+  }) {
     showModalBottomSheet<dynamic>(
         isScrollControlled: true,
         useSafeArea: true,
@@ -76,7 +85,9 @@ class _HomeChooseStoreFilterButtonState extends State<HomeChooseStoreFilterButto
             width: widthRatio(size: 36, context: context),
             height: heightRatio(size: 36, context: context),
             padding: EdgeInsets.only(
-                top: heightRatio(size: 5, context: context), left: widthRatio(size: 10, context: context), right: widthRatio(size: 10, context: context)),
+                top: heightRatio(size: 5, context: context),
+                left: widthRatio(size: 10, context: context),
+                right: widthRatio(size: 10, context: context)),
             decoration: BoxDecoration(color: white03, shape: BoxShape.circle),
             child: SvgPicture.asset(
               'assets/images/newFilter.svg',

@@ -2,15 +2,17 @@ import 'package:smart/models/meta_model.dart';
 
 class BannersListModel {
   BannersListModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<BannersListDataModel> data;
   MetaModel meta;
 
-  factory BannersListModel.fromJson(Map<String, dynamic> json) => BannersListModel(
-        data: List<BannersListDataModel>.from(json["data"].map((x) => BannersListDataModel.fromJson(x))),
+  factory BannersListModel.fromJson(Map<String, dynamic> json) =>
+      BannersListModel(
+        data: List<BannersListDataModel>.from(
+            json["data"].map((x) => BannersListDataModel.fromJson(x))),
         meta: MetaModel.fromJson(json["meta"]),
       );
 
@@ -22,28 +24,29 @@ class BannersListModel {
 
 class BannersListDataModel {
   BannersListDataModel({
-    this.id,
+    required this.id,
     this.name,
-    this.logoFilePath,
+    required this.logoFilePath,
     this.description,
-    this.number,
-    this.enabled,
-    this.createdAt,
-    this.referenceType,
+    required this.number,
+    required this.enabled,
+    required this.createdAt,
+    required this.referenceType,
     this.referenceUuid,
   });
 
   int id;
-  String name;
+  String? name;
   String logoFilePath;
-  String description;
+  String? description;
   int number;
   bool enabled;
   String createdAt;
   String referenceType;
-  String referenceUuid;
+  String? referenceUuid;
 
-  factory BannersListDataModel.fromJson(Map<String, dynamic> json) => BannersListDataModel(
+  factory BannersListDataModel.fromJson(Map<String, dynamic> json) =>
+      BannersListDataModel(
         id: json["id"],
         name: json["name"],
         logoFilePath: json["logo_file_path"],

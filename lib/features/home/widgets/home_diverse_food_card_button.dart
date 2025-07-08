@@ -21,18 +21,29 @@ HomeDiverseFoodCardButton() => BlocBuilder<ProfileBloc, ProfileState>(
         return BlocConsumer<DiverseFoodBloc, DiverseFoodState>(
           listener: (context, state) {
             if (state is DiverseFoodOldTokenState) {
-              ProfilePage.logout(regBloc: _authPageBloc, basicPageBloc: _basicPageBloc);
+              ProfilePage.logout(
+                  regBloc: _authPageBloc, basicPageBloc: _basicPageBloc);
             }
           },
           builder: (context, diverseFoodState) {
             return InkWell(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RedesDiverseFoodContent())),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RedesDiverseFoodContent())),
               child: Container(
                 padding: EdgeInsets.all(widthRatio(size: 10, context: context)),
                 decoration: BoxDecoration(
                   color: whiteColor,
-                  borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)),
-                  boxShadow: [BoxShadow(color: newShadow, offset: Offset(12, 12), blurRadius: 24, spreadRadius: 0)],
+                  borderRadius: BorderRadius.circular(
+                      heightRatio(size: 10, context: context)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: newShadow,
+                        offset: Offset(12, 12),
+                        blurRadius: 24,
+                        spreadRadius: 0)
+                  ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +54,10 @@ HomeDiverseFoodCardButton() => BlocBuilder<ProfileBloc, ProfileState>(
                         Container(
                           width: 60,
                           height: 60,
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 5, context: context)), color: newIconBg),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                  heightRatio(size: 5, context: context)),
+                              color: newIconBg),
                           child: SvgPicture.asset(
                             "assets/images/variedNutrition.svg",
                             height: heightRatio(size: 35, context: context),
@@ -58,14 +72,27 @@ HomeDiverseFoodCardButton() => BlocBuilder<ProfileBloc, ProfileState>(
                             children: [
                               Text(
                                 "diverseFoodOneLineText".tr(),
-                                style: appHeadersTextStyle(fontSize: heightRatio(size: 15, context: context), fontWeight: FontWeight.w700, color: newBlack),
+                                style: appHeadersTextStyle(
+                                    fontSize:
+                                        heightRatio(size: 15, context: context),
+                                    fontWeight: FontWeight.w700,
+                                    color: newBlack),
                               ),
-                              SizedBox(height: heightRatio(size: 5, context: context)),
+                              SizedBox(
+                                  height:
+                                      heightRatio(size: 5, context: context)),
                               // если пользователь еще не участвует в разннобр питании:
-                              if (profileState is ProfileLoadedState && profileState.profileModel.data.isAgreeWithDiverseFoodPromo == false)
+                              if (profileState is ProfileLoadedState &&
+                                  profileState.profileModel.data
+                                          .isAgreeWithDiverseFoodPromo ==
+                                      false)
                                 Text(
                                   "diverseFoodDescriptionText".tr(),
-                                  style: appTextStyle(fontSize: heightRatio(size: 12.5, context: context), fontWeight: FontWeight.w400, color: newBlackLight),
+                                  style: appTextStyle(
+                                      fontSize: heightRatio(
+                                          size: 12.5, context: context),
+                                      fontWeight: FontWeight.w400,
+                                      color: newBlackLight),
                                 )
                               // участвует в разн питании:
                               else
@@ -74,15 +101,30 @@ HomeDiverseFoodCardButton() => BlocBuilder<ProfileBloc, ProfileState>(
                                     children: [
                                       TextSpan(
                                         text: "Сейчас вы копите скидку ",
-                                        style: appLabelTextStyle(fontSize: heightRatio(size: 13, context: context), fontWeight: FontWeight.w400, color: newBlackLight),
+                                        style: appLabelTextStyle(
+                                            fontSize: heightRatio(
+                                                size: 13, context: context),
+                                            fontWeight: FontWeight.w400,
+                                            color: newBlackLight),
                                       ),
                                       TextSpan(
                                         text: "to".tr() + " ",
-                                        style: appLabelTextStyle(fontSize: heightRatio(size: 13, context: context), fontWeight: FontWeight.w400, color: newRedDark),
+                                        style: appLabelTextStyle(
+                                            fontSize: heightRatio(
+                                                size: 13, context: context),
+                                            fontWeight: FontWeight.w400,
+                                            color: newRedDark),
                                       ),
                                       TextSpan(
-                                        text: getMonthName(month: DateTime.now().month == 12 ? 1 : DateTime.now().month + 1),
-                                        style: appLabelTextStyle(fontSize: heightRatio(size: 13, context: context), fontWeight: FontWeight.w400, color: newRedDark),
+                                        text: getMonthName(
+                                            month: DateTime.now().month == 12
+                                                ? 1
+                                                : DateTime.now().month + 1),
+                                        style: appLabelTextStyle(
+                                            fontSize: heightRatio(
+                                                size: 13, context: context),
+                                            fontWeight: FontWeight.w400,
+                                            color: newRedDark),
                                       ),
                                     ],
                                   ),
@@ -91,16 +133,26 @@ HomeDiverseFoodCardButton() => BlocBuilder<ProfileBloc, ProfileState>(
                           ),
                         ),
                         SizedBox(width: widthRatio(size: 10, context: context)),
-                        Icon(Icons.arrow_forward_ios_rounded, color: newRedDark, size: heightRatio(size: 23, context: context)),
+                        Icon(Icons.arrow_forward_ios_rounded,
+                            color: newRedDark,
+                            size: heightRatio(size: 23, context: context)),
                       ],
                     ),
-                    if (diverseFoodState is DiverseFoodLoadingState) HomeDiverseFoodCardButtonShimmer(),
+                    if (diverseFoodState is DiverseFoodLoadingState)
+                      HomeDiverseFoodCardButtonShimmer(),
                     if (profileState is ProfileLoadedState &&
-                        profileState.profileModel.data.isAgreeWithDiverseFoodPromo == true &&
+                        profileState.profileModel.data
+                                .isAgreeWithDiverseFoodPromo ==
+                            true &&
                         diverseFoodState is DiverseFoodLoadedState &&
-                        diverseFoodState.diverseFoodPersentListModel.data != null &&
-                        diverseFoodState.diverseFoodPersentListModel.data.isNotEmpty)
-                      redesDiverseFoodProgressBox(context: context, state: diverseFoodState, forMaim: true), //проценты в квадратиках
+                        diverseFoodState.diverseFoodPersentListModel.data !=
+                            null &&
+                        diverseFoodState
+                            .diverseFoodPersentListModel.data!.isNotEmpty)
+                      redesDiverseFoodProgressBox(
+                          context: context,
+                          state: diverseFoodState,
+                          forMaim: true), //проценты в квадратиках
                     // if (diverseFoodState is DiverseFoodLoadedState &&
                     //     profileState is ProfileLoadedState &&
                     //     profileState

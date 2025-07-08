@@ -22,13 +22,19 @@ class HomeChooseStoreMap extends StatefulWidget {
 }
 
 class _HomeChooseStoreMapState extends State<HomeChooseStoreMap> {
-  YandexMapController yandexMapController2;
+  late YandexMapController yandexMapController2;
 
   @override
   Widget build(BuildContext context) {
-    ShopDetailsBloc _shopDetailsBloc = BlocProvider.of<ShopDetailsBloc>(context);
+    ShopDetailsBloc _shopDetailsBloc =
+        BlocProvider.of<ShopDetailsBloc>(context);
 
-    void openShopDetailsBottomSheet({BuildContext context, String uuid, String lat, String lon}) {
+    void openShopDetailsBottomSheet({
+      required BuildContext context,
+      required String uuid,
+      required String lat,
+      required String lon,
+    }) {
       showModalBottomSheet<dynamic>(
           isScrollControlled: true,
           useSafeArea: true,
@@ -36,7 +42,8 @@ class _HomeChooseStoreMapState extends State<HomeChooseStoreMap> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(heightRatio(size: 25, context: context)),
-              topRight: Radius.circular(heightRatio(size: 25, context: context)),
+              topRight:
+                  Radius.circular(heightRatio(size: 25, context: context)),
             ),
           ),
           builder: (BuildContext bc) {
@@ -64,8 +71,15 @@ class _HomeChooseStoreMapState extends State<HomeChooseStoreMap> {
                   ...state.loadedShopsList.data.map((e) => PlacemarkMapObject(
                       onTap: (mapObject, point) async {
                         if (_shopDetailsBloc.state is ShopDetailsDisableState) {
-                          _shopDetailsBloc.add(ShopDetailsEnableEvent(lat: e.addressLatitude ?? "0", lon: e.addressLongitude ?? "0", storeUuid: e.uuid));
-                          openShopDetailsBottomSheet(lat: e.addressLatitude ?? "0", lon: e.addressLongitude ?? "0", context: context, uuid: e.uuid);
+                          _shopDetailsBloc.add(ShopDetailsEnableEvent(
+                              lat: e.addressLatitude ?? "0",
+                              lon: e.addressLongitude ?? "0",
+                              storeUuid: e.uuid));
+                          openShopDetailsBottomSheet(
+                              lat: e.addressLatitude ?? "0",
+                              lon: e.addressLongitude ?? "0",
+                              context: context,
+                              uuid: e.uuid);
                         }
                       },
                       opacity: 1,
@@ -74,10 +88,13 @@ class _HomeChooseStoreMapState extends State<HomeChooseStoreMap> {
                           anchor: const Offset(0.5, 0.8),
                           scale: 0.25,
                           // image: BitmapDescriptor.fromAssetImage("assets/images/mapPointIcon.png"),
-                          image: BitmapDescriptor.fromAssetImage("assets/images/newShopPoint.png"),
+                          image: BitmapDescriptor.fromAssetImage(
+                              "assets/images/newShopPoint.png"),
                         ),
                       ),
-                      point: Point(latitude: double.parse(e.addressLatitude ?? "0"), longitude: double.parse(e.addressLongitude ?? "0")),
+                      point: Point(
+                          latitude: double.parse(e.addressLatitude ?? "0"),
+                          longitude: double.parse(e.addressLongitude ?? "0")),
                       mapId: MapObjectId(e.uuid))),
                   if (state.myLocation != null)
                     PlacemarkMapObject(
@@ -85,11 +102,14 @@ class _HomeChooseStoreMapState extends State<HomeChooseStoreMap> {
                       icon: PlacemarkIcon.single(
                         PlacemarkIconStyle(
                           scale: 1.5,
-                          image: BitmapDescriptor.fromAssetImage("assets/images/mapPointImage.png"),
+                          image: BitmapDescriptor.fromAssetImage(
+                              "assets/images/mapPointImage.png"),
                         ),
                       ),
                       mapId: MapObjectId("myPoint"),
-                      point: Point(latitude: state.myLocation.latitude, longitude: state.myLocation.longitude),
+                      point: Point(
+                          latitude: state.myLocation!.latitude,
+                          longitude: state.myLocation!.longitude),
                     ),
                 ],
                 onMapCreated: (YandexMapController yandexMapController) async {
@@ -104,8 +124,12 @@ class _HomeChooseStoreMapState extends State<HomeChooseStoreMap> {
                         CameraPosition(
                           zoom: 10.5,
                           target: Point(
-                            latitude: double.parse(state.loadedShopsList.data.first.addressLatitude ?? "0"),
-                            longitude: double.parse(state.loadedShopsList.data.first.addressLongitude ?? "0"),
+                            latitude: double.parse(state.loadedShopsList.data
+                                    .first.addressLatitude ??
+                                "0"),
+                            longitude: double.parse(state.loadedShopsList.data
+                                    .first.addressLongitude ??
+                                "0"),
                           ),
                         ),
                       ),
@@ -121,8 +145,10 @@ class _HomeChooseStoreMapState extends State<HomeChooseStoreMap> {
                     await moveToMyPosition(state);
                   },
                   child: Container(
-                    decoration: BoxDecoration(shape: BoxShape.circle, color: newRedDark),
-                    padding: EdgeInsets.all(heightRatio(size: 16, context: context)),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: newRedDark),
+                    padding:
+                        EdgeInsets.all(heightRatio(size: 16, context: context)),
                     alignment: Alignment.center,
                     child: SvgPicture.asset(
                       "assets/images/myLocationIcon.svg",
@@ -136,7 +162,8 @@ class _HomeChooseStoreMapState extends State<HomeChooseStoreMap> {
                 right: widthRatio(size: 16, context: context),
                 top: heightRatio(size: 25, context: context),
                 child: Container(
-                  decoration: BoxDecoration(color: grey04, borderRadius: BorderRadius.circular(12)),
+                  decoration: BoxDecoration(
+                      color: grey04, borderRadius: BorderRadius.circular(12)),
                   height: heightRatio(size: 40, context: context),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,10 +188,15 @@ class _HomeChooseStoreMapState extends State<HomeChooseStoreMap> {
                           },
                           child: Container(
                             alignment: Alignment.center,
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 12, context: context))),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    heightRatio(size: 12, context: context))),
                             child: Text(
                               'Списком',
-                              style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), color: Colors.black),
+                              style: appHeadersTextStyle(
+                                  fontSize:
+                                      heightRatio(size: 14, context: context),
+                                  color: Colors.black),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -174,12 +206,16 @@ class _HomeChooseStoreMapState extends State<HomeChooseStoreMap> {
                         child: Container(
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(heightRatio(size: 12, context: context)),
+                            borderRadius: BorderRadius.circular(
+                                heightRatio(size: 12, context: context)),
                             color: newRedDark,
                           ),
                           child: Text(
                             'На карте',
-                            style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), color: whiteColor),
+                            style: appHeadersTextStyle(
+                                fontSize:
+                                    heightRatio(size: 14, context: context),
+                                color: whiteColor),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -233,7 +269,7 @@ class _HomeChooseStoreMapState extends State<HomeChooseStoreMap> {
         return;
       }
     }
-    LocationData myLocation = state.myLocation;
+    LocationData? myLocation = state.myLocation;
     if (state.myLocation == null) {
       myLocation = await location.getLocation();
     }
@@ -242,8 +278,12 @@ class _HomeChooseStoreMapState extends State<HomeChooseStoreMap> {
         CameraPosition(
           zoom: 17,
           target: Point(
-            latitude: state.myLocation != null ? state.myLocation.latitude : myLocation.latitude,
-            longitude: state.myLocation != null ? state.myLocation.longitude : myLocation.longitude,
+            latitude: state.myLocation != null
+                ? state.myLocation!.latitude
+                : myLocation!.latitude,
+            longitude: state.myLocation != null
+                ? state.myLocation!.longitude
+                : myLocation!.longitude,
           ),
         ),
       ),

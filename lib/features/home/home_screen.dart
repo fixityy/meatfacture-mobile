@@ -12,15 +12,16 @@ import 'package:smart/main.dart';
 class HomeScreen extends StatefulWidget {
   final GlobalKey<NavigatorState> homePageNavKey;
 
-  const HomeScreen({@required this.homePageNavKey});
+  const HomeScreen({required this.homePageNavKey});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
-  bool popupBetaVersion = prefs.getBool(SharedKeys.popupBetaVersion);
-  bool isSocialNetworkFacebook = prefs.getBool(SharedKeys.isSocialNetworkFacebook);
+  bool? popupBetaVersion = prefs.getBool(SharedKeys.popupBetaVersion);
+  bool? isSocialNetworkFacebook =
+      prefs.getBool(SharedKeys.isSocialNetworkFacebook);
 
   @override
   void initState() {
@@ -48,11 +49,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         break;
       case AppLifecycleState.detached:
         break;
+      case AppLifecycleState.hidden:
+      //ignore //FIXME
     }
   }
 
   void showPopupBetaVersionDialog() async {
-    if (isSocialNetworkFacebook != null && isSocialNetworkFacebook) {
+    if (isSocialNetworkFacebook != null && isSocialNetworkFacebook!) {
       if (popupBetaVersion == false || popupBetaVersion == null) {
         await Future.delayed(Duration(seconds: 1));
         await popupBetaVersionDialog(context);
@@ -73,14 +76,15 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   Widget build(BuildContext context) {
     // ignore: close_sinks
-    LoyaltyCardsListBloc _loyaltyCardsListBloc = BlocProvider.of<LoyaltyCardsListBloc>(context);
+    LoyaltyCardsListBloc _loyaltyCardsListBloc =
+        BlocProvider.of<LoyaltyCardsListBloc>(context);
     if (_loyaltyCardsListBloc.state is LoyaltyCardsListLoadedState) {
     } else {
       _loyaltyCardsListBloc.add(LoyaltyCardsListLoadEvent());
     }
     return WillPopScope(
       onWillPop: () async {
-        widget.homePageNavKey.currentState.maybePop();
+        widget.homePageNavKey.currentState?.maybePop();
         return false;
       },
       child: Navigator(
@@ -103,8 +107,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     flex: 1,
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                        topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                        topLeft: Radius.circular(
+                            heightRatio(size: 15, context: context)),
+                        topRight: Radius.circular(
+                            heightRatio(size: 15, context: context)),
                       ),
                       child: Container(
                         color: Colors.white,
