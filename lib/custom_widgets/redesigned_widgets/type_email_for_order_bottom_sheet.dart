@@ -31,10 +31,10 @@ class _TypeEmailForOrderBottomSheetState
         builder: (context, profileState) {
       if (profileState is ProfileLoadedState &&
           isInit &&
-          profileState.profileModel.data.email != null &&
-          profileState.profileModel.data.email.isNotEmpty) {
+          profileState.profileModel.data!.email != null &&
+          profileState.profileModel.data!.email!.isNotEmpty) {
         isInit = false;
-        emailTextController.text = profileState.profileModel.data.email;
+        emailTextController.text = profileState.profileModel.data!.email!;
       } else {
         isUserHasEmail = false;
       }
@@ -98,9 +98,9 @@ class _TypeEmailForOrderBottomSheetState
                             emailTextController.text.isNotEmpty) {
                           if (!isUserHasEmail) {
                             _profileBloc.add(ProfileUpdateDataEvent(
-                                name: profileState.profileModel.data.name,
+                                name: profileState.profileModel.data!.name,
                                 email: emailTextController.text,
-                                phone: profileState.profileModel.data.phone));
+                                phone: profileState.profileModel.data!.phone));
                           }
 
                           Navigator.pop(context, emailTextController.text);

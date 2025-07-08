@@ -35,7 +35,7 @@ class DeleteProfileBottomSheet extends StatelessWidget {
         DeleteProfileBloc _deleteProfileBloc = BlocProvider.of(context);
 
         if (state is DeleteProfileLoadedState &&
-            state.deleteProfileModel.success) {
+            state.deleteProfileModel.success == true) {
           _profileBloc.add(ProfileLoadEvent());
           isDeleted = true;
         }

@@ -68,7 +68,7 @@ mapImInShopProductToAssortmentProduct({required Product product}) {
     shortName: product.name,
     weight: product.weight,
     name: product.name,
-    rating: product.rating == null ? null : product.rating.value,
+    rating: product.rating == null ? null : product.rating!.value,
     images: product.images,
     currentPrice: product.price.toString(),
     priceWithDiscount: product.priceWithDiscount,

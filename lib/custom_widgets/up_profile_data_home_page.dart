@@ -30,7 +30,7 @@ class UpProfileDataHome extends StatelessWidget {
       builder: (context, state) {
         if (state is ProfileLoadedState) {
           _addressesShopBloc.add(SelectAddressShopEvent(
-            shopUuid: state.profileModel.data.selectedStoreUserUuid,
+            shopUuid: state.profileModel.data!.selectedStoreUserUuid,
           ));
         }
         return SafeArea(
@@ -51,11 +51,11 @@ class UpProfileDataHome extends StatelessWidget {
                       color: Colors.transparent,
                       child: Text(
                         state is ProfileLoadedState
-                            ? state.profileModel.data
+                            ? state.profileModel.data!
                                         .filledProfileBonusesAdded !=
                                     false
-                                ? state.profileModel.data.name != null
-                                    ? state.profileModel.data.name
+                                ? state.profileModel.data!.name != null
+                                    ? state.profileModel.data!.name!
                                     : 'Заполните профиль'
                                 : 'Заполните профиль'
                             : '',

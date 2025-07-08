@@ -18,7 +18,8 @@ class DiscountTitleText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (pDState.productDetailsModel.data.discountType
-        .contains("FavoriteAssortment")) {
+            ?.contains("FavoriteAssortment") ==
+        true) {
       return BlocBuilder<FavoriteProductBloc, FavoriteProductState>(
         builder: (context, favProdstate) {
           num? percent = null;
@@ -37,7 +38,8 @@ class DiscountTitleText extends StatelessWidget {
         },
       );
     }
-    if (pDState.productDetailsModel.data.discountType.contains("diverse")) {
+    if (pDState.productDetailsModel.data.discountType?.contains("diverse") ==
+        true) {
       return BlocBuilder<DiverseFoodBloc, DiverseFoodState>(
         builder: (context, diverseState) {
           if (diverseState is DiverseFoodLoadedState) {
@@ -57,7 +59,7 @@ class DiscountTitleText extends StatelessWidget {
     return Text(
       pDState.productDetailsModel.data.discountTypeName == null
           ? ""
-          : "${pDState.productDetailsModel.data.discountTypeName}${percent != null ? ". ${"discount".tr()} ${percent.isNaN ? percent : percent.toInt()}% " : ""} ${pDState.productDetailsModel.data.discountActiveTill != null && pDState.productDetailsModel.data.discountActiveTill.isNotEmpty ? "${"validForText".tr().toLowerCase()} ${pDState.productDetailsModel.data.discountActiveTill[8]}${pDState.productDetailsModel.data.discountActiveTill[9]}.${pDState.productDetailsModel.data.discountActiveTill[5]}${pDState.productDetailsModel.data.discountActiveTill[6]}" : ""}",
+          : "${pDState.productDetailsModel.data.discountTypeName}${percent != null ? ". ${"discount".tr()} ${percent.isNaN ? percent : percent.toInt()}% " : ""} ${pDState.productDetailsModel.data.discountActiveTill != null && pDState.productDetailsModel.data.discountActiveTill!.isNotEmpty ? "${"validForText".tr().toLowerCase()} ${pDState.productDetailsModel.data.discountActiveTill![8]}${pDState.productDetailsModel.data.discountActiveTill![9]}.${pDState.productDetailsModel.data.discountActiveTill![5]}${pDState.productDetailsModel.data.discountActiveTill![6]}" : ""}",
       textAlign: TextAlign.center,
       style: appTextStyle(
           color: colorBlack04,

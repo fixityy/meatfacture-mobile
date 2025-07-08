@@ -1498,7 +1498,7 @@ class CatalogsProvider {
           Map<String, List<CatalogListModel>> secondLevelMap = {};
           for (var secondLevelCatalog in secondLevelCatalogs) {
             secondLevelMap
-                .putIfAbsent(secondLevelCatalog.catalogUuid, () => [])
+                .putIfAbsent(secondLevelCatalog.catalogUuid!, () => [])
                 .add(secondLevelCatalog);
           }
 
@@ -1953,15 +1953,15 @@ class ProfileProvider {
     if (response.statusCode == 200) {
       final Map<String, dynamic> profileJson = json.decode(response.body);
       ProfileModel profileModel = ProfileModel.fromJson(profileJson);
-      if (profileModel.data.selectedStoreUserUuid != null) {
-        log('🌎🌎🌎🌎🌎🌎 получаем профиль selected_store_user_uuid = ${profileModel.data.selectedStoreUserUuid}');
-        log('🌎🌎🌎🌎🌎🌎 получаем профиль selectedStoreAddress = ${profileModel.data.selectedStoreAddress}');
+      if (profileModel.data?.selectedStoreUserUuid != null) {
+        log('🌎🌎🌎🌎🌎🌎 получаем профиль selected_store_user_uuid = ${profileModel.data?.selectedStoreUserUuid}');
+        log('🌎🌎🌎🌎🌎🌎 получаем профиль selectedStoreAddress = ${profileModel.data?.selectedStoreAddress}');
+        await prefs.setString(SharedKeys.shopLogo,
+            profileModel.data!.image!.thumbnails!.the200X200!);
         await prefs.setString(
-            SharedKeys.shopLogo, profileModel.data.image.thumbnails.the200X200);
+            SharedKeys.shopUuid, profileModel.data!.selectedStoreUserUuid!);
         await prefs.setString(
-            SharedKeys.shopUuid, profileModel.data.selectedStoreUserUuid);
-        await prefs.setString(
-            SharedKeys.shopAddress, profileModel.data.selectedStoreAddress);
+            SharedKeys.shopAddress, profileModel.data!.selectedStoreAddress!);
       } else {
         log('🌎🌎🌎🌎🌎🌎 в профиле нет выбранного магазина ❗️❗️❗️');
       }

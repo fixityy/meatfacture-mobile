@@ -20,8 +20,10 @@ import '../../pages/history_order_details_page.dart';
 class RedesHasBonusesContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    HistoryOrdertDetailsBloc _historyOrdertDetailsBloc = BlocProvider.of<HistoryOrdertDetailsBloc>(context);
-    HistoryCheckDetailsBloc _historyCheckDetailsBloc = BlocProvider.of<HistoryCheckDetailsBloc>(context);
+    HistoryOrdertDetailsBloc _historyOrdertDetailsBloc =
+        BlocProvider.of<HistoryOrdertDetailsBloc>(context);
+    HistoryCheckDetailsBloc _historyCheckDetailsBloc =
+        BlocProvider.of<HistoryCheckDetailsBloc>(context);
     int currentPage = 1;
     return Column(
       children: [
@@ -29,8 +31,10 @@ class RedesHasBonusesContent extends StatelessWidget {
           padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                bottomRight: Radius.circular(heightRatio(size: 15, context: context)),
+                bottomLeft:
+                    Radius.circular(heightRatio(size: 15, context: context)),
+                bottomRight:
+                    Radius.circular(heightRatio(size: 15, context: context)),
               ),
               color: whiteColor),
           child: RedesPointsHaveNowCard(),
@@ -42,8 +46,10 @@ class RedesHasBonusesContent extends StatelessWidget {
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                  topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                  topLeft:
+                      Radius.circular(heightRatio(size: 15, context: context)),
+                  topRight:
+                      Radius.circular(heightRatio(size: 15, context: context)),
                 ),
                 color: whiteColor),
             child: PaginationView<BonusesListDataModel>(
@@ -52,22 +58,38 @@ class RedesHasBonusesContent extends StatelessWidget {
                   valueColor: new AlwaysStoppedAnimation<Color>(mainColor),
                 ),
               ),
-              padding: EdgeInsets.only(left: widthRatio(size: 15, context: context), right: widthRatio(size: 15, context: context), top: heightRatio(size: 12, context: context)),
+              padding: EdgeInsets.only(
+                  left: widthRatio(size: 15, context: context),
+                  right: widthRatio(size: 15, context: context),
+                  top: heightRatio(size: 12, context: context)),
               paginationViewType: PaginationViewType.listView,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: 1.3,
                 crossAxisCount: 2,
               ),
-              itemBuilder: (BuildContext context, BonusesListDataModel bonusesListDataModel, int index) {
+              itemBuilder: (BuildContext context,
+                  BonusesListDataModel bonusesListDataModel, int index) {
                 return InkWell(
                   onTap: () {
-                    if (bonusesListDataModel.relatedReferenceType != null && bonusesListDataModel.relatedReferenceId != "") {
-                      if (bonusesListDataModel.relatedReferenceType == "receipt") {
-                        _historyCheckDetailsBloc.add(HistoryCheckDetailsLoadEvent(receiptUuid: bonusesListDataModel.relatedReferenceId));
+                    if (bonusesListDataModel.relatedReferenceType != null &&
+                        bonusesListDataModel.relatedReferenceId != "") {
+                      if (bonusesListDataModel.relatedReferenceType ==
+                          "receipt") {
+                        _historyCheckDetailsBloc.add(
+                            HistoryCheckDetailsLoadEvent(
+                                receiptUuid:
+                                    bonusesListDataModel.relatedReferenceId!));
 
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryCheckDetailsPage(checkDate: "checkText".tr())));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HistoryCheckDetailsPage(
+                                    checkDate: "checkText".tr())));
                       } else {
-                        _historyOrdertDetailsBloc.add(HistoryOrderDetailsLoadEvent(orderId: bonusesListDataModel.relatedReferenceId));
+                        _historyOrdertDetailsBloc.add(
+                            HistoryOrderDetailsLoadEvent(
+                                orderId:
+                                    bonusesListDataModel.relatedReferenceId!));
 
                         Navigator.push(
                             context,
@@ -79,7 +101,9 @@ class RedesHasBonusesContent extends StatelessWidget {
                     }
                   },
                   child: Container(
-                    padding: EdgeInsets.only(top: heightRatio(size: 12, context: context), bottom: heightRatio(size: 12, context: context)),
+                    padding: EdgeInsets.only(
+                        top: heightRatio(size: 12, context: context),
+                        bottom: heightRatio(size: 12, context: context)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -89,12 +113,21 @@ class RedesHasBonusesContent extends StatelessWidget {
                             children: [
                               Text(
                                 getResonText(bonusesListDataModel),
-                                style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), fontWeight: FontWeight.w600),
+                                style: appHeadersTextStyle(
+                                    fontSize:
+                                        heightRatio(size: 16, context: context),
+                                    fontWeight: FontWeight.w600),
                               ),
-                              SizedBox(height: heightRatio(size: 5, context: context)),
+                              SizedBox(
+                                  height:
+                                      heightRatio(size: 5, context: context)),
                               Text(
                                 getDateForText(bonusesListDataModel.createdAt),
-                                style: appHeadersTextStyle(fontSize: heightRatio(size: 12, context: context), fontWeight: FontWeight.w500, color: colorBlack06),
+                                style: appHeadersTextStyle(
+                                    fontSize:
+                                        heightRatio(size: 12, context: context),
+                                    fontWeight: FontWeight.w500,
+                                    color: colorBlack06),
                               )
                             ],
                           ),
@@ -103,10 +136,20 @@ class RedesHasBonusesContent extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              bonusesListDataModel.quantityDelta < 0 ? bonusesListDataModel.quantityDelta.toString() : "+" + bonusesListDataModel.quantityDelta.toString(),
-                              style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), fontWeight: FontWeight.w600, color: colorBlack06),
+                              bonusesListDataModel.quantityDelta < 0
+                                  ? bonusesListDataModel.quantityDelta
+                                      .toString()
+                                  : "+" +
+                                      bonusesListDataModel.quantityDelta
+                                          .toString(),
+                              style: appHeadersTextStyle(
+                                  fontSize:
+                                      heightRatio(size: 16, context: context),
+                                  fontWeight: FontWeight.w600,
+                                  color: colorBlack06),
                             ),
-                            SizedBox(width: widthRatio(size: 5, context: context)),
+                            SizedBox(
+                                width: widthRatio(size: 5, context: context)),
                             SvgPicture.asset(
                               "assets/images/MFIcon.svg",
                               fit: BoxFit.contain,
@@ -120,7 +163,10 @@ class RedesHasBonusesContent extends StatelessWidget {
                 );
               },
               pageFetch: (currentListSize) async {
-                List<BonusesListDataModel> fechedPage = await BonusesListProvider().BonusesListForPaginationResponse(currentPage: currentPage);
+                List<BonusesListDataModel> fechedPage =
+                    await BonusesListProvider()
+                        .BonusesListForPaginationResponse(
+                            currentPage: currentPage);
                 currentPage++;
                 return fechedPage;
               },
@@ -147,7 +193,8 @@ String getDateForText(DateTime date) {
   if (date.month == DateTime.now().month && date.day == DateTime.now().day) {
     return "${"todayText".tr()} ${date.hour}:${date.minute}";
   }
-  if (date.month == DateTime.now().month && date.day - 1 == DateTime.now().day) {
+  if (date.month == DateTime.now().month &&
+      date.day - 1 == DateTime.now().day) {
     return "${"yesterdayText".tr()} ${date.hour}:${date.minute}";
   }
   return "${date.day} ${getMonthName(month: date.month, isOfMode: true)} ${date.hour}:${date.minute}";

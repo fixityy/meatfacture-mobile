@@ -165,7 +165,7 @@ class _ToFreeDeliveryWidgetState extends State<ToFreeDeliveryWidget> {
                                             ),
                                             TextSpan(
                                               text:
-                                                  '${state.orderCalculateResponseModel!.data.toFreeDelivery.removeAfterPointNulles()} руб',
+                                                  '${state.orderCalculateResponseModel!.data.toFreeDelivery?.removeAfterPointNulles()} руб',
                                               style: appHeadersTextStyle(
                                                   fontSize: heightRatio(
                                                       size: 10,
@@ -352,7 +352,7 @@ class _ToFreeDeliveryWidgetState extends State<ToFreeDeliveryWidget> {
                                 Text(
                                   tr('sum_to_free_delivery', args: [
                                     state.orderCalculateResponseModel!.data
-                                        .toFreeDelivery
+                                        .toFreeDelivery!
                                         .removeAfterPointNulles()
                                         .toString()
                                   ]),

@@ -49,11 +49,11 @@ class _RedesAssortmentsCard2WidgetState
         builder: (context, basketState) {
       if (basketState is BasketLoadedState &&
           _secondaryPageBloc.state is SecondaryBasketPageState) {
-        for (var i = 0; i < basketState.basketListModel.data.length; i++) {
+        for (var i = 0; i < basketState.basketListModel.data!.length; i++) {
           if (widget.assortmentsListModel.uuid ==
-              basketState.basketListModel.data[i].assortment.uuid) {
+              basketState.basketListModel.data![i].assortment.uuid) {
             widget.assortmentsListModel.quantityInClientCart =
-                basketState.basketListModel.data[i].quantity;
+                basketState.basketListModel.data![i].quantity;
             break;
           } else {
             widget.assortmentsListModel.quantityInClientCart = 0;
@@ -72,7 +72,7 @@ class _RedesAssortmentsCard2WidgetState
             context,
             new CupertinoPageRoute(
               builder: (context) => RedesProductDetailsPage(
-                productUuid: widget.assortmentsListModel.uuid,
+                productUuid: widget.assortmentsListModel.uuid!,
               ),
             ),
           );
@@ -122,7 +122,7 @@ class _RedesAssortmentsCard2WidgetState
                                 ? '${widget.index}. ${widget.assortmentsListModel.name}' //наименование товара
                                 : ''
                             : widget.assortmentsListModel.name != null
-                                ? widget.assortmentsListModel.name
+                                ? widget.assortmentsListModel.name!
                                 : '',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -168,9 +168,9 @@ class _RedesAssortmentsCard2WidgetState
                           widget.assortmentsListModel.weight == "0"
                               ? ""
                               : double.parse(
-                                          widget.assortmentsListModel.weight) >
+                                          widget.assortmentsListModel.weight!) >
                                       500
-                                  ? "${double.parse(widget.assortmentsListModel.weight) / 1000}${"kgText".tr()}"
+                                  ? "${double.parse(widget.assortmentsListModel.weight!) / 1000}${"kgText".tr()}"
                                   : "${widget.assortmentsListModel.weight}${"grText".tr()}",
                           style: appLabelTextStyle(
                               fontSize: heightRatio(size: 9, context: context),
@@ -191,23 +191,25 @@ class _RedesAssortmentsCard2WidgetState
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(
                           heightRatio(size: 5, context: context)),
-                      color: widget.assortmentsListModel.images.isNotEmpty
-                          ? Colors.transparent
-                          : newGrey2,
+                      color:
+                          widget.assortmentsListModel.images?.isNotEmpty == true
+                              ? Colors.transparent
+                              : newGrey2,
                     ),
-                    child: widget.assortmentsListModel.images.isNotEmpty
-                        ? CachedNetworkImage(
-                            imageUrl: widget.assortmentsListModel.images[0]
-                                .thumbnails.the1000X1000,
-                            cacheManager: CustomCacheManager(),
-                            fit: BoxFit.cover,
-                            errorWidget: (context, url, error) => Image.asset(
-                                "assets/images/notImage.png",
-                                fit: BoxFit.contain),
-                            useOldImageOnUrlChange: true,
-                          )
-                        : Image.asset("assets/images/notImage.png",
-                            fit: BoxFit.fitWidth),
+                    child:
+                        widget.assortmentsListModel.images?.isNotEmpty == true
+                            ? CachedNetworkImage(
+                                imageUrl: widget.assortmentsListModel.images![0]
+                                    .thumbnails.the1000X1000,
+                                cacheManager: CustomCacheManager(),
+                                fit: BoxFit.cover,
+                                errorWidget: (context, url, error) =>
+                                    Image.asset("assets/images/notImage.png",
+                                        fit: BoxFit.contain),
+                                useOldImageOnUrlChange: true,
+                              )
+                            : Image.asset("assets/images/notImage.png",
+                                fit: BoxFit.fitWidth),
                   ),
                   SizedBox(
                     height: heightRatio(size: 60, context: context),
@@ -311,7 +313,7 @@ class _RedesAssortmentsCard2WidgetState
                         widget.assortmentsListModel.quantityInClientCart !=
                                     null &&
                                 widget.assortmentsListModel
-                                        .quantityInClientCart >
+                                        .quantityInClientCart! >
                                     0 &&
                                 (widget.isFavoriteProdiuctPicking == null ||
                                     !widget.isFavoriteProdiuctPicking!)

@@ -70,7 +70,7 @@ class HowWorkDiverseFoodScreen extends StatelessWidget {
                             SizedBox(
                                 height:
                                     heightRatio(size: 25, context: context)),
-                            ...state.diverseFoodPersentListModel.data
+                            ...state.diverseFoodPersentListModel.data!
                                 .map((element) => _percentCard(
                                     purchasesCount: element.countPurchases,
                                     ratedCount: element.countRatingScores,

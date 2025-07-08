@@ -16,32 +16,32 @@ Widget redesDiverseFoodProgressBox({
   if (state is DiverseFoodLoadedState) {
     if (state.diverseFoodFutureDiscountModel.data != null) {
       minDiscountPercent =
-          state.diverseFoodFutureDiscountModel.data.discountPercent;
-      for (var i = 0; i < state.diverseFoodPersentListModel.data.length; i++) {
+          state.diverseFoodFutureDiscountModel.data!.discountPercent;
+      for (var i = 0; i < state.diverseFoodPersentListModel.data!.length; i++) {
         if (minDiscountPercent <
-                state.diverseFoodPersentListModel.data[i].discountPercent ||
-            i == state.diverseFoodPersentListModel.data.length - 1) {
+                state.diverseFoodPersentListModel.data![i].discountPercent ||
+            i == state.diverseFoodPersentListModel.data!.length - 1) {
           minDiscountPercent =
-              state.diverseFoodPersentListModel.data[i].discountPercent;
+              state.diverseFoodPersentListModel.data![i].discountPercent;
           futurePuchases =
-              state.diverseFoodPersentListModel.data[i].countPurchases;
+              state.diverseFoodPersentListModel.data![i].countPurchases;
           futuretRating =
-              state.diverseFoodPersentListModel.data[i].countRatingScores;
+              state.diverseFoodPersentListModel.data![i].countRatingScores;
           break;
         }
       }
     } else {
       minDiscountPercent =
-          state.diverseFoodPersentListModel.data.first.discountPercent;
-      for (var i = 0; i < state.diverseFoodPersentListModel.data.length; i++) {
-        if (state.diverseFoodPersentListModel.data[i].discountPercent <=
+          state.diverseFoodPersentListModel.data!.first.discountPercent;
+      for (var i = 0; i < state.diverseFoodPersentListModel.data!.length; i++) {
+        if (state.diverseFoodPersentListModel.data![i].discountPercent <=
             minDiscountPercent) {
           minDiscountPercent =
-              state.diverseFoodPersentListModel.data[i].discountPercent;
+              state.diverseFoodPersentListModel.data![i].discountPercent;
           futurePuchases =
-              state.diverseFoodPersentListModel.data[i].countPurchases;
+              state.diverseFoodPersentListModel.data![i].countPurchases;
           futuretRating =
-              state.diverseFoodPersentListModel.data[i].countRatingScores;
+              state.diverseFoodPersentListModel.data![i].countRatingScores;
         }
       }
     }
@@ -85,10 +85,10 @@ Widget _redesDiverseFoodOnlyProgressBox({
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (state is DiverseFoodLoadedState)
-            ...state.diverseFoodPersentListModel.data
+            ...state.diverseFoodPersentListModel.data!
                 .map((item) => _getPercentArea(
                     isLast: item.discountPercent ==
-                            state.diverseFoodPersentListModel.data.last
+                            state.diverseFoodPersentListModel.data!.last
                                 .discountPercent
                         ? true
                         : false,
