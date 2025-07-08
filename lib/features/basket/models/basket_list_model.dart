@@ -5,27 +5,30 @@ import 'package:smart/models/Assortments_image_model.dart';
 class BasketListModel {
   BasketListModel({this.data});
 
-  List<BasketListDataModel> data;
+  List<BasketListDataModel>? data;
 
-  factory BasketListModel.fromJson(Map<String, dynamic> json) => BasketListModel(
-        data: List<BasketListDataModel>.from(json["data"].map((x) => BasketListDataModel.fromJson(x))),
+  factory BasketListModel.fromJson(Map<String, dynamic> json) =>
+      BasketListModel(
+        data: List<BasketListDataModel>.from(
+            json["data"].map((x) => BasketListDataModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }
 
 class BasketListDataModel {
   BasketListDataModel({
-    this.assortment,
-    this.quantity,
+    required this.assortment,
+    required this.quantity,
   });
 
   BasketListAssortmentModel assortment;
   double quantity;
 
-  factory BasketListDataModel.fromJson(Map<String, dynamic> json) => BasketListDataModel(
+  factory BasketListDataModel.fromJson(Map<String, dynamic> json) =>
+      BasketListDataModel(
         assortment: BasketListAssortmentModel.fromJson(json["assortment"]),
         quantity: double.parse(json["quantity"].toString()),
       );
@@ -43,64 +46,64 @@ class BasketListDataModel {
 
 class BasketListAssortmentModel {
   BasketListAssortmentModel({
-    this.uuid,
-    this.discountType,
-    this.discountTypeColor,
-    this.discountTypeName,
-    this.catalogUuid,
-    this.catalogName,
-    this.name,
-    this.shortName,
-    this.assortmentUnitId,
-    this.countryId,
-    this.weight,
-    this.volume,
+    required this.uuid,
+    required this.discountType,
+    required this.discountTypeColor,
+    required this.discountTypeName,
+    required this.catalogUuid,
+    required this.catalogName,
+    required this.name,
+    required this.shortName,
+    required this.assortmentUnitId,
+    required this.countryId,
+    required this.weight,
+    required this.volume,
     this.manufacturer,
     this.ingredients,
-    this.description,
+    required this.description,
     this.temperatureMin,
-    this.temperatureMax,
-    this.productionStandardId,
-    this.productionStandardNumber,
-    this.shelfLife,
+    required this.temperatureMax,
+    required this.productionStandardId,
+    required this.productionStandardNumber,
+    required this.shelfLife,
     this.rating,
-    this.images,
+    required this.images,
     this.priceWithDiscount, //цена со скидкой
     this.totalAmountWithDiscount, //сумма позиции
     this.price, //актуальная цена
     this.originalPrice, //цена без скидки
     this.currentPrice,
-    this.stores,
-    this.tags,
-    this.properties,
+    required this.stores,
+    required this.tags,
+    required this.properties,
     this.userShoppingLists,
     this.quantityInStore,
     this.bonusPercent,
   });
 
   String uuid;
-  double quantityInStore;
-  double bonusPercent;
+  double? quantityInStore;
+  double? bonusPercent;
   String catalogUuid;
   String catalogName;
-  String discountTypeName;
-  String discountType;
-  String discountTypeColor;
+  String? discountTypeName;
+  String? discountType;
+  String? discountTypeColor;
   String name;
-  double priceWithDiscount;
-  double totalAmountWithDiscount;
-  double price;
-  double originalPrice;
-  double currentPrice;
-  String shortName;
+  double? priceWithDiscount;
+  double? totalAmountWithDiscount;
+  double? price;
+  double? originalPrice;
+  double? currentPrice;
+  String? shortName;
   String assortmentUnitId;
   String countryId;
   String weight;
-  String volume;
+  String? volume;
   dynamic manufacturer;
   dynamic ingredients;
   String description;
-  dynamic temperatureMin;
+  int? temperatureMin;
   int temperatureMax;
   String productionStandardId;
   String productionStandardNumber;
@@ -112,17 +115,30 @@ class BasketListAssortmentModel {
   List<BasketListAssortmentPropertyModel> properties;
   dynamic userShoppingLists;
 
-  factory BasketListAssortmentModel.fromJson(Map<String, dynamic> json) => BasketListAssortmentModel(
+  factory BasketListAssortmentModel.fromJson(Map<String, dynamic> json) =>
+      BasketListAssortmentModel(
         uuid: json["uuid"],
         discountTypeColor: json["discount_type_color"],
         discountType: json["discount_type"],
         discountTypeName: json["discount_type_name"],
-        bonusPercent: json["bonus_percent"] == null ? null : double.parse(json["bonus_percent"]),
-        priceWithDiscount: json["price_with_discount"] == null ? null : double.parse(json["price_with_discount"].toString()),
-        totalAmountWithDiscount: json["total_amount_with_discount"] == null ? null : double.parse(json["total_amount_with_discount"].toString()),
-        price: json["price"] == null ? null : double.parse(json["price"].toString()),
-        originalPrice: json["original_price"] == null ? null : double.parse(json["original_price"].toString()),
-        currentPrice: json["current_price"] == null ? null : double.parse(json["current_price"].toString()),
+        bonusPercent: json["bonus_percent"] == null
+            ? null
+            : double.parse(json["bonus_percent"]),
+        priceWithDiscount: json["price_with_discount"] == null
+            ? null
+            : double.parse(json["price_with_discount"].toString()),
+        totalAmountWithDiscount: json["total_amount_with_discount"] == null
+            ? null
+            : double.parse(json["total_amount_with_discount"].toString()),
+        price: json["price"] == null
+            ? null
+            : double.parse(json["price"].toString()),
+        originalPrice: json["original_price"] == null
+            ? null
+            : double.parse(json["original_price"].toString()),
+        currentPrice: json["current_price"] == null
+            ? null
+            : double.parse(json["current_price"].toString()),
         catalogUuid: json["catalog_uuid"],
         catalogName: json["catalog_name"],
         name: json["name"],
@@ -140,10 +156,14 @@ class BasketListAssortmentModel {
         productionStandardNumber: json["production_standard_number"],
         shelfLife: json["shelf_life"],
         rating: json["rating"],
-        images: List<ImageModel>.from(json["images"].map((x) => ImageModel.fromJson(x))),
-        stores: List<BasketListStoreModel>.from(json["stores"].map((x) => BasketListStoreModel.fromJson(x))),
+        images: List<ImageModel>.from(
+            json["images"].map((x) => ImageModel.fromJson(x))),
+        stores: List<BasketListStoreModel>.from(
+            json["stores"].map((x) => BasketListStoreModel.fromJson(x))),
         tags: List<dynamic>.from(json["tags"].map((x) => x)),
-        properties: List<BasketListAssortmentPropertyModel>.from(json["properties"].map((x) => BasketListAssortmentPropertyModel.fromJson(x))),
+        properties: List<BasketListAssortmentPropertyModel>.from(
+            json["properties"]
+                .map((x) => BasketListAssortmentPropertyModel.fromJson(x))),
         userShoppingLists: json["user_shopping_lists"],
       );
 

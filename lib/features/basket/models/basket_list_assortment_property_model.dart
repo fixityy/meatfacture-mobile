@@ -1,11 +1,11 @@
 class BasketListAssortmentPropertyModel {
   BasketListAssortmentPropertyModel({
-    this.uuid,
-    this.name,
-    this.assortmentPropertyDataTypeId,
-    this.availableValues,
-    this.isSearchable,
-    this.value,
+    required this.uuid,
+    required this.name,
+    required this.assortmentPropertyDataTypeId,
+    required this.availableValues,
+    required this.isSearchable,
+    required this.value,
   });
 
   String uuid;
@@ -16,11 +16,14 @@ class BasketListAssortmentPropertyModel {
   bool isSearchable;
   String value;
 
-  factory BasketListAssortmentPropertyModel.fromJson(Map<String, dynamic> json) => BasketListAssortmentPropertyModel(
+  factory BasketListAssortmentPropertyModel.fromJson(
+          Map<String, dynamic> json) =>
+      BasketListAssortmentPropertyModel(
         uuid: json["uuid"],
         name: json["name"],
         assortmentPropertyDataTypeId: json["assortment_property_data_type_id"],
-        availableValues: List<String>.from(json["available_values"].map((x) => x)),
+        availableValues:
+            List<String>.from(json["available_values"].map((x) => x)),
         isSearchable: json["is_searchable"],
         value: json["value"],
       );

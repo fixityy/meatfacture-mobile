@@ -10,7 +10,10 @@ import 'package:smart/core/constants/text_styles.dart';
 class BasketEmpty extends StatelessWidget {
   final BoxDecoration Function(BuildContext) decorationForContent;
 
-  const BasketEmpty({Key key, @required this.decorationForContent}) : super(key: key);
+  const BasketEmpty({
+    super.key,
+    required this.decorationForContent,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,12 @@ class BasketEmpty extends StatelessWidget {
               height: heightRatio(size: 131, context: context),
             ),
             SizedBox(height: heightRatio(size: 22, context: context)),
-            Text('В корзине нет товаров', textAlign: TextAlign.center, style: appLabelTextStyle(fontSize: heightRatio(size: 18, context: context), color: newBlack, fontWeight: FontWeight.w400)),
+            Text('В корзине нет товаров',
+                textAlign: TextAlign.center,
+                style: appLabelTextStyle(
+                    fontSize: heightRatio(size: 18, context: context),
+                    color: newBlack,
+                    fontWeight: FontWeight.w400)),
             SizedBox(height: heightRatio(size: 25, context: context)),
             InkWell(
               onTap: () {
@@ -44,7 +52,9 @@ class BasketEmpty extends StatelessWidget {
                 ),
                 child: Text(
                   'Перейти к покупкам',
-                  style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                  style: appLabelTextStyle(
+                      color: Colors.white,
+                      fontSize: heightRatio(size: 16, context: context)),
                 ),
               ),
             ),
@@ -72,7 +82,9 @@ class BasketEmpty extends StatelessWidget {
                 ),
                 child: Text(
                   'Перейти в избранное',
-                  style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                  style: appLabelTextStyle(
+                      color: Colors.white,
+                      fontSize: heightRatio(size: 16, context: context)),
                 ),
               ),
             ),

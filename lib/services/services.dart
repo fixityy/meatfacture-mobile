@@ -287,7 +287,7 @@ class AddressesClientProvider {
   }
 
   Future<bool> changeClientAddressResponse({
-    required String addressUuid,
+    required String? addressUuid,
     String? title,
     String? city,
     String? street,

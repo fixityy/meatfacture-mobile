@@ -4,20 +4,20 @@ import 'package:smart/custom_widgets/order_calculate_bottom_sheet.dart';
 import 'package:smart/models/product_model_for_order_request.dart';
 
 void openOrderCalculateBottomSheet({
-  @required String clientCreditCardUuid,
-  @required BuildContext context,
-  @required String clientComment,
-  @required String clientEmail,
-  @required String address,
-  @required int floor,
-  @required int entrance,
-  @required int apartmentNumber,
-  @required String intercomCode,
-  @required String plannedDeliveryDatetimeFrom,
-  @required String plannedDeliveryDatetimeTo,
-  @required String orderDeliveryTypeId,
-  @required String orderPaymentTypeId,
-  @required List<ProductModelForOrderRequest> productModelForOrderRequestList,
+  required String clientCreditCardUuid,
+  required BuildContext context,
+  required String clientComment,
+  required String clientEmail,
+  required String address,
+  required int? floor,
+  required int? entrance,
+  required int? apartmentNumber,
+  required String intercomCode,
+  required String plannedDeliveryDatetimeFrom,
+  required String plannedDeliveryDatetimeTo,
+  required String orderDeliveryTypeId,
+  required String orderPaymentTypeId,
+  required List<ProductModelForOrderRequest> productModelForOrderRequestList,
 }) {
   showModalBottomSheet<dynamic>(
     isScrollControlled: true,
@@ -38,11 +38,13 @@ void openOrderCalculateBottomSheet({
       debugPrint('🍏 entrance: $entrance');
       debugPrint('🍏 apartmentNumber: $apartmentNumber');
       debugPrint('🍏 intercomCode: $intercomCode');
-      debugPrint('🍏 plannedDeliveryDatetimeFrom: $plannedDeliveryDatetimeFrom');
+      debugPrint(
+          '🍏 plannedDeliveryDatetimeFrom: $plannedDeliveryDatetimeFrom');
       debugPrint('🍏 plannedDeliveryDatetimeTo: $plannedDeliveryDatetimeTo');
       debugPrint('🍏 orderDeliveryTypeId: $orderDeliveryTypeId');
       debugPrint('🍏 orderPaymentTypeId: $orderPaymentTypeId');
-      debugPrint('🍏 productModelForOrderRequestList: $productModelForOrderRequestList');
+      debugPrint(
+          '🍏 productModelForOrderRequestList: $productModelForOrderRequestList');
 
       return Wrap(
         children: [

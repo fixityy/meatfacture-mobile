@@ -52,7 +52,7 @@ class OrderCalculateBloc
   String? _promocode;
   String? get promocode => _promocode;
 
-  void updatePromoCode(String newPromoCode) {
+  void updatePromoCode(String? newPromoCode) {
     _promocode = newPromoCode;
     log('💾 Промокод обновлён вручную: $_promocode');
   }

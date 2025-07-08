@@ -6,18 +6,28 @@ class BasketAddress extends StatelessWidget {
   final String labelText;
   final TextEditingController textController;
 
-  const BasketAddress({Key key, @required this.labelText, @required this.textController}) : super(key: key);
+  const BasketAddress({
+    super.key,
+    required this.labelText,
+    required this.textController,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: grey04, width: widthRatio(size: 1, context: context)))),
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(
+                  color: grey04,
+                  width: widthRatio(size: 1, context: context)))),
       width: widthRatio(size: 64, context: context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             labelText,
-            style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: newBlackLight),
+            style: appLabelTextStyle(
+                fontSize: heightRatio(size: 14, context: context),
+                color: newBlackLight),
             textAlign: TextAlign.left,
           ),
           SizedBox(
@@ -27,7 +37,9 @@ class BasketAddress extends StatelessWidget {
               onTapOutside: (event) => FocusScope.of(context).unfocus(),
               controller: textController,
               maxLines: 1,
-              style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+              style: appLabelTextStyle(
+                  fontSize: heightRatio(size: 16, context: context),
+                  color: newBlack),
             ),
           ),
         ],

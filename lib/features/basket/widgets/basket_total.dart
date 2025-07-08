@@ -10,7 +10,9 @@ class BasketTotal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: widthRatio(size: 15, context: context), right: widthRatio(size: 15, context: context)),
+      padding: EdgeInsets.only(
+          left: widthRatio(size: 15, context: context),
+          right: widthRatio(size: 15, context: context)),
       child: BlocBuilder<OrderCalculateBloc, OrderCalculateState>(
         builder: (context, calculateState) {
           if (calculateState is OrderCalculateErrorState) {
@@ -23,13 +25,18 @@ class BasketTotal extends StatelessWidget {
                     color: newRedDark,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Icon(Icons.info_outline, color: Colors.white, size: heightRatio(size: 35, context: context)),
+                  child: Icon(Icons.info_outline,
+                      color: Colors.white,
+                      size: heightRatio(size: 35, context: context)),
                 ),
                 SizedBox(width: widthRatio(size: 13, context: context)),
                 Flexible(
                   child: Text(
                     'В данном магазине товаров в наличии нет, вернитесь пожалуйста назад чтобы пересмотреть товары или выберите другой магазин',
-                    style: appLabelTextStyle(color: newBlack, fontSize: heightRatio(size: 13, context: context), height: heightRatio(size: 1.2, context: context)),
+                    style: appLabelTextStyle(
+                        color: newBlack,
+                        fontSize: heightRatio(size: 13, context: context),
+                        height: heightRatio(size: 1.2, context: context)),
                   ),
                 ),
               ],
@@ -39,7 +46,8 @@ class BasketTotal extends StatelessWidget {
             return Container(
               alignment: Alignment.center,
               color: Colors.white,
-              child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(mainColor)),
+              child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(mainColor)),
             );
           }
           if (calculateState is OrderCalculateLoadedState) {
@@ -51,19 +59,30 @@ class BasketTotal extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        "${"goodsupperFirstText".tr()} ${calculateState.orderCalculateResponseModel.data.products.length} (${calculateState.orderCalculateResponseModel.data.totalWeight >= 0.5 ? (calculateState.orderCalculateResponseModel.data.totalWeight / 1000).toStringAsFixed(2) + "kgText".tr() : calculateState.orderCalculateResponseModel.data.totalWeight.toStringAsFixed(0) + "grText".tr()})",
-                        style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                        "${"goodsupperFirstText".tr()} ${calculateState.orderCalculateResponseModel!.data.products.length} (${calculateState.orderCalculateResponseModel!.data.totalWeight! >= 0.5 ? (calculateState.orderCalculateResponseModel!.data.totalWeight! / 1000).toStringAsFixed(2) + "kgText".tr() : calculateState.orderCalculateResponseModel!.data.totalWeight!.toStringAsFixed(0) + "grText".tr()})",
+                        style: appLabelTextStyle(
+                            fontSize: heightRatio(size: 16, context: context),
+                            color: newBlack),
                       ),
                     ), // Товаров 1 (1.50 кг)
                     RichText(
                       text: TextSpan(children: [
                         TextSpan(
-                          text: calculateState.orderCalculateResponseModel.data.totalPriceForProductsWithDiscount.toString(),
-                          style: appHeadersTextStyle(color: newBlack, fontSize: heightRatio(size: 16, context: context)),
+                          text: calculateState.orderCalculateResponseModel!.data
+                              .totalPriceForProductsWithDiscount
+                              .toString(),
+                          style: appHeadersTextStyle(
+                              color: newBlack,
+                              fontSize:
+                                  heightRatio(size: 16, context: context)),
                         ),
                         TextSpan(
                           text: " ${"rubleSignText".tr()}",
-                          style: appTextStyle(color: newBlack, fontWeight: FontWeight.w800, fontSize: heightRatio(size: 16, context: context)),
+                          style: appTextStyle(
+                              color: newBlack,
+                              fontWeight: FontWeight.w800,
+                              fontSize:
+                                  heightRatio(size: 16, context: context)),
                         )
                       ]),
                     )
@@ -75,40 +94,67 @@ class BasketTotal extends StatelessWidget {
                   children: [
                     Text(
                       "DiscountOnPromotionsText".tr(),
-                      style: appLabelTextStyle(color: newBlack, fontSize: heightRatio(size: 16, context: context)),
+                      style: appLabelTextStyle(
+                          color: newBlack,
+                          fontSize: heightRatio(size: 16, context: context)),
                     ), // скидка по акциям
                     RichText(
                       text: TextSpan(children: [
                         TextSpan(
-                          text: calculateState.orderCalculateResponseModel.data.totalDiscountForProducts.toString(),
-                          style: appHeadersTextStyle(color: newBlack, fontSize: heightRatio(size: 16, context: context)),
+                          text: calculateState.orderCalculateResponseModel!.data
+                              .totalDiscountForProducts
+                              .toString(),
+                          style: appHeadersTextStyle(
+                              color: newBlack,
+                              fontSize:
+                                  heightRatio(size: 16, context: context)),
                         ),
                         TextSpan(
                           text: " ${"rubleSignText".tr()}",
-                          style: appTextStyle(color: newBlack, fontWeight: FontWeight.w700, fontSize: heightRatio(size: 16, context: context)),
+                          style: appTextStyle(
+                              color: newBlack,
+                              fontWeight: FontWeight.w700,
+                              fontSize:
+                                  heightRatio(size: 16, context: context)),
                         )
                       ]),
                     )
                   ],
                 ),
-                if (calculateState.orderCalculateResponseModel.data.orderDeliveryTypeId == "delivery") SizedBox(height: heightRatio(size: 8, context: context)),
-                if (calculateState.orderCalculateResponseModel.data.orderDeliveryTypeId == "delivery")
+                if (calculateState.orderCalculateResponseModel!.data
+                        .orderDeliveryTypeId ==
+                    "delivery")
+                  SizedBox(height: heightRatio(size: 8, context: context)),
+                if (calculateState.orderCalculateResponseModel!.data
+                        .orderDeliveryTypeId ==
+                    "delivery")
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Доставка',
-                        style: appLabelTextStyle(color: newBlack, fontSize: heightRatio(size: 16, context: context)),
+                        style: appLabelTextStyle(
+                            color: newBlack,
+                            fontSize: heightRatio(size: 16, context: context)),
                       ),
                       RichText(
                         text: TextSpan(children: [
                           TextSpan(
-                            text: calculateState.orderCalculateResponseModel.data.deliveryPrice.toString(),
-                            style: appHeadersTextStyle(color: newBlack, fontSize: heightRatio(size: 16, context: context)),
+                            text: calculateState
+                                .orderCalculateResponseModel!.data.deliveryPrice
+                                .toString(),
+                            style: appHeadersTextStyle(
+                                color: newBlack,
+                                fontSize:
+                                    heightRatio(size: 16, context: context)),
                           ),
                           TextSpan(
                             text: " ${"rubleSignText".tr()}",
-                            style: appTextStyle(color: newBlack, fontWeight: FontWeight.w700, fontSize: heightRatio(size: 16, context: context)),
+                            style: appTextStyle(
+                                color: newBlack,
+                                fontWeight: FontWeight.w700,
+                                fontSize:
+                                    heightRatio(size: 16, context: context)),
                           )
                         ]),
                       )
@@ -120,17 +166,28 @@ class BasketTotal extends StatelessWidget {
                   children: [
                     Text(
                       "Итого к оплате",
-                      style: appHeadersTextStyle(color: newBlack, fontSize: heightRatio(size: 16, context: context)),
+                      style: appHeadersTextStyle(
+                          color: newBlack,
+                          fontSize: heightRatio(size: 16, context: context)),
                     ), // Доставка
                     RichText(
                       text: TextSpan(children: [
                         TextSpan(
-                          text: calculateState.orderCalculateResponseModel.data.totalPrice.toString(),
-                          style: appHeadersTextStyle(color: newBlack, fontSize: heightRatio(size: 16, context: context)),
+                          text: calculateState
+                              .orderCalculateResponseModel!.data.totalPrice
+                              .toString(),
+                          style: appHeadersTextStyle(
+                              color: newBlack,
+                              fontSize:
+                                  heightRatio(size: 16, context: context)),
                         ),
                         TextSpan(
                           text: " ${"rubleSignText".tr()}",
-                          style: appTextStyle(color: newBlack, fontWeight: FontWeight.w700, fontSize: heightRatio(size: 16, context: context)),
+                          style: appTextStyle(
+                              color: newBlack,
+                              fontWeight: FontWeight.w700,
+                              fontSize:
+                                  heightRatio(size: 16, context: context)),
                         )
                       ]),
                     )
@@ -142,7 +199,12 @@ class BasketTotal extends StatelessWidget {
             );
           }
 
-          return ShimmerforCalculateInBasket(countStr: calculateState.orderCalculateResponseModel.data.orderDeliveryTypeId == "delivery" ? 2 : 3);
+          return ShimmerforCalculateInBasket(
+              countStr: calculateState.orderCalculateResponseModel!.data
+                          .orderDeliveryTypeId ==
+                      "delivery"
+                  ? 2
+                  : 3);
         },
       ),
     );

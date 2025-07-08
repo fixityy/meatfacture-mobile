@@ -13,9 +13,9 @@ class OrderCalculateBottomSheet extends StatelessWidget {
   final String address;
   final String clientComment;
   final String clientEmail;
-  final int floor;
-  final int entrance;
-  final int apartmentNumber;
+  final int? floor;
+  final int? entrance;
+  final int? apartmentNumber;
   final String intercomCode;
   final String plannedDeliveryDatetimeFrom;
   final String plannedDeliveryDatetimeTo;
