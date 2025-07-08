@@ -304,7 +304,7 @@ class _InitAddUserAddressListCartState
                       time: '${store.workHoursFrom} - ${store.workHoursTill}',
                       price: store.deliveryPrice,
                       thumbnail: store.image != null
-                          ? store.image.thumbnails.the1000X1000
+                          ? store.image!.thumbnails.the1000X1000
                           : '',
                     ),
                   );

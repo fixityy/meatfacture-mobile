@@ -47,11 +47,11 @@ class _ReceiptsAssortmentsCard extends State<RecipeProductCard> {
     return BlocBuilder<BasketListBloc, BasketState>(
         builder: (context, basketState) {
       if (basketState is BasketLoadedState) {
-        for (var i = 0; i < basketState.basketListModel.data.length; i++) {
+        for (var i = 0; i < basketState.basketListModel.data!.length; i++) {
           if (widget.assortmentsListModel.uuid ==
-              basketState.basketListModel.data[i].assortment.uuid) {
+              basketState.basketListModel.data![i].assortment.uuid) {
             widget.assortmentsListModel.quantity =
-                basketState.basketListModel.data[i].quantity;
+                basketState.basketListModel.data![i].quantity;
             break;
           } else {
             widget.assortmentsListModel.quantity = 0;

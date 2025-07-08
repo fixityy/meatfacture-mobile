@@ -175,7 +175,7 @@ class _RedesImInShopBeforePageState extends State<RedesImInShopBeforePage> {
                                         price: store.deliveryPrice,
                                         thumbnail: store.image != null
                                             ? store
-                                                .image.thumbnails.the1000X1000
+                                                .image!.thumbnails.the1000X1000
                                             : '',
                                       ),
                                     );

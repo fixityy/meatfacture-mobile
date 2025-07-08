@@ -27,7 +27,7 @@ import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class InitAddUserAddress extends StatefulWidget {
   final bool isNewAddress;
-  final double heightOfBottomNavBar;
+  final double? heightOfBottomNavBar;
   final AddressClientModel? clientAddressDataModel;
 
   const InitAddUserAddress({
@@ -214,10 +214,10 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
                             ? MediaQuery.of(context).viewInsets.bottom
                             : Platform.isIOS
                                 ? MediaQuery.of(context).viewInsets.bottom -
-                                    widget.heightOfBottomNavBar -
+                                    widget.heightOfBottomNavBar! -
                                     30
                                 : MediaQuery.of(context).viewInsets.bottom -
-                                    widget.heightOfBottomNavBar,
+                                    widget.heightOfBottomNavBar!,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -586,12 +586,12 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
                                 10
                             : Platform.isIOS
                                 ? MediaQuery.of(context).viewInsets.bottom -
-                                    widget.heightOfBottomNavBar -
+                                    widget.heightOfBottomNavBar! -
                                     50 +
                                     bottomAreaHeight -
                                     10
                                 : MediaQuery.of(context).viewInsets.bottom -
-                                    widget.heightOfBottomNavBar +
+                                    widget.heightOfBottomNavBar! +
                                     bottomAreaHeight -
                                     10,
                     context: context)),

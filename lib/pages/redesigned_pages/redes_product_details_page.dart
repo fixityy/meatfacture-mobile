@@ -243,12 +243,13 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                   if (widget.isFromBasket == null ||
                       widget.isFromBasket == false) {
                     for (var i = 0;
-                        i < basketState.basketListModel.data.length;
+                        i < basketState.basketListModel.data!.length;
                         i++) {
                       if (state.productDetailsModel.data.uuid ==
-                          basketState.basketListModel.data[i].assortment.uuid) {
+                          basketState
+                              .basketListModel.data![i].assortment.uuid) {
                         state.productDetailsModel.data.quantityInClientCart =
-                            basketState.basketListModel.data[i].quantity;
+                            basketState.basketListModel.data![i].quantity;
                         isInBasket = true;
                         break;
                       } else {

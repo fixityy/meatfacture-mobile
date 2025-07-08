@@ -184,8 +184,8 @@ class _InitAddUserAddressListProfileState
                                               '${store.workHoursFrom} - ${store.workHoursTill}',
                                           price: store.deliveryPrice,
                                           thumbnail: store.image != null
-                                              ? store
-                                                  .image.thumbnails.the1000X1000
+                                              ? store.image!.thumbnails
+                                                  .the1000X1000
                                               : '',
                                         ),
                                       );
@@ -203,7 +203,7 @@ class _InitAddUserAddressListProfileState
                                       selectedShop.image != null &&
                                               selectedShop.image != ""
                                           ? selectedShop
-                                              .image.thumbnails.the1000X1000
+                                              .image!.thumbnails.the1000X1000
                                           : "",
                                     );
                                     // Обновляем выбранный магазин:
