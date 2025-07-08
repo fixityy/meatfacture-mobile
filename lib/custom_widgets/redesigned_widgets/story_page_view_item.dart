@@ -147,7 +147,7 @@ class _StoryPageViewItemState extends State<StoryPageViewItem> {
         //Tabs List Builder
         StoryView(
             inline: true,
-            onStoryShow: (value) {
+            onStoryShow: (value, _) {
               if (isTimerMove) {
                 if (currentIndex <
                     widget.storiesListDataModel.tabs.length - 1) {

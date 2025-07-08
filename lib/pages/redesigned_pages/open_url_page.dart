@@ -15,36 +15,57 @@ Widget openUrlPage({
   required BuildContext context,
   required String orderId,
 }) {
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
-
+  // final Completer<WebViewController> _controller =
+  //     Completer<WebViewController>();
+  final WebViewController _webController = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..loadRequest(Uri.parse(url));
+  _webController.setNavigationDelegate(NavigationDelegate(
+      // onNavigationRequest: ,
+      onNavigationRequest: (navigation) {
+    print('blocking navigation to $navigation}');
+    if (navigation.url.contains("sberpay")) {
+      _launchUrl(navigation.url);
+      return NavigationDecision.prevent;
+    }
+    if (navigation.url.contains("success")) {
+      Navigator.pop(context);
+    } else if (navigation.url.contains("error")) {
+      Fluttertoast.showToast(msg: "errorText".tr());
+      Navigator.pop(context);
+    }
+    print('allowing navigation to $navigation');
+    return NavigationDecision.navigate;
+  }));
   return Scaffold(
     body: SafeArea(
       bottom: false,
       child: Stack(
         children: [
-          WebView(
-              javascriptMode: JavascriptMode.unrestricted,
-              initialUrl: url,
-              onWebViewCreated: (WebViewController webcontroller) {
-                _controller.complete(webcontroller);
-              },
-              navigationDelegate: (navigation) {
-                print('blocking navigation to $navigation}');
-                if (navigation.url.contains("sberpay")) {
-                  _launchUrl(navigation.url);
-                  return NavigationDecision.prevent;
-                }
-                if (navigation.url.contains("success")) {
-                  Navigator.pop(context);
-                } else if (navigation.url.contains("error")) {
-                  Fluttertoast.showToast(msg: "errorText".tr());
-                  Navigator.pop(context);
-                }
-                print('allowing navigation to $navigation');
-                return NavigationDecision.navigate;
-              },
-              onPageStarted: (url) async {}),
+          WebViewWidget(
+            // javascriptMode: JavascriptMode.unrestricted,
+            controller: _webController,
+            // initialUrl: url,?
+            // onWebViewCreated: (WebViewController webcontroller) {
+            //   _controller.complete(webcontroller);
+            // },
+            // navigationDelegate: (navigation) {
+            //   print('blocking navigation to $navigation}');
+            //   if (navigation.url.contains("sberpay")) {
+            //     _launchUrl(navigation.url);
+            //     return NavigationDecision.prevent;
+            //   }
+            //   if (navigation.url.contains("success")) {
+            //     Navigator.pop(context);
+            //   } else if (navigation.url.contains("error")) {
+            //     Fluttertoast.showToast(msg: "errorText".tr());
+            //     Navigator.pop(context);
+            //   }
+            //   print('allowing navigation to $navigation');
+            //   return NavigationDecision.navigate;
+            // },
+            // onPageStarted: (url) async {}
+          ),
           Container(
             margin: EdgeInsets.only(
                 top: heightRatio(size: 10, context: context),

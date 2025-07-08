@@ -63,7 +63,7 @@ class AddressesShopBloc extends Bloc<AddressesShopEvent, AddressesShopState> {
       if (myLocation == null || loadedShops.data.isEmpty) return null;
       for (var shop in loadedShops.data) {
         double currentDistance = distance(
-          LatLng(myLocation.latitude, myLocation.longitude),
+          LatLng(myLocation.latitude!, myLocation.longitude!),
           LatLng(double.tryParse(shop.addressLatitude!)!,
               double.tryParse(shop.addressLongitude!)!),
         );

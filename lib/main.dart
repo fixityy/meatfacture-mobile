@@ -201,6 +201,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         navigatorKey: navigatorKey,
         theme: ThemeData(
+            useMaterial3: false,
             appBarTheme:
                 AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.light)),
         localizationsDelegates: context.localizationDelegates,

@@ -83,15 +83,14 @@ class CreditCardsLinkPage extends StatelessWidget {
                     );
                   }
                   if (state is UrlForCreditCardLinkLoadState) {
-                    late WebViewController _webViewController;
-                    return WebView(
-                      initialUrl: state.urlForCreditCardLinkModel.data.formUrl,
-                      onWebViewCreated: (controller) {
-                        _webViewController = controller;
-                      },
-                      javascriptMode: JavascriptMode.unrestricted,
-                      onPageStarted: (progress) async {
-                        if (await _webViewController.currentUrl().then(
+                    final WebViewController _webController = WebViewController()
+                      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                      ..loadRequest(Uri.parse(
+                          state.urlForCreditCardLinkModel.data.formUrl));
+                    _webController.setNavigationDelegate(
+                        NavigationDelegate(onPageStarted: (progress) async {
+                      {
+                        if (await _webController.currentUrl().then(
                             (value) => value?.contains("success") == true)) {
                           if (await CreditCardsProvider()
                               .setSuccessStatusOfLinkingCardResponse(
@@ -102,7 +101,7 @@ class CreditCardsLinkPage extends StatelessWidget {
                           }
                         }
 
-                        if (await _webViewController.currentUrl().then(
+                        if (await _webController.currentUrl().then(
                             (value) => value?.contains("error") == true)) {
                           Fluttertoast.showToast(msg: "CardLinkErrorText".tr());
                           if (await CreditCardsProvider()
@@ -117,7 +116,46 @@ class CreditCardsLinkPage extends StatelessWidget {
                             Navigator.pop(context);
                           }
                         }
-                      },
+                      }
+                    }));
+                    // late WebViewController _webViewController;
+                    // _webController.load
+                    return WebViewWidget(
+                      controller: _webController,
+
+                      // initialUrl: state.urlForCreditCardLinkModel.data.formUrl,
+                      // onWebViewCreated: (controller) {
+                      //   _webViewController = controller;
+                      // },
+                      // javascriptMode: JavaScriptMode.unrestricted,
+                      // onPageStarted: (progress) async {
+                      //   if (await _webController.currentUrl().then(
+                      //       (value) => value?.contains("success") == true)) {
+                      //     if (await CreditCardsProvider()
+                      //         .setSuccessStatusOfLinkingCardResponse(
+                      //             orderId: state.urlForCreditCardLinkModel.data
+                      //                 .orderId)) {
+                      //       _cardsListBloc.add(CreditCardsListLoadEvent());
+                      //       Navigator.pop(context);
+                      //     }
+                      //   }
+
+                      //   if (await _webController.currentUrl().then(
+                      //       (value) => value?.contains("error") == true)) {
+                      //     Fluttertoast.showToast(msg: "CardLinkErrorText".tr());
+                      //     if (await CreditCardsProvider()
+                      //         .setSErrorStatusOfLinkingCardResponse(
+                      //             orderId: state.urlForCreditCardLinkModel.data
+                      //                 .orderId)) {
+                      //       _loyaltyCardsListBloc
+                      //           .add(LoyaltyCardsListLoadEvent());
+                      //       _profileBloc.add(ProfileLoadEvent());
+                      //       _cardsListBloc.add(CreditCardsListLoadEvent());
+                      //       // print("****" + await _webViewController.currentUrl());
+                      //       Navigator.pop(context);
+                      //     }
+                      //   }
+                      // },
                     );
                   }
 

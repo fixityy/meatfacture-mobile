@@ -108,8 +108,8 @@ class _HomeChooseStoreMapState extends State<HomeChooseStoreMap> {
                       ),
                       mapId: MapObjectId("myPoint"),
                       point: Point(
-                          latitude: state.myLocation!.latitude,
-                          longitude: state.myLocation!.longitude),
+                          latitude: state.myLocation!.latitude!,
+                          longitude: state.myLocation!.longitude!),
                     ),
                 ],
                 onMapCreated: (YandexMapController yandexMapController) async {
@@ -279,11 +279,11 @@ class _HomeChooseStoreMapState extends State<HomeChooseStoreMap> {
           zoom: 17,
           target: Point(
             latitude: state.myLocation != null
-                ? state.myLocation!.latitude
-                : myLocation!.latitude,
+                ? state.myLocation!.latitude!
+                : myLocation!.latitude!,
             longitude: state.myLocation != null
-                ? state.myLocation!.longitude
-                : myLocation!.longitude,
+                ? state.myLocation!.longitude!
+                : myLocation!.longitude!,
           ),
         ),
       ),

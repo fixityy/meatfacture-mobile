@@ -16,9 +16,10 @@ class LocalNotificationService {
                 AndroidInitializationSettings("@drawable/main_logo_for_notif"));
     await _notificationsPlugin.initialize(
       initializationSettings,
-      onSelectNotification: (payload) async {
+      // onSelectNotification: (payload) async {
+      onDidReceiveNotificationResponse: (payload) async {
         if (payload != null) {
-          onNotification.add(payload);
+          onNotification.add(payload.toString());
         }
         return null;
       },
@@ -30,12 +31,12 @@ class LocalNotificationService {
     try {
       final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
       final NotificationDetails notificationDetails = NotificationDetails(
-        iOS: IOSNotificationDetails(
+        iOS: DarwinNotificationDetails(
             presentAlert: true, threadIdentifier: "smart.ios"),
         android: AndroidNotificationDetails(
           "smart.android",
           "smart.android channel",
-          "this is channel for fcm",
+          // "this is channel for fcm",
           importance: Importance.max,
           priority: Priority.high,
           icon: "@drawable/main_logo_for_notif",

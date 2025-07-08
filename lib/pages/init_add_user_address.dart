@@ -77,11 +77,11 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
       setState(() {
         addressListVisible = true;
         myPosition = Point(
-            latitude: mylocation.latitude, longitude: mylocation.longitude);
+            latitude: mylocation.latitude!, longitude: mylocation.longitude!);
         _geocodingbloc.add(GeocodingLoadEvent(
             latLngOfAddress: Point(
-                latitude: mylocation.latitude,
-                longitude: mylocation.longitude)));
+                latitude: mylocation.latitude!,
+                longitude: mylocation.longitude!)));
       });
 
       YandexMapController controller = await _completer.future;

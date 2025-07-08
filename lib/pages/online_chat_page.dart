@@ -9,13 +9,22 @@ class OnlineChatPage extends StatelessWidget {
 
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(bottom: heightRatio(size: MediaQuery.of(context).viewInsets.bottom == 0 ? 0 : MediaQuery.of(context).viewInsets.bottom - 60, context: context)),
-        child: WebView(
-          initialUrl: "https://kprg.bitrix24.ru/online/mobile-chat",
+        padding: EdgeInsets.only(
+            bottom: heightRatio(
+                size: MediaQuery.of(context).viewInsets.bottom == 0
+                    ? 0
+                    : MediaQuery.of(context).viewInsets.bottom - 60,
+                context: context)),
+        child: WebViewWidget(
+          controller: WebViewController()
+            ..loadRequest(
+                Uri.parse('https://kprg.bitrix24.ru/online/mobile-chat'))
+            ..setJavaScriptMode(JavaScriptMode.unrestricted),
+          // initialUrl: "https://kprg.bitrix24.ru/online/mobile-chat",
           // onWebViewCreated: (controller) {
           // _webViewController = controller;
           // },
-          javascriptMode: JavascriptMode.unrestricted,
+          // javascriptMode: JavascriptMode.unrestricted,
         ),
       ),
     );
