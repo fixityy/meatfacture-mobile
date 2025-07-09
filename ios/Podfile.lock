@@ -148,6 +148,12 @@ PODS:
   - Toast (4.1.1)
   - url_launcher_ios (0.0.1):
     - Flutter
+  - UserX (2.8.1):
+    - UserX/XCFramework (= 2.8.1)
+  - UserX/XCFramework (2.8.1)
+  - userx_flutter (1.2.0):
+    - Flutter
+    - UserX
   - video_player_avfoundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -175,6 +181,7 @@ DEPENDENCIES:
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite_darwin (from `.symlinks/plugins/sqflite_darwin/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - userx_flutter (from `.symlinks/plugins/userx_flutter/ios`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/darwin`)
   - yandex_mapkit (from `.symlinks/plugins/yandex_mapkit/ios`)
@@ -195,6 +202,7 @@ SPEC REPOS:
     - PromisesObjC
     - SwiftProtobuf
     - Toast
+    - UserX
     - YandexMapsMobile
 
 EXTERNAL SOURCES:
@@ -228,6 +236,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite_darwin/darwin"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
+  userx_flutter:
+    :path: ".symlinks/plugins/userx_flutter/ios"
   video_player_avfoundation:
     :path: ".symlinks/plugins/video_player_avfoundation/darwin"
   webview_flutter_wkwebview:
@@ -265,6 +275,8 @@ SPEC CHECKSUMS:
   SwiftProtobuf: 3697407f0d5b23bedeba9c2eaaf3ec6fdff69349
   Toast: 1f5ea13423a1e6674c4abdac5be53587ae481c4e
   url_launcher_ios: b7f13d9491e07f5230bf3e056ab68678f896980a
+  UserX: d85368d559162cb14f285888898d6e50519288c3
+  userx_flutter: acd67b3df4197382ff59be2fc3373b6de06e0664
   video_player_avfoundation: 2cef49524dd1f16c5300b9cd6efd9611ce03639b
   webview_flutter_wkwebview: 1821ceac936eba6f7984d89a9f3bcb4dea99ebb2
   yandex_mapkit: d9c479705f0f3888a3fc67b0d9c6156108e74270

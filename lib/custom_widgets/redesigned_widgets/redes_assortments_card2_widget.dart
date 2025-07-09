@@ -12,6 +12,7 @@ import 'package:smart/pages/redesigned_pages/redes_product_details_page.dart';
 import 'package:smart/core/constants/source.dart';
 import 'package:smart/core/constants/text_styles.dart';
 import 'package:smart/utils/custom_cache_manager.dart';
+import 'package:userx_flutter/userx_flutter.dart';
 
 // карточка товара которая отображается внутри категорий и в блоке я в магазине на главной иногда
 // ignore: must_be_immutable
@@ -68,6 +69,8 @@ class _RedesAssortmentsCard2WidgetState
 
       return InkWell(
         onTap: () async {
+          UserX.addEvent('recomentation',
+              {'product': '${widget.assortmentsListModel.uuid}'});
           List resulte = await Navigator.push(
             context,
             new CupertinoPageRoute(

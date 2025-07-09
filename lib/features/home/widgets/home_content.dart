@@ -30,6 +30,7 @@ import 'package:smart/order_process/order_process.dart';
 import 'package:smart/pages/secondary_page.dart';
 import 'package:smart/pages/shopping_list/shopping_lists_page.dart';
 import 'package:smart/theme/app_screen.dart';
+import 'package:userx_flutter/userx_flutter.dart';
 
 import '../../../bloc_files/assortment_recommendations_bloc.dart';
 import '../../addresses/addresses_delivery/bloc/addresses_client_bloc.dart';
@@ -66,6 +67,12 @@ class _HomeContentState extends State<HomeContent> {
     favoriteProductBloc.add(FavoriteProductLoadEvent()); //
 
     ////REFRESH EVENTS
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    UserX.addScreenName(widget.runtimeType.toString());
   }
 
   bool isSocialNetworkFacebook =
