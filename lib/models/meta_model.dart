@@ -9,10 +9,10 @@ class MetaModel {
   });
 
   int currentPage;
-  int from;
+  int? from;
   int lastPage;
   int perPage;
-  int to;
+  int? to;
   int total;
 
   factory MetaModel.fromJson(Map<String, dynamic> json) => MetaModel(

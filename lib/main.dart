@@ -47,6 +47,7 @@ import 'package:smart/pages/splash_screen_with_animation.dart';
 import 'package:smart/services/services.dart';
 import 'package:smart/order_process/order_process_list_bloc.dart';
 import 'package:smart/core/constants/shared_keys.dart';
+import 'package:smart/services/user_x.dart';
 
 import 'bloc_files/add_or_subtract_bonuses_bloc.dart';
 import 'bloc_files/assortment_recommendations_bloc.dart';
@@ -114,6 +115,7 @@ void main() async {
       );
     }
   });
+  initUserX();
 
   runApp(EasyLocalization(
     supportedLocales: [Locale('ru', 'RU')],
