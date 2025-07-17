@@ -1,9 +1,7 @@
 name: smart
 description: A new Flutter project.
 publish_to: "none"
-version: 1.0.43+49
-# version: 1.0.42+49
-#flutter version 3.7.9;
+version: 1.0.51+96
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
