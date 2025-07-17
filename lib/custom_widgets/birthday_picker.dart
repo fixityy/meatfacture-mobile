@@ -6,7 +6,7 @@ import 'package:smart/core/constants/source.dart';
 import 'package:smart/core/constants/text_styles.dart';
 
 class BirthdayPicker extends StatefulWidget {
-  final String dateFromProfile;
+  final String? dateFromProfile;
 
   BirthdayPicker({required this.dateFromProfile});
 
@@ -16,7 +16,7 @@ class BirthdayPicker extends StatefulWidget {
 }
 
 class _BirthdayPickerState extends State<BirthdayPicker> {
-  final String dateFromProfile;
+  final String? dateFromProfile;
   DateTime? _birthdayDate;
   late DateTime initDateFromProfile;
 
@@ -26,7 +26,7 @@ class _BirthdayPickerState extends State<BirthdayPicker> {
   void initState() {
     super.initState();
     if (dateFromProfile != null) {
-      DateTime parsedDate = DateTime.parse(dateFromProfile);
+      DateTime parsedDate = DateTime.parse(dateFromProfile!);
       initDateFromProfile =
           DateTime(parsedDate.year, parsedDate.month, parsedDate.day);
       _birthdayDate = initDateFromProfile;

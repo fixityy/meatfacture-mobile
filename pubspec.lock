@@ -1170,6 +1170,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.7"
+  userx_flutter:
+    dependency: "direct main"
+    description:
+      name: userx_flutter
+      sha256: f0b0a900514e01bdbecd1f05210df6f7cb8142580f676a48378fc86b8f082df6
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.8"
   uuid:
     dependency: transitive
     description:

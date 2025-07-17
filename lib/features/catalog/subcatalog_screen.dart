@@ -86,7 +86,6 @@ class _SubcatalogScreenState extends State<SubcatalogScreen>
   @override
   void initState() {
     super.initState();
-    print('init one time');
     _focusNodeForSearch.requestFocus();
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent -
@@ -119,7 +118,7 @@ class _SubcatalogScreenState extends State<SubcatalogScreen>
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => AssortmentsListBloc()),
+        BlocProvider.value(value: assortmentsListBloc),
         BlocProvider(
             create: (context) => CatalogsBloc()
               ..add(CatalogsLoadEvent(catalogUuid: widget.preCataloUuid))),
@@ -185,13 +184,11 @@ class _SubcatalogScreenState extends State<SubcatalogScreen>
               BlocBuilder<AssortmentsListBloc, AssortmentsListState>(
                 builder: (context, state) {
                   if (state is AssortmentsListInitState) {
-                    print('AssortmentsListInitState one time');
                     if (widget.isFinalLevel ||
                         (widget.isFavorite != null &&
                             widget.isFavorite == true) ||
                         (widget.isPromoAssortment != null &&
                             widget.isPromoAssortment == true)) {
-                      print('тут должен');
                       assortmentsListBloc.add(
                         AssortmentsListLoadEvent(
                           isPromoAssortment: widget.isPromoAssortment,
@@ -204,7 +201,6 @@ class _SubcatalogScreenState extends State<SubcatalogScreen>
                           searchText: widget.searchText,
                           preCataloUuid: widget
                               .preCataloUuid, //приходит родительская категория
-                          subcatalogUuid: currentSubCatalogUuid,
                         ),
                       );
                     }

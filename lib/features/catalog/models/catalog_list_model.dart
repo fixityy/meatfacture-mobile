@@ -28,7 +28,7 @@ class CatalogListModel {
   });
 
   factory CatalogListModel.fromJson(Map<String, dynamic> json) {
-    var subcatalogJson = json['subcatalog'] as List<dynamic>;
+    var subcatalogJson = json['subcatalog'] as List<dynamic>?;
     List<CatalogListModel>? subcatalog = subcatalogJson != null
         ? subcatalogJson.map((e) => CatalogListModel.fromJson(e)).toList()
         : null;

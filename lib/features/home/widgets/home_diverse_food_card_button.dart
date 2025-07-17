@@ -12,6 +12,7 @@ import 'package:smart/custom_widgets/redesigned_widgets/redes_diverse_food_progr
 import 'package:smart/features/profile/profile_page.dart';
 import 'package:smart/core/constants/source.dart';
 import 'package:smart/core/constants/text_styles.dart';
+import 'package:userx_flutter/userx_flutter.dart';
 
 // разнообразное питание
 HomeDiverseFoodCardButton() => BlocBuilder<ProfileBloc, ProfileState>(
@@ -27,10 +28,13 @@ HomeDiverseFoodCardButton() => BlocBuilder<ProfileBloc, ProfileState>(
           },
           builder: (context, diverseFoodState) {
             return InkWell(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => RedesDiverseFoodContent())),
+              onTap: () {
+                UserX.addEvent('food_card', {});
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RedesDiverseFoodContent()));
+              },
               child: Container(
                 padding: EdgeInsets.all(widthRatio(size: 10, context: context)),
                 decoration: BoxDecoration(

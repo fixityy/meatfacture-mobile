@@ -9,6 +9,7 @@ import 'package:smart/features/catalog/subcatalog_screen.dart';
 import 'package:smart/features/home/models/banners_list_model.dart';
 import 'package:smart/pages/redesigned_pages/redes_product_details_page.dart';
 import 'package:smart/utils/custom_cache_manager.dart';
+import 'package:userx_flutter/userx_flutter.dart';
 
 class BannerItem extends StatelessWidget {
   final BannersListDataModel bannersListDataModel;
@@ -17,6 +18,7 @@ class BannerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
+        UserX.addEvent('banner_tap', {'banner': '${bannersListDataModel.id}'});
         if (bannersListDataModel.referenceType == "product") {
           await Navigator.push(
             context,
