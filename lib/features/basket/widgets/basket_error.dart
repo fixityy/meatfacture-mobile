@@ -9,7 +9,11 @@ class BasketError extends StatelessWidget {
   final BasketListBloc basketListBloc;
   final BoxDecoration Function(BuildContext) decorationForContent;
 
-  const BasketError({Key key, @required this.basketListBloc, @required this.decorationForContent}) : super(key: key);
+  const BasketError({
+    required this.basketListBloc,
+    required this.decorationForContent,
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -21,7 +25,8 @@ class BasketError extends StatelessWidget {
           children: [
             Container(
               padding: EdgeInsets.all(heightRatio(size: 15, context: context)),
-              decoration: BoxDecoration(color: colorBlack03, shape: BoxShape.circle),
+              decoration:
+                  BoxDecoration(color: colorBlack03, shape: BoxShape.circle),
               child: SvgPicture.asset(
                 'assets/images/netErrorIcon.svg',
                 color: Colors.white,
@@ -29,7 +34,10 @@ class BasketError extends StatelessWidget {
               ),
             ),
             SizedBox(height: heightRatio(size: 15, context: context)),
-            Text("errorText".tr(), style: appHeadersTextStyle(fontSize: heightRatio(size: 18, context: context), color: colorBlack06)),
+            Text("errorText".tr(),
+                style: appHeadersTextStyle(
+                    fontSize: heightRatio(size: 18, context: context),
+                    color: colorBlack06)),
             SizedBox(height: heightRatio(size: 10, context: context)),
             InkWell(
               onTap: () {
@@ -37,7 +45,10 @@ class BasketError extends StatelessWidget {
               },
               child: Container(
                 color: Colors.transparent,
-                child: Text("tryAgainText".tr(), style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), color: newRedDark)),
+                child: Text("tryAgainText".tr(),
+                    style: appHeadersTextStyle(
+                        fontSize: heightRatio(size: 14, context: context),
+                        color: newRedDark)),
               ),
             )
           ],

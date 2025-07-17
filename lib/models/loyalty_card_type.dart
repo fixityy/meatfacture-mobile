@@ -1,6 +1,6 @@
 class LoyaltyCardType {
   LoyaltyCardType({
-    this.uuid,
+    required this.uuid,
   });
 
   String uuid;

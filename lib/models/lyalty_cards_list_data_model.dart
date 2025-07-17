@@ -1,13 +1,13 @@
 class LoyaltyCardsListDataModel {
   LoyaltyCardsListDataModel({
-    this.uuid,
-    this.number,
-    this.discountPercent,
-    this.loyaltyCardTypeUuid,
-    this.loyaltyCardTypeName,
-    this.clientUuid,
-    this.clientPhone,
-    this.createdAt,
+    required this.uuid,
+    required this.number,
+    required this.discountPercent,
+    required this.loyaltyCardTypeUuid,
+    required this.loyaltyCardTypeName,
+    required this.clientUuid,
+    required this.clientPhone,
+    required this.createdAt,
   });
 
   String uuid;

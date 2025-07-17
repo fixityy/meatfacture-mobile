@@ -5,12 +5,12 @@ import 'package:smart/core/constants/text_styles.dart';
 class RecipeCategoryItem extends StatelessWidget {
   final String title;
   final bool isActive;
-  final Function(String) onTap;
+  final Function(String)? onTap;
   const RecipeCategoryItem({
     key,
     Key,
-    @required this.title,
-    @required this.isActive,
+    required this.title,
+    required this.isActive,
     this.onTap,
   });
 
@@ -19,11 +19,12 @@ class RecipeCategoryItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (onTap != null) {
-          onTap(title);
+          onTap!(title);
         }
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 6, context: context)),
+        margin: EdgeInsets.symmetric(
+            horizontal: widthRatio(size: 6, context: context)),
         decoration: BoxDecoration(
           color: isActive ? newRedDark : newGrey2,
           borderRadius: BorderRadius.circular(20),
@@ -36,7 +37,8 @@ class RecipeCategoryItem extends StatelessWidget {
         ),
         child: Text(
           title,
-          style: appLabelTextStyle(fontSize: 12, color: isActive ? Colors.white : Colors.black),
+          style: appLabelTextStyle(
+              fontSize: 12, color: isActive ? Colors.white : Colors.black),
         ),
       ),
     );

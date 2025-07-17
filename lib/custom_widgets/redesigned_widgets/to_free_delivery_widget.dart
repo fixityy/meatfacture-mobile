@@ -19,7 +19,7 @@ bool isFirst = true;
 class ToFreeDeliveryWidget extends StatefulWidget {
   final bool isfromCatalog;
 
-  const ToFreeDeliveryWidget({Key key, this.isfromCatalog = true}) : super(key: key);
+  const ToFreeDeliveryWidget({super.key, this.isfromCatalog = true});
 
   @override
   State<ToFreeDeliveryWidget> createState() => _ToFreeDeliveryWidgetState();
@@ -49,13 +49,16 @@ class _ToFreeDeliveryWidgetState extends State<ToFreeDeliveryWidget> {
                 } else {
                   if (isFirst) {
                     print('BasketLoadedState stateeeeee event ');
-                    OrderCalculateBloc _orderCalculateBloc = BlocProvider.of<OrderCalculateBloc>(context);
+                    OrderCalculateBloc _orderCalculateBloc =
+                        BlocProvider.of<OrderCalculateBloc>(context);
                     _orderCalculateBloc.add(OrderCalculateLoadEvent(
                       orderDeliveryTypeId: orderDeliveryTypeId,
                       orderPaymentTypeId: "online",
-                      productModelForOrderRequestList: basketState.productModelForOrderRequestList,
+                      productModelForOrderRequestList:
+                          basketState.productModelForOrderRequestList,
                     ));
-                    print('PRDUCTSSS --- ${basketState.productModelForOrderRequestList}');
+                    print(
+                        'PRDUCTSSS --- ${basketState.productModelForOrderRequestList}');
                     isFirst = false;
                   }
                 }
@@ -64,10 +67,19 @@ class _ToFreeDeliveryWidgetState extends State<ToFreeDeliveryWidget> {
                 builder: (context, state) {
                   print('OrderCalculateBloc stateeeeee $state ');
                   if (state is OrderCalculateLoadedState) {
-                    double totalPriceForProductsWithDiscountInCart = prefs.getDouble(SharedKeys.totalPriceForProductsWithDiscount);
-                    return state.orderCalculateResponseModel.data.toFreeDelivery == null || state.orderCalculateResponseModel.data.toFreeDelivery == 0.0
+                    double? totalPriceForProductsWithDiscountInCart =
+                        prefs.getDouble(
+                            SharedKeys.totalPriceForProductsWithDiscount);
+                    return state.orderCalculateResponseModel!.data
+                                    .toFreeDelivery ==
+                                null ||
+                            state.orderCalculateResponseModel!.data
+                                    .toFreeDelivery ==
+                                0.0
                         ? InkWell(
-                            onTap: () => BlocProvider.of<SecondaryPageBloc>(context).add(BasketPageLoadEvent()),
+                            onTap: () =>
+                                BlocProvider.of<SecondaryPageBloc>(context)
+                                    .add(BasketPageLoadEvent()),
                             child: Container(
                               width: double.maxFinite,
                               height: heightRatio(size: 60, context: context),
@@ -80,18 +92,28 @@ class _ToFreeDeliveryWidgetState extends State<ToFreeDeliveryWidget> {
                               decoration: BoxDecoration(
                                 color: newRedDark,
                                 borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(widthRatio(size: 16, context: context)),
-                                  topLeft: Radius.circular(widthRatio(size: 16, context: context)),
+                                  topRight: Radius.circular(
+                                      widthRatio(size: 16, context: context)),
+                                  topLeft: Radius.circular(
+                                      widthRatio(size: 16, context: context)),
                                 ),
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  SvgPicture.asset("assets/images/green_select_circle.svg", height: heightRatio(size: 14, context: context)),
-                                  SizedBox(width: widthRatio(size: 6, context: context)),
+                                  SvgPicture.asset(
+                                      "assets/images/green_select_circle.svg",
+                                      height: heightRatio(
+                                          size: 14, context: context)),
+                                  SizedBox(
+                                      width: widthRatio(
+                                          size: 6, context: context)),
                                   Text(
                                     "free_delivery".tr(),
-                                    style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), color: whiteColor),
+                                    style: appHeadersTextStyle(
+                                        fontSize: heightRatio(
+                                            size: 14, context: context),
+                                        color: whiteColor),
                                   ),
                                 ],
                               ),
@@ -100,7 +122,9 @@ class _ToFreeDeliveryWidgetState extends State<ToFreeDeliveryWidget> {
                         : SizedBox(
                             height: heightRatio(size: 80, context: context),
                             child: InkWell(
-                              onTap: () => BlocProvider.of<SecondaryPageBloc>(context).add(BasketPageLoadEvent()),
+                              onTap: () =>
+                                  BlocProvider.of<SecondaryPageBloc>(context)
+                                      .add(BasketPageLoadEvent()),
                               child: Stack(
                                 children: [
                                   Positioned(
@@ -108,18 +132,24 @@ class _ToFreeDeliveryWidgetState extends State<ToFreeDeliveryWidget> {
                                     right: 0,
                                     bottom: 0,
                                     child: Container(
-                                      height: heightRatio(size: 80, context: context),
+                                      height: heightRatio(
+                                          size: 80, context: context),
                                       alignment: Alignment.center,
                                       padding: EdgeInsets.only(
-                                        left: widthRatio(size: 17, context: context),
-                                        right: widthRatio(size: 17, context: context),
-                                        bottom: heightRatio(size: 55, context: context),
+                                        left: widthRatio(
+                                            size: 17, context: context),
+                                        right: widthRatio(
+                                            size: 17, context: context),
+                                        bottom: heightRatio(
+                                            size: 55, context: context),
                                       ),
                                       decoration: BoxDecoration(
                                         color: newBlack,
                                         borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(widthRatio(size: 16, context: context)),
-                                          topLeft: Radius.circular(widthRatio(size: 16, context: context)),
+                                          topRight: Radius.circular(widthRatio(
+                                              size: 16, context: context)),
+                                          topLeft: Radius.circular(widthRatio(
+                                              size: 16, context: context)),
                                         ),
                                       ),
                                       child: RichText(
@@ -127,15 +157,28 @@ class _ToFreeDeliveryWidgetState extends State<ToFreeDeliveryWidget> {
                                           children: <TextSpan>[
                                             TextSpan(
                                               text: 'Еще ',
-                                              style: appLabelTextStyle(fontSize: heightRatio(size: 10, context: context), color: whiteColor),
+                                              style: appLabelTextStyle(
+                                                  fontSize: heightRatio(
+                                                      size: 10,
+                                                      context: context),
+                                                  color: whiteColor),
                                             ),
                                             TextSpan(
-                                              text: '${state.orderCalculateResponseModel.data.toFreeDelivery.removeAfterPointNulles()} руб',
-                                              style: appHeadersTextStyle(fontSize: heightRatio(size: 10, context: context), color: whiteColor),
+                                              text:
+                                                  '${state.orderCalculateResponseModel!.data.toFreeDelivery?.removeAfterPointNulles()} руб',
+                                              style: appHeadersTextStyle(
+                                                  fontSize: heightRatio(
+                                                      size: 10,
+                                                      context: context),
+                                                  color: whiteColor),
                                             ),
                                             TextSpan(
                                               text: ' до бесплатной доставки',
-                                              style: appLabelTextStyle(fontSize: heightRatio(size: 10, context: context), color: whiteColor),
+                                              style: appLabelTextStyle(
+                                                  fontSize: heightRatio(
+                                                      size: 10,
+                                                      context: context),
+                                                  color: whiteColor),
                                             ),
                                           ],
                                         ),
@@ -147,18 +190,24 @@ class _ToFreeDeliveryWidgetState extends State<ToFreeDeliveryWidget> {
                                     right: 0,
                                     bottom: 0,
                                     child: Container(
-                                      height: heightRatio(size: 54, context: context),
+                                      height: heightRatio(
+                                          size: 54, context: context),
                                       alignment: Alignment.center,
                                       padding: EdgeInsets.only(
-                                        left: widthRatio(size: 17, context: context),
-                                        right: widthRatio(size: 17, context: context),
-                                        bottom: heightRatio(size: 6, context: context),
+                                        left: widthRatio(
+                                            size: 17, context: context),
+                                        right: widthRatio(
+                                            size: 17, context: context),
+                                        bottom: heightRatio(
+                                            size: 6, context: context),
                                       ),
                                       decoration: BoxDecoration(
                                         color: newRedDark,
                                         borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(widthRatio(size: 16, context: context)),
-                                          topLeft: Radius.circular(widthRatio(size: 16, context: context)),
+                                          topRight: Radius.circular(widthRatio(
+                                              size: 16, context: context)),
+                                          topLeft: Radius.circular(widthRatio(
+                                              size: 16, context: context)),
                                         ),
                                       ),
                                       child: RichText(
@@ -166,13 +215,21 @@ class _ToFreeDeliveryWidgetState extends State<ToFreeDeliveryWidget> {
                                           children: <TextSpan>[
                                             TextSpan(
                                               text:
-                                                  'Перейти в корзину - ${totalPriceForProductsWithDiscountInCart % 1 == 0 ? totalPriceForProductsWithDiscountInCart.toInt() : totalPriceForProductsWithDiscountInCart}',
-                                              style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), color: whiteColor),
+                                                  'Перейти в корзину - ${totalPriceForProductsWithDiscountInCart! % 1 == 0 ? totalPriceForProductsWithDiscountInCart.toInt() : totalPriceForProductsWithDiscountInCart}',
+                                              style: appHeadersTextStyle(
+                                                  fontSize: heightRatio(
+                                                      size: 14,
+                                                      context: context),
+                                                  color: whiteColor),
                                             ),
                                             TextSpan(
                                               text: ' ₽',
                                               style: appTextStyle(
-                                                  fontSize: heightRatio(size: 14, context: context), color: whiteColor, fontWeight: FontWeight.w700),
+                                                  fontSize: heightRatio(
+                                                      size: 14,
+                                                      context: context),
+                                                  color: whiteColor,
+                                                  fontWeight: FontWeight.w700),
                                             ),
                                           ],
                                         ),
@@ -197,13 +254,17 @@ class _ToFreeDeliveryWidgetState extends State<ToFreeDeliveryWidget> {
                       decoration: BoxDecoration(
                         color: newRedDark,
                         borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(widthRatio(size: 16, context: context)),
-                          topLeft: Radius.circular(widthRatio(size: 16, context: context)),
+                          topRight: Radius.circular(
+                              widthRatio(size: 16, context: context)),
+                          topLeft: Radius.circular(
+                              widthRatio(size: 16, context: context)),
                         ),
                       ),
                       child: DefaultTextStyle(
                         textAlign: TextAlign.center,
-                        style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: whiteColor),
+                        style: appTextStyle(
+                            fontSize: heightRatio(size: 14, context: context),
+                            color: whiteColor),
                         child: Text('Ошибка'),
                       ),
                     );
@@ -221,19 +282,25 @@ class _ToFreeDeliveryWidgetState extends State<ToFreeDeliveryWidget> {
                     decoration: BoxDecoration(
                       color: newRedDark,
                       borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(widthRatio(size: 16, context: context)),
-                        topLeft: Radius.circular(widthRatio(size: 16, context: context)),
+                        topRight: Radius.circular(
+                            widthRatio(size: 16, context: context)),
+                        topLeft: Radius.circular(
+                            widthRatio(size: 16, context: context)),
                       ),
                     ),
                     child: DefaultTextStyle(
                       textAlign: TextAlign.center,
-                      style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: whiteColor),
+                      style: appTextStyle(
+                          fontSize: heightRatio(size: 14, context: context),
+                          color: whiteColor),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Загрузка'),
-                          AnimatedTextKit(animatedTexts: [TyperAnimatedText('...')], isRepeatingAnimation: true),
+                          AnimatedTextKit(
+                              animatedTexts: [TyperAnimatedText('...')],
+                              isRepeatingAnimation: true),
                         ],
                       ),
                     ),
@@ -242,22 +309,33 @@ class _ToFreeDeliveryWidgetState extends State<ToFreeDeliveryWidget> {
               );
             } else {
               return Padding(
-                padding: EdgeInsets.only(bottom: heightRatio(size: 10, context: context)),
+                padding: EdgeInsets.only(
+                    bottom: heightRatio(size: 10, context: context)),
                 child: BlocBuilder<OrderCalculateBloc, OrderCalculateState>(
                   builder: (context, state) {
                     if (state is OrderCalculateLoadedState) {
-                      return state.orderCalculateResponseModel.data.toFreeDelivery == null || state.orderCalculateResponseModel.data.toFreeDelivery == 0.0
+                      return state.orderCalculateResponseModel!.data
+                                      .toFreeDelivery ==
+                                  null ||
+                              state.orderCalculateResponseModel!.data
+                                      .toFreeDelivery ==
+                                  0.0
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SvgPicture.asset(
                                   "assets/images/green_select_circle.svg",
-                                  height: heightRatio(size: 14, context: context),
+                                  height:
+                                      heightRatio(size: 14, context: context),
                                 ),
-                                SizedBox(width: widthRatio(size: 6, context: context)),
+                                SizedBox(
+                                    width:
+                                        widthRatio(size: 6, context: context)),
                                 Text(
                                   "free_delivery".tr(),
-                                  style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context)),
+                                  style: appHeadersTextStyle(
+                                      fontSize: heightRatio(
+                                          size: 14, context: context)),
                                 ),
                               ],
                             )
@@ -268,21 +346,32 @@ class _ToFreeDeliveryWidgetState extends State<ToFreeDeliveryWidget> {
                                 SvgPicture.asset(
                                   "assets/images/delivery_bike.svg",
                                   color: mainColor,
-                                  height: heightRatio(size: 14, context: context),
+                                  height:
+                                      heightRatio(size: 14, context: context),
                                 ),
                                 Text(
-                                  tr('sum_to_free_delivery', args: [state.orderCalculateResponseModel.data.toFreeDelivery.removeAfterPointNulles().toString()]),
+                                  tr('sum_to_free_delivery', args: [
+                                    state.orderCalculateResponseModel!.data
+                                        .toFreeDelivery!
+                                        .removeAfterPointNulles()
+                                        .toString()
+                                  ]),
                                   style: appHeadersTextStyle(
-                                    fontSize: heightRatio(size: 14, context: context),
+                                    fontSize:
+                                        heightRatio(size: 14, context: context),
                                   ),
                                 ),
-                                SizedBox(width: widthRatio(size: 14, context: context))
+                                SizedBox(
+                                    width:
+                                        widthRatio(size: 14, context: context))
                               ],
                             );
                     }
                     return DefaultTextStyle(
                       textAlign: TextAlign.center,
-                      style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: whiteColor),
+                      style: appTextStyle(
+                          fontSize: heightRatio(size: 14, context: context),
+                          color: whiteColor),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,

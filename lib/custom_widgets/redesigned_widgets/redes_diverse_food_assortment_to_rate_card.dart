@@ -11,17 +11,26 @@ import 'package:smart/utils/custom_cache_manager.dart';
 class RedesDiverseFoodAssortmentToRateCard extends StatelessWidget {
   final DiverseFoodAssortmentListDataModel productModel;
 
-  const RedesDiverseFoodAssortmentToRateCard({@required this.productModel});
+  const RedesDiverseFoodAssortmentToRateCard({required this.productModel});
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-          top: widthRatio(size: 8, context: context), bottom: widthRatio(size: 10, context: context), left: widthRatio(size: 10, context: context)),
+          top: widthRatio(size: 8, context: context),
+          bottom: widthRatio(size: 10, context: context),
+          left: widthRatio(size: 10, context: context)),
       margin: EdgeInsets.only(bottom: heightRatio(size: 10, context: context)),
       decoration: BoxDecoration(
         color: whiteColor,
-        borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)),
-        boxShadow: [BoxShadow(color: newShadow, offset: Offset(12, 12), blurRadius: 24, spreadRadius: 0)],
+        borderRadius:
+            BorderRadius.circular(heightRatio(size: 10, context: context)),
+        boxShadow: [
+          BoxShadow(
+              color: newShadow,
+              offset: Offset(12, 12),
+              blurRadius: 24,
+              spreadRadius: 0)
+        ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,12 +38,14 @@ class RedesDiverseFoodAssortmentToRateCard extends StatelessWidget {
           Container(
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)),
+              borderRadius: BorderRadius.circular(
+                  heightRatio(size: 10, context: context)),
               color: whiteColor,
             ),
             child: productModel.assortment.images.length > 0
                 ? CachedNetworkImage(
-                    imageUrl: productModel.assortment.images[0].thumbnails.the1000X1000,
+                    imageUrl: productModel
+                        .assortment.images[0].thumbnails.the1000X1000,
                     cacheManager: CustomCacheManager(),
                     fit: BoxFit.cover,
                     useOldImageOnUrlChange: true,
@@ -50,8 +61,11 @@ class RedesDiverseFoodAssortmentToRateCard extends StatelessWidget {
                 : Container(
                     height: heightRatio(size: 100, context: context),
                     width: widthRatio(size: 90, context: context),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 20, context: context))),
-                    child: Image.asset("assets/images/notImage.png", fit: BoxFit.scaleDown),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                            heightRatio(size: 20, context: context))),
+                    child: Image.asset("assets/images/notImage.png",
+                        fit: BoxFit.scaleDown),
                   ),
           ),
           SizedBox(width: widthRatio(size: 16, context: context)),
@@ -77,23 +91,48 @@ class RedesDiverseFoodAssortmentToRateCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          _getRateStar(currentRate: 1, rating: productModel.rating ?? 0, context: context),
-                          _getRateStar(currentRate: 2, rating: productModel.rating ?? 0, context: context),
-                          _getRateStar(currentRate: 3, rating: productModel.rating ?? 0, context: context),
-                          _getRateStar(currentRate: 4, rating: productModel.rating ?? 0, context: context),
-                          _getRateStar(currentRate: 5, rating: productModel.rating ?? 0, context: context),
+                          _getRateStar(
+                              currentRate: 1,
+                              rating: productModel.rating ?? 0,
+                              context: context),
+                          _getRateStar(
+                              currentRate: 2,
+                              rating: productModel.rating ?? 0,
+                              context: context),
+                          _getRateStar(
+                              currentRate: 3,
+                              rating: productModel.rating ?? 0,
+                              context: context),
+                          _getRateStar(
+                              currentRate: 4,
+                              rating: productModel.rating ?? 0,
+                              context: context),
+                          _getRateStar(
+                              currentRate: 5,
+                              rating: productModel.rating ?? 0,
+                              context: context),
                         ],
                       ),
                       SizedBox(height: heightRatio(size: 10, context: context)),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: widthRatio(size: 10, context: context), horizontal: widthRatio(size: 23, context: context)),
+                        padding: EdgeInsets.symmetric(
+                            vertical: widthRatio(size: 10, context: context),
+                            horizontal: widthRatio(size: 23, context: context)),
                         decoration: BoxDecoration(
-                            color: productModel.rating == null ? newRedDark : greamMainColor,
-                            borderRadius: BorderRadius.circular(widthRatio(size: 10, context: context))),
+                            color: productModel.rating == null
+                                ? newRedDark
+                                : greamMainColor,
+                            borderRadius: BorderRadius.circular(
+                                widthRatio(size: 10, context: context))),
                         child: Text(
-                          productModel.rating == null ? "WriteCommentText".tr() : "readCommentText".tr(),
+                          productModel.rating == null
+                              ? "WriteCommentText".tr()
+                              : "readCommentText".tr(),
                           style: appLabelTextStyle(
-                              fontSize: heightRatio(size: 11, context: context), color: productModel.rating == null ? whiteColor : newRedDark),
+                              fontSize: heightRatio(size: 11, context: context),
+                              color: productModel.rating == null
+                                  ? whiteColor
+                                  : newRedDark),
                         ),
                       )
                     ],
@@ -107,18 +146,24 @@ class RedesDiverseFoodAssortmentToRateCard extends StatelessWidget {
     );
   }
 
-  _getRateStar({int currentRate, double rating, @required BuildContext context}) {
+  _getRateStar({
+    required int currentRate,
+    required double rating,
+    required BuildContext context,
+  }) {
     return Padding(
       padding: EdgeInsets.only(right: widthRatio(size: 8, context: context)),
       child: SvgPicture.asset(
-        rating < currentRate ? "assets/images/redes_star_big.svg" : "assets/images/redes_star_big_active.svg",
+        rating < currentRate
+            ? "assets/images/redes_star_big.svg"
+            : "assets/images/redes_star_big_active.svg",
         height: heightRatio(size: 30, context: context),
         width: widthRatio(size: 30, context: context),
       ),
     );
   }
 
-  opentRateBottomSheet({@required BuildContext context}) {
+  opentRateBottomSheet({required BuildContext context}) {
     showModalBottomSheet<dynamic>(
         isScrollControlled: true,
         useSafeArea: true,

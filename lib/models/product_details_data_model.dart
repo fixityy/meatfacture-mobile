@@ -2,79 +2,79 @@ import 'package:smart/models/Assortments_image_model.dart';
 
 class ProductDetailsDataModel {
   ProductDetailsDataModel({
-    this.uuid,
-    this.catalogUuid,
-    this.catalogName,
-    this.name,
-    this.shortName,
-    this.assortmentUnitId,
-    this.countryId,
-    this.weight,
-    this.volume,
+    required this.uuid,
+    required this.catalogUuid,
+    required this.catalogName,
+    required this.name,
+    required this.shortName,
+    required this.assortmentUnitId,
+    required this.countryId,
+    required this.weight,
+    required this.volume,
     this.manufacturer,
     this.ingredients,
-    this.description,
+    required this.description,
     this.temperatureMin,
-    this.temperatureMax,
-    this.productionStandardId,
-    this.productionStandardNumber,
-    this.shelfLife,
+    required this.temperatureMax,
+    required this.productionStandardId,
+    required this.productionStandardNumber,
+    required this.shelfLife,
     this.rating,
-    this.images,
-    this.stores,
-    this.isFavorite,
-    this.tags,
-    this.userShoppingLists,
+    required this.images,
+    required this.stores,
+    required this.isFavorite,
+    required this.tags,
+    required this.userShoppingLists,
     this.currentPrice,
-    this.properties,
+    required this.properties,
     this.discountTypeName,
     this.quantityInClientCart,
     this.priceWithDiscount,
-    this.discountType,
+    required this.discountType,
     this.productsQuantity,
     this.discountTypeColor,
-    this.isPromoFavorite,
+    required this.isPromoFavorite,
     this.totalBonus,
     this.bonusPercent,
-    this.discountActiveTill,
+    required this.discountActiveTill,
   });
 
   String uuid;
-  String discountTypeName;
-  String discountType;
-  String discountTypeColor;
-  int totalBonus;
-  double bonusPercent;
+  String? discountTypeName;
+  String? discountType;
+  String? discountTypeColor;
+  int? totalBonus;
+  double? bonusPercent;
 
-  String currentPrice;
-  double priceWithDiscount;
+  String? currentPrice;
+  double? priceWithDiscount;
   String catalogUuid;
   String catalogName;
   String name;
-  String shortName;
+  String? shortName;
   String assortmentUnitId;
   List<ProductDetailsPropertyModel> properties;
   String countryId;
   String weight;
-  double productsQuantity;
-  String volume;
+  double? productsQuantity;
+  String? volume;
   dynamic manufacturer;
-  double quantityInClientCart;
+  double? quantityInClientCart;
   dynamic ingredients;
   dynamic description;
-  dynamic temperatureMin;
+  int? temperatureMin;
   int temperatureMax;
   String productionStandardId;
   String productionStandardNumber;
   int shelfLife;
-  double rating;
+  double? rating;
   List<ImageModel> images;
   List<ProductDetailsStoreListModel> stores;
   bool isFavorite;
   bool isPromoFavorite;
   List<String> tags;
   List<ProductDetailsUserShoppingList> userShoppingLists;
-  String discountActiveTill;
+  String? discountActiveTill;
 
   factory ProductDetailsDataModel.fromJson(Map<String, dynamic> json) =>
       ProductDetailsDataModel(
@@ -173,14 +173,14 @@ class ProductDetailsDataModel {
 //stores
 class ProductDetailsStoreListModel {
   ProductDetailsStoreListModel({
-    this.uuid,
-    this.brandName,
-    this.address,
-    this.addressLatitude,
-    this.addressLongitude,
-    this.loyaltyCardTypes,
-    this.isSelected,
-    this.productsQuantity,
+    required this.uuid,
+    required this.brandName,
+    required this.address,
+    required this.addressLatitude,
+    required this.addressLongitude,
+    required this.loyaltyCardTypes,
+    this.isSelected = false,
+    required this.productsQuantity,
   });
 
   String uuid;
@@ -219,7 +219,7 @@ class ProductDetailsStoreListModel {
 
 class ProductDetailsStoreLoyaltyCardTypeModel {
   ProductDetailsStoreLoyaltyCardTypeModel({
-    this.uuid,
+    required this.uuid,
   });
 
   String uuid;
@@ -237,8 +237,8 @@ class ProductDetailsStoreLoyaltyCardTypeModel {
 
 class ProductDetailsUserShoppingList {
   ProductDetailsUserShoppingList({
-    this.uuid,
-    this.name,
+    required this.uuid,
+    required this.name,
   });
 
   String uuid;
@@ -258,12 +258,12 @@ class ProductDetailsUserShoppingList {
 
 class ProductDetailsPropertyModel {
   ProductDetailsPropertyModel({
-    this.uuid,
-    this.name,
-    this.assortmentPropertyDataTypeId,
-    this.availableValues,
-    this.isSearchable,
-    this.value,
+    required this.uuid,
+    required this.name,
+    required this.assortmentPropertyDataTypeId,
+    required this.availableValues,
+    required this.isSearchable,
+    required this.value,
   });
 
   String uuid;

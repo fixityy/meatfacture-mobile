@@ -13,10 +13,10 @@ class StoriesListWidget extends StatefulWidget {
 }
 
 class _StoriesListWidgetState extends State<StoriesListWidget> {
-  StoriesListModel storiesListModel;
-  List<String> storiesList;
+  StoriesListModel? storiesListModel;
+  late List<String> storiesList;
 
-  setSharedStoriesList({@required String sotryId}) async {
+  setSharedStoriesList({required String sotryId}) async {
     if (storiesList.contains(sotryId) != true) {
       setState(() {
         storiesList.add(sotryId);
@@ -56,31 +56,37 @@ class _StoriesListWidgetState extends State<StoriesListWidget> {
         //   );
         // }
 
-        if (storiesListModel == null || storiesListModel.data.isEmpty) {
+        if (storiesListModel == null || storiesListModel!.data.isEmpty) {
           return SizedBox();
         } else {
           return SizedBox(
             height: heightRatio(size: 118, context: context),
             child: ListView.builder(
               shrinkWrap: true,
-              padding: EdgeInsets.only(left: widthRatio(size: 6, context: context)),
+              padding:
+                  EdgeInsets.only(left: widthRatio(size: 6, context: context)),
               scrollDirection: Axis.horizontal,
               physics: BouncingScrollPhysics(),
-              itemCount: storiesListModel.data.length,
+              itemCount: storiesListModel!.data.length,
               itemBuilder: (context, index) => InkWell(
                 onTap: () {
                   //set storeis as checked
-                  setSharedStoriesList(sotryId: storiesListModel.data[index].id.toString());
+                  setSharedStoriesList(
+                      sotryId: storiesListModel!.data[index].id.toString());
                   Navigator.of(context, rootNavigator: true)
                       .push(MaterialPageRoute(
-                    builder: (context) => StoryPage(storiesListModel: storiesListModel, initStory: index),
+                    builder: (context) => StoryPage(
+                        storiesListModel: storiesListModel!, initStory: index),
                   ))
                       .then((value) {
                     loadStoriesList();
                     setState(() {});
                   });
                 },
-                child: storiesListItemWidget(storiesItem: storiesListModel.data[index], context: context, storiesList: storiesList),
+                child: storiesListItemWidget(
+                    storiesItem: storiesListModel!.data[index],
+                    context: context,
+                    storiesList: storiesList),
               ),
             ),
           );
@@ -90,7 +96,11 @@ class _StoriesListWidgetState extends State<StoriesListWidget> {
   }
 }
 
-storiesListItemWidget({@required StoriesListDataModel storiesItem, @required BuildContext context, @required List<String> storiesList}) {
+storiesListItemWidget({
+  required StoriesListDataModel storiesItem,
+  required BuildContext context,
+  required List<String> storiesList,
+}) {
   return Stack(
     children: [
       Container(
@@ -98,7 +108,8 @@ storiesListItemWidget({@required StoriesListDataModel storiesItem, @required Bui
         margin: EdgeInsets.only(right: widthRatio(size: 4, context: context)),
         padding: EdgeInsets.all(widthRatio(size: 2, context: context)),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(widthRatio(size: 24, context: context)),
+          borderRadius:
+              BorderRadius.circular(widthRatio(size: 24, context: context)),
           border: Border.all(
               width: widthRatio(size: 2, context: context),
               color: storiesList != null
@@ -110,12 +121,19 @@ storiesListItemWidget({@required StoriesListDataModel storiesItem, @required Bui
         child: Container(
           clipBehavior: Clip.hardEdge,
           width: widthRatio(size: 82, context: context),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(widthRatio(size: 22, context: context))),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                  widthRatio(size: 22, context: context))),
           child: Image.network(
             storiesItem.logoFilePath,
             fit: BoxFit.cover,
             loadingBuilder: (context, child, loadingProgress) {
-              return loadingProgress == null ? child : Container(height: heightRatio(size: 82, context: context), width: widthRatio(size: 82, context: context), color: colorBlack03);
+              return loadingProgress == null
+                  ? child
+                  : Container(
+                      height: heightRatio(size: 82, context: context),
+                      width: widthRatio(size: 82, context: context),
+                      color: colorBlack03);
             },
           ),
         ),
@@ -128,7 +146,9 @@ storiesListItemWidget({@required StoriesListDataModel storiesItem, @required Bui
           height: heightRatio(size: 24, context: context),
           child: Text(
             storiesItem.name ?? '',
-            style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), color: Colors.black),
+            style: appLabelTextStyle(
+                fontSize: heightRatio(size: 12, context: context),
+                color: Colors.black),
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

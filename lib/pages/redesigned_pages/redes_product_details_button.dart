@@ -10,10 +10,10 @@ class RedesProductDetailsButton extends StatelessWidget {
   final VoidCallback onTapCallback;
 
   const RedesProductDetailsButton({
-    @required this.isActive,
-    @required this.text,
-    @required this.icon,
-    @required this.onTapCallback,
+    required this.isActive,
+    required this.text,
+    required this.icon,
+    required this.onTapCallback,
   });
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,8 @@ class RedesProductDetailsButton extends StatelessWidget {
             padding: EdgeInsets.all(widthRatio(size: 10, context: context)),
             decoration: BoxDecoration(
               color: isActive ? newRedDark : newIconBg,
-              borderRadius: BorderRadius.circular(heightRatio(size: 12, context: context)),
+              borderRadius: BorderRadius.circular(
+                  heightRatio(size: 12, context: context)),
             ),
             child: SvgPicture.asset(
               icon,
@@ -38,7 +39,9 @@ class RedesProductDetailsButton extends StatelessWidget {
           Text(
             text,
             textAlign: TextAlign.center,
-            style: appLabelTextStyle(fontSize: heightRatio(size: 11, context: context), color: newBlack),
+            style: appLabelTextStyle(
+                fontSize: heightRatio(size: 11, context: context),
+                color: newBlack),
           ),
         ],
       ),

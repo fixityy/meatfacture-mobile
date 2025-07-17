@@ -9,28 +9,32 @@ class RedesDeliveryDatePickerBottomSheet extends StatefulWidget {
   final List<String> monthList;
 
   const RedesDeliveryDatePickerBottomSheet({
-    @required this.titleText,
-    @required this.monthList,
+    required this.titleText,
+    required this.monthList,
     // @required this.daysList,
   });
 
   @override
-  State<RedesDeliveryDatePickerBottomSheet> createState() => _RedesDeliveryDatePickerBottomSheetState();
+  State<RedesDeliveryDatePickerBottomSheet> createState() =>
+      _RedesDeliveryDatePickerBottomSheetState();
 }
 
-class _RedesDeliveryDatePickerBottomSheetState extends State<RedesDeliveryDatePickerBottomSheet> {
-  List<String> daysList;
+class _RedesDeliveryDatePickerBottomSheetState
+    extends State<RedesDeliveryDatePickerBottomSheet> {
+  late List<String> daysList;
   String _selectedMonth = DateTime.now().month.toString();
   String _selectedDay = DateTime.now().day.toString();
 
   int getDaysInMonth(int year, int month) {
-    var lastDayDate = (month < 12) ? DateTime(year, month + 1, 0) : DateTime(year + 1, 1, 0);
+    var lastDayDate =
+        (month < 12) ? DateTime(year, month + 1, 0) : DateTime(year + 1, 1, 0);
     return lastDayDate.day;
   }
 
   void setDeliveryDaysList() {
     daysList = [];
-    int daysInMonth = getDaysInMonth(DateTime.now().year, int.parse(_selectedMonth));
+    int daysInMonth =
+        getDaysInMonth(DateTime.now().year, int.parse(_selectedMonth));
 
     if (int.parse(_selectedMonth) == DateTime.now().month) {
       if (int.parse(_selectedDay) < DateTime.now().day) {
@@ -72,7 +76,9 @@ class _RedesDeliveryDatePickerBottomSheetState extends State<RedesDeliveryDatePi
           SizedBox(height: heightRatio(size: 10, context: context)),
           Text(
             widget.titleText,
-            style: appHeadersTextStyle(fontSize: heightRatio(size: 18, context: context), color: newBlack),
+            style: appHeadersTextStyle(
+                fontSize: heightRatio(size: 18, context: context),
+                color: newBlack),
           ),
           SizedBox(height: heightRatio(size: 15, context: context)),
           Expanded(
@@ -82,10 +88,14 @@ class _RedesDeliveryDatePickerBottomSheetState extends State<RedesDeliveryDatePi
                 Expanded(
                   child: CupertinoPicker(
                     itemExtent: heightRatio(size: 50, context: context),
-                    onSelectedItemChanged: (value) => _selectedDay = daysList[value],
+                    onSelectedItemChanged: (value) =>
+                        _selectedDay = daysList[value],
                     children: daysList
                         .map((e) => Center(
-                              child: Text(e, style: appHeadersTextStyle(fontSize: heightRatio(size: 18, context: context))),
+                              child: Text(e,
+                                  style: appHeadersTextStyle(
+                                      fontSize: heightRatio(
+                                          size: 18, context: context))),
                             ))
                         .toList(),
                   ),
@@ -105,7 +115,9 @@ class _RedesDeliveryDatePickerBottomSheetState extends State<RedesDeliveryDatePi
                         .map((e) => Center(
                               child: Text(
                                 getMonthName(month: int.parse(e)),
-                                style: appHeadersTextStyle(fontSize: heightRatio(size: 18, context: context)),
+                                style: appHeadersTextStyle(
+                                    fontSize: heightRatio(
+                                        size: 18, context: context)),
                               ),
                             ))
                         .toList(),
@@ -118,10 +130,16 @@ class _RedesDeliveryDatePickerBottomSheetState extends State<RedesDeliveryDatePi
             onTap: () => Navigator.pop(context, [_selectedMonth, _selectedDay]),
             child: Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
+              padding: EdgeInsets.only(
+                  top: heightRatio(size: 15, context: context),
+                  bottom: heightRatio(size: 18, context: context)),
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
-              child: Text("toChooseText".tr(), style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context))),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5), color: newRedDark),
+              child: Text("toChooseText".tr(),
+                  style: appLabelTextStyle(
+                      color: Colors.white,
+                      fontSize: heightRatio(size: 16, context: context))),
             ),
           ),
           SizedBox(height: heightRatio(size: 15, context: context)),

@@ -34,33 +34,39 @@ import '../../bloc_files/product_details_middle_content_bloc.dart';
 import '../../custom_widgets/redesigned_widgets/discount_text_in_product_det.dart';
 
 class RedesProductDetailsPage extends StatefulWidget {
-  final bool isFavoritePage;
-  final bool isFromBasket;
+  final bool? isFavoritePage;
+  final bool? isFromBasket;
   final String productUuid;
 
   // final String productsQuantity;
 
-  RedesProductDetailsPage({this.isFavoritePage, this.isFromBasket, @required this.productUuid});
+  RedesProductDetailsPage({
+    this.isFavoritePage,
+    this.isFromBasket,
+    required this.productUuid,
+  });
 
   @override
-  _RedesProductDetailsPageState createState() => _RedesProductDetailsPageState();
+  _RedesProductDetailsPageState createState() =>
+      _RedesProductDetailsPageState();
 }
 
-double countInBasket;
+late double countInBasket;
 
 class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
   bool isInBasket = false;
-  double quantityInCartToBack;
-  double priceWithDiscountInCartToBack;
-  String currentPriceInCartToBack;
-  String discountTypeColorInCartToBack;
-  bool isFavorite;
+  double? quantityInCartToBack;
+  double? priceWithDiscountInCartToBack;
+  String? currentPriceInCartToBack;
+  String? discountTypeColorInCartToBack;
+  bool? isFavorite;
   double kgToAddToBasket = 0;
   final ValueNotifier<int> _currentIndexSliderNotifier = ValueNotifier<int>(0);
 
   @override
   void initState() {
-    AssortmentRecommendationBloc _assortmentRecommendationBloc = BlocProvider.of<AssortmentRecommendationBloc>(context);
+    AssortmentRecommendationBloc _assortmentRecommendationBloc =
+        BlocProvider.of<AssortmentRecommendationBloc>(context);
     _assortmentRecommendationBloc.add(AssortmentRecommendationsLoadEvent());
     super.initState();
   }
@@ -73,21 +79,25 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    AssortmentCommentsBloc _assortmentCommentsBloc = BlocProvider.of<AssortmentCommentsBloc>(context);
+    AssortmentCommentsBloc _assortmentCommentsBloc =
+        BlocProvider.of<AssortmentCommentsBloc>(context);
 
     SecondaryPageBloc _secondaryPageBloc = BlocProvider.of(context);
 
     BasketListBloc _basketListBloc = BlocProvider.of<BasketListBloc>(context);
-    ProductDetMiddleContentBloc _productDetMiddleContentBloc = BlocProvider.of<ProductDetMiddleContentBloc>(context);
-    ShoppingListsBloc _shoppingListsBloc = BlocProvider.of<ShoppingListsBloc>(context);
+    ProductDetMiddleContentBloc _productDetMiddleContentBloc =
+        BlocProvider.of<ProductDetMiddleContentBloc>(context);
+    ShoppingListsBloc _shoppingListsBloc =
+        BlocProvider.of<ShoppingListsBloc>(context);
 
-    void _openaddingProductToShoppingListBottomSheet(
-        {BuildContext context,
-        String assortmentUuid,
-        String price,
-        ProductDetailsBloc productDetailsBloc,
-        double priceWithDiscount,
-        List<ProductDetailsUserShoppingList> addedShoppingList}) {
+    void _openaddingProductToShoppingListBottomSheet({
+      required BuildContext context,
+      required String assortmentUuid,
+      required String? price,
+      required ProductDetailsBloc productDetailsBloc,
+      required double? priceWithDiscount,
+      required List<ProductDetailsUserShoppingList> addedShoppingList,
+    }) {
       showModalBottomSheet<dynamic>(
           isScrollControlled: true,
           useSafeArea: true,
@@ -95,7 +105,8 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(heightRatio(size: 25, context: context)),
-              topRight: Radius.circular(heightRatio(size: 25, context: context)),
+              topRight:
+                  Radius.circular(heightRatio(size: 25, context: context)),
             ),
           ),
           builder: (BuildContext bc) {
@@ -114,7 +125,7 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
     }
 
     return CustomWillPopScope(
-      onWillPop: null,
+      onWillPop: () async => true, //null,
       onPopAction: () async {
         _productDetMiddleContentBloc.add(ProductDetMiddleContentDisableEvent());
         Navigator.pop(context, [
@@ -124,34 +135,43 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
           discountTypeColorInCartToBack,
           isFavorite,
         ]);
-        return true;
+        // return true;
       },
-      child: BlocBuilder<ProfileBloc, ProfileState>(builder: (context, profileState) {
+      child: BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, profileState) {
         return BlocProvider(
           create: (context) => ProductDetailsBloc(),
-          child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(builder: (context, state) {
+          child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+              builder: (context, state) {
             ProductDetailsBloc _productDetailsBloc = BlocProvider.of(context);
 
             if (state is ProductDetailsEmptyState) {
-              _productDetailsBloc.add(ProductDetailsLoadEvent(uuid: widget.productUuid));
-              return Container(alignment: Alignment.center, color: Colors.white);
+              _productDetailsBloc
+                  .add(ProductDetailsLoadEvent(uuid: widget.productUuid));
+              return Container(
+                  alignment: Alignment.center, color: Colors.white);
             }
             if (state is ProductDetailsLoadingState) {
               return Container(
                 alignment: Alignment.center,
                 color: Colors.white,
-                child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(mainColor)),
+                child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(mainColor)),
               );
             }
             if (state is ProductDetailsErrorState) {
               return Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(left: widthRatio(size: 20, context: context), right: widthRatio(size: 20, context: context)),
+                padding: EdgeInsets.only(
+                    left: widthRatio(size: 20, context: context),
+                    right: widthRatio(size: 20, context: context)),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                    topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                    topLeft: Radius.circular(
+                        heightRatio(size: 15, context: context)),
+                    topRight: Radius.circular(
+                        heightRatio(size: 15, context: context)),
                   ),
                 ),
                 child: Center(
@@ -159,8 +179,10 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
-                        decoration: BoxDecoration(color: colorBlack03, shape: BoxShape.circle),
+                        padding: EdgeInsets.all(
+                            widthRatio(size: 15, context: context)),
+                        decoration: BoxDecoration(
+                            color: colorBlack03, shape: BoxShape.circle),
                         child: SvgPicture.asset(
                           'assets/images/netErrorIcon.svg',
                           color: Colors.white,
@@ -169,17 +191,25 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                       ),
                       SizedBox(height: heightRatio(size: 15, context: context)),
                       Text("errorText".tr(),
-                          style: appTextStyle(fontSize: heightRatio(size: 18, context: context), color: colorBlack06, fontWeight: FontWeight.w500)),
+                          style: appTextStyle(
+                              fontSize: heightRatio(size: 18, context: context),
+                              color: colorBlack06,
+                              fontWeight: FontWeight.w500)),
                       SizedBox(height: heightRatio(size: 10, context: context)),
                       InkWell(
                         onTap: () {
-                          _productDetailsBloc.add(ProductDetailsLoadEvent(uuid: state.uuid));
+                          _productDetailsBloc
+                              .add(ProductDetailsLoadEvent(uuid: state.uuid));
                         },
                         child: Container(
                           color: Colors.transparent,
                           child: Text(
                             "tryAgainText".tr(),
-                            style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: mainColor, fontWeight: FontWeight.w500),
+                            style: appTextStyle(
+                                fontSize:
+                                    heightRatio(size: 14, context: context),
+                                color: mainColor,
+                                fontWeight: FontWeight.w500),
                           ),
                         ),
                       ),
@@ -191,21 +221,35 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
 
             // Basic State
             if (state is ProductDetailsLoadedState) {
-              _assortmentCommentsBloc.add(AssortmentCommentsLoadEvent(assortmentUuid: state.productDetailsModel.data.uuid));
-              currentPriceInCartToBack = state.productDetailsModel.data.currentPrice;
-              priceWithDiscountInCartToBack = state.productDetailsModel.data.priceWithDiscount;
-              quantityInCartToBack = state.productDetailsModel.data.quantityInClientCart;
-              discountTypeColorInCartToBack = state.productDetailsModel.data.discountTypeColor;
+              _assortmentCommentsBloc.add(AssortmentCommentsLoadEvent(
+                  assortmentUuid: state.productDetailsModel.data.uuid));
+              currentPriceInCartToBack =
+                  state.productDetailsModel.data.currentPrice;
+              priceWithDiscountInCartToBack =
+                  state.productDetailsModel.data.priceWithDiscount;
+              quantityInCartToBack =
+                  state.productDetailsModel.data.quantityInClientCart;
+              discountTypeColorInCartToBack =
+                  state.productDetailsModel.data.discountTypeColor;
 
-              if (state.productDetailsModel.data.quantityInClientCart != null && state.productDetailsModel.data.quantityInClientCart > 0) {
+              if (state.productDetailsModel.data.quantityInClientCart != null &&
+                  state.productDetailsModel.data.quantityInClientCart! > 0) {
                 isInBasket = true;
               }
-              return BlocBuilder<BasketListBloc, BasketState>(builder: (context, basketState) {
-                if (basketState is BasketLoadedState && _secondaryPageBloc.state is SecondaryBasketPageState) {
-                  if (widget.isFromBasket == null || widget.isFromBasket == false) {
-                    for (var i = 0; i < basketState.basketListModel.data.length; i++) {
-                      if (state.productDetailsModel.data.uuid == basketState.basketListModel.data[i].assortment.uuid) {
-                        state.productDetailsModel.data.quantityInClientCart = basketState.basketListModel.data[i].quantity;
+              return BlocBuilder<BasketListBloc, BasketState>(
+                  builder: (context, basketState) {
+                if (basketState is BasketLoadedState &&
+                    _secondaryPageBloc.state is SecondaryBasketPageState) {
+                  if (widget.isFromBasket == null ||
+                      widget.isFromBasket == false) {
+                    for (var i = 0;
+                        i < basketState.basketListModel.data!.length;
+                        i++) {
+                      if (state.productDetailsModel.data.uuid ==
+                          basketState
+                              .basketListModel.data![i].assortment.uuid) {
+                        state.productDetailsModel.data.quantityInClientCart =
+                            basketState.basketListModel.data![i].quantity;
                         isInBasket = true;
                         break;
                       } else {
@@ -215,7 +259,8 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                     }
                   }
                 } else {
-                  if (basketState is BasketEmptyState && _secondaryPageBloc.state is SecondaryBasketPageState) {
+                  if (basketState is BasketEmptyState &&
+                      _secondaryPageBloc.state is SecondaryBasketPageState) {
                     state.productDetailsModel.data.quantityInClientCart = 0;
                     isInBasket = false;
                   }
@@ -235,49 +280,71 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                             automaticallyImplyLeading: false,
                             flexibleSpace: Stack(
                               children: [
-                                if (state.productDetailsModel.data.images.isEmpty)
+                                if (state
+                                    .productDetailsModel.data.images.isEmpty)
                                   Container(
                                     height: screenWidth(context),
                                     width: MediaQuery.of(context).size.width,
-                                    child: Image.asset("assets/images/notImage.png", fit: BoxFit.contain),
+                                    child: Image.asset(
+                                        "assets/images/notImage.png",
+                                        fit: BoxFit.contain),
                                   ),
-                                if (state.productDetailsModel.data.images.length == 1)
+                                if (state.productDetailsModel.data.images
+                                        .length ==
+                                    1)
                                   Container(
                                     height: screenWidth(context),
                                     width: MediaQuery.of(context).size.width,
                                     child: CachedNetworkImage(
-                                      imageUrl: state.productDetailsModel.data.images[0].path,
+                                      imageUrl: state.productDetailsModel.data
+                                          .images[0].path,
                                       cacheManager: CustomCacheManager(),
                                       fit: BoxFit.cover,
-                                      errorWidget: (context, url, error) => Image.asset("assets/images/notImage.png", fit: BoxFit.contain),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                              "assets/images/notImage.png",
+                                              fit: BoxFit.contain),
                                       useOldImageOnUrlChange: true,
                                     ),
                                   ),
-                                if (state.productDetailsModel.data.images.length > 1)
+                                if (state.productDetailsModel.data.images
+                                        .length >
+                                    1)
                                   CarouselSlider(
                                     options: CarouselOptions(
                                       autoPlay: false,
                                       height: screenWidth(context),
                                       autoPlayCurve: Curves.fastOutSlowIn,
-                                      autoPlayAnimationDuration: const Duration(milliseconds: 500),
-                                      autoPlayInterval: const Duration(seconds: 5),
+                                      autoPlayAnimationDuration:
+                                          const Duration(milliseconds: 500),
+                                      autoPlayInterval:
+                                          const Duration(seconds: 5),
                                       viewportFraction: 1,
                                       onPageChanged: (index, reason) {
-                                        _currentIndexSliderNotifier.value = index;
+                                        _currentIndexSliderNotifier.value =
+                                            index;
                                       },
                                     ),
-                                    items: state.productDetailsModel.data.images.map(
+                                    items: state.productDetailsModel.data.images
+                                        .map(
                                       (i) {
                                         return Builder(
                                           builder: (BuildContext context) {
                                             return Container(
                                               height: screenWidth(context),
-                                              width: MediaQuery.of(context).size.width,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
                                               child: CachedNetworkImage(
                                                 imageUrl: i.path,
-                                                cacheManager: CustomCacheManager(),
+                                                cacheManager:
+                                                    CustomCacheManager(),
                                                 fit: BoxFit.cover,
-                                                errorWidget: (context, url, error) => Image.asset("assets/images/notImage.png", fit: BoxFit.contain),
+                                                errorWidget: (context, url,
+                                                        error) =>
+                                                    Image.asset(
+                                                        "assets/images/notImage.png",
+                                                        fit: BoxFit.contain),
                                                 useOldImageOnUrlChange: true,
                                               ),
                                             );
@@ -286,25 +353,34 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                                       },
                                     ).toList(),
                                   ),
-                                if (state.productDetailsModel.data.images.length > 1)
+                                if (state.productDetailsModel.data.images
+                                        .length >
+                                    1)
                                   Positioned(
                                     bottom: 30,
                                     child: SizedBox(
                                       width: MediaQuery.of(context).size.width,
                                       child: ValueListenableBuilder<int>(
-                                        valueListenable: _currentIndexSliderNotifier,
-                                        builder: (context, currentIndex, child) {
+                                        valueListenable:
+                                            _currentIndexSliderNotifier,
+                                        builder:
+                                            (context, currentIndex, child) {
                                           return Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: List.generate(
-                                              state.productDetailsModel.data.images.length,
+                                              state.productDetailsModel.data
+                                                  .images.length,
                                               (index) => Container(
-                                                margin: EdgeInsets.symmetric(horizontal: 4),
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 4),
                                                 width: 12,
                                                 height: 8,
                                                 decoration: BoxDecoration(
                                                   shape: BoxShape.circle,
-                                                  color: currentIndex == index ? Colors.red : Colors.white,
+                                                  color: currentIndex == index
+                                                      ? Colors.red
+                                                      : Colors.white,
                                                 ),
                                               ),
                                             ),
@@ -318,44 +394,69 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                                   left: 0,
                                   right: 0,
                                   child: Container(
-                                    height: heightRatio(size: 25, context: context),
+                                    height:
+                                        heightRatio(size: 25, context: context),
                                     clipBehavior: Clip.hardEdge,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                                        topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                                        topLeft: Radius.circular(heightRatio(
+                                            size: 15, context: context)),
+                                        topRight: Radius.circular(heightRatio(
+                                            size: 15, context: context)),
                                       ),
                                     ),
                                   ),
                                 ),
 
                                 //Bonuses
-                                if (state.productDetailsModel.data.totalBonus != null && state.productDetailsModel.data.totalBonus != 0)
+                                if (state.productDetailsModel.data.totalBonus !=
+                                        null &&
+                                    state.productDetailsModel.data.totalBonus !=
+                                        0)
                                   Positioned(
-                                    top: (screenWidth(context) - widthRatio(size: 70, context: context)),
-                                    left: widthRatio(size: 20, context: context),
+                                    top: (screenWidth(context) -
+                                        widthRatio(size: 70, context: context)),
+                                    left:
+                                        widthRatio(size: 20, context: context),
                                     child: Container(
                                       decoration: BoxDecoration(
                                         color: whiteColor,
-                                        borderRadius: BorderRadius.circular(widthRatio(size: 4, context: context)),
+                                        borderRadius: BorderRadius.circular(
+                                            widthRatio(
+                                                size: 4, context: context)),
                                       ),
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: widthRatio(size: 4, context: context), vertical: heightRatio(size: 2, context: context)),
+                                          horizontal: widthRatio(
+                                              size: 4, context: context),
+                                          vertical: heightRatio(
+                                              size: 2, context: context)),
                                       child: Row(children: [
                                         Container(
-                                          width: widthRatio(size: 20, context: context),
-                                          height: heightRatio(size: 20, context: context),
-                                          child: SvgPicture.asset('assets/images/bonus_vector.svg',
-                                              width: widthRatio(size: 20, context: context), height: heightRatio(size: 20, context: context)),
+                                          width: widthRatio(
+                                              size: 20, context: context),
+                                          height: heightRatio(
+                                              size: 20, context: context),
+                                          child: SvgPicture.asset(
+                                              'assets/images/bonus_vector.svg',
+                                              width: widthRatio(
+                                                  size: 20, context: context),
+                                              height: heightRatio(
+                                                  size: 20, context: context)),
                                         ),
                                         SizedBox(
-                                          width: widthRatio(size: 3, context: context),
+                                          width: widthRatio(
+                                              size: 3, context: context),
                                         ),
                                         Text(
-                                          state.productDetailsModel.data.totalBonus.toStringAsFixed(0),
-                                          style:
-                                              appTextStyle(fontSize: heightRatio(size: 16, context: context), fontWeight: FontWeight.w700, color: colorBlack06),
+                                          state.productDetailsModel.data
+                                              .totalBonus!
+                                              .toStringAsFixed(0),
+                                          style: appTextStyle(
+                                              fontSize: heightRatio(
+                                                  size: 16, context: context),
+                                              fontWeight: FontWeight.w700,
+                                              color: colorBlack06),
                                         )
                                       ]),
                                     ),
@@ -363,18 +464,25 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                                 // назад
                                 InkWell(
                                   onTap: () async {
-                                    _productDetMiddleContentBloc.add(ProductDetMiddleContentDisableEvent());
+                                    _productDetMiddleContentBloc.add(
+                                        ProductDetMiddleContentDisableEvent());
                                     // _bottomNavBloc.add(CatalogEvent());
                                     Navigator.pop(context, [
                                       quantityInCartToBack,
-                                      state.productDetailsModel.data.priceWithDiscount,
-                                      state.productDetailsModel.data.currentPrice,
-                                      state.productDetailsModel.data.discountTypeColor,
+                                      state.productDetailsModel.data
+                                          .priceWithDiscount,
+                                      state.productDetailsModel.data
+                                          .currentPrice,
+                                      state.productDetailsModel.data
+                                          .discountTypeColor,
                                       state.productDetailsModel.data.isFavorite,
                                     ]);
                                   },
                                   child: Container(
-                                    decoration: BoxDecoration(color: newBlack, borderRadius: BorderRadius.circular(18)),
+                                    decoration: BoxDecoration(
+                                        color: newBlack,
+                                        borderRadius:
+                                            BorderRadius.circular(18)),
                                     width: 36,
                                     height: 36,
                                     margin: EdgeInsets.only(top: 43, left: 15),
@@ -383,7 +491,10 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                                         Positioned(
                                           top: 2,
                                           left: 1,
-                                          child: Icon(Icons.chevron_left_rounded, color: Colors.white, size: 32),
+                                          child: Icon(
+                                              Icons.chevron_left_rounded,
+                                              color: Colors.white,
+                                              size: 32),
                                         ),
                                       ],
                                     ),
@@ -397,87 +508,182 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
-                                  padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 16, context: context)),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: widthRatio(
+                                          size: 16, context: context)),
                                   color: Colors.white,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           SizedBox(
-                                            width: MediaQuery.of(context).size.width - widthRatio(size: 88, context: context),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width -
+                                                widthRatio(
+                                                    size: 88, context: context),
                                             child: Text(
-                                              state.productDetailsModel.data.name,
-                                              style: appHeadersTextStyle(fontSize: heightRatio(size: 18, context: context)),
+                                              state.productDetailsModel.data
+                                                  .name,
+                                              style: appHeadersTextStyle(
+                                                  fontSize: heightRatio(
+                                                      size: 18,
+                                                      context: context)),
                                             ),
                                           ),
                                           //rating
-                                          if (state.productDetailsModel.data.rating != null)
+                                          if (state.productDetailsModel.data
+                                                  .rating !=
+                                              null)
                                             Row(
                                               children: [
-                                                SvgPicture.asset("assets/images/newStar.svg", height: heightRatio(size: 15, context: context)),
-                                                SizedBox(width: widthRatio(size: 5, context: context)),
+                                                SvgPicture.asset(
+                                                    "assets/images/newStar.svg",
+                                                    height: heightRatio(
+                                                        size: 15,
+                                                        context: context)),
+                                                SizedBox(
+                                                    width: widthRatio(
+                                                        size: 5,
+                                                        context: context)),
                                                 Text(
-                                                  state.productDetailsModel.data.rating == null ? '' : state.productDetailsModel.data.rating.toString(),
-                                                  style: appHeadersTextStyle(fontSize: 12, color: newGrey),
+                                                  state.productDetailsModel.data
+                                                              .rating ==
+                                                          null
+                                                      ? ''
+                                                      : state
+                                                          .productDetailsModel
+                                                          .data
+                                                          .rating
+                                                          .toString(),
+                                                  style: appHeadersTextStyle(
+                                                      fontSize: 12,
+                                                      color: newGrey),
                                                 ),
                                               ],
                                             ),
                                         ],
                                       ),
-                                      SizedBox(height: heightRatio(size: 18, context: context)),
+                                      SizedBox(
+                                          height: heightRatio(
+                                              size: 18, context: context)),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           SizedBox.shrink(),
                                           //Price
                                           Container(
-                                            height: heightRatio(size: 32, context: context),
-                                            width: widthRatio(size: 160, context: context),
+                                            height: heightRatio(
+                                                size: 32, context: context),
+                                            width: widthRatio(
+                                                size: 160, context: context),
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
-                                              color: state.productDetailsModel.data.discountTypeColor == null
+                                              color: state
+                                                          .productDetailsModel
+                                                          .data
+                                                          .discountTypeColor ==
+                                                      null
                                                   ? newRedDark
-                                                  : Color(int.parse("0xff${state.productDetailsModel.data.discountTypeColor}")),
-                                              borderRadius: BorderRadius.circular(heightRatio(size: 4, context: context)),
+                                                  : Color(int.parse(
+                                                      "0xff${state.productDetailsModel.data.discountTypeColor}")),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      heightRatio(
+                                                          size: 4,
+                                                          context: context)),
                                             ),
                                             child: RichText(
                                               text: TextSpan(
                                                 children: [
                                                   TextSpan(
-                                                      text: state.productDetailsModel.data.priceWithDiscount == null
-                                                          ? state.productDetailsModel.data.currentPrice != null
+                                                      text: state
+                                                                  .productDetailsModel
+                                                                  .data
+                                                                  .priceWithDiscount ==
+                                                              null
+                                                          ? state.productDetailsModel.data.currentPrice !=
+                                                                  null
                                                               ? state.productDetailsModel.data.productsQuantity != null &&
-                                                                      state.productDetailsModel.data.productsQuantity != 0
-                                                                  ? state.productDetailsModel.data.currentPrice
-                                                                  : "notAvailableText".tr()
-                                                              : "notAvailableText".tr()
-                                                          : state.productDetailsModel.data.priceWithDiscount.toString(),
-                                                      style: appHeadersTextStyle(fontSize: heightRatio(size: 17, context: context), color: Colors.white)),
+                                                                      state.productDetailsModel.data.productsQuantity !=
+                                                                          0
+                                                                  ? state
+                                                                      .productDetailsModel
+                                                                      .data
+                                                                      .currentPrice
+                                                                  : "notAvailableText"
+                                                                      .tr()
+                                                              : "notAvailableText"
+                                                                  .tr()
+                                                          : state
+                                                              .productDetailsModel
+                                                              .data
+                                                              .priceWithDiscount
+                                                              .toString(),
+                                                      style: appHeadersTextStyle(
+                                                          fontSize: heightRatio(
+                                                              size: 17,
+                                                              context: context),
+                                                          color: Colors.white)),
                                                   TextSpan(
-                                                      text: state.productDetailsModel.data.priceWithDiscount == null
-                                                          ? state.productDetailsModel.data.currentPrice != null
-                                                              ? state.productDetailsModel.data.productsQuantity != null &&
-                                                                      state.productDetailsModel.data.productsQuantity != 0
+                                                      text: state
+                                                                  .productDetailsModel
+                                                                  .data
+                                                                  .priceWithDiscount ==
+                                                              null
+                                                          ? state.productDetailsModel.data
+                                                                      .currentPrice !=
+                                                                  null
+                                                              ? state.productDetailsModel.data
+                                                                              .productsQuantity !=
+                                                                          null &&
+                                                                      state.productDetailsModel.data
+                                                                              .productsQuantity !=
+                                                                          0
                                                                   ? " ₽"
                                                                   : ""
                                                               : ""
                                                           : " ₽",
                                                       style: appTextStyle(
-                                                          fontWeight: FontWeight.bold, color: Colors.white, fontSize: heightRatio(size: 17, context: context))),
-                                                  state.productDetailsModel.data.assortmentUnitId != "package"
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white,
+                                                          fontSize: heightRatio(
+                                                              size: 17,
+                                                              context:
+                                                                  context))),
+                                                  state.productDetailsModel.data
+                                                              .assortmentUnitId !=
+                                                          "package"
                                                       ? TextSpan(
-                                                          text: state.productDetailsModel.data.priceWithDiscount == null
-                                                              ? state.productDetailsModel.data.currentPrice != null
+                                                          text: state
+                                                                      .productDetailsModel
+                                                                      .data
+                                                                      .priceWithDiscount ==
+                                                                  null
+                                                              ? state.productDetailsModel.data
+                                                                          .currentPrice !=
+                                                                      null
                                                                   ? state.productDetailsModel.data.productsQuantity != null &&
-                                                                          state.productDetailsModel.data.productsQuantity != 0
+                                                                          state.productDetailsModel.data.productsQuantity !=
+                                                                              0
                                                                       ? "/ ${getAssortmentUnitId(assortmentUnitId: state.productDetailsModel.data.assortmentUnitId)[1]}"
                                                                       : ""
                                                                   : ""
                                                               : "/${getAssortmentUnitId(assortmentUnitId: state.productDetailsModel.data.assortmentUnitId)[1]}",
-                                                          style: appHeadersTextStyle(fontSize: heightRatio(size: 17, context: context), color: Colors.white))
+                                                          style: appHeadersTextStyle(
+                                                              fontSize: heightRatio(
+                                                                  size: 17,
+                                                                  context:
+                                                                      context),
+                                                              color: Colors.white))
                                                       : TextSpan(),
                                                 ],
                                               ),
@@ -485,25 +691,46 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: heightRatio(size: 15, context: context)),
-                                      state.productDetailsModel.data.discountTypeName != null
+                                      SizedBox(
+                                          height: heightRatio(
+                                              size: 15, context: context)),
+                                      state.productDetailsModel.data
+                                                  .discountTypeName !=
+                                              null
                                           ? Row(
                                               children: [
-                                                if (state.productDetailsModel.data.discountType.contains("diverse"))
+                                                if (state.productDetailsModel
+                                                        .data.discountType
+                                                        ?.contains("diverse") ==
+                                                    true)
                                                   Padding(
-                                                    padding: EdgeInsets.only(right: widthRatio(size: 5, context: context)),
+                                                    padding: EdgeInsets.only(
+                                                        right: widthRatio(
+                                                            size: 5,
+                                                            context: context)),
                                                     child: Image.asset(
                                                       "assets/images/diverse_food_image.png",
-                                                      height: heightRatio(size: 20, context: context),
+                                                      height: heightRatio(
+                                                          size: 20,
+                                                          context: context),
                                                     ),
                                                   ),
-                                                if (state.productDetailsModel.data.discountType.contains("FavoriteAssortment"))
+                                                if (state.productDetailsModel
+                                                        .data.discountType
+                                                        ?.contains(
+                                                            "FavoriteAssortment") ==
+                                                    true)
                                                   Padding(
-                                                    padding: EdgeInsets.only(right: widthRatio(size: 5, context: context)),
+                                                    padding: EdgeInsets.only(
+                                                        right: widthRatio(
+                                                            size: 5,
+                                                            context: context)),
                                                     child: Icon(
                                                       Icons.favorite,
                                                       color: colorRed,
-                                                      size: heightRatio(size: 15, context: context),
+                                                      size: heightRatio(
+                                                          size: 15,
+                                                          context: context),
                                                     ),
                                                   ),
                                                 DiscountTitleText(
@@ -512,112 +739,211 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                                               ],
                                             )
                                           : SizedBox(),
-                                      SizedBox(height: heightRatio(size: 15, context: context)),
+                                      SizedBox(
+                                          height: heightRatio(
+                                              size: 15, context: context)),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           // Выбрать любимым
                                           RedesProductDetailsButton(
-                                            isActive: state.productDetailsModel.data.isPromoFavorite ? true : false,
-                                            icon: state.productDetailsModel.data.isPromoFavorite
+                                            isActive: state.productDetailsModel
+                                                    .data.isPromoFavorite
+                                                ? true
+                                                : false,
+                                            icon: state.productDetailsModel.data
+                                                    .isPromoFavorite
                                                 ? "assets/images/newChooseLovely.svg"
                                                 : "assets/images/newChooseLovely.svg",
-                                            text: state.productDetailsModel.data.isPromoFavorite ? "Добавлен\nв любимые" : "Выбрать\nлюбимым",
+                                            text: state.productDetailsModel.data
+                                                    .isPromoFavorite
+                                                ? "Добавлен\nв любимые"
+                                                : "Выбрать\nлюбимым",
                                             onTapCallback: () async {
-                                              if (await AssortmentFilterButton().loadToken() != "guest") {
+                                              if (await AssortmentFilterButton()
+                                                      .loadToken() !=
+                                                  "guest") {
                                                 String _isSettedFavoriteProduct;
-                                                FavoriteProductVariantUuidModel _favoriteProductVariantUuidModel =
-                                                    await FavoriteProductProvider().getFavoriteProductVariantUuidResponse();
+                                                FavoriteProductVariantUuidModel
+                                                    _favoriteProductVariantUuidModel =
+                                                    await FavoriteProductProvider()
+                                                        .getFavoriteProductVariantUuidResponse();
 
-                                                if (_favoriteProductVariantUuidModel.data.isEmpty) {
-                                                  showSnackBar(context, "Ошибка. Условия акции не выполнены!");
+                                                if (_favoriteProductVariantUuidModel
+                                                    .data.isEmpty) {
+                                                  showSnackBar(context,
+                                                      "Ошибка. Условия акции не выполнены!");
                                                 } else {
-                                                  _isSettedFavoriteProduct = await FavoriteProductProvider().setFavoriteProductResponse(
-                                                    assortmentUuid: state.productDetailsModel.data.uuid,
-                                                    variantUuid: _favoriteProductVariantUuidModel.data.first.uuid,
+                                                  _isSettedFavoriteProduct =
+                                                      await FavoriteProductProvider()
+                                                          .setFavoriteProductResponse(
+                                                    assortmentUuid: state
+                                                        .productDetailsModel
+                                                        .data
+                                                        .uuid,
+                                                    variantUuid:
+                                                        _favoriteProductVariantUuidModel
+                                                            .data.first.uuid,
                                                   );
 
-                                                  if (_isSettedFavoriteProduct == "old token") {
-                                                    AuthPageBloc authPageBloc = BlocProvider.of(context);
-                                                    BasicPageBloc basicPageBloc = BlocProvider.of(context);
-                                                    ProfilePage.logout(regBloc: authPageBloc, basicPageBloc: basicPageBloc);
+                                                  if (_isSettedFavoriteProduct ==
+                                                      "old token") {
+                                                    AuthPageBloc authPageBloc =
+                                                        BlocProvider.of(
+                                                            context);
+                                                    BasicPageBloc
+                                                        basicPageBloc =
+                                                        BlocProvider.of(
+                                                            context);
+                                                    ProfilePage.logout(
+                                                        regBloc: authPageBloc,
+                                                        basicPageBloc:
+                                                            basicPageBloc);
                                                   }
-                                                  if (_isSettedFavoriteProduct == "ok") {
-                                                    Timer(Duration(seconds: 1), () {
-                                                      _productDetailsBloc.add(ProductDetailsLoadEvent(uuid: state.productDetailsModel.data.uuid));
+                                                  if (_isSettedFavoriteProduct ==
+                                                      "ok") {
+                                                    Timer(Duration(seconds: 1),
+                                                        () {
+                                                      _productDetailsBloc.add(
+                                                          ProductDetailsLoadEvent(
+                                                              uuid: state
+                                                                  .productDetailsModel
+                                                                  .data
+                                                                  .uuid));
                                                     });
-                                                  } else if (_isSettedFavoriteProduct == "alreadyActivated") {
-                                                    showSnackBar(context, "Вы уже изменили Любимый Продукт, снова поменять его можно будет завтра");
+                                                  } else if (_isSettedFavoriteProduct ==
+                                                      "alreadyActivated") {
+                                                    showSnackBar(context,
+                                                        "Вы уже изменили Любимый Продукт, снова поменять его можно будет завтра");
                                                   } else {
-                                                    showSnackBar(context, "Ошибка. Условия акции не выполнены!");
+                                                    showSnackBar(context,
+                                                        "Ошибка. Условия акции не выполнены!");
                                                   }
                                                 }
                                               } else {
-                                                AssortmentFilterButton().loginOrRegWarning(context);
+                                                AssortmentFilterButton()
+                                                    .loginOrRegWarning(context);
                                               }
                                             },
                                           ),
 
                                           // В список покупок
                                           RedesProductDetailsButton(
-                                            isActive: state.productDetailsModel.data.userShoppingLists == null ||
-                                                    state.productDetailsModel.data.userShoppingLists.isEmpty
+                                            isActive: state
+                                                            .productDetailsModel
+                                                            .data
+                                                            .userShoppingLists ==
+                                                        null ||
+                                                    state
+                                                        .productDetailsModel
+                                                        .data
+                                                        .userShoppingLists
+                                                        .isEmpty
                                                 ? false
                                                 : true,
-                                            icon: "assets/images/newAddToCart.svg",
+                                            icon:
+                                                "assets/images/newAddToCart.svg",
                                             text: 'inShopListText'.tr(),
                                             onTapCallback: () async {
-                                              if (await AssortmentFilterButton().loadToken() != "guest") {
-                                                _shoppingListsBloc.add(ShoppingListsLoadEvent());
+                                              if (await AssortmentFilterButton()
+                                                      .loadToken() !=
+                                                  "guest") {
+                                                _shoppingListsBloc.add(
+                                                    ShoppingListsLoadEvent());
                                                 _openaddingProductToShoppingListBottomSheet(
-                                                    productDetailsBloc: _productDetailsBloc,
-                                                    priceWithDiscount: state.productDetailsModel.data.priceWithDiscount,
+                                                    productDetailsBloc:
+                                                        _productDetailsBloc,
+                                                    priceWithDiscount: state
+                                                        .productDetailsModel
+                                                        .data
+                                                        .priceWithDiscount,
                                                     context: context,
-                                                    assortmentUuid: state.productDetailsModel.data.uuid,
-                                                    price: state.productDetailsModel.data.currentPrice,
-                                                    addedShoppingList: state.productDetailsModel.data.userShoppingLists);
+                                                    assortmentUuid: state
+                                                        .productDetailsModel
+                                                        .data
+                                                        .uuid,
+                                                    price: state
+                                                        .productDetailsModel
+                                                        .data
+                                                        .currentPrice,
+                                                    addedShoppingList: state
+                                                        .productDetailsModel
+                                                        .data
+                                                        .userShoppingLists);
                                               } else {
-                                                AssortmentFilterButton().loginOrRegWarning(context);
+                                                AssortmentFilterButton()
+                                                    .loginOrRegWarning(context);
                                               }
                                             },
                                           ),
 
                                           // Добавить в избранное (внутри)
                                           RedesProductDetailsButton(
-                                            isActive: state.productDetailsModel.data.isFavorite ? true : false,
-                                            icon: 'assets/images/newHeartContur.svg',
+                                            isActive: state.productDetailsModel
+                                                    .data.isFavorite
+                                                ? true
+                                                : false,
+                                            icon:
+                                                'assets/images/newHeartContur.svg',
                                             text: 'addTofavoriteText'.tr(),
                                             onTapCallback: () async {
-                                              if (await AssortmentFilterButton().loadToken() != 'guest') {
-                                                if (state.productDetailsModel.data.isFavorite) {
+                                              if (await AssortmentFilterButton()
+                                                      .loadToken() !=
+                                                  'guest') {
+                                                if (state.productDetailsModel
+                                                    .data.isFavorite) {
                                                   setState(() {
-                                                    state.productDetailsModel.data.isFavorite = false;
+                                                    state
+                                                        .productDetailsModel
+                                                        .data
+                                                        .isFavorite = false;
                                                     isFavorite = false;
                                                   });
                                                 } else {
                                                   setState(() {
-                                                    state.productDetailsModel.data.isFavorite = true;
+                                                    state.productDetailsModel
+                                                        .data.isFavorite = true;
                                                     isFavorite = true;
                                                   });
                                                 }
-                                                var _likeResponse = await AddDeleteProductToFavoriteProvider(
-                                                        isLiked: !state.productDetailsModel.data.isFavorite, productUuid: state.productDetailsModel.data.uuid)
-                                                    .getisAddProductTofavoriteResponse();
-                                                if (_likeResponse == 'old token') {
-                                                  AuthPageBloc authPageBloc = BlocProvider.of(context);
-                                                  BasicPageBloc basicPageBloc = BlocProvider.of(context);
-                                                  ProfilePage.logout(regBloc: authPageBloc, basicPageBloc: basicPageBloc);
+                                                var _likeResponse =
+                                                    await AddDeleteProductToFavoriteProvider(
+                                                            isLiked: !state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .isFavorite,
+                                                            productUuid: state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .uuid)
+                                                        .getisAddProductTofavoriteResponse();
+                                                if (_likeResponse ==
+                                                    'old token') {
+                                                  AuthPageBloc authPageBloc =
+                                                      BlocProvider.of(context);
+                                                  BasicPageBloc basicPageBloc =
+                                                      BlocProvider.of(context);
+                                                  ProfilePage.logout(
+                                                      regBloc: authPageBloc,
+                                                      basicPageBloc:
+                                                          basicPageBloc);
                                                 }
                                               } else {
-                                                AssortmentFilterButton().loginOrRegWarning(context);
+                                                AssortmentFilterButton()
+                                                    .loginOrRegWarning(context);
                                               }
                                             },
                                           ),
                                         ],
                                       ),
                                       SizedBox(height: 30),
-                                      RedesProductDetailsMiddleContent(productDetailsModel: state.productDetailsModel),
-                                      ProductDetailsTegsWidget(tagsList: state.productDetailsModel.data.tags),
+                                      RedesProductDetailsMiddleContent(
+                                          productDetailsModel:
+                                              state.productDetailsModel),
+                                      ProductDetailsTegsWidget(
+                                          tagsList: state
+                                              .productDetailsModel.data.tags),
                                     ],
                                   ),
                                 ),
@@ -627,8 +953,10 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                         ],
                       ),
                       state.productDetailsModel.data.productsQuantity != null &&
-                              state.productDetailsModel.data.productsQuantity != 0 &&
-                              state.productDetailsModel.data.currentPrice != null
+                              state.productDetailsModel.data.productsQuantity !=
+                                  0 &&
+                              state.productDetailsModel.data.currentPrice !=
+                                  null
                           ? Positioned(
                               bottom: 0,
                               left: 0,
@@ -636,33 +964,72 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                               child: !isInBasket
                                   ? InkWell(
                                       onTap: () async {
-                                        if (profileState is ProfileAsGuestState) {
-                                          AssortmentFilterButton().loginOrRegWarning(context);
+                                        if (profileState
+                                            is ProfileAsGuestState) {
+                                          AssortmentFilterButton()
+                                              .loginOrRegWarning(context);
                                         } else if (!isInBasket) {
-                                          if (state.productDetailsModel.data.productsQuantity > state.productDetailsModel.data.quantityInClientCart) {
-                                            if (state.productDetailsModel.data.assortmentUnitId != "kilogram") {
+                                          if (state.productDetailsModel.data
+                                                  .productsQuantity! >
+                                              state.productDetailsModel.data
+                                                  .quantityInClientCart!) {
+                                            if (state.productDetailsModel.data
+                                                    .assortmentUnitId !=
+                                                "kilogram") {
                                               setState(() {
                                                 isInBasket = true;
                                               });
-                                              if (state.productDetailsModel.data.quantityInClientCart < state.productDetailsModel.data.productsQuantity) {
-                                                state.productDetailsModel.data.quantityInClientCart++;
+                                              if (state.productDetailsModel.data
+                                                      .quantityInClientCart! <
+                                                  state.productDetailsModel.data
+                                                      .productsQuantity!) {
+                                                state.productDetailsModel.data
+                                                        .quantityInClientCart! +
+                                                    1;
 
-                                                if (await BasketProvider().addProductInBasket(state.productDetailsModel.data.uuid, 1)) {
-                                                  _basketListBloc.add(BasketLoadEvent());
+                                                if (await BasketProvider()
+                                                    .addProductInBasket(
+                                                        state
+                                                            .productDetailsModel
+                                                            .data
+                                                            .uuid,
+                                                        1)) {
+                                                  _basketListBloc
+                                                      .add(BasketLoadEvent());
                                                 }
                                               }
                                             } else {
                                               setState(() {
                                                 isInBasket = true;
                                               });
-                                              double weight = double.tryParse(state.productDetailsModel.data.weight) ?? 0.0;
+                                              double weight = double.tryParse(
+                                                      state.productDetailsModel
+                                                          .data.weight) ??
+                                                  0.0;
                                               double weightInKg = weight / 1000;
-                                              if (state.productDetailsModel.data.quantityInClientCart < state.productDetailsModel.data.productsQuantity) {
-                                                state.productDetailsModel.data.quantityInClientCart += weightInKg; // Добавляем 100 грамм
+                                              if (state.productDetailsModel.data
+                                                      .quantityInClientCart! <
+                                                  state.productDetailsModel.data
+                                                      .productsQuantity!) {
+                                                state.productDetailsModel.data
+                                                    .quantityInClientCart = state
+                                                        .productDetailsModel
+                                                        .data
+                                                        .quantityInClientCart! +
+                                                    weightInKg; // Добавляем 100 грамм
 
-                                                if (await BasketProvider().addProductInBasket(
-                                                    state.productDetailsModel.data.uuid, state.productDetailsModel.data.quantityInClientCart)) {
-                                                  _basketListBloc.add(BasketLoadEvent());
+                                                if (await BasketProvider()
+                                                    .addProductInBasket(
+                                                        state
+                                                            .productDetailsModel
+                                                            .data
+                                                            .uuid,
+                                                        state
+                                                            .productDetailsModel
+                                                            .data
+                                                            .quantityInClientCart)) {
+                                                  _basketListBloc
+                                                      .add(BasketLoadEvent());
                                                 }
                                               }
                                             }
@@ -670,21 +1037,34 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                                         }
                                       },
                                       child: Container(
-                                        padding: const EdgeInsets.only(bottom: 15, top: 15),
+                                        padding: const EdgeInsets.only(
+                                            bottom: 15, top: 15),
                                         alignment: Alignment.center,
                                         child: Text("toBasketText".tr(),
-                                            style: GoogleFonts.raleway(fontSize: heightRatio(size: 18, context: context), color: Colors.white)),
+                                            style: GoogleFonts.raleway(
+                                                fontSize: heightRatio(
+                                                    size: 18, context: context),
+                                                color: Colors.white)),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
+                                          borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(10),
+                                              topLeft: Radius.circular(10)),
                                           gradient: LinearGradient(
                                               begin: Alignment.centerLeft,
                                               end: Alignment.centerRight,
-                                              colors: [firstColorButtonsOrangeGradient, secondColorButtonsOrangeGradient]),
+                                              colors: [
+                                                firstColorButtonsOrangeGradient,
+                                                secondColorButtonsOrangeGradient
+                                              ]),
                                         ),
                                       ),
                                     )
                                   : Container(
-                                      padding: EdgeInsets.only(bottom: heightRatio(size: 15, context: context), top: heightRatio(size: 12, context: context)),
+                                      padding: EdgeInsets.only(
+                                          bottom: heightRatio(
+                                              size: 15, context: context),
+                                          top: heightRatio(
+                                              size: 12, context: context)),
                                       alignment: Alignment.center,
                                       child: SafeArea(
                                         bottom: true,
@@ -692,120 +1072,282 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                                         left: false,
                                         right: false,
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Expanded(
                                               child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: [
                                                   InkWell(
                                                     //Убавить из детального экрана
                                                     onTap: () async {
-                                                      if (state.productDetailsModel.data.assortmentUnitId != 'kilogram') {
-                                                        if (state.productDetailsModel.data.quantityInClientCart > 0) {
+                                                      if (state
+                                                              .productDetailsModel
+                                                              .data
+                                                              .assortmentUnitId !=
+                                                          'kilogram') {
+                                                        if (state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .quantityInClientCart! >
+                                                            0) {
                                                           setState(() {
-                                                            state.productDetailsModel.data.quantityInClientCart--;
+                                                            state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .quantityInClientCart = state
+                                                                    .productDetailsModel
+                                                                    .data
+                                                                    .quantityInClientCart! -
+                                                                1;
                                                           });
-                                                          if (state.productDetailsModel.data.quantityInClientCart <= 0) {
+                                                          if (state
+                                                                  .productDetailsModel
+                                                                  .data
+                                                                  .quantityInClientCart! <=
+                                                              0) {
                                                             setState(() {
-                                                              isInBasket = false;
+                                                              isInBasket =
+                                                                  false;
                                                             });
-                                                            if (await BasketProvider().reomoveProductFromBasket(state.productDetailsModel.data.uuid)) {
-                                                              _basketListBloc.add(BasketLoadEvent());
+                                                            if (await BasketProvider()
+                                                                .reomoveProductFromBasket(state
+                                                                    .productDetailsModel
+                                                                    .data
+                                                                    .uuid)) {
+                                                              _basketListBloc.add(
+                                                                  BasketLoadEvent());
                                                             }
                                                           } else {
-                                                            if (await BasketProvider().updateProductInBasket(
-                                                              productUuid: state.productDetailsModel.data.uuid,
-                                                              quantity: state.productDetailsModel.data.quantityInClientCart,
+                                                            if (await BasketProvider()
+                                                                .updateProductInBasket(
+                                                              productUuid: state
+                                                                  .productDetailsModel
+                                                                  .data
+                                                                  .uuid,
+                                                              quantity: state
+                                                                  .productDetailsModel
+                                                                  .data
+                                                                  .quantityInClientCart,
                                                             )) {
-                                                              _basketListBloc.add(BasketLoadEvent());
+                                                              _basketListBloc.add(
+                                                                  BasketLoadEvent());
                                                             }
                                                           }
                                                         }
                                                       } else {
-                                                        double weight = double.tryParse(state.productDetailsModel.data.weight) ?? 0.0;
-                                                        double weightInKg = weight / 1000;
-                                                        if (state.productDetailsModel.data.quantityInClientCart > 0) {
+                                                        double weight = double
+                                                                .tryParse(state
+                                                                    .productDetailsModel
+                                                                    .data
+                                                                    .weight) ??
+                                                            0.0;
+                                                        double weightInKg =
+                                                            weight / 1000;
+                                                        if (state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .quantityInClientCart! >
+                                                            0) {
                                                           setState(() {
-                                                            state.productDetailsModel.data.quantityInClientCart -= weightInKg; // Уменьшаем на 100 грамм
+                                                            state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .quantityInClientCart = state
+                                                                    .productDetailsModel
+                                                                    .data
+                                                                    .quantityInClientCart! -
+                                                                weightInKg; // Уменьшаем на 100 грамм
                                                           });
-                                                          if (state.productDetailsModel.data.quantityInClientCart <= 0) {
+                                                          if (state
+                                                                  .productDetailsModel
+                                                                  .data
+                                                                  .quantityInClientCart! <=
+                                                              0) {
                                                             setState(() {
-                                                              isInBasket = false;
+                                                              isInBasket =
+                                                                  false;
                                                             });
-                                                            if (await BasketProvider().reomoveProductFromBasket(state.productDetailsModel.data.uuid)) {
-                                                              _basketListBloc.add(BasketLoadEvent());
+                                                            if (await BasketProvider()
+                                                                .reomoveProductFromBasket(state
+                                                                    .productDetailsModel
+                                                                    .data
+                                                                    .uuid)) {
+                                                              _basketListBloc.add(
+                                                                  BasketLoadEvent());
                                                             }
                                                           } else {
-                                                            if (await BasketProvider().updateProductInBasket(
-                                                              productUuid: state.productDetailsModel.data.uuid,
-                                                              quantity: state.productDetailsModel.data.quantityInClientCart,
+                                                            if (await BasketProvider()
+                                                                .updateProductInBasket(
+                                                              productUuid: state
+                                                                  .productDetailsModel
+                                                                  .data
+                                                                  .uuid,
+                                                              quantity: state
+                                                                  .productDetailsModel
+                                                                  .data
+                                                                  .quantityInClientCart,
                                                             )) {
-                                                              _basketListBloc.add(BasketLoadEvent());
+                                                              _basketListBloc.add(
+                                                                  BasketLoadEvent());
                                                             }
-                                                          }
-                                                        }
-                                                      }
-                                                    },
-                                                    child: Container(
-                                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
-                                                        child: Icon(Icons.remove, color: Colors.white)),
-                                                  ),
-                                                  SizedBox(width: widthRatio(size: 10, context: context)),
-                                                  Text(
-                                                    state.productDetailsModel.data.assortmentUnitId == 'kilogram'
-                                                        ? state.productDetailsModel.data.quantityInClientCart > 0.5
-                                                            ? "${state.productDetailsModel.data.quantityInClientCart.toStringAsFixed(1)}${"kgText".tr()}"
-                                                            : "${(state.productDetailsModel.data.quantityInClientCart * 1000).toStringAsFixed(0)}${"grText".tr()}"
-                                                        : "${state.productDetailsModel.data.quantityInClientCart.toInt()}${getAssortmentUnitId(assortmentUnitId: state.productDetailsModel.data.assortmentUnitId)[1]}",
-                                                    style: TextStyle(
-                                                        color: Colors.white, fontWeight: FontWeight.w600, fontSize: heightRatio(size: 18, context: context)),
-                                                  ),
-                                                  SizedBox(width: widthRatio(size: 10, context: context)),
-                                                  InkWell(
-                                                    //добавить из детального экрана
-                                                    onTap: () async {
-                                                      if (state.productDetailsModel.data.assortmentUnitId == 'kilogram') {
-                                                        double weight = double.tryParse(state.productDetailsModel.data.weight) ?? 0.0;
-                                                        double weightInKg = weight / 1000;
-                                                        setState(() {
-                                                          if (state.productDetailsModel.data.quantityInClientCart <
-                                                              state.productDetailsModel.data.productsQuantity) {
-                                                            state.productDetailsModel.data.quantityInClientCart += weightInKg; // Увеличиваем на 100 грамм
-                                                          }
-                                                        });
-                                                        if (state.productDetailsModel.data.quantityInClientCart <=
-                                                            state.productDetailsModel.data.productsQuantity) {
-                                                          if (await BasketProvider().updateProductInBasket(
-                                                            productUuid: state.productDetailsModel.data.uuid,
-                                                            quantity: state.productDetailsModel.data.quantityInClientCart,
-                                                          )) {
-                                                            _basketListBloc.add(BasketLoadEvent());
-                                                          }
-                                                        }
-                                                      } else {
-                                                        setState(() {
-                                                          if (state.productDetailsModel.data.quantityInClientCart !=
-                                                              state.productDetailsModel.data.productsQuantity) {
-                                                            state.productDetailsModel.data.quantityInClientCart++;
-                                                          }
-                                                        });
-                                                        if (state.productDetailsModel.data.quantityInClientCart <=
-                                                            state.productDetailsModel.data.productsQuantity) {
-                                                          if (await BasketProvider().updateProductInBasket(
-                                                            productUuid: state.productDetailsModel.data.uuid,
-                                                            quantity: state.productDetailsModel.data.quantityInClientCart,
-                                                          )) {
-                                                            _basketListBloc.add(BasketLoadEvent());
                                                           }
                                                         }
                                                       }
                                                     },
                                                     child: Container(
                                                         decoration: BoxDecoration(
-                                                            // color: colorBlack03,
-                                                            borderRadius: BorderRadius.circular(50)),
-                                                        child: Icon(Icons.add, color: Colors.white)),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50)),
+                                                        child: Icon(
+                                                            Icons.remove,
+                                                            color:
+                                                                Colors.white)),
+                                                  ),
+                                                  SizedBox(
+                                                      width: widthRatio(
+                                                          size: 10,
+                                                          context: context)),
+                                                  Text(
+                                                    state.productDetailsModel.data
+                                                                .assortmentUnitId ==
+                                                            'kilogram'
+                                                        ? state.productDetailsModel.data
+                                                                    .quantityInClientCart! >
+                                                                0.5
+                                                            ? "${state.productDetailsModel.data.quantityInClientCart!.toStringAsFixed(1)}${"kgText".tr()}"
+                                                            : "${(state.productDetailsModel.data.quantityInClientCart! * 1000).toStringAsFixed(0)}${"grText".tr()}"
+                                                        : "${state.productDetailsModel.data.quantityInClientCart!.toInt()}${getAssortmentUnitId(assortmentUnitId: state.productDetailsModel.data.assortmentUnitId)[1]}",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: heightRatio(
+                                                            size: 18,
+                                                            context: context)),
+                                                  ),
+                                                  SizedBox(
+                                                      width: widthRatio(
+                                                          size: 10,
+                                                          context: context)),
+                                                  InkWell(
+                                                    //добавить из детального экрана
+                                                    onTap: () async {
+                                                      if (state
+                                                              .productDetailsModel
+                                                              .data
+                                                              .assortmentUnitId ==
+                                                          'kilogram') {
+                                                        double weight = double
+                                                                .tryParse(state
+                                                                    .productDetailsModel
+                                                                    .data
+                                                                    .weight) ??
+                                                            0.0;
+                                                        double weightInKg =
+                                                            weight / 1000;
+                                                        setState(() {
+                                                          if (state
+                                                                  .productDetailsModel
+                                                                  .data
+                                                                  .quantityInClientCart! <
+                                                              state
+                                                                  .productDetailsModel
+                                                                  .data
+                                                                  .productsQuantity!) {
+                                                            state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .quantityInClientCart = state
+                                                                    .productDetailsModel
+                                                                    .data
+                                                                    .quantityInClientCart! +
+                                                                weightInKg; // Увеличиваем на 100 грамм
+                                                          }
+                                                        });
+                                                        if (state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .quantityInClientCart! <=
+                                                            state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .productsQuantity!) {
+                                                          if (await BasketProvider()
+                                                              .updateProductInBasket(
+                                                            productUuid: state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .uuid,
+                                                            quantity: state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .quantityInClientCart,
+                                                          )) {
+                                                            _basketListBloc.add(
+                                                                BasketLoadEvent());
+                                                          }
+                                                        }
+                                                      } else {
+                                                        setState(() {
+                                                          if (state
+                                                                  .productDetailsModel
+                                                                  .data
+                                                                  .quantityInClientCart !=
+                                                              state
+                                                                  .productDetailsModel
+                                                                  .data
+                                                                  .productsQuantity) {
+                                                            state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .quantityInClientCart = state
+                                                                    .productDetailsModel
+                                                                    .data
+                                                                    .quantityInClientCart! +
+                                                                1;
+                                                          }
+                                                        });
+                                                        if (state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .quantityInClientCart! <=
+                                                            state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .productsQuantity!) {
+                                                          if (await BasketProvider()
+                                                              .updateProductInBasket(
+                                                            productUuid: state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .uuid,
+                                                            quantity: state
+                                                                .productDetailsModel
+                                                                .data
+                                                                .quantityInClientCart,
+                                                          )) {
+                                                            _basketListBloc.add(
+                                                                BasketLoadEvent());
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                // color: colorBlack03,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            50)),
+                                                        child: Icon(Icons.add,
+                                                            color:
+                                                                Colors.white)),
                                                   ),
                                                 ],
                                               ),
@@ -819,16 +1361,23 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                                               child: Container(
                                                 alignment: Alignment.center,
                                                 child: Text(
-                                                  state.productDetailsModel.data.priceWithDiscount != null
+                                                  state.productDetailsModel.data
+                                                              .priceWithDiscount !=
+                                                          null
                                                       ? "sumText".tr() +
                                                           ": "
-                                                              "${(state.productDetailsModel.data.priceWithDiscount * state.productDetailsModel.data.quantityInClientCart).toStringAsFixed(2)} ${"rubleSignText".tr()}"
+                                                              "${(state.productDetailsModel.data.priceWithDiscount! * state.productDetailsModel.data.quantityInClientCart!).toStringAsFixed(2)} ${"rubleSignText".tr()}"
                                                       : "sumText".tr() +
                                                           ": "
-                                                              "${(double.parse(state.productDetailsModel.data.currentPrice) * state.productDetailsModel.data.quantityInClientCart).toStringAsFixed(2)} ${"rubleSignText".tr()}",
+                                                              "${(double.parse(state.productDetailsModel.data.currentPrice!) * state.productDetailsModel.data.quantityInClientCart!).toStringAsFixed(2)} ${"rubleSignText".tr()}",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                      color: Colors.white, fontWeight: FontWeight.w600, fontSize: heightRatio(size: 18, context: context)),
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: heightRatio(
+                                                          size: 18,
+                                                          context: context)),
                                                 ),
                                               ),
                                             ),
@@ -836,11 +1385,16 @@ class _RedesProductDetailsPageState extends State<RedesProductDetailsPage> {
                                         ),
                                       ),
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(10),
+                                            topLeft: Radius.circular(10)),
                                         gradient: LinearGradient(
                                             begin: Alignment.centerLeft,
                                             end: Alignment.centerRight,
-                                            colors: [firstColorButtonsOrangeGradient, secondColorButtonsOrangeGradient]),
+                                            colors: [
+                                              firstColorButtonsOrangeGradient,
+                                              secondColorButtonsOrangeGradient
+                                            ]),
                                       ),
                                     ),
                             )

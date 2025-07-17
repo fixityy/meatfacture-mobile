@@ -1,10 +1,14 @@
 import 'package:smart/models/assortments_thumbnails_model.dart';
 
 class ImageModel {
-  String uuid;
+  String? uuid;
   String path;
   AssortmentsThumbnailsModel thumbnails;
-  ImageModel({this.uuid, this.path, this.thumbnails});
+  ImageModel({
+    this.uuid,
+    required this.path,
+    required this.thumbnails,
+  });
 
   factory ImageModel.fromJson(Map<String, dynamic> json) => ImageModel(
         uuid: json["uuid"],

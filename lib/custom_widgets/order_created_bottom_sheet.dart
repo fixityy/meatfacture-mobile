@@ -17,7 +17,9 @@ class OrderCreatedBottomSheet extends StatelessWidget {
     SecondaryPageBloc _secondaryPageBloc = BlocProvider.of(context);
     BasketListBloc basketListBloc = BlocProvider.of<BasketListBloc>(context);
     void deleteAllBasket() async {
-      await BasketProvider().removeAllBasket() == true ? basketListBloc.add(BasketLoadEvent()) : Fluttertoast.showToast(msg: "errorText".tr());
+      await BasketProvider().removeAllBasket() == true
+          ? basketListBloc.add(BasketLoadEvent())
+          : Fluttertoast.showToast(msg: "errorText".tr());
     }
 
     return BlocBuilder<OrderCreatedBloc, OrderCreatedState>(
@@ -37,42 +39,67 @@ class OrderCreatedBottomSheet extends StatelessWidget {
                       " ${state.orderCreateResponseModel.data.number == null ? "" : state.orderCreateResponseModel.data.number} " +
                       "HasBeenCompletedText".tr() +
                       "!",
-                  style: appTextStyle(fontWeight: FontWeight.w700, fontSize: heightRatio(size: 22, context: context)),
+                  style: appTextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: heightRatio(size: 22, context: context)),
                 ),
                 SizedBox(height: heightRatio(size: 30, context: context)),
                 Text(
-                  state.orderCreateResponseModel.data.orderPaymentTypeId == "cash" ? "cashPaymentAtTheCheckoutText".tr() : "PaymentByCardAtTheCheckout".tr(),
-                  style: appTextStyle(fontWeight: FontWeight.w700, fontSize: heightRatio(size: 18, context: context)),
+                  state.orderCreateResponseModel.data.orderPaymentTypeId ==
+                          "cash"
+                      ? "cashPaymentAtTheCheckoutText".tr()
+                      : "PaymentByCardAtTheCheckout".tr(),
+                  style: appTextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: heightRatio(size: 18, context: context)),
                 ),
                 SizedBox(height: heightRatio(size: 20, context: context)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      state.orderCreateResponseModel.data.totalQuantity.toInt().toString() +
+                      state.orderCreateResponseModel.data.totalQuantity!
+                              .toInt()
+                              .toString() +
                           " " +
-                          getGoodsText(quanity: state.orderCreateResponseModel.data.totalQuantity.toInt().toString()) +
+                          getGoodsText(
+                              quanity: state
+                                  .orderCreateResponseModel.data.totalQuantity!
+                                  .toInt()
+                                  .toString()) +
                           ":",
-                      style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 16, context: context)),
+                      style: appTextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: heightRatio(size: 16, context: context)),
                     ),
                     Text(
-                      state.orderCreateResponseModel.data.totalPriceForProductsWithDiscount.toString() + " ${"rubleSignText".tr()}",
-                      style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 16, context: context)),
+                      state.orderCreateResponseModel.data
+                              .totalPriceForProductsWithDiscount
+                              .toString() +
+                          " ${"rubleSignText".tr()}",
+                      style: appTextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: heightRatio(size: 16, context: context)),
                     ),
                   ],
                 ),
                 SizedBox(height: heightRatio(size: 10, context: context)),
-                if (state.orderCreateResponseModel.data.orderDeliveryTypeId == "pickup")
+                if (state.orderCreateResponseModel.data.orderDeliveryTypeId ==
+                    "pickup")
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "pickupText".tr(),
-                        style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 16, context: context)),
+                        style: appTextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: heightRatio(size: 16, context: context)),
                       ),
                       Text(
                         "forFreeText".tr(),
-                        style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 16, context: context)),
+                        style: appTextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: heightRatio(size: 16, context: context)),
                       )
                     ],
                   )
@@ -82,26 +109,39 @@ class OrderCreatedBottomSheet extends StatelessWidget {
                     children: [
                       Text(
                         'Доставка',
-                        style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 16, context: context)),
+                        style: appTextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: heightRatio(size: 16, context: context)),
                       ),
                       Text(
                         "${state.orderCreateResponseModel.data.deliveryPrice == 0 ? "forFreeText".tr() : state.orderCreateResponseModel.data.deliveryPrice}",
-                        style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 16, context: context)),
+                        style: appTextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: heightRatio(size: 16, context: context)),
                       )
                     ],
                   ),
                 SizedBox(height: heightRatio(size: 5, context: context)),
-                if (state.orderCreateResponseModel.data.paidBonus != null && state.orderCreateResponseModel.data.paidBonus != 0)
+                if (state.orderCreateResponseModel.data.paidBonus != null &&
+                    state.orderCreateResponseModel.data.paidBonus != 0)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "Списано ${state.orderCreateResponseModel.data.paidBonus} бонусов",
-                        style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 16, context: context)),
+                        style: appTextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: heightRatio(size: 16, context: context)),
                       ),
                       Text(
-                        "-" + state.orderCreateResponseModel.data.paidBonus.toString() + "" + "rubleSignText".tr(),
-                        style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 16, context: context)),
+                        "-" +
+                            state.orderCreateResponseModel.data.paidBonus
+                                .toString() +
+                            "" +
+                            "rubleSignText".tr(),
+                        style: appTextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: heightRatio(size: 16, context: context)),
                       )
                     ],
                   ),
@@ -111,23 +151,37 @@ class OrderCreatedBottomSheet extends StatelessWidget {
                   children: [
                     Text(
                       "totalText".tr() + ":",
-                      style: appTextStyle(fontWeight: FontWeight.w600, fontSize: heightRatio(size: 16, context: context)),
+                      style: appTextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: heightRatio(size: 16, context: context)),
                     ),
                     Text(
-                      state.orderCreateResponseModel.data.totalPrice.toString() + " " + "rubleSignText".tr(),
-                      style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 16, context: context)),
+                      state.orderCreateResponseModel.data.totalPrice
+                              .toString() +
+                          " " +
+                          "rubleSignText".tr(),
+                      style: appTextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: heightRatio(size: 16, context: context)),
                     ),
                   ],
                 ),
                 SizedBox(height: heightRatio(size: 25, context: context)),
                 Text(
-                  state.orderCreateResponseModel.data.orderDeliveryTypeId == "pickup" ? "Самовывоз из магазина" : "Доставка курьером",
-                  style: appTextStyle(fontWeight: FontWeight.w700, fontSize: heightRatio(size: 18, context: context)),
+                  state.orderCreateResponseModel.data.orderDeliveryTypeId ==
+                          "pickup"
+                      ? "Самовывоз из магазина"
+                      : "Доставка курьером",
+                  style: appTextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: heightRatio(size: 18, context: context)),
                 ),
                 SizedBox(height: heightRatio(size: 15, context: context)),
                 Text(
                   state.orderCreateResponseModel.data.storeUserAddress,
-                  style: appTextStyle(fontWeight: FontWeight.w300, fontSize: heightRatio(size: 16, context: context)),
+                  style: appTextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontSize: heightRatio(size: 16, context: context)),
                 ),
                 SizedBox(height: heightRatio(size: 30, context: context)),
                 Row(
@@ -135,11 +189,20 @@ class OrderCreatedBottomSheet extends StatelessWidget {
                   children: [
                     Text(
                       "purchasesText".tr(),
-                      style: appTextStyle(fontWeight: FontWeight.w700, fontSize: heightRatio(size: 18, context: context)),
+                      style: appTextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: heightRatio(size: 18, context: context)),
                     ),
                     Text(
-                      state.orderCreateResponseModel.data.totalQuantity.toInt().toString() + " " + "товаров",
-                      style: appTextStyle(fontWeight: FontWeight.w500, fontSize: heightRatio(size: 14, context: context), color: mainColor),
+                      state.orderCreateResponseModel.data.totalQuantity!
+                              .toInt()
+                              .toString() +
+                          " " +
+                          "товаров",
+                      style: appTextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: heightRatio(size: 14, context: context),
+                          color: mainColor),
                     ),
                   ],
                 ),
@@ -148,7 +211,8 @@ class OrderCreatedBottomSheet extends StatelessWidget {
                   height: heightRatio(size: 100, context: context),
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: state.orderCreateResponseModel.data.products.length,
+                    itemCount:
+                        state.orderCreateResponseModel.data.products.length,
                     itemBuilder: (context, index) {
                       return Container(
                         width: widthRatio(size: 100, context: context),
@@ -157,10 +221,19 @@ class OrderCreatedBottomSheet extends StatelessWidget {
                           color: Colors.black54,
                           clipBehavior: Clip.hardEdge,
                           elevation: 1,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context))),
-                          child: state.orderCreateResponseModel.data.products[index].assortment.images.isNotEmpty
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  heightRatio(size: 10, context: context))),
+                          child: state.orderCreateResponseModel.data
+                                  .products[index].assortment.images.isNotEmpty
                               ? Image.network(
-                                  state.orderCreateResponseModel.data.products[index].assortment.images[0].path,
+                                  state
+                                      .orderCreateResponseModel
+                                      .data
+                                      .products[index]
+                                      .assortment
+                                      .images[0]
+                                      .path,
                                   fit: BoxFit.cover,
                                 )
                               : Image.asset("assets/images/notImage.png"),
@@ -173,14 +246,22 @@ class OrderCreatedBottomSheet extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     _secondaryPageBloc.add(HomeEvent());
-                    Navigator.of(context).pushNamedAndRemoveUntil(' ', (Route<dynamic> route) => false);
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        ' ', (Route<dynamic> route) => false);
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: heightRatio(size: 15, context: context)),
+                    padding: EdgeInsets.symmetric(
+                        vertical: heightRatio(size: 15, context: context)),
                     alignment: Alignment.center,
                     child: Text("thanksText".tr() + "!",
-                        style: appTextStyle(fontWeight: FontWeight.w600, fontSize: heightRatio(size: 18, context: context), color: Colors.white)),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)), color: mainColor),
+                        style: appTextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: heightRatio(size: 18, context: context),
+                            color: Colors.white)),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                            heightRatio(size: 10, context: context)),
+                        color: mainColor),
                   ),
                 ),
               ],
@@ -190,7 +271,9 @@ class OrderCreatedBottomSheet extends StatelessWidget {
         if (state is OrderCreatedLoadingState) {
           return Container(
             height: heightRatio(size: 400, context: context),
-            child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(mainColor))),
+            child: Center(
+                child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(mainColor))),
           );
         }
 
@@ -206,17 +289,27 @@ class OrderCreatedBottomSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    state.errorText == 'Client address too far for delivering' ? "tooFarForOrderCreatingText".tr() : "paymentErrorFromBloc".tr(),
+                    state.errorText == 'Client address too far for delivering'
+                        ? "tooFarForOrderCreatingText".tr()
+                        : "paymentErrorFromBloc".tr(),
                     textAlign: TextAlign.center,
-                    style: appTextStyle(fontSize: heightRatio(size: 20, context: context)),
+                    style: appTextStyle(
+                        fontSize: heightRatio(size: 20, context: context)),
                   ),
                   InkWell(
                     onTap: () => Navigator.pop(context),
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: heightRatio(size: 15, context: context)),
+                      padding: EdgeInsets.symmetric(
+                          vertical: heightRatio(size: 15, context: context)),
                       alignment: Alignment.center,
-                      child: Text("Понятно", style: appHeadersTextStyle(fontSize: heightRatio(size: 18, context: context), color: Colors.white)),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)), color: mainColor),
+                      child: Text("Понятно",
+                          style: appHeadersTextStyle(
+                              fontSize: heightRatio(size: 18, context: context),
+                              color: Colors.white)),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                              heightRatio(size: 10, context: context)),
+                          color: mainColor),
                     ),
                   ),
                 ],
@@ -233,7 +326,7 @@ class OrderCreatedBottomSheet extends StatelessWidget {
     );
   }
 
-  String getGoodsText({String quanity}) {
+  String getGoodsText({required String quanity}) {
     switch (quanity) {
       case "1":
         return "товар";

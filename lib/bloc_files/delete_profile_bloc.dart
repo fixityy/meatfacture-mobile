@@ -34,11 +34,13 @@ class DeleteProfileInitState extends DeleteProfileState {
 }
 
 class DeleteProfileLoadingState extends DeleteProfileState {
-  DeleteProfileLoadingState(DeleteProfileModel deleteProfileModel) : super(deleteProfileModel);
+  DeleteProfileLoadingState(DeleteProfileModel deleteProfileModel)
+      : super(deleteProfileModel);
 }
 
 class DeleteProfileLoadedState extends DeleteProfileState {
-  DeleteProfileLoadedState(DeleteProfileModel deleteProfileModel) : super(deleteProfileModel);
+  DeleteProfileLoadedState(DeleteProfileModel deleteProfileModel)
+      : super(deleteProfileModel);
 }
 
 class DeleteProfileErrorState extends DeleteProfileState {
@@ -50,7 +52,7 @@ class DeleteProfileErrorState extends DeleteProfileState {
 class DeleteProfileBloc extends Bloc<DeleteProfileEvent, DeleteProfileState> {
   DeleteProfileBloc() : super(DeleteProfileInitState());
 
-  DeleteProfileModel _deleteProfileModel;
+  late DeleteProfileModel _deleteProfileModel;
 
   @override
   Stream<DeleteProfileState> mapEventToState(DeleteProfileEvent event) async* {
@@ -60,16 +62,18 @@ class DeleteProfileBloc extends Bloc<DeleteProfileEvent, DeleteProfileState> {
         _deleteProfileModel = await ProfileProvider().deleteProfileResponse();
         yield DeleteProfileLoadedState(_deleteProfileModel);
         Navigator.pop(event.context);
-        _showProfileDeleteDescription(_deleteProfileModel.data.markDeletedAt, event.context);
+        _showProfileDeleteDescription(
+            _deleteProfileModel.data?.markDeletedAt, event.context);
       } catch (e) {
         yield DeleteProfileErrorState();
       }
     }
   }
 
-  _showProfileDeleteDescription(String markDeletedAt, BuildContext cont) async {
+  _showProfileDeleteDescription(
+      String? markDeletedAt, BuildContext cont) async {
     prefs = await SharedPreferences.getInstance();
-    String number = await prefs.getString(SharedKeys.callCenterNumber);
+    String number = await prefs.getString(SharedKeys.callCenterNumber)!;
     Navigator.push(
       cont,
       MaterialPageRoute(

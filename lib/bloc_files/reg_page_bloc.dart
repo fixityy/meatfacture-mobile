@@ -13,13 +13,12 @@ class LoginEvent extends AuthEvent {}
 class GetCodeEvent extends AuthEvent {
   final String phone;
 
-  GetCodeEvent({@required this.phone});
+  GetCodeEvent({required this.phone});
   String get getphone => phone;
 }
 
 class AuthPageBloc extends Bloc<AuthEvent, Widget> {
   AuthPageBloc() : super(LoginWidget());
-  String phoneinbloc;
   @override
   Stream<Widget> mapEventToState(AuthEvent event) async* {
     if (event is LoginEvent) {

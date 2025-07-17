@@ -30,18 +30,26 @@ class _LandingPageState extends State<LandingPage> {
   @override
   void initState() {
     super.initState();
-    AssortmentRecommendationBloc _assortmentRecommendationBloc = BlocProvider.of<AssortmentRecommendationBloc>(context);
-    HistoryOrdertDetailsBloc _historyOrdertDetailsBloc = BlocProvider.of<HistoryOrdertDetailsBloc>(context);
+    AssortmentRecommendationBloc _assortmentRecommendationBloc =
+        BlocProvider.of<AssortmentRecommendationBloc>(context);
+    HistoryOrdertDetailsBloc _historyOrdertDetailsBloc =
+        BlocProvider.of<HistoryOrdertDetailsBloc>(context);
     SecondaryPageBloc _secondaryPageBloc = BlocProvider.of(context);
-    ShoppingHistoryBloc _shoppingHistoryBloc = BlocProvider.of<ShoppingHistoryBloc>(context);
+    ShoppingHistoryBloc _shoppingHistoryBloc =
+        BlocProvider.of<ShoppingHistoryBloc>(context);
     // ProfileBloc _profileBloc = BlocProvider(create: create)
-    HistoryCheckDetailsBloc _historyCheckDetailsBloc = BlocProvider.of<HistoryCheckDetailsBloc>(context);
+    HistoryCheckDetailsBloc _historyCheckDetailsBloc =
+        BlocProvider.of<HistoryCheckDetailsBloc>(context);
 
     //событие при нажатии на пуш
 
-    void notificationOnTapEvent({RemoteMessage event, Map<String, dynamic> mapDataFromLocalNotif}) {
+    void notificationOnTapEvent({
+      RemoteMessage? event,
+      Map<String, dynamic>? mapDataFromLocalNotif,
+    }) {
       if (event != null || mapDataFromLocalNotif != null) {
-        Map<String, dynamic> _data = event != null ? event.data : mapDataFromLocalNotif;
+        Map<String, dynamic> _data =
+            event != null ? event.data : mapDataFromLocalNotif!;
 
         log('при нажатии на пуш 🟧 : $_data');
         print("Push opened 🌘: ${_data["url"]}");
@@ -66,7 +74,8 @@ class _LandingPageState extends State<LandingPage> {
 
           case "profile":
             {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()));
             }
             break;
           case "orders":
@@ -74,9 +83,15 @@ class _LandingPageState extends State<LandingPage> {
               _secondaryPageBloc.add(ProfilePageEvent());
               _shoppingHistoryBloc.add(ShoppingHistoryOrdersListEvent());
               if (_data["id"] != null && _data["id"] != "") {
-                _secondaryPageBloc.add(HistoryOrderDetailsPageLoadEvent(orderNumber: ""));
-                _historyOrdertDetailsBloc.add(HistoryOrderDetailsLoadEvent(orderId: _data["id"]));
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryOrderDetailsPage(orderDate: "")));
+                _secondaryPageBloc
+                    .add(HistoryOrderDetailsPageLoadEvent(orderNumber: ""));
+                _historyOrdertDetailsBloc
+                    .add(HistoryOrderDetailsLoadEvent(orderId: _data["id"]));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            HistoryOrderDetailsPage(orderDate: "")));
               }
             }
             break;
@@ -85,8 +100,13 @@ class _LandingPageState extends State<LandingPage> {
               _secondaryPageBloc.add(ProfilePageEvent());
               _shoppingHistoryBloc.add(ShoppingHistoryCheckListEvent());
               if (_data["id"] != null && _data["id"] != "") {
-                _historyCheckDetailsBloc.add(HistoryCheckDetailsLoadEvent(receiptUuid: _data["id"]));
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryCheckDetailsPage(checkDate: "checkText".tr())));
+                _historyCheckDetailsBloc.add(
+                    HistoryCheckDetailsLoadEvent(receiptUuid: _data["id"]));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HistoryCheckDetailsPage(
+                            checkDate: "checkText".tr())));
               }
             }
             break;
@@ -104,7 +124,9 @@ class _LandingPageState extends State<LandingPage> {
               } else {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SubcatalogScreen(isSearchPage: false, preCataloName: "Все товары")),
+                  MaterialPageRoute(
+                      builder: (context) => SubcatalogScreen(
+                          isSearchPage: false, preCataloName: "Все товары")),
                 );
               }
             }
@@ -124,7 +146,8 @@ class _LandingPageState extends State<LandingPage> {
                 );
               } else {
                 _secondaryPageBloc.add(CatalogEvent());
-                _assortmentRecommendationBloc.add(AssortmentRecommendationsLoadEvent());
+                _assortmentRecommendationBloc
+                    .add(AssortmentRecommendationsLoadEvent());
               }
             }
             break;
@@ -140,7 +163,7 @@ class _LandingPageState extends State<LandingPage> {
     FirebaseMessaging.onMessage.listen((message) {
       log('🟧 Новое пуш-уведомление: ${message.data}');
       if (message.notification != null) {
-        log('🟧 Уведомление: ${message.notification.title}');
+        log('🟧 Уведомление: ${message.notification?.title ?? ''}');
       }
       LocalNotificationService.display(message);
     });

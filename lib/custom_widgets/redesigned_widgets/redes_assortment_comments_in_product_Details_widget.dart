@@ -24,22 +24,29 @@ class RedesAssortmentCommentsInProductDetailsWidget extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Отзывы: 0", style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context))),
+              Text("Отзывы: 0",
+                  style: appHeadersTextStyle(
+                      fontSize: heightRatio(size: 16, context: context))),
               SizedBox(height: heightRatio(size: 15, context: context)),
               Container(
-                padding: EdgeInsets.only(bottom: heightRatio(size: 50, context: context)),
+                padding: EdgeInsets.only(
+                    bottom: heightRatio(size: 50, context: context)),
                 height: heightRatio(size: 100, context: context),
                 alignment: Alignment.center,
                 child: Text(
                   "NoReviews".tr(),
-                  style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), color: newGrey),
+                  style: appLabelTextStyle(
+                      fontSize: heightRatio(size: 12, context: context),
+                      color: newGrey),
                 ),
               ),
             ],
           );
         }
-        if ((state is AssortmentCommentsLoadingState || state is AssortmentCommentsInitState) &&
-            (state.assortmentCommentsModel == null || state.assortmentCommentsModel.data.isEmpty)) {
+        if ((state is AssortmentCommentsLoadingState ||
+                state is AssortmentCommentsInitState) &&
+            (state.assortmentCommentsModel == null ||
+                state.assortmentCommentsModel.data.isEmpty)) {
           return Container(
             height: heightRatio(size: 50, context: context),
             alignment: Alignment.center,
@@ -51,10 +58,13 @@ class RedesAssortmentCommentsInProductDetailsWidget extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Отзывы: ${state.assortmentCommentsModel.data.length}", style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context))),
+            Text("Отзывы: ${state.assortmentCommentsModel.data.length}",
+                style: appHeadersTextStyle(
+                    fontSize: heightRatio(size: 16, context: context))),
             SizedBox(height: heightRatio(size: 8, context: context)),
             ListView.builder(
-                padding: EdgeInsets.only(top: heightRatio(size: 10, context: context)),
+                padding: EdgeInsets.only(
+                    top: heightRatio(size: 10, context: context)),
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: state.assortmentCommentsModel.data.length,
@@ -70,18 +80,35 @@ class RedesAssortmentCommentsInProductDetailsWidget extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (state.assortmentCommentsModel.data[index].clientName != null)
+                              if (state.assortmentCommentsModel.data[index]
+                                      .clientName !=
+                                  null)
                                 Text(
-                                  state.assortmentCommentsModel.data[index].clientName,
-                                  style: appTextStyle(fontSize: heightRatio(size: 16, context: context), fontWeight: FontWeight.w600),
+                                  state.assortmentCommentsModel.data[index]
+                                      .clientName,
+                                  style: appTextStyle(
+                                      fontSize: heightRatio(
+                                          size: 16, context: context),
+                                      fontWeight: FontWeight.w600),
                                 ),
-                              if (state.assortmentCommentsModel.data[index].clientName != null) SizedBox(height: heightRatio(size: 10, context: context)),
+                              if (state.assortmentCommentsModel.data[index]
+                                      .clientName !=
+                                  null)
+                                SizedBox(
+                                    height: heightRatio(
+                                        size: 10, context: context)),
                               //Comment
                               Text(
-                                state.assortmentCommentsModel.data[index].comment ?? "",
+                                state.assortmentCommentsModel.data[index]
+                                        .comment ??
+                                    "",
                                 maxLines: 10,
                                 overflow: TextOverflow.ellipsis,
-                                style: appTextStyle(fontSize: heightRatio(size: 14, context: context), fontWeight: FontWeight.w400, color: newGrey),
+                                style: appTextStyle(
+                                    fontSize:
+                                        heightRatio(size: 14, context: context),
+                                    fontWeight: FontWeight.w400,
+                                    color: newGrey),
                               ),
                             ],
                           ),
@@ -89,31 +116,55 @@ class RedesAssortmentCommentsInProductDetailsWidget extends StatelessWidget {
                           Row(
                             children: [
                               SvgPicture.asset(
-                                state.assortmentCommentsModel.data[index].value > 0 ? 'assets/images/activeStar.svg' : 'assets/images/star.svg',
+                                state.assortmentCommentsModel.data[index]
+                                            .value >
+                                        0
+                                    ? 'assets/images/activeStar.svg'
+                                    : 'assets/images/star.svg',
                                 width: widthRatio(size: 18, context: context),
                                 height: heightRatio(size: 18, context: context),
                               ),
-                              SizedBox(width: widthRatio(size: 5, context: context)),
+                              SizedBox(
+                                  width: widthRatio(size: 5, context: context)),
                               SvgPicture.asset(
-                                state.assortmentCommentsModel.data[index].value > 1 ? 'assets/images/activeStar.svg' : 'assets/images/star.svg',
+                                state.assortmentCommentsModel.data[index]
+                                            .value >
+                                        1
+                                    ? 'assets/images/activeStar.svg'
+                                    : 'assets/images/star.svg',
                                 width: widthRatio(size: 18, context: context),
                                 height: heightRatio(size: 18, context: context),
                               ),
-                              SizedBox(width: widthRatio(size: 5, context: context)),
+                              SizedBox(
+                                  width: widthRatio(size: 5, context: context)),
                               SvgPicture.asset(
-                                state.assortmentCommentsModel.data[index].value > 2 ? 'assets/images/activeStar.svg' : 'assets/images/star.svg',
+                                state.assortmentCommentsModel.data[index]
+                                            .value >
+                                        2
+                                    ? 'assets/images/activeStar.svg'
+                                    : 'assets/images/star.svg',
                                 width: widthRatio(size: 18, context: context),
                                 height: heightRatio(size: 18, context: context),
                               ),
-                              SizedBox(width: widthRatio(size: 5, context: context)),
+                              SizedBox(
+                                  width: widthRatio(size: 5, context: context)),
                               SvgPicture.asset(
-                                state.assortmentCommentsModel.data[index].value > 3 ? 'assets/images/activeStar.svg' : 'assets/images/star.svg',
+                                state.assortmentCommentsModel.data[index]
+                                            .value >
+                                        3
+                                    ? 'assets/images/activeStar.svg'
+                                    : 'assets/images/star.svg',
                                 width: widthRatio(size: 18, context: context),
                                 height: heightRatio(size: 18, context: context),
                               ),
-                              SizedBox(width: widthRatio(size: 5, context: context)),
+                              SizedBox(
+                                  width: widthRatio(size: 5, context: context)),
                               SvgPicture.asset(
-                                state.assortmentCommentsModel.data[index].value > 4 ? 'assets/images/activeStar.svg' : 'assets/images/star.svg',
+                                state.assortmentCommentsModel.data[index]
+                                            .value >
+                                        4
+                                    ? 'assets/images/activeStar.svg'
+                                    : 'assets/images/star.svg',
                                 width: widthRatio(size: 18, context: context),
                                 height: heightRatio(size: 18, context: context),
                               ),
@@ -127,7 +178,8 @@ class RedesAssortmentCommentsInProductDetailsWidget extends StatelessWidget {
                     ],
                   );
                 }),
-            if (state is AssortmentCommentsLoadingState && state.assortmentCommentsModel.data.isNotEmpty)
+            if (state is AssortmentCommentsLoadingState &&
+                state.assortmentCommentsModel.data.isNotEmpty)
               Container(
                 alignment: Alignment.center,
                 child: CircularProgressIndicator(
@@ -139,13 +191,13 @@ class RedesAssortmentCommentsInProductDetailsWidget extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    BlocProvider.of<ShoppingHistoryBloc>(context).add(ShoppingHistoryCheckListEvent());
+                    BlocProvider.of<ShoppingHistoryBloc>(context)
+                        .add(ShoppingHistoryCheckListEvent());
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
                         return ShoppingHistoryPage(
                           hasBack: true,
                           historyNavKey: null,
-                          outContext: context,
                         );
                       },
                     ));
@@ -161,7 +213,9 @@ class RedesAssortmentCommentsInProductDetailsWidget extends StatelessWidget {
                         color: Colors.transparent,
                         child: Text(
                           "Оценить в своих покупках",
-                          style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: mainColor),
+                          style: appTextStyle(
+                              fontSize: heightRatio(size: 14, context: context),
+                              color: mainColor),
                         ),
                       ),
                     ],
@@ -170,13 +224,16 @@ class RedesAssortmentCommentsInProductDetailsWidget extends StatelessWidget {
                 if (state.assortmentCommentsModel.data.length > 5)
                   InkWell(
                     onTap: () {
-                      _assortmentCommentsBloc.add(AssortmentCommentsShowMoreEvent());
+                      _assortmentCommentsBloc
+                          .add(AssortmentCommentsShowMoreEvent());
                     },
                     child: Container(
                       color: Colors.transparent,
                       child: Text(
                         'Показать еще',
-                        style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: mainColor),
+                        style: appTextStyle(
+                            fontSize: heightRatio(size: 14, context: context),
+                            color: mainColor),
                       ),
                     ),
                   )

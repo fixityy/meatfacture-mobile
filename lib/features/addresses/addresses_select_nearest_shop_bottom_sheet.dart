@@ -10,17 +10,18 @@ import 'package:smart/core/constants/source.dart';
 import 'package:smart/core/constants/text_styles.dart';
 
 class AddressesSelectNearestShopBottomSheet extends StatelessWidget {
-  const AddressesSelectNearestShopBottomSheet({Key key}) : super(key: key);
+  const AddressesSelectNearestShopBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
     ProfileBloc _profileBloc = BlocProvider.of<ProfileBloc>(context);
     AddressesShopBloc _shopsBloc = BlocProvider.of<AddressesShopBloc>(context);
-    SecondaryPageBloc _bottomNavBloc = BlocProvider.of<SecondaryPageBloc>(context);
+    SecondaryPageBloc _bottomNavBloc =
+        BlocProvider.of<SecondaryPageBloc>(context);
 
     return BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
       if (state is ProfileLoadedState) {
-        if (state.profileModel.data.selectedStoreUserUuid != null) {
+        if (state.profileModel.data!.selectedStoreUserUuid != null) {
           SchedulerBinding.instance.addPostFrameCallback((_) {
             Navigator.pop(context);
             Navigator.pop(context);
@@ -66,7 +67,8 @@ class AddressesSelectNearestShopBottomSheet extends StatelessWidget {
                   ),
                   child: Text(
                     "Выберите ближайший магазин для продолжения покупок",
-                    style: appTextStyle(fontSize: heightRatio(size: 20, context: context)),
+                    style: appTextStyle(
+                        fontSize: heightRatio(size: 20, context: context)),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -74,16 +76,25 @@ class AddressesSelectNearestShopBottomSheet extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     _shopsBloc.add(MapAddressesShopEvent());
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeChooseStoreScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomeChooseStoreScreen()));
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: heightRatio(size: 15, context: context)),
+                    padding: EdgeInsets.symmetric(
+                        vertical: heightRatio(size: 15, context: context)),
                     alignment: Alignment.center,
                     child: Text(
                       "Выбрать магазин",
-                      style: appTextStyle(color: Colors.white, fontSize: heightRatio(size: 18, context: context)),
+                      style: appTextStyle(
+                          color: Colors.white,
+                          fontSize: heightRatio(size: 18, context: context)),
                     ),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 15, context: context)), color: newRedDark),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                            heightRatio(size: 15, context: context)),
+                        color: newRedDark),
                   ),
                 ),
               ],

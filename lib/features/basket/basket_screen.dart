@@ -19,7 +19,7 @@ import 'package:smart/models/product_model_for_order_request.dart';
 
 class BasketScreen extends StatefulWidget {
   final GlobalKey<NavigatorState> basketNavKey;
-  const BasketScreen({Key key, @required this.basketNavKey}) : super(key: key);
+  const BasketScreen({super.key, required this.basketNavKey});
 
   @override
   State<BasketScreen> createState() => _BasketScreenState();
@@ -33,10 +33,12 @@ class _BasketScreenState extends State<BasketScreen> {
   Widget build(BuildContext context) {
     BasketListBloc _basketListBloc = BlocProvider.of<BasketListBloc>(context);
     AuthPageBloc authPageBloc = BlocProvider.of(context);
-    ShoppingListsBloc _shoppingListsBloc = BlocProvider.of<ShoppingListsBloc>(context);
+    ShoppingListsBloc _shoppingListsBloc =
+        BlocProvider.of<ShoppingListsBloc>(context);
     BasicPageBloc basicPageBloc = BlocProvider.of(context);
     SmartContactsBloc _smartContactsBloc = BlocProvider.of(context);
-    OrderCalculateBloc _orderCalculateBloc = BlocProvider.of<OrderCalculateBloc>(context);
+    OrderCalculateBloc _orderCalculateBloc =
+        BlocProvider.of<OrderCalculateBloc>(context);
     return Navigator(
       key: widget.basketNavKey,
       onGenerateRoute: (settings) => MaterialPageRoute(
@@ -44,16 +46,20 @@ class _BasketScreenState extends State<BasketScreen> {
           listener: (context, basketListState) {
             print('LOAD IN BASAKETT');
             if (basketListState is BasketOldTokenState) {
-              ProfilePage.logout(basicPageBloc: basicPageBloc, regBloc: authPageBloc);
+              ProfilePage.logout(
+                  basicPageBloc: basicPageBloc, regBloc: authPageBloc);
             }
             if (basketListState is BasketLoadedState) {
-              productModelForOrderRequestList = basketListState.productModelForOrderRequestList;
+              productModelForOrderRequestList =
+                  basketListState.productModelForOrderRequestList;
               _orderCalculateBloc.add(OrderCalculateLoadEvent(
                 orderDeliveryTypeId: "delivery",
                 orderPaymentTypeId: "online",
-                productModelForOrderRequestList: productModelForOrderRequestList,
+                productModelForOrderRequestList:
+                    productModelForOrderRequestList,
               ));
-              print(basketListState.productModelForOrderRequestList.map((e) => e.quantity));
+              print(basketListState.productModelForOrderRequestList
+                  .map((e) => e.quantity));
             }
           },
           builder: (context, basketState) {
@@ -62,58 +68,92 @@ class _BasketScreenState extends State<BasketScreen> {
               bottomNavigationBar: (basketState is BasketLoadedState)
                   ? Container(
                       color: Colors.white,
-                      padding: EdgeInsets.only(bottom: heightRatio(size: 20, context: context)),
+                      padding: EdgeInsets.only(
+                          bottom: heightRatio(size: 20, context: context)),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SizedBox(height: heightRatio(size: 8, context: context)),
+                          SizedBox(
+                              height: heightRatio(size: 8, context: context)),
                           GestureDetector(
                             onTap: () {
-                              if (basketState.orderCalculateResponseModel != null &&
-                                  (basketState.orderCalculateResponseModel.data.toMinPrice == null ||
-                                      basketState.orderCalculateResponseModel.data.toMinPrice == 0)) {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => BasketScreen2()));
+                              if (basketState.orderCalculateResponseModel !=
+                                      null &&
+                                  (basketState.orderCalculateResponseModel!.data
+                                              .toMinPrice ==
+                                          null ||
+                                      basketState.orderCalculateResponseModel!
+                                              .data.toMinPrice ==
+                                          0)) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BasketScreen2()));
                               }
                             },
                             child: Container(
                               alignment: Alignment.center,
                               padding: EdgeInsets.only(
                                   top: heightRatio(size: 15, context: context),
-                                  bottom: heightRatio(size: 18, context: context)),
-                              margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 16, context: context)),
+                                  bottom:
+                                      heightRatio(size: 18, context: context)),
+                              margin: EdgeInsets.symmetric(
+                                  horizontal:
+                                      widthRatio(size: 16, context: context)),
                               width: double.maxFinite,
                               height: heightRatio(size: 54, context: context),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                color: basketState.orderCalculateResponseModel != null
-                                    ? (basketState.orderCalculateResponseModel.data.toMinPrice == null ||
-                                            basketState.orderCalculateResponseModel.data.toMinPrice == 0)
+                                color: basketState
+                                            .orderCalculateResponseModel !=
+                                        null
+                                    ? (basketState.orderCalculateResponseModel!
+                                                    .data.toMinPrice ==
+                                                null ||
+                                            basketState
+                                                    .orderCalculateResponseModel!
+                                                    .data
+                                                    .toMinPrice ==
+                                                0)
                                         ? newRedDark
                                         : newBlackLight
                                     : newGrey,
                               ),
-                              child: basketState.orderCalculateResponseModel != null
-                                  ? (basketState.orderCalculateResponseModel.data.toMinPrice == null ||
-                                          basketState.orderCalculateResponseModel.data.toMinPrice == 0)
+                              child: basketState.orderCalculateResponseModel !=
+                                      null
+                                  ? (basketState.orderCalculateResponseModel!
+                                                  .data.toMinPrice ==
+                                              null ||
+                                          basketState
+                                                  .orderCalculateResponseModel!
+                                                  .data
+                                                  .toMinPrice ==
+                                              0)
                                       ? Text(
                                           'Перейти к оплате',
                                           style: appLabelTextStyle(
-                                              color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                                              color: Colors.white,
+                                              fontSize: heightRatio(
+                                                  size: 16, context: context)),
                                         )
                                       : RichText(
                                           text: TextSpan(
                                             children: <TextSpan>[
                                               TextSpan(
                                                 text:
-                                                    'Минимальная сумма заказа ${basketState.orderCalculateResponseModel.data.minPrice % 1 == 0 ? basketState.orderCalculateResponseModel.data.minPrice.toInt().toString() : basketState.orderCalculateResponseModel.data.minPrice.toStringAsFixed(2)}',
+                                                    'Минимальная сумма заказа ${basketState.orderCalculateResponseModel!.data.minPrice! % 1 == 0 ? basketState.orderCalculateResponseModel!.data.minPrice!.toInt().toString() : basketState.orderCalculateResponseModel!.data.minPrice!.toStringAsFixed(2)}',
                                                 style: appLabelTextStyle(
                                                     color: Colors.white,
-                                                    fontSize: heightRatio(size: 16, context: context)),
+                                                    fontSize: heightRatio(
+                                                        size: 16,
+                                                        context: context)),
                                               ),
                                               TextSpan(
                                                 text: ' ₽',
                                                 style: appTextStyle(
-                                                    fontSize: heightRatio(size: 16, context: context),
+                                                    fontSize: heightRatio(
+                                                        size: 16,
+                                                        context: context),
                                                     color: Colors.white),
                                               ),
                                             ],
@@ -122,7 +162,9 @@ class _BasketScreenState extends State<BasketScreen> {
                                   : Text(
                                       'Нет в наличии',
                                       style: appLabelTextStyle(
-                                          color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                                          color: Colors.white,
+                                          fontSize: heightRatio(
+                                              size: 16, context: context)),
                                     ),
                             ),
                           ),
@@ -140,7 +182,8 @@ class _BasketScreenState extends State<BasketScreen> {
                           shoppingListsBloc: _shoppingListsBloc,
                           smartContactsBloc: _smartContactsBloc,
                           basketState: basketState),
-                      if (basketState is BasketEmptyState) //в корзине нет товаров
+                      if (basketState
+                          is BasketEmptyState) //в корзине нет товаров
                         BasketEmpty(decorationForContent: _decorationForContent)
                       // else if (basketState is BasketLoadingState)
                       //   Expanded(
@@ -151,7 +194,9 @@ class _BasketScreenState extends State<BasketScreen> {
                       //     ),
                       //   )
                       else if (basketState is BasketErrorState)
-                        BasketError(basketListBloc: _basketListBloc, decorationForContent: _decorationForContent)
+                        BasketError(
+                            basketListBloc: _basketListBloc,
+                            decorationForContent: _decorationForContent)
                       else
                         Expanded(
                           child: Container(
@@ -159,15 +204,19 @@ class _BasketScreenState extends State<BasketScreen> {
                             decoration: BoxDecoration(
                               color: whiteColor,
                               borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                                topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                                topLeft: Radius.circular(
+                                    heightRatio(size: 15, context: context)),
+                                topRight: Radius.circular(
+                                    heightRatio(size: 15, context: context)),
                               ),
                             ),
                             alignment: Alignment.topLeft,
                             child: SingleChildScrollView(
                               controller: _scrollController,
                               child: Container(
-                                padding: EdgeInsets.symmetric(vertical: heightRatio(size: 20, context: context)),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: heightRatio(
+                                        size: 20, context: context)),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,9 +224,13 @@ class _BasketScreenState extends State<BasketScreen> {
                                     BasketList(),
                                     SizedBox(height: 16),
                                     // Введите промокод:
-                                    BlocBuilder<OrderCalculateBloc, OrderCalculateState>(
+                                    BlocBuilder<OrderCalculateBloc,
+                                        OrderCalculateState>(
                                       builder: (context, orderCalculateState) {
-                                        return Column(crossAxisAlignment: CrossAxisAlignment.start, children: []);
+                                        return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: []);
                                       },
                                     ),
                                     SizedBox(height: 50),

@@ -1,9 +1,10 @@
 class SmartContactsModel {
-  SmartContactsModel({this.data});
+  SmartContactsModel({required this.data});
 
   SmartContactsDataModel data;
 
-  factory SmartContactsModel.fromJson(Map<String, dynamic> json) => SmartContactsModel(
+  factory SmartContactsModel.fromJson(Map<String, dynamic> json) =>
+      SmartContactsModel(
         data: SmartContactsDataModel.fromJson(json["data"]),
       );
 
@@ -16,38 +17,39 @@ class SmartContactsDataModel {
   SmartContactsDataModel({
     this.id,
     this.email,
-    this.callCenterNumber,
+    required this.callCenterNumber,
     this.socialNetworkInstagram,
     this.socialNetworkVk,
     this.socialNetworkFacebook,
     this.socialMessengerTelegram,
-    this.deliveyInformation,
+    required this.deliveyInformation,
     this.androidVersion,
     this.iosVersion,
   });
 
-  int id;
-  String email;
+  int? id;
+  String? email;
   String callCenterNumber;
-  String socialNetworkInstagram;
-  String socialNetworkVk;
+  String? socialNetworkInstagram;
+  String? socialNetworkVk;
   String deliveyInformation;
-  String socialNetworkFacebook;
-  String socialMessengerTelegram;
-  String iosVersion;
-  String androidVersion;
+  String? socialNetworkFacebook;
+  String? socialMessengerTelegram;
+  String? iosVersion;
+  String? androidVersion;
 
-  factory SmartContactsDataModel.fromJson(Map<String, dynamic> json) => SmartContactsDataModel(
-      id: json["id"],
-      deliveyInformation: json["delivey_information"],
-      email: json["email"],
-      callCenterNumber: json["call_center_number"],
-      socialNetworkInstagram: json["social_network_instagram"],
-      socialNetworkVk: json["social_network_vk"],
-      socialNetworkFacebook: json["social_network_facebook"],
-      socialMessengerTelegram: json["social_messenger_telegram"],
-      androidVersion: json["android_version"],
-      iosVersion: json["ios_version"]);
+  factory SmartContactsDataModel.fromJson(Map<String, dynamic> json) =>
+      SmartContactsDataModel(
+          id: json["id"],
+          deliveyInformation: json["delivey_information"],
+          email: json["email"],
+          callCenterNumber: json["call_center_number"],
+          socialNetworkInstagram: json["social_network_instagram"],
+          socialNetworkVk: json["social_network_vk"],
+          socialNetworkFacebook: json["social_network_facebook"],
+          socialMessengerTelegram: json["social_messenger_telegram"],
+          androidVersion: json["android_version"],
+          iosVersion: json["ios_version"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,

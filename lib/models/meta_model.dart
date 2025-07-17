@@ -1,11 +1,11 @@
 class MetaModel {
   MetaModel({
-    this.currentPage,
-    this.from,
-    this.lastPage,
-    this.perPage,
-    this.to,
-    this.total,
+    required this.currentPage,
+    required this.from,
+    required this.lastPage,
+    required this.perPage,
+    required this.to,
+    required this.total,
   });
 
   int currentPage;

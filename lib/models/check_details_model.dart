@@ -2,7 +2,7 @@ import 'package:smart/models/loyalty_card_type.dart';
 
 class CheckDetailsModel {
   CheckDetailsModel({
-    this.checkDetailsDataModel,
+    required this.checkDetailsDataModel,
   });
 
   CheckDetailsDataModel checkDetailsDataModel;
@@ -19,16 +19,16 @@ class CheckDetailsModel {
 
 class CheckDetailsDataModel {
   CheckDetailsDataModel({
-    this.uuid,
-    this.id,
-    this.total,
-    this.createdAt,
-    this.storeBrandName,
-    this.storeAddress,
-    this.loyaltyCardTypes,
-    this.totalBonus,
-    this.paidBonus,
-    this.bonusToCharge,
+    required this.uuid,
+    required this.id,
+    required this.total,
+    required this.createdAt,
+    required this.storeBrandName,
+    required this.storeAddress,
+    required this.loyaltyCardTypes,
+    required this.totalBonus,
+    required this.paidBonus,
+    required this.bonusToCharge,
   });
 
   String uuid;

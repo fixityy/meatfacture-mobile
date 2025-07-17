@@ -17,7 +17,13 @@ class HomeChooseStoreFilter extends StatefulWidget {
   bool isfavorite;
   bool isOpenNow;
 
-  HomeChooseStoreFilter({@required this.hasParking, @required this.hasAtms, @required this.hasReadyMeals, @required this.isOpenNow, @required this.isfavorite});
+  HomeChooseStoreFilter({
+    required this.hasParking,
+    required this.hasAtms,
+    required this.hasReadyMeals,
+    required this.isOpenNow,
+    required this.isfavorite,
+  });
 
   @override
   _HomeChooseStoreFilterState createState() => _HomeChooseStoreFilterState();
@@ -27,7 +33,8 @@ class _HomeChooseStoreFilterState extends State<HomeChooseStoreFilter> {
   @override
   Widget build(BuildContext context) {
     @override
-    ShopsListFiltersBloc _shopsListFiltersBloc = BlocProvider.of<ShopsListFiltersBloc>(context);
+    ShopsListFiltersBloc _shopsListFiltersBloc =
+        BlocProvider.of<ShopsListFiltersBloc>(context);
     AddressesShopBloc _shopsBloc = BlocProvider.of<AddressesShopBloc>(context);
 
     return ClipRRect(
@@ -36,7 +43,8 @@ class _HomeChooseStoreFilterState extends State<HomeChooseStoreFilter> {
         topRight: Radius.circular(heightRatio(size: 15, context: context)),
       ),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 15, context: context)),
+        padding: EdgeInsets.symmetric(
+            horizontal: widthRatio(size: 15, context: context)),
         decoration: BoxDecoration(color: Colors.white),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,13 +52,17 @@ class _HomeChooseStoreFilterState extends State<HomeChooseStoreFilter> {
             SizedBox(height: heightRatio(size: 25, context: context)),
             Text(
               'Укажите нужные фильтры',
-              style: appHeadersTextStyle(fontSize: heightRatio(size: 18, context: context)),
+              style: appHeadersTextStyle(
+                  fontSize: heightRatio(size: 18, context: context)),
             ),
             SizedBox(height: heightRatio(size: 25, context: context)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("openNowText".tr(), style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack)),
+                Text("openNowText".tr(),
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 16, context: context),
+                        color: newBlack)),
                 CupertinoSwitch(
                   value: widget.isOpenNow,
                   onChanged: (val) {
@@ -63,7 +75,10 @@ class _HomeChooseStoreFilterState extends State<HomeChooseStoreFilter> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("atmText".tr(), style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack)),
+                Text("atmText".tr(),
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 16, context: context),
+                        color: newBlack)),
                 CupertinoSwitch(
                   value: widget.hasAtms,
                   onChanged: (val) {
@@ -76,7 +91,10 @@ class _HomeChooseStoreFilterState extends State<HomeChooseStoreFilter> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("readyMealText".tr(), style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack)),
+                Text("readyMealText".tr(),
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 16, context: context),
+                        color: newBlack)),
                 CupertinoSwitch(
                   value: widget.hasReadyMeals,
                   onChanged: (val) {
@@ -89,7 +107,10 @@ class _HomeChooseStoreFilterState extends State<HomeChooseStoreFilter> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("parkingText".tr(), style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack)),
+                Text("parkingText".tr(),
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 16, context: context),
+                        color: newBlack)),
                 CupertinoSwitch(
                   value: widget.hasParking,
                   onChanged: (val) {
@@ -102,7 +123,10 @@ class _HomeChooseStoreFilterState extends State<HomeChooseStoreFilter> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("nlySelectText".tr(), style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack)),
+                Text("nlySelectText".tr(),
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 16, context: context),
+                        color: newBlack)),
                 CupertinoSwitch(
                     value: widget.isfavorite,
                     onChanged: (val) {
@@ -115,7 +139,8 @@ class _HomeChooseStoreFilterState extends State<HomeChooseStoreFilter> {
             SizedBox(height: heightRatio(size: 30, context: context)),
             InkWell(
               onTap: () {
-                if (_shopsBloc.state is LoadedAddressesShopState || _shopsBloc.state is LoadingAddressesShopState) {
+                if (_shopsBloc.state is LoadedAddressesShopState ||
+                    _shopsBloc.state is LoadingAddressesShopState) {
                   _shopsBloc.add(ListAddressesShopEvent(
                     hasAtms: widget.hasAtms,
                     hasParking: widget.hasParking,
@@ -132,17 +157,27 @@ class _HomeChooseStoreFilterState extends State<HomeChooseStoreFilter> {
                     isFavorite: widget.isfavorite,
                   ));
                 }
-                _shopsListFiltersBloc.add(ShopsListFiltersLoadEvent(hasAtms: widget.hasAtms, hasParking: widget.hasParking, hasReadyMeals: widget.hasReadyMeals, isOpenNow: widget.isOpenNow, isfavorite: widget.isfavorite));
+                _shopsListFiltersBloc.add(ShopsListFiltersLoadEvent(
+                    hasAtms: widget.hasAtms,
+                    hasParking: widget.hasParking,
+                    hasReadyMeals: widget.hasReadyMeals,
+                    isOpenNow: widget.isOpenNow,
+                    isfavorite: widget.isfavorite));
                 Navigator.pop(context);
               },
               child: Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
+                padding: EdgeInsets.only(
+                    top: heightRatio(size: 15, context: context),
+                    bottom: heightRatio(size: 18, context: context)),
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5), color: newRedDark),
                 child: Text(
                   "applyText".tr(),
-                  style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                  style: appLabelTextStyle(
+                      color: Colors.white,
+                      fontSize: heightRatio(size: 16, context: context)),
                 ),
               ),
             ),

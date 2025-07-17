@@ -5,15 +5,17 @@ class ReceiptsListModel {
   Meta meta;
 
   ReceiptsListModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
-  factory ReceiptsListModel.fromJson(String str) => ReceiptsListModel.fromMap(json.decode(str));
+  factory ReceiptsListModel.fromJson(String str) =>
+      ReceiptsListModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory ReceiptsListModel.fromMap(Map<String, dynamic> json) => ReceiptsListModel(
+  factory ReceiptsListModel.fromMap(Map<String, dynamic> json) =>
+      ReceiptsListModel(
         data: List<Datum>.from(json["data"].map((x) => Datum.fromMap(x))),
         meta: Meta.fromMap(json["meta"]),
       );
@@ -33,28 +35,28 @@ class Datum {
   List<Ingredient> ingredients;
   int duration;
   bool isFavorite;
-  bool clientLikeValue;
-  String filePath;
+  bool? clientLikeValue;
+  String? filePath;
   List<Assortment> assortments;
   List<Tab> tabs;
   String createdAt;
   String updatedAt;
 
   Datum({
-    this.uuid,
-    this.name,
-    this.section,
-    this.title,
-    this.description,
-    this.ingredients,
-    this.duration,
-    this.isFavorite,
-    this.clientLikeValue,
+    required this.uuid,
+    required this.name,
+    required this.section,
+    required this.title,
+    required this.description,
+    required this.ingredients,
+    required this.duration,
+    required this.isFavorite,
+    required this.clientLikeValue,
     this.filePath,
-    this.assortments,
-    this.tabs,
-    this.createdAt,
-    this.updatedAt,
+    required this.assortments,
+    required this.tabs,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory Datum.fromJson(String str) => Datum.fromMap(json.decode(str));
@@ -67,12 +69,14 @@ class Datum {
         section: json["section"],
         title: json["title"],
         description: json["description"],
-        ingredients: List<Ingredient>.from(json["ingredients"].map((x) => Ingredient.fromMap(x))),
+        ingredients: List<Ingredient>.from(
+            json["ingredients"].map((x) => Ingredient.fromMap(x))),
         duration: json["duration"],
         isFavorite: json["is_favorite"],
         clientLikeValue: json["client_like_value"],
         filePath: json["file_path"],
-        assortments: List<Assortment>.from(json["assortments"].map((x) => Assortment.fromMap(x))),
+        assortments: List<Assortment>.from(
+            json["assortments"].map((x) => Assortment.fromMap(x))),
         tabs: List<Tab>.from(json["tabs"].map((x) => Tab.fromMap(x))),
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
@@ -98,28 +102,29 @@ class Datum {
 
 class Assortment {
   String uuid;
-  String name;
-  String assortmentUnitId;
-  String weight;
-  double rating;
+  String? name;
+  String? assortmentUnitId;
+  String? weight;
+  double? rating;
   List<Image> images;
-  double quantity;
-  num productsQuantity;
-  String currentPrice;
+  double? quantity;
+  num? productsQuantity;
+  String? currentPrice;
 
   Assortment({
-    this.uuid,
-    this.name,
-    this.assortmentUnitId,
-    this.weight,
+    required this.uuid,
+    required this.name,
+    required this.assortmentUnitId,
+    required this.weight,
     this.rating,
-    this.images,
-    this.quantity,
-    this.productsQuantity,
-    this.currentPrice,
+    required this.images,
+    required this.quantity,
+    required this.productsQuantity,
+    required this.currentPrice,
   });
 
-  factory Assortment.fromJson(String str) => Assortment.fromMap(json.decode(str));
+  factory Assortment.fromJson(String str) =>
+      Assortment.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
@@ -128,7 +133,8 @@ class Assortment {
         name: json["name"],
         assortmentUnitId: json["assortment_unit_id"],
         weight: json["weight"],
-        rating: json["rating"] != null ? (json["rating"] as num).toDouble() : null,
+        rating:
+            json["rating"] != null ? (json["rating"] as num).toDouble() : null,
         images: List<Image>.from(json["images"].map((x) => Image.fromMap(x))),
         quantity: (json["quantity"] as num).toDouble(),
         productsQuantity: json["products_quantity"],
@@ -150,7 +156,8 @@ class Assortment {
 
 enum AssortmentUnitId { KILOGRAM }
 
-final assortmentUnitIdValues = EnumValues({"kilogram": AssortmentUnitId.KILOGRAM});
+final assortmentUnitIdValues =
+    EnumValues({"kilogram": AssortmentUnitId.KILOGRAM});
 
 class Image {
   String uuid;
@@ -158,9 +165,9 @@ class Image {
   Thumbnails thumbnails;
 
   Image({
-    this.uuid,
-    this.path,
-    this.thumbnails,
+    required this.uuid,
+    required this.path,
+    required this.thumbnails,
   });
 
   factory Image.fromJson(String str) => Image.fromMap(json.decode(str));
@@ -184,10 +191,11 @@ class Thumbnails {
   String the1000X1000;
 
   Thumbnails({
-    this.the1000X1000,
+    required this.the1000X1000,
   });
 
-  factory Thumbnails.fromJson(String str) => Thumbnails.fromMap(json.decode(str));
+  factory Thumbnails.fromJson(String str) =>
+      Thumbnails.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
@@ -205,11 +213,12 @@ class Ingredient {
   String quantity;
 
   Ingredient({
-    this.name,
-    this.quantity,
+    required this.name,
+    required this.quantity,
   });
 
-  factory Ingredient.fromJson(String str) => Ingredient.fromMap(json.decode(str));
+  factory Ingredient.fromJson(String str) =>
+      Ingredient.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
@@ -238,17 +247,17 @@ class Tab {
   String updatedAt;
 
   Tab({
-    this.uuid,
-    this.title,
-    this.text,
-    this.textColor,
-    this.duration,
-    this.sequence,
-    this.buttonTitle,
-    this.url,
-    this.filePath,
-    this.createdAt,
-    this.updatedAt,
+    required this.uuid,
+    required this.title,
+    required this.text,
+    required this.textColor,
+    required this.duration,
+    required this.sequence,
+    required this.buttonTitle,
+    required this.url,
+    required this.filePath,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory Tab.fromJson(String str) => Tab.fromMap(json.decode(str));
@@ -293,12 +302,12 @@ class Meta {
   int total;
 
   Meta({
-    this.currentPage,
-    this.from,
-    this.lastPage,
-    this.perPage,
-    this.to,
-    this.total,
+    required this.currentPage,
+    required this.from,
+    required this.lastPage,
+    required this.perPage,
+    required this.to,
+    required this.total,
   });
 
   factory Meta.fromJson(String str) => Meta.fromMap(json.decode(str));
@@ -326,7 +335,7 @@ class Meta {
 
 class EnumValues<T> {
   Map<String, T> map;
-  Map<T, String> reverseMap;
+  late Map<T, String> reverseMap;
 
   EnumValues(this.map);
 

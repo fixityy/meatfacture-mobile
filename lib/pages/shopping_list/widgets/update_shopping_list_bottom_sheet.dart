@@ -13,14 +13,20 @@ class UpdateShoppingListBottomSheetWidget extends StatefulWidget {
   final String shoppingListsUuid;
   final String shoppingListName;
 
-  UpdateShoppingListBottomSheetWidget({@required this.shoppingListsUuid, @required this.shoppingListName});
+  UpdateShoppingListBottomSheetWidget({
+    required this.shoppingListsUuid,
+    required this.shoppingListName,
+  });
 
   @override
-  State<UpdateShoppingListBottomSheetWidget> createState() => _UpdateShoppingListBottomSheetWidgetState();
+  State<UpdateShoppingListBottomSheetWidget> createState() =>
+      _UpdateShoppingListBottomSheetWidgetState();
 }
 
-class _UpdateShoppingListBottomSheetWidgetState extends State<UpdateShoppingListBottomSheetWidget> {
-  final TextEditingController renameShoppingListTextController = TextEditingController();
+class _UpdateShoppingListBottomSheetWidgetState
+    extends State<UpdateShoppingListBottomSheetWidget> {
+  final TextEditingController renameShoppingListTextController =
+      TextEditingController();
 
   @override
   void initState() {
@@ -31,7 +37,8 @@ class _UpdateShoppingListBottomSheetWidgetState extends State<UpdateShoppingList
   @override
   Widget build(BuildContext context) {
     // ignore: close_sinks
-    ShoppingListsBloc _shoppingListsBloc = BlocProvider.of<ShoppingListsBloc>(context);
+    ShoppingListsBloc _shoppingListsBloc =
+        BlocProvider.of<ShoppingListsBloc>(context);
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -40,19 +47,28 @@ class _UpdateShoppingListBottomSheetWidgetState extends State<UpdateShoppingList
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: heightRatio(size: 25, context: context)),
-          Text('Обновить список заказа'.tr(), style: appHeadersTextStyle(fontSize: heightRatio(size: 20, context: context), color: newBlack), textAlign: TextAlign.center),
+          Text('Обновить список заказа'.tr(),
+              style: appHeadersTextStyle(
+                  fontSize: heightRatio(size: 20, context: context),
+                  color: newBlack),
+              textAlign: TextAlign.center),
           SizedBox(height: heightRatio(size: 15, context: context)),
           Container(
-            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: grey04, width: 1))),
-            margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 20, context: context)),
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: grey04, width: 1))),
+            margin: EdgeInsets.symmetric(
+                horizontal: widthRatio(size: 20, context: context)),
             child: TextField(
               textCapitalization: TextCapitalization.sentences,
-              style: appTextStyle(fontSize: heightRatio(size: 18, context: context)),
+              style: appTextStyle(
+                  fontSize: heightRatio(size: 18, context: context)),
               controller: renameShoppingListTextController,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: "Любимые продукты",
-                hintStyle: appTextStyle(fontSize: heightRatio(size: 18, context: context), color: colorBlack03),
+                hintStyle: appTextStyle(
+                    fontSize: heightRatio(size: 18, context: context),
+                    color: colorBlack03),
               ),
             ),
           ),
@@ -62,7 +78,11 @@ class _UpdateShoppingListBottomSheetWidgetState extends State<UpdateShoppingList
             onTap: () async {
               Fluttertoast.showToast(msg: "Подождите...");
 
-              if (await CreateNewShoppingListProvider().updateShoppingListResponse(shoppingListsUuid: widget.shoppingListsUuid, shoppingListName: renameShoppingListTextController.text)) {
+              if (await CreateNewShoppingListProvider()
+                  .updateShoppingListResponse(
+                      shoppingListsUuid: widget.shoppingListsUuid,
+                      shoppingListName:
+                          renameShoppingListTextController.text)) {
                 _shoppingListsBloc.add(ShoppingListsLoadEvent());
                 Navigator.pop(context);
               } else {
@@ -71,13 +91,19 @@ class _UpdateShoppingListBottomSheetWidgetState extends State<UpdateShoppingList
             },
             child: Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
-              margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 20, context: context)),
+              padding: EdgeInsets.only(
+                  top: heightRatio(size: 15, context: context),
+                  bottom: heightRatio(size: 18, context: context)),
+              margin: EdgeInsets.symmetric(
+                  horizontal: widthRatio(size: 20, context: context)),
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5), color: newRedDark),
               child: Text(
                 'Обновить список'.tr(),
-                style: appLabelTextStyle(fontSize: heightRatio(size: 18, context: context), color: Colors.white),
+                style: appLabelTextStyle(
+                    fontSize: heightRatio(size: 18, context: context),
+                    color: Colors.white),
               ),
             ),
           ),

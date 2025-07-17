@@ -2,8 +2,8 @@ import 'package:smart/models/meta_model.dart';
 
 class FavoriteProductTitleModel {
   FavoriteProductTitleModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<FavoriteProductTitleDataModel> data;
@@ -24,17 +24,17 @@ class FavoriteProductTitleModel {
 
 class FavoriteProductTitleDataModel {
   FavoriteProductTitleDataModel({
-    this.uuid,
-    this.name,
-    this.title,
-    this.description,
+    required this.uuid,
+    required this.name,
+    required this.title,
+    required this.description,
     this.logoFileUuid,
     this.logoFilePath,
-    this.discountType,
+    required this.discountType,
     this.color,
-    this.isHidden,
-    this.createdAt,
-    this.updatedAt,
+    required this.isHidden,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   String uuid;

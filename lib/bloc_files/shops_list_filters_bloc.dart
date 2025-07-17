@@ -11,12 +11,13 @@ class ShopsListFiltersLoadEvent extends ShopsListFiltersEvent {
   final bool isOpenNow;
   // final String searchText;
 
-  ShopsListFiltersLoadEvent(
-      {this.hasParking,
-      this.hasReadyMeals,
-      this.hasAtms,
-      this.isfavorite,
-      this.isOpenNow});
+  ShopsListFiltersLoadEvent({
+    required this.hasParking,
+    required this.hasReadyMeals,
+    required this.hasAtms,
+    required this.isfavorite,
+    required this.isOpenNow,
+  });
 }
 
 //states
@@ -31,12 +32,13 @@ class ShopsListFiltersActiveState extends ShopsListFiltersEState {
   bool isOpenNow;
   // final String searchText;
 
-  ShopsListFiltersActiveState(
-      {this.hasParking,
-      this.hasReadyMeals,
-      this.hasAtms,
-      this.isfavorite,
-      this.isOpenNow});
+  ShopsListFiltersActiveState({
+    required this.hasParking,
+    required this.hasReadyMeals,
+    required this.hasAtms,
+    required this.isfavorite,
+    required this.isOpenNow,
+  });
 }
 
 class ShopsListFiltersDisableState extends ShopsListFiltersEState {}

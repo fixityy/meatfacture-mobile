@@ -3,8 +3,8 @@ import 'package:smart/models/meta_model.dart';
 
 class LoyaltyCardsListModel {
   LoyaltyCardsListModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<LoyaltyCardsListDataModel> data;

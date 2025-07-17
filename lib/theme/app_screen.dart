@@ -7,7 +7,12 @@ class AppScreen extends StatelessWidget {
   final double titleSize;
   final Widget content;
   final bool titleCenter;
-  const AppScreen({@required this.title, @required this.content, this.titleCenter = false, this.titleSize = 22});
+  const AppScreen({
+    required this.title,
+    required this.content,
+    this.titleCenter = false,
+    this.titleSize = 22,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,9 @@ class AppScreen extends StatelessWidget {
           children: [
             SizedBox(height: heightRatio(size: 15, context: context)),
             Row(
-              mainAxisAlignment: titleCenter ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
+              mainAxisAlignment: titleCenter
+                  ? MainAxisAlignment.spaceBetween
+                  : MainAxisAlignment.start,
               children: [
                 InkWell(
                   onTap: () => Navigator.pop(context),
@@ -36,10 +43,14 @@ class AppScreen extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: titleSize, context: context)),
+                  style: appHeadersTextStyle(
+                      color: Colors.white,
+                      fontSize: heightRatio(size: titleSize, context: context)),
                   textAlign: TextAlign.left,
                 ),
-                titleCenter ? SizedBox(width: widthRatio(size: 60, context: context)) : SizedBox.shrink(),
+                titleCenter
+                    ? SizedBox(width: widthRatio(size: 60, context: context))
+                    : SizedBox.shrink(),
               ],
             ),
             SizedBox(height: heightRatio(size: 20, context: context)),
@@ -49,8 +60,10 @@ class AppScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                    topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                    topLeft: Radius.circular(
+                        heightRatio(size: 15, context: context)),
+                    topRight: Radius.circular(
+                        heightRatio(size: 15, context: context)),
                   ),
                 ),
                 child: content,

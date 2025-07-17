@@ -1,24 +1,24 @@
 //events
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class SelectedPayCardAndAddressForOrderEvent {}
 
-class SelectedPayCardAndAddressForOrderLoadEvent extends SelectedPayCardAndAddressForOrderEvent {
-  final String cardUuid;
-  final String addressForDelivery;
-  final int floor;
-  final int entrance;
-  final int apartmentNumber;
-  final String intercomCode;
-  final String orderType;
-  final int addressindex;
-  final String payType;
-  final String payCardNumber;
+class SelectedPayCardAndAddressForOrderLoadEvent
+    extends SelectedPayCardAndAddressForOrderEvent {
+  final String? cardUuid;
+  final String? addressForDelivery;
+  final int? floor;
+  final int? entrance;
+  final int? apartmentNumber;
+  final String? intercomCode;
+  final String? orderType;
+  final int? addressindex;
+  final String? payType;
+  final String? payCardNumber;
 
   SelectedPayCardAndAddressForOrderLoadEvent({
     this.payType,
-    @required this.payCardNumber,
+    required this.payCardNumber,
     this.addressindex,
     this.cardUuid,
     this.addressForDelivery,
@@ -32,24 +32,26 @@ class SelectedPayCardAndAddressForOrderLoadEvent extends SelectedPayCardAndAddre
 
 abstract class SelectedPayCardAndAddressForOrderState {}
 
-class SelectedPayCardAndAddressForOrderInitState extends SelectedPayCardAndAddressForOrderState {}
+class SelectedPayCardAndAddressForOrderInitState
+    extends SelectedPayCardAndAddressForOrderState {}
 
-class SelectedPayCardAndAddressForOrderLoadedState extends SelectedPayCardAndAddressForOrderState {
-  String cardUuid;
-  final String addressForDelivery;
-  int addressindex;
-  final String payType;
-  final int floor;
-  final int entrance;
-  final int apartmentNumber;
-  final String intercomCode;
-  final String orderType;
-  final String emailAddress;
-  String payCardNumber;
+class SelectedPayCardAndAddressForOrderLoadedState
+    extends SelectedPayCardAndAddressForOrderState {
+  String? cardUuid;
+  final String? addressForDelivery;
+  int? addressindex;
+  final String? payType;
+  final int? floor;
+  final int? entrance;
+  final int? apartmentNumber;
+  final String? intercomCode;
+  final String? orderType;
+  final String? emailAddress;
+  String? payCardNumber;
 
   SelectedPayCardAndAddressForOrderLoadedState({
     this.emailAddress,
-    @required this.payCardNumber,
+    required this.payCardNumber,
     this.payType,
     this.cardUuid,
     this.addressindex,
@@ -63,11 +65,16 @@ class SelectedPayCardAndAddressForOrderLoadedState extends SelectedPayCardAndAdd
 }
 
 //bloc class
-class SelectedPayCardAndAddressForOrderBloc extends Bloc<SelectedPayCardAndAddressForOrderEvent, SelectedPayCardAndAddressForOrderState> {
-  SelectedPayCardAndAddressForOrderBloc() : super(SelectedPayCardAndAddressForOrderLoadedState(payCardNumber: null));
+class SelectedPayCardAndAddressForOrderBloc extends Bloc<
+    SelectedPayCardAndAddressForOrderEvent,
+    SelectedPayCardAndAddressForOrderState> {
+  SelectedPayCardAndAddressForOrderBloc()
+      : super(
+            SelectedPayCardAndAddressForOrderLoadedState(payCardNumber: null));
 
   @override
-  Stream<SelectedPayCardAndAddressForOrderState> mapEventToState(SelectedPayCardAndAddressForOrderEvent event) async* {
+  Stream<SelectedPayCardAndAddressForOrderState> mapEventToState(
+      SelectedPayCardAndAddressForOrderEvent event) async* {
     if (event is SelectedPayCardAndAddressForOrderLoadEvent) {
       yield SelectedPayCardAndAddressForOrderLoadedState(
         addressForDelivery: event.addressForDelivery,

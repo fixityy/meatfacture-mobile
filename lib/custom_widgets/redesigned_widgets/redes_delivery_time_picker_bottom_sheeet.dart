@@ -11,17 +11,25 @@ class DeliveryTimePickerBottomSheet extends StatefulWidget {
   final String titleText;
   final List<String> timeList;
 
-  const DeliveryTimePickerBottomSheet({@required this.titleText, @required this.timeList, function({String deliveryTimeChoose})});
+  const DeliveryTimePickerBottomSheet({
+    required this.titleText,
+    required this.timeList,
+    // function({String deliveryTimeChoose}),
+  });
 
   @override
-  State<DeliveryTimePickerBottomSheet> createState() => _DeliveryTimePickerBottomSheetState();
+  State<DeliveryTimePickerBottomSheet> createState() =>
+      _DeliveryTimePickerBottomSheetState();
 }
 
-class _DeliveryTimePickerBottomSheetState extends State<DeliveryTimePickerBottomSheet> {
+class _DeliveryTimePickerBottomSheetState
+    extends State<DeliveryTimePickerBottomSheet> {
   @override
   Widget build(BuildContext context) {
-    String _selectedTime = widget.timeList.isNotEmpty ? widget.timeList.first : null;
-    return BlocBuilder<OrderCalculateBloc, OrderCalculateState>(builder: (context, state) {
+    String? _selectedTime =
+        widget.timeList.isNotEmpty ? widget.timeList.first : null;
+    return BlocBuilder<OrderCalculateBloc, OrderCalculateState>(
+        builder: (context, state) {
       return CustomLoadableScreen(
         loading: state is OrderCalculateLoadingState,
         child: Container(
@@ -32,7 +40,8 @@ class _DeliveryTimePickerBottomSheetState extends State<DeliveryTimePickerBottom
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-              topRight: Radius.circular(heightRatio(size: 15, context: context)),
+              topRight:
+                  Radius.circular(heightRatio(size: 15, context: context)),
             ),
           ),
           child: state is OrderCalculateLoadedState
@@ -42,7 +51,9 @@ class _DeliveryTimePickerBottomSheetState extends State<DeliveryTimePickerBottom
                     SizedBox(height: heightRatio(size: 10, context: context)),
                     Text(
                       widget.titleText,
-                      style: appHeadersTextStyle(fontSize: heightRatio(size: 20, context: context), color: newBlack),
+                      style: appHeadersTextStyle(
+                          fontSize: heightRatio(size: 20, context: context),
+                          color: newBlack),
                     ),
                     Flexible(
                         child: CupertinoPicker(
@@ -52,7 +63,10 @@ class _DeliveryTimePickerBottomSheetState extends State<DeliveryTimePickerBottom
                             },
                             children: widget.timeList
                                 .map((e) => Center(
-                                      child: Text(e, style: appHeadersTextStyle(fontSize: heightRatio(size: 18, context: context))),
+                                      child: Text(e,
+                                          style: appHeadersTextStyle(
+                                              fontSize: heightRatio(
+                                                  size: 18, context: context))),
                                     ))
                                 .toList())),
                     InkWell(
@@ -61,10 +75,18 @@ class _DeliveryTimePickerBottomSheetState extends State<DeliveryTimePickerBottom
                       },
                       child: Container(
                         alignment: Alignment.center,
-                        padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
+                        padding: EdgeInsets.only(
+                            top: heightRatio(size: 15, context: context),
+                            bottom: heightRatio(size: 18, context: context)),
                         width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
-                        child: Text("toChooseText".tr(), style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context))),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: newRedDark),
+                        child: Text("toChooseText".tr(),
+                            style: appLabelTextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    heightRatio(size: 16, context: context))),
                       ),
                     ),
                     SizedBox(height: heightRatio(size: 15, context: context)),

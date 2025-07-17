@@ -9,9 +9,9 @@ class AppButton extends StatelessWidget {
   final Color colorText;
   final bool hasMargin;
   const AppButton({
-    Key key,
-    @required this.text,
-    @required this.onPress,
+    super.key,
+    required this.text,
+    required this.onPress,
     this.colorText = Colors.white,
     this.colorButton = newRedDark,
     this.hasMargin = true,
@@ -23,13 +23,21 @@ class AppButton extends StatelessWidget {
       onTap: onPress,
       child: Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
-        margin: hasMargin ? EdgeInsets.symmetric(horizontal: widthRatio(size: 20, context: context)) : EdgeInsets.zero,
+        padding: EdgeInsets.only(
+            top: heightRatio(size: 15, context: context),
+            bottom: heightRatio(size: 18, context: context)),
+        margin: hasMargin
+            ? EdgeInsets.symmetric(
+                horizontal: widthRatio(size: 20, context: context))
+            : EdgeInsets.zero,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: colorButton),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5), color: colorButton),
         child: Text(
           text ?? '',
-          style: appLabelTextStyle(color: colorText, fontSize: heightRatio(size: 16, context: context)),
+          style: appLabelTextStyle(
+              color: colorText,
+              fontSize: heightRatio(size: 16, context: context)),
         ),
       ),
     );

@@ -1,20 +1,19 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/assortments_list_model.dart';
 import 'package:smart/repositories/assortments_repository.dart';
 
 abstract class AssortmentsListEvent {
-  final String preCataloUuid;
+  final String? preCataloUuid;
   final uuidForAllProductsInCatalog;
 
-  final List<String> brandName;
-  String searchText;
-  final bool isFavorite;
-  final bool isPromoAssortment;
-  final bool isRecommendations;
-  final List<String> activeTagsList;
+  final List<String>? brandName;
+  String? searchText;
+  final bool? isFavorite;
+  final bool? isPromoAssortment;
+  final bool? isRecommendations;
+  final List<String>? activeTagsList;
   final bool isAllSubcatalogsWithoutFavorite;
-  String subcatalogUuid;
+  String? subcatalogUuid;
 
   AssortmentsListEvent({
     this.preCataloUuid,
@@ -32,16 +31,16 @@ abstract class AssortmentsListEvent {
 
 class AssortmentsListLoadEvent extends AssortmentsListEvent {
   AssortmentsListLoadEvent({
-    String preCataloUuid,
-    String uuidForAllProductsInCatalog,
-    List<String> brandName,
-    bool isFavorite,
-    bool isPromoAssortment,
-    bool isRecommendations,
-    String searchText,
-    List<String> activeTagsList,
-    final bool isAllSubcatalogsWithoutFavorite,
-    String subcatalogUuid,
+    String? preCataloUuid,
+    String? uuidForAllProductsInCatalog,
+    List<String>? brandName,
+    bool? isFavorite,
+    bool? isPromoAssortment,
+    bool? isRecommendations,
+    String? searchText,
+    List<String>? activeTagsList,
+    final bool? isAllSubcatalogsWithoutFavorite,
+    String? subcatalogUuid,
   }) : super(
           preCataloUuid: preCataloUuid,
           uuidForAllProductsInCatalog: uuidForAllProductsInCatalog,
@@ -51,22 +50,23 @@ class AssortmentsListLoadEvent extends AssortmentsListEvent {
           isRecommendations: isRecommendations,
           activeTagsList: activeTagsList,
           searchText: searchText,
-          isAllSubcatalogsWithoutFavorite: isAllSubcatalogsWithoutFavorite,
+          isAllSubcatalogsWithoutFavorite:
+              isAllSubcatalogsWithoutFavorite ?? false,
           subcatalogUuid: subcatalogUuid,
         );
 }
 
 class AssortmentsListNextPageEvent extends AssortmentsListEvent {
   AssortmentsListNextPageEvent({
-    String preCataloUuid,
-    String uuidForAllProductsInCatalog,
-    List<String> brandName,
-    bool isFavorite,
-    bool isPromoAssortment,
-    bool isRecommendations,
-    String searchText,
-    List<String> activeTagsList,
-    String subcatalogUuid,
+    String? preCataloUuid,
+    String? uuidForAllProductsInCatalog,
+    List<String>? brandName,
+    bool? isFavorite,
+    bool? isPromoAssortment,
+    bool? isRecommendations,
+    String? searchText,
+    List<String>? activeTagsList,
+    String? subcatalogUuid,
   }) : super(
           preCataloUuid: preCataloUuid,
           uuidForAllProductsInCatalog: uuidForAllProductsInCatalog,
@@ -84,7 +84,7 @@ class AssortmentsListNextPageEvent extends AssortmentsListEvent {
 
 abstract class AssortmentsListState {
   final List<AssortmentsListModel> assortmentsList;
-  AssortmentsListState({@required this.assortmentsList});
+  AssortmentsListState({required this.assortmentsList});
 }
 
 class AssortmentsListInitState extends AssortmentsListState {
@@ -92,26 +92,33 @@ class AssortmentsListInitState extends AssortmentsListState {
 }
 
 class AssortmentsListLoadingState extends AssortmentsListState {
-  AssortmentsListLoadingState({@required List<AssortmentsListModel> assortmentsList}) : super(assortmentsList: assortmentsList);
+  AssortmentsListLoadingState(
+      {required List<AssortmentsListModel> assortmentsList})
+      : super(assortmentsList: assortmentsList);
 }
 
 class AssortmentsListErrorState extends AssortmentsListState {
-  AssortmentsListErrorState({@required List<AssortmentsListModel> assortmentsList}) : super(assortmentsList: assortmentsList);
+  AssortmentsListErrorState(
+      {required List<AssortmentsListModel> assortmentsList})
+      : super(assortmentsList: assortmentsList);
 }
 
 class AssortmentsListEmptyState extends AssortmentsListState {
-  AssortmentsListEmptyState({@required List<AssortmentsListModel> assortmentsList}) : super(assortmentsList: assortmentsList);
+  AssortmentsListEmptyState(
+      {required List<AssortmentsListModel> assortmentsList})
+      : super(assortmentsList: assortmentsList);
 }
 
 class AssortmentsListLoadedState extends AssortmentsListState {
   AssortmentsListLoadedState({
-    @required List<AssortmentsListModel> assortmentsList,
+    required List<AssortmentsListModel> assortmentsList,
   }) : super(
           assortmentsList: assortmentsList,
         );
 }
 
-class AssortmentsListBloc extends Bloc<AssortmentsListEvent, AssortmentsListState> {
+class AssortmentsListBloc
+    extends Bloc<AssortmentsListEvent, AssortmentsListState> {
   AssortmentsListBloc() : super(AssortmentsListInitState());
   List<AssortmentsListModel> assortmentsList = [];
   int currentPage = 1;
@@ -119,7 +126,8 @@ class AssortmentsListBloc extends Bloc<AssortmentsListEvent, AssortmentsListStat
   bool isAllLoaded = false;
 
   @override
-  Stream<AssortmentsListState> mapEventToState(AssortmentsListEvent event) async* {
+  Stream<AssortmentsListState> mapEventToState(
+      AssortmentsListEvent event) async* {
     if (event is AssortmentsListLoadEvent) {
       print('запрос дважды - ${event.isAllSubcatalogsWithoutFavorite}');
       currentPage = 1;
@@ -137,7 +145,8 @@ class AssortmentsListBloc extends Bloc<AssortmentsListEvent, AssortmentsListStat
           currentPage: currentPage,
           catalogUuid: event.preCataloUuid,
         ).getAssortmentsFromRepositoryForPagination(
-          isAllSubcatalogsWithoutFavorite: event.isAllSubcatalogsWithoutFavorite, //если дочерние есть должно приходить тру
+          isAllSubcatalogsWithoutFavorite: event
+              .isAllSubcatalogsWithoutFavorite, //если дочерние есть должно приходить тру
           subcatalogUuid: event.subcatalogUuid,
         );
         print('listttt length ${assortmentsList.length}');

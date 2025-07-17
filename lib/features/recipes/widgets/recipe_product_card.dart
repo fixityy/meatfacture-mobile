@@ -19,10 +19,14 @@ import '../models/receipts_list_model.dart' as Recipe;
 // ignore: must_be_immutable
 class RecipeProductCard extends StatefulWidget {
   final Recipe.Assortment assortmentsListModel;
-  final bool isFavoriteProdiuctPicking;
+  final bool? isFavoriteProdiuctPicking;
   bool isRecomendations = false;
 
-  RecipeProductCard({@required this.assortmentsListModel, this.isFavoriteProdiuctPicking, @required this.isRecomendations});
+  RecipeProductCard({
+    required this.assortmentsListModel,
+    this.isFavoriteProdiuctPicking,
+    required this.isRecomendations,
+  });
 
   @override
   State<RecipeProductCard> createState() => _ReceiptsAssortmentsCard();
@@ -30,33 +34,38 @@ class RecipeProductCard extends StatefulWidget {
 
 class _ReceiptsAssortmentsCard extends State<RecipeProductCard> {
   double kgToAddToBasket = 0;
-  double quantityInCartToBack;
-  double priceWithDiscountInCartToBack;
-  String currentPriceInCartToBack;
-  String discountTypeColorInCartToBack;
+  // double quantityInCartToBack;
+  // double priceWithDiscountInCartToBack;
+  // String currentPriceInCartToBack;
+  // String discountTypeColorInCartToBack;
 
   @override
   Widget build(BuildContext context) {
     SecondaryPageBloc _secondaryPageBloc = BlocProvider.of(context);
     BasketListBloc _basketListBloc = BlocProvider.of<BasketListBloc>(context);
 
-    return BlocBuilder<BasketListBloc, BasketState>(builder: (context, basketState) {
+    return BlocBuilder<BasketListBloc, BasketState>(
+        builder: (context, basketState) {
       if (basketState is BasketLoadedState) {
-        for (var i = 0; i < basketState.basketListModel.data.length; i++) {
-          if (widget.assortmentsListModel.uuid == basketState.basketListModel.data[i].assortment.uuid) {
-            widget.assortmentsListModel.quantity = basketState.basketListModel.data[i].quantity;
+        for (var i = 0; i < basketState.basketListModel.data!.length; i++) {
+          if (widget.assortmentsListModel.uuid ==
+              basketState.basketListModel.data![i].assortment.uuid) {
+            widget.assortmentsListModel.quantity =
+                basketState.basketListModel.data![i].quantity;
             break;
           } else {
             widget.assortmentsListModel.quantity = 0;
           }
         }
       } else {
-        if (basketState is BasketEmptyState && _secondaryPageBloc.state is SecondaryBasketPageState) {
+        if (basketState is BasketEmptyState &&
+            _secondaryPageBloc.state is SecondaryBasketPageState) {
           widget.assortmentsListModel.quantity = 0;
         }
       }
 
-      double price = double.tryParse(widget.assortmentsListModel.currentPrice) ?? 0.0;
+      double price =
+          double.tryParse(widget.assortmentsListModel.currentPrice!) ?? 0.0;
       String priceText;
       if (price % 1 == 0) {
         priceText = price.toInt().toString();
@@ -88,11 +97,20 @@ class _ReceiptsAssortmentsCard extends State<RecipeProductCard> {
         child: Container(
           padding: EdgeInsets.only(top: 9, left: 9, right: 9, bottom: 9),
           margin: EdgeInsets.only(
-              right: widthRatio(size: 4, context: context), top: heightRatio(size: 2.5, context: context), bottom: heightRatio(size: 2.5, context: context)),
+              right: widthRatio(size: 4, context: context),
+              top: heightRatio(size: 2.5, context: context),
+              bottom: heightRatio(size: 2.5, context: context)),
           decoration: BoxDecoration(
             color: whiteColor,
-            borderRadius: BorderRadius.circular(heightRatio(size: 14, context: context)),
-            boxShadow: [BoxShadow(color: newShadow, offset: Offset(6, 4), blurRadius: 12, spreadRadius: 0)],
+            borderRadius:
+                BorderRadius.circular(heightRatio(size: 14, context: context)),
+            boxShadow: [
+              BoxShadow(
+                  color: newShadow,
+                  offset: Offset(6, 4),
+                  blurRadius: 12,
+                  spreadRadius: 0)
+            ],
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -108,7 +126,9 @@ class _ReceiptsAssortmentsCard extends State<RecipeProductCard> {
                         widget.assortmentsListModel.name ?? '',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), color: newBlack),
+                        style: appLabelTextStyle(
+                            fontSize: heightRatio(size: 12, context: context),
+                            color: newBlack),
                       ),
                     ),
                   ),
@@ -117,27 +137,44 @@ class _ReceiptsAssortmentsCard extends State<RecipeProductCard> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        if (widget.assortmentsListModel.rating != null) // rating
+                        if (widget.assortmentsListModel.rating !=
+                            null) // rating
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               SvgPicture.asset("assets/images/newStar.svg",
-                                  height: heightRatio(size: 12, context: context), width: widthRatio(size: 12, context: context)),
-                              SizedBox(width: widthRatio(size: 3, context: context)),
+                                  height:
+                                      heightRatio(size: 12, context: context),
+                                  width:
+                                      widthRatio(size: 12, context: context)),
+                              SizedBox(
+                                  width: widthRatio(size: 3, context: context)),
                               Text(
-                                widget.assortmentsListModel.rating != null ? widget.assortmentsListModel.rating.toString() : '',
-                                style: appLabelTextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: newGrey),
+                                widget.assortmentsListModel.rating != null
+                                    ? widget.assortmentsListModel.rating
+                                        .toString()
+                                    : '',
+                                style: appLabelTextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w700,
+                                    color: newGrey),
                               ),
                             ],
                           ),
-                        SizedBox(height: heightRatio(size: 3, context: context)),
+                        SizedBox(
+                            height: heightRatio(size: 3, context: context)),
                         Text(
-                          widget.assortmentsListModel.weight == null || widget.assortmentsListModel.weight == "0"
+                          widget.assortmentsListModel.weight == null ||
+                                  widget.assortmentsListModel.weight == "0"
                               ? ""
-                              : double.parse(widget.assortmentsListModel.weight) > 500
-                                  ? "${double.parse(widget.assortmentsListModel.weight) / 1000}${"kgText".tr()}"
+                              : double.parse(
+                                          widget.assortmentsListModel.weight!) >
+                                      500
+                                  ? "${double.parse(widget.assortmentsListModel.weight!) / 1000}${"kgText".tr()}"
                                   : "${widget.assortmentsListModel.weight}${"grText".tr()}",
-                          style: appLabelTextStyle(fontSize: heightRatio(size: 9, context: context), color: colorBlack04),
+                          style: appLabelTextStyle(
+                              fontSize: heightRatio(size: 9, context: context),
+                              color: colorBlack04),
                         ),
                       ],
                     ),
@@ -153,49 +190,77 @@ class _ReceiptsAssortmentsCard extends State<RecipeProductCard> {
                     width: widthRatio(size: 60, context: context),
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(heightRatio(size: 5, context: context)),
-                      color: widget.assortmentsListModel.images.isNotEmpty ? Colors.transparent : newGrey2,
+                      borderRadius: BorderRadius.circular(
+                          heightRatio(size: 5, context: context)),
+                      color: widget.assortmentsListModel.images.isNotEmpty
+                          ? Colors.transparent
+                          : newGrey2,
                     ),
                     child: Stack(
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(heightRatio(size: 5, context: context)),
+                          borderRadius: BorderRadius.circular(
+                              heightRatio(size: 5, context: context)),
                           child: widget.assortmentsListModel.images.isNotEmpty
                               ? CachedNetworkImage(
-                                  imageUrl: widget.assortmentsListModel.images[0].thumbnails.the1000X1000,
+                                  imageUrl: widget.assortmentsListModel
+                                      .images[0].thumbnails.the1000X1000,
                                   cacheManager: CustomCacheManager(),
                                   fit: BoxFit.cover,
-                                  height: heightRatio(size: 60, context: context),
+                                  height:
+                                      heightRatio(size: 60, context: context),
                                   width: widthRatio(size: 60, context: context),
-                                  errorWidget: (context, url, error) => Image.asset("assets/images/notImage.png", fit: BoxFit.contain),
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset("assets/images/notImage.png",
+                                          fit: BoxFit.contain),
                                 )
                               : Image.asset(
                                   "assets/images/notImage.png",
-                                  height: heightRatio(size: 60, context: context),
+                                  height:
+                                      heightRatio(size: 60, context: context),
                                   width: widthRatio(size: 60, context: context),
                                   fit: BoxFit.cover,
                                 ),
                         ),
                         widget.assortmentsListModel.quantity != null &&
-                                widget.assortmentsListModel.quantity > 0 &&
-                                (widget.isFavoriteProdiuctPicking == null || !widget.isFavoriteProdiuctPicking)
+                                widget.assortmentsListModel.quantity! > 0 &&
+                                (widget.isFavoriteProdiuctPicking == null ||
+                                    !widget.isFavoriteProdiuctPicking!)
                             ? Positioned.fill(
                                 child: Container(
                                   alignment: Alignment.center,
-                                  decoration: BoxDecoration(color: colorBlack04, borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context))),
+                                  decoration: BoxDecoration(
+                                      color: colorBlack04,
+                                      borderRadius: BorderRadius.circular(
+                                          heightRatio(
+                                              size: 10, context: context))),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Text('В корзине', style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 10, context: context))),
-                                      SizedBox(height: heightRatio(size: 4, context: context)),
+                                      Text('В корзине',
+                                          style: appLabelTextStyle(
+                                              color: Colors.white,
+                                              fontSize: heightRatio(
+                                                  size: 10, context: context))),
+                                      SizedBox(
+                                          height: heightRatio(
+                                              size: 4, context: context)),
                                       Text(
-                                        widget.assortmentsListModel.assortmentUnitId == "kilogram"
-                                            ? widget.assortmentsListModel.quantity > 0.9
-                                                ? "${widget.assortmentsListModel.quantity.toStringAsFixed(1)}${"kgText".tr()}"
-                                                : "${(widget.assortmentsListModel.quantity * 1000).toStringAsFixed(0)}${"grText".tr()}"
-                                            : "${widget.assortmentsListModel.quantity.toInt().toString()} ${getAssortmentUnitId(assortmentUnitId: widget.assortmentsListModel.assortmentUnitId != null ? widget.assortmentsListModel.assortmentUnitId : '')[1]}",
-                                        style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 10, context: context)),
+                                        widget.assortmentsListModel
+                                                    .assortmentUnitId ==
+                                                "kilogram"
+                                            ? widget.assortmentsListModel
+                                                        .quantity! >
+                                                    0.9
+                                                ? "${widget.assortmentsListModel.quantity!.toStringAsFixed(1)}${"kgText".tr()}"
+                                                : "${(widget.assortmentsListModel.quantity! * 1000).toStringAsFixed(0)}${"grText".tr()}"
+                                            : "${widget.assortmentsListModel.quantity!.toInt().toString()} ${getAssortmentUnitId(assortmentUnitId: widget.assortmentsListModel.assortmentUnitId != null ? widget.assortmentsListModel.assortmentUnitId : '')[1]}",
+                                        style: appHeadersTextStyle(
+                                            color: Colors.white,
+                                            fontSize: heightRatio(
+                                                size: 10, context: context)),
                                       ),
                                     ],
                                   ),
@@ -213,39 +278,77 @@ class _ReceiptsAssortmentsCard extends State<RecipeProductCard> {
                       children: [
                         Container(
                           alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(vertical: 3, horizontal: 8),
-                          decoration: BoxDecoration(color: newRedDark, borderRadius: BorderRadius.circular(heightRatio(size: 3, context: context))),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 3, horizontal: 8),
+                          decoration: BoxDecoration(
+                              color: newRedDark,
+                              borderRadius: BorderRadius.circular(
+                                  heightRatio(size: 3, context: context))),
                           child: RichText(
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  style: appHeadersTextStyle(color: whiteColor, fontSize: heightRatio(size: 10, context: context)),
-                                  text: widget.assortmentsListModel.currentPrice != null ? priceText : '',
+                                  style: appHeadersTextStyle(
+                                      color: whiteColor,
+                                      fontSize: heightRatio(
+                                          size: 10, context: context)),
+                                  text: widget.assortmentsListModel
+                                              .currentPrice !=
+                                          null
+                                      ? priceText
+                                      : '',
                                 ),
                                 TextSpan(
                                   text: " ${"rubleSignText".tr()}",
-                                  style: appTextStyle(color: whiteColor, fontWeight: FontWeight.w700, fontSize: heightRatio(size: 10, context: context)),
+                                  style: appTextStyle(
+                                      color: whiteColor,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: heightRatio(
+                                          size: 10, context: context)),
                                 ),
-                                if (getAssortmentUnitId(assortmentUnitId: widget.assortmentsListModel.assortmentUnitId)[1] != '')
+                                if (getAssortmentUnitId(
+                                        assortmentUnitId: widget
+                                            .assortmentsListModel
+                                            .assortmentUnitId)[1] !=
+                                    '')
                                   TextSpan(
-                                    style: appHeadersTextStyle(color: whiteColor, fontSize: heightRatio(size: 10, context: context)),
-                                    text: "/${getAssortmentUnitId(assortmentUnitId: widget.assortmentsListModel.assortmentUnitId)[1]}",
+                                    style: appHeadersTextStyle(
+                                        color: whiteColor,
+                                        fontSize: heightRatio(
+                                            size: 10, context: context)),
+                                    text:
+                                        "/${getAssortmentUnitId(assortmentUnitId: widget.assortmentsListModel.assortmentUnitId)[1]}",
                                   ),
                               ],
                             ),
                           ),
                         ),
-                        widget.assortmentsListModel.quantity == null || widget.assortmentsListModel.quantity <= 0
+                        widget.assortmentsListModel.quantity == null ||
+                                widget.assortmentsListModel.quantity! <= 0
                             ? InkWell(
                                 // Добавить из recipe
                                 onTap: () async {
                                   if (await loadToken() != "guest") {
-                                    if (widget.assortmentsListModel.assortmentUnitId != "kilogram") {
-                                      if (widget.assortmentsListModel.quantity < widget.assortmentsListModel.productsQuantity) {
-                                        widget.assortmentsListModel.quantity++;
-                                        if (await BasketProvider().updateProductInBasket(
-                                            productUuid: widget.assortmentsListModel.uuid, quantity: widget.assortmentsListModel.quantity)) {
-                                          _basketListBloc.add(BasketLoadEvent());
+                                    if (widget.assortmentsListModel
+                                            .assortmentUnitId !=
+                                        "kilogram") {
+                                      if (widget
+                                              .assortmentsListModel.quantity! <
+                                          widget.assortmentsListModel
+                                              .productsQuantity!) {
+                                        widget.assortmentsListModel.quantity =
+                                            widget.assortmentsListModel
+                                                    .quantity! +
+                                                1;
+                                        if (await BasketProvider()
+                                            .updateProductInBasket(
+                                                productUuid: widget
+                                                    .assortmentsListModel.uuid,
+                                                quantity: widget
+                                                    .assortmentsListModel
+                                                    .quantity)) {
+                                          _basketListBloc
+                                              .add(BasketLoadEvent());
                                         }
                                       }
                                     } else {
@@ -275,35 +378,65 @@ class _ReceiptsAssortmentsCard extends State<RecipeProductCard> {
                                       //     });
                                       //   }
                                       // }
-                                      double weight = double.tryParse(widget.assortmentsListModel.weight) ?? 0.0;
+                                      double weight = double.tryParse(widget
+                                              .assortmentsListModel.weight!) ??
+                                          0.0;
                                       double weightInKg = weight / 1000;
-                                      if (widget.assortmentsListModel.quantity < widget.assortmentsListModel.productsQuantity) {
+                                      if (widget
+                                              .assortmentsListModel.quantity! <
+                                          widget.assortmentsListModel
+                                              .productsQuantity!) {
                                         setState(() {
-                                          widget.assortmentsListModel.quantity += weightInKg; // Добавление по 100 грамм
+                                          widget.assortmentsListModel.quantity =
+                                              widget.assortmentsListModel
+                                                      .quantity! +
+                                                  1;
+                                          weightInKg; // Добавление по 100 грамм
                                         });
-                                        if (await BasketProvider().updateProductInBasket(
-                                            productUuid: widget.assortmentsListModel.uuid, quantity: widget.assortmentsListModel.quantity)) {
-                                          _basketListBloc.add(BasketLoadEvent());
+                                        if (await BasketProvider()
+                                            .updateProductInBasket(
+                                                productUuid: widget
+                                                    .assortmentsListModel.uuid,
+                                                quantity: widget
+                                                    .assortmentsListModel
+                                                    .quantity)) {
+                                          _basketListBloc
+                                              .add(BasketLoadEvent());
                                         }
                                       }
                                     }
                                   } else {
-                                    AssortmentFilterButton().loginOrRegWarning(context);
+                                    AssortmentFilterButton()
+                                        .loginOrRegWarning(context);
                                   }
                                 },
                                 child: Container(
                                   width: widthRatio(size: 82, context: context),
-                                  height: heightRatio(size: 22, context: context),
+                                  height:
+                                      heightRatio(size: 22, context: context),
                                   alignment: Alignment.center,
-                                  decoration: BoxDecoration(color: newRedDark, borderRadius: BorderRadius.circular(heightRatio(size: 3, context: context))),
+                                  decoration: BoxDecoration(
+                                      color: newRedDark,
+                                      borderRadius: BorderRadius.circular(
+                                          heightRatio(
+                                              size: 3, context: context))),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SvgPicture.asset("assets/images/newBuy.svg",
-                                          height: heightRatio(size: 10, context: context), width: widthRatio(size: 10, context: context)),
-                                      SizedBox(width: widthRatio(size: 6, context: context)),
-                                      Text('В корзину', style: appLabelTextStyle(color: whiteColor, fontSize: 10)),
+                                      SvgPicture.asset(
+                                          "assets/images/newBuy.svg",
+                                          height: heightRatio(
+                                              size: 10, context: context),
+                                          width: widthRatio(
+                                              size: 10, context: context)),
+                                      SizedBox(
+                                          width: widthRatio(
+                                              size: 6, context: context)),
+                                      Text('В корзину',
+                                          style: appLabelTextStyle(
+                                              color: whiteColor, fontSize: 10)),
                                     ],
                                   ),
                                 ),
@@ -311,86 +444,183 @@ class _ReceiptsAssortmentsCard extends State<RecipeProductCard> {
                             : Container(
                                 width: widthRatio(size: 82, context: context),
                                 height: heightRatio(size: 22, context: context),
-                                decoration: BoxDecoration(color: newRedDark, borderRadius: BorderRadius.circular(heightRatio(size: 3, context: context))),
+                                decoration: BoxDecoration(
+                                    color: newRedDark,
+                                    borderRadius: BorderRadius.circular(
+                                        heightRatio(
+                                            size: 3, context: context))),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SizedBox(width: widthRatio(size: 5, context: context)),
+                                    SizedBox(
+                                        width: widthRatio(
+                                            size: 5, context: context)),
                                     GestureDetector(
                                       // Убавить из recipe
                                       onTap: () async {
-                                        if (widget.assortmentsListModel.assortmentUnitId != "kilogram") {
+                                        if (widget.assortmentsListModel
+                                                .assortmentUnitId !=
+                                            "kilogram") {
                                           setState(() {
-                                            widget.assortmentsListModel.quantity -= 1;
+                                            widget.assortmentsListModel
+                                                .quantity = widget
+                                                    .assortmentsListModel
+                                                    .quantity! -
+                                                1;
                                           });
 
-                                          if (widget.assortmentsListModel.quantity != null && widget.assortmentsListModel.quantity <= 0) {
-                                            if (await BasketProvider().reomoveProductFromBasket(widget.assortmentsListModel.uuid)) {
-                                              _basketListBloc.add(BasketLoadEvent());
+                                          if (widget.assortmentsListModel.quantity !=
+                                                  null &&
+                                              widget.assortmentsListModel
+                                                      .quantity! <=
+                                                  0) {
+                                            if (await BasketProvider()
+                                                .reomoveProductFromBasket(widget
+                                                    .assortmentsListModel
+                                                    .uuid)) {
+                                              _basketListBloc
+                                                  .add(BasketLoadEvent());
                                             }
-                                          } else if (await BasketProvider().updateProductInBasket(
-                                              productUuid: widget.assortmentsListModel.uuid, quantity: widget.assortmentsListModel.quantity)) {
-                                            _basketListBloc.add(BasketLoadEvent());
+                                          } else if (await BasketProvider()
+                                              .updateProductInBasket(
+                                                  productUuid: widget
+                                                      .assortmentsListModel
+                                                      .uuid,
+                                                  quantity: widget
+                                                      .assortmentsListModel
+                                                      .quantity)) {
+                                            _basketListBloc
+                                                .add(BasketLoadEvent());
                                           }
                                         } else {
-                                          double weight = double.tryParse(widget.assortmentsListModel.weight) ?? 0.0;
+                                          double weight = double.tryParse(widget
+                                                  .assortmentsListModel
+                                                  .weight!) ??
+                                              0.0;
                                           double weightInKg = weight / 1000;
                                           setState(() {
-                                            widget.assortmentsListModel.quantity -= weightInKg; // Уменьшение по 100 грамм
+                                            widget.assortmentsListModel
+                                                .quantity = widget
+                                                    .assortmentsListModel
+                                                    .quantity! -
+                                                weightInKg; // Уменьшение по 100 грамм
                                           });
-                                          if (widget.assortmentsListModel.quantity <= 0) {
-                                            if (await BasketProvider().reomoveProductFromBasket(widget.assortmentsListModel.uuid)) {
-                                              _basketListBloc.add(BasketLoadEvent());
+                                          if (widget.assortmentsListModel
+                                                  .quantity! <=
+                                              0) {
+                                            if (await BasketProvider()
+                                                .reomoveProductFromBasket(widget
+                                                    .assortmentsListModel
+                                                    .uuid)) {
+                                              _basketListBloc
+                                                  .add(BasketLoadEvent());
                                             }
-                                          } else if (await BasketProvider().updateProductInBasket(
-                                              productUuid: widget.assortmentsListModel.uuid, quantity: widget.assortmentsListModel.quantity)) {
-                                            _basketListBloc.add(BasketLoadEvent());
+                                          } else if (await BasketProvider()
+                                              .updateProductInBasket(
+                                                  productUuid: widget
+                                                      .assortmentsListModel
+                                                      .uuid,
+                                                  quantity: widget
+                                                      .assortmentsListModel
+                                                      .quantity)) {
+                                            _basketListBloc
+                                                .add(BasketLoadEvent());
                                           }
                                         }
                                       },
-                                      child: Icon(Icons.remove, color: Colors.white, size: 12),
+                                      child: Icon(Icons.remove,
+                                          color: Colors.white, size: 12),
                                     ),
-                                    SizedBox(width: widthRatio(size: 5, context: context)),
+                                    SizedBox(
+                                        width: widthRatio(
+                                            size: 5, context: context)),
                                     Text(
-                                      widget.assortmentsListModel.assortmentUnitId == "kilogram"
-                                          ? widget.assortmentsListModel.quantity > 0.9
-                                              ? "${widget.assortmentsListModel.quantity.toStringAsFixed(1)}${"kgText".tr()}"
-                                              : "${(widget.assortmentsListModel.quantity * 1000).toStringAsFixed(0)}${"grText".tr()}"
-                                          : "${widget.assortmentsListModel.quantity.toInt().toString()} ${getAssortmentUnitId(assortmentUnitId: widget.assortmentsListModel.assortmentUnitId != null ? widget.assortmentsListModel.assortmentUnitId : '')[1]}",
-                                      style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 10, context: context)),
+                                      widget.assortmentsListModel
+                                                  .assortmentUnitId ==
+                                              "kilogram"
+                                          ? widget.assortmentsListModel
+                                                      .quantity! >
+                                                  0.9
+                                              ? "${widget.assortmentsListModel.quantity!.toStringAsFixed(1)}${"kgText".tr()}"
+                                              : "${(widget.assortmentsListModel.quantity! * 1000).toStringAsFixed(0)}${"grText".tr()}"
+                                          : "${widget.assortmentsListModel.quantity!.toInt().toString()} ${getAssortmentUnitId(assortmentUnitId: widget.assortmentsListModel.assortmentUnitId != null ? widget.assortmentsListModel.assortmentUnitId : '')[1]}",
+                                      style: appLabelTextStyle(
+                                          color: Colors.white,
+                                          fontSize: heightRatio(
+                                              size: 10, context: context)),
                                     ),
-                                    SizedBox(width: widthRatio(size: 5, context: context)),
+                                    SizedBox(
+                                        width: widthRatio(
+                                            size: 5, context: context)),
                                     GestureDetector(
                                       //Добавить из recipe
                                       onTap: () async {
-                                        if (widget.assortmentsListModel.assortmentUnitId != "kilogram") {
-                                          if (widget.assortmentsListModel.productsQuantity >= widget.assortmentsListModel.quantity + 1) {
+                                        if (widget.assortmentsListModel
+                                                .assortmentUnitId !=
+                                            "kilogram") {
+                                          if (widget.assortmentsListModel
+                                                  .productsQuantity! >=
+                                              widget.assortmentsListModel
+                                                      .quantity! +
+                                                  1) {
                                             setState(() {
-                                              widget.assortmentsListModel.quantity += 1;
+                                              widget.assortmentsListModel
+                                                  .quantity = widget
+                                                      .assortmentsListModel
+                                                      .quantity! +
+                                                  1;
                                             });
-                                            if (await BasketProvider().updateProductInBasket(
-                                                productUuid: widget.assortmentsListModel.uuid, quantity: widget.assortmentsListModel.quantity)) {
-                                              _basketListBloc.add(BasketLoadEvent());
+                                            if (await BasketProvider()
+                                                .updateProductInBasket(
+                                                    productUuid: widget
+                                                        .assortmentsListModel
+                                                        .uuid,
+                                                    quantity: widget
+                                                        .assortmentsListModel
+                                                        .quantity)) {
+                                              _basketListBloc
+                                                  .add(BasketLoadEvent());
                                             }
                                           }
                                         } else {
-                                          double weight = double.tryParse(widget.assortmentsListModel.weight) ?? 0.0;
+                                          double weight = double.tryParse(widget
+                                                  .assortmentsListModel
+                                                  .weight!) ??
+                                              0.0;
                                           double weightInKg = weight / 1000;
-                                          if (widget.assortmentsListModel.productsQuantity >= widget.assortmentsListModel.quantity + 0.1) {
+                                          if (widget.assortmentsListModel
+                                                  .productsQuantity! >=
+                                              widget.assortmentsListModel
+                                                      .quantity! +
+                                                  0.1) {
                                             setState(() {
-                                              widget.assortmentsListModel.quantity += weightInKg; // Добавление по 100 грамм
+                                              widget.assortmentsListModel
+                                                  .quantity = widget
+                                                      .assortmentsListModel
+                                                      .quantity! +
+                                                  weightInKg; // Добавление по 100 грамм
                                             });
-                                            if (await BasketProvider().updateProductInBasket(
-                                                productUuid: widget.assortmentsListModel.uuid, quantity: widget.assortmentsListModel.quantity)) {
-                                              _basketListBloc.add(BasketLoadEvent());
+                                            if (await BasketProvider()
+                                                .updateProductInBasket(
+                                                    productUuid: widget
+                                                        .assortmentsListModel
+                                                        .uuid,
+                                                    quantity: widget
+                                                        .assortmentsListModel
+                                                        .quantity)) {
+                                              _basketListBloc
+                                                  .add(BasketLoadEvent());
                                             }
                                           }
                                         }
                                       },
-                                      child: Icon(Icons.add, color: Colors.white, size: 12),
+                                      child: Icon(Icons.add,
+                                          color: Colors.white, size: 12),
                                     ),
-                                    SizedBox(width: widthRatio(size: 5, context: context)),
+                                    SizedBox(
+                                        width: widthRatio(
+                                            size: 5, context: context)),
                                   ],
                                 ),
                               ),
@@ -412,9 +642,13 @@ class CustomMaterialPageRoute extends MaterialPageRoute {
   bool get hasScopedWillPopCallback => false;
 
   CustomMaterialPageRoute({
-    @required WidgetBuilder builder,
-    RouteSettings settings,
+    required WidgetBuilder builder,
+    RouteSettings? settings,
     bool maintainState = true,
     bool fullscreenDialog = false,
-  }) : super(builder: builder, settings: settings, maintainState: maintainState, fullscreenDialog: fullscreenDialog);
+  }) : super(
+            builder: builder,
+            settings: settings,
+            maintainState: maintainState,
+            fullscreenDialog: fullscreenDialog);
 }

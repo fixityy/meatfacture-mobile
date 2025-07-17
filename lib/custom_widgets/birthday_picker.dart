@@ -8,25 +8,27 @@ import 'package:smart/core/constants/text_styles.dart';
 class BirthdayPicker extends StatefulWidget {
   final String dateFromProfile;
 
-  BirthdayPicker({@required this.dateFromProfile});
+  BirthdayPicker({required this.dateFromProfile});
 
   @override
-  _BirthdayPickerState createState() => _BirthdayPickerState(dateFromProfile: dateFromProfile);
+  _BirthdayPickerState createState() =>
+      _BirthdayPickerState(dateFromProfile: dateFromProfile);
 }
 
 class _BirthdayPickerState extends State<BirthdayPicker> {
   final String dateFromProfile;
-  DateTime _birthdayDate;
-  DateTime initDateFromProfile;
+  DateTime? _birthdayDate;
+  late DateTime initDateFromProfile;
 
-  _BirthdayPickerState({@required this.dateFromProfile});
+  _BirthdayPickerState({required this.dateFromProfile});
 
   @override
   void initState() {
     super.initState();
     if (dateFromProfile != null) {
       DateTime parsedDate = DateTime.parse(dateFromProfile);
-      initDateFromProfile = DateTime(parsedDate.year, parsedDate.month, parsedDate.day);
+      initDateFromProfile =
+          DateTime(parsedDate.year, parsedDate.month, parsedDate.day);
       _birthdayDate = initDateFromProfile;
     }
   }
@@ -78,7 +80,7 @@ class _BirthdayPickerState extends State<BirthdayPicker> {
   }
 
   _pickDate() async {
-    DateTime date = await showDatePicker(
+    DateTime? date = await showDatePicker(
       locale: const Locale("ru", "RU"),
       context: context,
       initialDate: _birthdayDate ?? DateTime.now(),
@@ -91,7 +93,8 @@ class _BirthdayPickerState extends State<BirthdayPicker> {
       });
       ProfileBloc _profileBloc = BlocProvider.of<ProfileBloc>(context);
       _profileBloc.add(ProfileUpdateDataEvent(
-        birthdayDate: "${_birthdayDate.year}-${_birthdayDate.month.toString().padLeft(2, '0')}-${_birthdayDate.day.toString().padLeft(2, '0')}",
+        birthdayDate:
+            "${_birthdayDate!.year}-${_birthdayDate!.month.toString().padLeft(2, '0')}-${_birthdayDate!.day.toString().padLeft(2, '0')}",
       ));
     }
   }
@@ -111,11 +114,15 @@ class _BirthdayPickerState extends State<BirthdayPicker> {
           child: _birthdayDate == null
               ? Text(
                   'Дата рождения',
-                  style: appLabelTextStyle(color: newGrey, fontSize: heightRatio(size: 14, context: context)),
+                  style: appLabelTextStyle(
+                      color: newGrey,
+                      fontSize: heightRatio(size: 14, context: context)),
                 )
               : Text(
-                  dataAsMonthName(_birthdayDate),
-                  style: appLabelTextStyle(color: newBlack, fontSize: heightRatio(size: 16, context: context)),
+                  dataAsMonthName(_birthdayDate!),
+                  style: appLabelTextStyle(
+                      color: newBlack,
+                      fontSize: heightRatio(size: 16, context: context)),
                 ),
         ),
       ),

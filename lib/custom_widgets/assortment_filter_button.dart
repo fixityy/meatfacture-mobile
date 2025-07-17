@@ -10,12 +10,15 @@ import 'package:smart/custom_widgets/assortment_filter_bottom_sheet.dart';
 import 'package:smart/custom_widgets/reg_or_login_warning_bottomSheet.dart';
 
 class AssortmentFilterButton extends StatelessWidget {
-  final String subcatalogUuid;
-  final String catalogUuid;
+  final String? subcatalogUuid;
+  final String? catalogUuid;
 
-  const AssortmentFilterButton({this.subcatalogUuid, this.catalogUuid});
+  const AssortmentFilterButton({
+    this.subcatalogUuid,
+    this.catalogUuid,
+  });
 
-  Future<String> loadToken() async {
+  Future<String?> loadToken() async {
     SharedPreferences _shared = await SharedPreferences.getInstance();
     return _shared.getString(SharedKeys.token);
   }
@@ -43,7 +46,10 @@ class AssortmentFilterButton extends StatelessWidget {
     // // ignore: close_sinks
     // AssortmentFiltersBloc _assortmentFiltersBloc =
     BlocProvider.of<AssortmentFiltersBloc>(context);
-    void _openShopsFiltersBottomSheet({BuildContext context, bool isFavorite}) {
+    void _openShopsFiltersBottomSheet({
+      required BuildContext context,
+      required bool isFavorite,
+    }) {
       showModalBottomSheet<dynamic>(
           isScrollControlled: true,
           useSafeArea: true,
@@ -51,13 +57,15 @@ class AssortmentFilterButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(heightRatio(size: 25, context: context)),
-              topRight: Radius.circular(heightRatio(size: 25, context: context)),
+              topRight:
+                  Radius.circular(heightRatio(size: 25, context: context)),
             ),
           ),
           builder: (BuildContext bc) {
             return Wrap(
               children: [
-                AssortmentFilterBottomSheet(subcatalogUuid: subcatalogUuid, catalogUuid: catalogUuid),
+                AssortmentFilterBottomSheet(
+                    subcatalogUuid: subcatalogUuid, catalogUuid: catalogUuid),
               ],
             );
           }).then((value) {});
@@ -74,9 +82,11 @@ class AssortmentFilterButton extends StatelessWidget {
               // _assortmentFiltersBloc
               //     .add(AssortmentFiltersLoadEvent(isFavorite: false));
               if (state is AssortmentFiltersActiveState) {
-                _openShopsFiltersBottomSheet(context: context, isFavorite: state.isFavorite);
+                _openShopsFiltersBottomSheet(
+                    context: context, isFavorite: state.isFavorite!);
               } else {
-                _openShopsFiltersBottomSheet(context: context, isFavorite: false);
+                _openShopsFiltersBottomSheet(
+                    context: context, isFavorite: false);
               }
             } else {
               loginOrRegWarning(context);
@@ -86,10 +96,14 @@ class AssortmentFilterButton extends StatelessWidget {
             width: widthRatio(size: 36, context: context),
             height: heightRatio(size: 36, context: context),
             padding: EdgeInsets.only(
-                top: heightRatio(size: 5, context: context), left: widthRatio(size: 10, context: context), right: widthRatio(size: 10, context: context)),
+                top: heightRatio(size: 5, context: context),
+                left: widthRatio(size: 10, context: context),
+                right: widthRatio(size: 10, context: context)),
             decoration: BoxDecoration(color: white03, shape: BoxShape.circle),
             child: SvgPicture.asset('assets/images/newFilter.svg',
-                color: whiteColor, height: heightRatio(size: 17, context: context), width: widthRatio(size: 17, context: context)),
+                color: whiteColor,
+                height: heightRatio(size: 17, context: context),
+                width: widthRatio(size: 17, context: context)),
           ),
         );
       },

@@ -7,7 +7,11 @@ class InitAddMyAddressItem extends StatelessWidget {
   final bool isActive;
   final String address;
 
-  const InitAddMyAddressItem({Key key, @required this.isActive, @required this.address}) : super(key: key);
+  const InitAddMyAddressItem({
+    super.key,
+    required this.isActive,
+    required this.address,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +19,15 @@ class InitAddMyAddressItem extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: isActive ? newRedDark : Colors.transparent),
         color: whiteColor,
-        borderRadius: BorderRadius.circular(heightRatio(size: 5, context: context)),
-        boxShadow: [BoxShadow(color: newShadow, offset: Offset(2, 2), blurRadius: 4, spreadRadius: 0)],
+        borderRadius:
+            BorderRadius.circular(heightRatio(size: 5, context: context)),
+        boxShadow: [
+          BoxShadow(
+              color: newShadow,
+              offset: Offset(2, 2),
+              blurRadius: 4,
+              spreadRadius: 0)
+        ],
       ),
       margin: EdgeInsets.only(top: heightRatio(size: 20, context: context)),
       padding: EdgeInsets.only(

@@ -2,11 +2,13 @@ import 'package:smart/models/Assortments_image_model.dart';
 import 'package:smart/models/order_list_model.dart';
 
 class OrderDetailsAndCalculateResponseModel {
-  OrderDetailsAndCalculateResponseModel({this.data});
+  OrderDetailsAndCalculateResponseModel({required this.data});
 
   OrderCalculateDataResponseModel data;
 
-  factory OrderDetailsAndCalculateResponseModel.fromJson(Map<String, dynamic> json) => OrderDetailsAndCalculateResponseModel(
+  factory OrderDetailsAndCalculateResponseModel.fromJson(
+          Map<String, dynamic> json) =>
+      OrderDetailsAndCalculateResponseModel(
         data: OrderCalculateDataResponseModel.fromJson(json["data"]),
       );
 
@@ -20,9 +22,9 @@ class OrderCalculateDataResponseModel {
     this.uuid,
     this.storeUserUuid,
     this.storeUserFullName,
-    this.storeUserAddress,
+    required this.storeUserAddress,
     this.orderStatusId,
-    this.orderDeliveryTypeId,
+    required this.orderDeliveryTypeId,
     this.orderPaymentTypeId,
     this.clientComment,
     this.clientEmail,
@@ -40,7 +42,7 @@ class OrderCalculateDataResponseModel {
     this.plannedDeliveryDatetimeTo,
     this.createdAt,
     this.updatedAt,
-    this.products,
+    required this.products,
     this.number,
     this.totalBonus,
     this.paidBonus,
@@ -53,40 +55,41 @@ class OrderCalculateDataResponseModel {
   });
 
   dynamic uuid;
-  int number;
-  String workHoursFrom;
-  String workHoursTill;
-  String storeUserUuid;
-  String storeUserFullName;
+  int? number;
+  String? workHoursFrom;
+  String? workHoursTill;
+  String? storeUserUuid;
+  String? storeUserFullName;
   String storeUserAddress;
-  String orderStatusId;
+  String? orderStatusId;
   String orderDeliveryTypeId;
-  String orderPaymentTypeId;
+  String? orderPaymentTypeId;
   dynamic clientComment;
   dynamic clientEmail;
-  OrderListClientAddressData clientAddressData;
-  bool isPaid;
-  double deliveryPrice;
-  double toMinPrice;
-  double minPrice;
-  double totalDiscountForProducts;
-  double totalPriceForProductsWithDiscount;
-  double totalPrice;
-  double totalWeight;
-  double toFreeDelivery;
+  OrderListClientAddressData? clientAddressData;
+  bool? isPaid;
+  double? deliveryPrice;
+  double? toMinPrice;
+  double? minPrice;
+  double? totalDiscountForProducts;
+  double? totalPriceForProductsWithDiscount;
+  double? totalPrice;
+  double? totalWeight;
+  double? toFreeDelivery;
   var totalQuantity;
   dynamic plannedDeliveryDatetimeFrom;
   dynamic plannedDeliveryDatetimeTo;
   dynamic createdAt;
   dynamic updatedAt;
   List<OrderCalculateProductModel> products;
-  int totalBonus;
-  int paidBonus;
-  int bonusToCharge;
-  int maxBonusToPaid;
-  String promocode;
+  int? totalBonus;
+  int? paidBonus;
+  int? bonusToCharge;
+  int? maxBonusToPaid;
+  String? promocode;
 
-  factory OrderCalculateDataResponseModel.fromJson(Map<String, dynamic> json) => OrderCalculateDataResponseModel(
+  factory OrderCalculateDataResponseModel.fromJson(Map<String, dynamic> json) =>
+      OrderCalculateDataResponseModel(
         uuid: json["uuid"],
         workHoursFrom: json["work_hours_from"],
         workHoursTill: json["work_hours_till"],
@@ -104,23 +107,36 @@ class OrderCalculateDataResponseModel {
         clientComment: json["client_comment"],
         clientEmail: json["client_email"],
         toFreeDelivery: double.tryParse(json["to_free_delivery"].toString()),
-        clientAddressData: json["client_address_data"] == null ? null : OrderListClientAddressData.fromJson(json["client_address_data"]),
+        clientAddressData: json["client_address_data"] == null
+            ? null
+            : OrderListClientAddressData.fromJson(json["client_address_data"]),
         isPaid: json["is_paid"],
         deliveryPrice: json["delivery_price"].toDouble(),
-        toMinPrice: json["to_min_price"] == null ? null : json["to_min_price"].toDouble(),
-        minPrice: json["min_price"] == null ? null : json["min_price"].toDouble(),
-        totalDiscountForProducts: json["total_discount_for_products"] == null ? null : json["total_discount_for_products"].toDouble(),
+        toMinPrice: json["to_min_price"] == null
+            ? null
+            : json["to_min_price"].toDouble(),
+        minPrice:
+            json["min_price"] == null ? null : json["min_price"].toDouble(),
+        totalDiscountForProducts: json["total_discount_for_products"] == null
+            ? null
+            : json["total_discount_for_products"].toDouble(),
         totalPriceForProductsWithDiscount:
-            json["total_price_for_products_with_discount"] == null ? null : json["total_price_for_products_with_discount"].toDouble(),
-        totalPrice: json["total_price"] == null ? null : json["total_price"].toDouble(),
-        totalWeight: json["total_weight"] == null ? null : json["total_weight"].toDouble(),
+            json["total_price_for_products_with_discount"] == null
+                ? null
+                : json["total_price_for_products_with_discount"].toDouble(),
+        totalPrice:
+            json["total_price"] == null ? null : json["total_price"].toDouble(),
+        totalWeight: json["total_weight"] == null
+            ? null
+            : json["total_weight"].toDouble(),
         promocode: json["promocode"] == null ? null : json["promocode"],
         totalQuantity: json["total_quantity"],
         plannedDeliveryDatetimeFrom: json["planned_delivery_datetime_from"],
         plannedDeliveryDatetimeTo: json["planned_delivery_datetime_to"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
-        products: List<OrderCalculateProductModel>.from(json["products"].map((x) => OrderCalculateProductModel.fromJson(x))),
+        products: List<OrderCalculateProductModel>.from(json["products"]
+            .map((x) => OrderCalculateProductModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -139,11 +155,13 @@ class OrderCalculateDataResponseModel {
         "order_payment_type_id": orderPaymentTypeId,
         "client_comment": clientComment,
         "client_email": clientEmail,
-        "client_address_data": clientAddressData == null ? null : clientAddressData.toJson(),
+        "client_address_data":
+            clientAddressData == null ? null : clientAddressData!.toJson(),
         "is_paid": isPaid,
         "delivery_price": deliveryPrice,
         "total_discount_for_products": totalDiscountForProducts,
-        "total_price_for_products_with_discount": totalPriceForProductsWithDiscount,
+        "total_price_for_products_with_discount":
+            totalPriceForProductsWithDiscount,
         "total_price": totalPrice,
         "total_weight": totalWeight,
         "total_quantity": totalQuantity,
@@ -161,7 +179,7 @@ class OrderCalculateProductModel {
     this.uuid,
     this.orderUuid,
     this.productUuid,
-    this.assortment,
+    required this.assortment,
     this.quantity,
     this.totalWeight,
     this.discount,
@@ -184,29 +202,30 @@ class OrderCalculateProductModel {
 
   dynamic uuid;
   dynamic orderUuid;
-  String productUuid;
+  String? productUuid;
   OrderCalculateAssortmentModel assortment;
   var quantity;
-  int rating;
-  String ratingComment;
-  double totalWeight;
+  int? rating;
+  String? ratingComment;
+  double? totalWeight;
   //
-  double priceWithDiscount;
-  double totalAmountWithDiscount;
-  double price;
-  double originalPrice;
+  double? priceWithDiscount;
+  double? totalAmountWithDiscount;
+  double? price;
+  double? originalPrice;
   //
-  double discount;
-  double totalDiscount;
-  String createdAt;
-  String updatedAt;
-  String discountableType;
-  String discountTypeColor;
-  String discountTypeName;
-  double paidBonus;
-  double totalBonus;
+  double? discount;
+  double? totalDiscount;
+  String? createdAt;
+  String? updatedAt;
+  String? discountableType;
+  String? discountTypeColor;
+  String? discountTypeName;
+  double? paidBonus;
+  double? totalBonus;
 
-  factory OrderCalculateProductModel.fromJson(Map<String, dynamic> json) => OrderCalculateProductModel(
+  factory OrderCalculateProductModel.fromJson(Map<String, dynamic> json) =>
+      OrderCalculateProductModel(
         uuid: json["uuid"],
         paidBonus: double.tryParse(json["paid_bonus"].toString()),
         totalBonus: double.tryParse(json["total_bonus"].toString()),
@@ -225,10 +244,16 @@ class OrderCalculateProductModel {
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
         //
-        priceWithDiscount: json["price_with_discount"] == null ? null : double.parse(json["price_with_discount"].toString()),
+        priceWithDiscount: json["price_with_discount"] == null
+            ? null
+            : double.parse(json["price_with_discount"].toString()),
         totalAmountWithDiscount: json["total_amount_with_discount"].toDouble(),
-        price: json["price"] == null ? null : double.parse(json["price"].toString()),
-        originalPrice: json["original_price"] == null ? null : double.parse(json["original_price"].toString()),
+        price: json["price"] == null
+            ? null
+            : double.parse(json["price"].toString()),
+        originalPrice: json["original_price"] == null
+            ? null
+            : double.parse(json["original_price"].toString()),
       );
 
   Map<String, dynamic> toJson() => {
@@ -254,28 +279,40 @@ class OrderCalculateProductModel {
 }
 
 class OrderCalculateAssortmentModel {
-  OrderCalculateAssortmentModel(
-      {this.uuid, this.name, this.catalogUuid, this.catalogName, this.rating, this.assortmentWeight, this.images, this.assortmentUnitId});
+  OrderCalculateAssortmentModel({
+    required this.uuid,
+    required this.name,
+    this.catalogUuid,
+    this.catalogName,
+    this.rating,
+    this.assortmentWeight,
+    required this.images,
+    this.assortmentUnitId,
+  });
 
   String uuid;
   String name;
-  String assortmentUnitId;
-  double assortmentWeight;
+  String? assortmentUnitId;
+  double? assortmentWeight;
 
-  String catalogUuid;
-  String catalogName;
-  double rating;
+  String? catalogUuid;
+  String? catalogName;
+  double? rating;
   List<ImageModel> images;
 
-  factory OrderCalculateAssortmentModel.fromJson(Map<String, dynamic> json) => OrderCalculateAssortmentModel(
+  factory OrderCalculateAssortmentModel.fromJson(Map<String, dynamic> json) =>
+      OrderCalculateAssortmentModel(
         uuid: json["uuid"],
         assortmentUnitId: json["assortment_unit_id"],
         name: json["name"],
         assortmentWeight: double.tryParse(json["assortment_weight"].toString()),
         catalogUuid: json["catalog_uuid"],
         catalogName: json["catalog_name"],
-        rating: json["rating"] == null ? null : double.parse(json["rating"].toString()),
-        images: List<ImageModel>.from(json["images"].map((x) => ImageModel.fromJson(x))),
+        rating: json["rating"] == null
+            ? null
+            : double.parse(json["rating"].toString()),
+        images: List<ImageModel>.from(
+            json["images"].map((x) => ImageModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

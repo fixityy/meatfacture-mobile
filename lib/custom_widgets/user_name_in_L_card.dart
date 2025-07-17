@@ -12,10 +12,17 @@ class UserNameInLCard extends StatelessWidget {
         return Container(
           alignment: Alignment.centerLeft,
           child: Text(
-            state is ProfileLoadedState && state != null && state.profileModel.data.name != null && state.profileModel.data.name != "" ? state.profileModel.data.name : "",
+            state is ProfileLoadedState &&
+                    state != null &&
+                    state.profileModel.data!.name != null &&
+                    state.profileModel.data!.name != ""
+                ? state.profileModel.data!.name!
+                : "",
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: appTextStyle(fontSize: heightRatio(size: 20, context: context), fontWeight: FontWeight.bold),
+            style: appTextStyle(
+                fontSize: heightRatio(size: 20, context: context),
+                fontWeight: FontWeight.bold),
           ),
         );
       },
@@ -31,10 +38,17 @@ class UserNameInLCardForProfilePage extends StatelessWidget {
         return Container(
           alignment: Alignment.centerLeft,
           child: Text(
-            state is ProfileLoadedState && state != null && state.profileModel.data.name != null ? state.profileModel.data.name : "",
+            state is ProfileLoadedState &&
+                    state != null &&
+                    state.profileModel.data!.name != null
+                ? state.profileModel.data!.name!
+                : "",
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: appTextStyle(fontSize: heightRatio(size: 20, context: context), fontWeight: FontWeight.w800, color: Colors.white),
+            style: appTextStyle(
+                fontSize: heightRatio(size: 20, context: context),
+                fontWeight: FontWeight.w800,
+                color: Colors.white),
           ),
         );
       },

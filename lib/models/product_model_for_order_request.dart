@@ -2,9 +2,13 @@
 class ProductModelForOrderRequest {
   double quantity;
   String assortmentUuid;
-  ProductModelForOrderRequest({this.quantity, this.assortmentUuid});
+  ProductModelForOrderRequest({
+    required this.quantity,
+    required this.assortmentUuid,
+  });
 
-  factory ProductModelForOrderRequest.fromJson(Map<String, dynamic> json) => ProductModelForOrderRequest(
+  factory ProductModelForOrderRequest.fromJson(Map<String, dynamic> json) =>
+      ProductModelForOrderRequest(
         assortmentUuid: json["assortment_uuid"],
         quantity: json["quantity"],
       );
@@ -15,5 +19,6 @@ class ProductModelForOrderRequest {
       };
 
   @override
-  String toString() => 'ProductModelForOrderRequest(quantity: $quantity, assortmentUuid: $assortmentUuid)';
+  String toString() =>
+      'ProductModelForOrderRequest(quantity: $quantity, assortmentUuid: $assortmentUuid)';
 }

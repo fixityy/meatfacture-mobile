@@ -3,7 +3,7 @@ class CreditCardsListModel {
     this.data,
   });
 
-  List<CreditCardsListDataModel> data;
+  List<CreditCardsListDataModel>? data;
 
   factory CreditCardsListModel.fromJson(Map<String, dynamic> json) =>
       CreditCardsListModel(
@@ -12,18 +12,18 @@ class CreditCardsListModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }
 
 class CreditCardsListDataModel {
   CreditCardsListDataModel({
-    this.uuid,
+    required this.uuid,
     this.cardMask,
   });
 
   String uuid;
-  String cardMask;
+  String? cardMask;
 
   factory CreditCardsListDataModel.fromJson(Map<String, dynamic> json) =>
       CreditCardsListDataModel(

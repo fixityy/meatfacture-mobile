@@ -5,9 +5,11 @@ import 'package:smart/features/addresses/addresses_shop/models/addresses_shop_mo
 
 abstract class AddressesShopState {} // ShopsListState
 
-class ErrorAddressesShopState extends AddressesShopState {} // ShopsListErrorState
+class ErrorAddressesShopState
+    extends AddressesShopState {} // ShopsListErrorState
 
-class OnMapEmptyAddressesShopState extends AddressesShopState {} // ShopsListOnMapEmptyState
+class OnMapEmptyAddressesShopState
+    extends AddressesShopState {} // ShopsListOnMapEmptyState
 
 // Загрузка списком // ShopsListAsListLoadingState
 class LoadingAddressesShopState extends AddressesShopState {}
@@ -18,17 +20,17 @@ class LoadingMapAddressesShopState extends AddressesShopState {}
 // Загруженный список магазинов на карте // ShopsAsMapPointsLoadedState
 class LoadedMapAddressesShopState extends AddressesShopState {
   final AddressesShopListModel loadedShopsList;
-  final LocationData myLocation;
-  final AddressesShopModel nearestStore;
-  final bool hasParking;
-  final bool hasReadyMeals;
-  final bool hasAtms;
-  final bool isFavorite;
-  final bool isOpenNow;
-  final String searchText;
+  final LocationData? myLocation;
+  final AddressesShopModel? nearestStore;
+  final bool? hasParking;
+  final bool? hasReadyMeals;
+  final bool? hasAtms;
+  final bool? isFavorite;
+  final bool? isOpenNow;
+  final String? searchText;
 
   LoadedMapAddressesShopState({
-    @required this.loadedShopsList,
+    required this.loadedShopsList,
     this.myLocation,
     this.nearestStore,
     this.hasParking,
@@ -40,8 +42,8 @@ class LoadedMapAddressesShopState extends AddressesShopState {
   });
 
   LoadedMapAddressesShopState copyWith({
-    AddressesShopListModel loadedShopsList,
-    AddressesShopModel nearestStore,
+    AddressesShopListModel? loadedShopsList,
+    AddressesShopModel? nearestStore,
   }) {
     return LoadedMapAddressesShopState(
       loadedShopsList: loadedShopsList ?? this.loadedShopsList,
@@ -59,16 +61,16 @@ class LoadedMapAddressesShopState extends AddressesShopState {
 
 // Загруженный список магазинов // ShopsListAsListLoadedState
 class LoadedAddressesShopState extends AddressesShopState {
-  final String searchText;
-  final LocationData myLocation;
-  final bool hasParking;
-  final bool hasReadyMeals;
-  final bool hasAtms;
-  final bool isFavorite;
-  final AddressesShopModel nearestStore;
-  final bool isOpenNow;
+  final String? searchText;
+  final LocationData? myLocation;
+  final bool? hasParking;
+  final bool? hasReadyMeals;
+  final bool? hasAtms;
+  final bool? isFavorite;
+  final AddressesShopModel? nearestStore;
+  final bool? isOpenNow;
   final AddressesShopListModel loadedShopsList;
-  final AddressesShopModel selectedShop;
+  final AddressesShopModel? selectedShop;
 
   LoadedAddressesShopState({
     this.searchText,
@@ -79,13 +81,13 @@ class LoadedAddressesShopState extends AddressesShopState {
     this.isFavorite,
     this.nearestStore,
     this.isOpenNow,
-    @required this.loadedShopsList,
+    required this.loadedShopsList,
     this.selectedShop,
   });
 
   LoadedAddressesShopState copyWith({
-    AddressesShopListModel loadedShopsList,
-    AddressesShopModel selectedShop,
+    AddressesShopListModel? loadedShopsList,
+    AddressesShopModel? selectedShop,
   }) {
     return LoadedAddressesShopState(
       searchText: this.searchText,

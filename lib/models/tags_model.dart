@@ -3,8 +3,8 @@ import 'package:smart/models/tags_list_model.dart';
 
 class TagsModel {
   TagsModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<TagsListModel> data;

@@ -4,9 +4,9 @@ import 'package:smart/core/constants/source.dart';
 import 'package:smart/core/constants/text_styles.dart';
 
 Widget homePageTopMenuItem({
-  @required String text,
-  String imagePath,
-  @required BuildContext context,
+  required String text,
+  required String imagePath,
+  required BuildContext context,
 }) {
   return Column(
     children: [

@@ -14,10 +14,11 @@ import 'package:smart/core/constants/source.dart';
 import 'package:smart/core/constants/text_styles.dart';
 
 class RedesImInShopCArdButton extends StatefulWidget {
-  const RedesImInShopCArdButton({Key key}) : super(key: key);
+  const RedesImInShopCArdButton({super.key});
 
   @override
-  State<RedesImInShopCArdButton> createState() => _RedesImInShopCArdButtonState();
+  State<RedesImInShopCArdButton> createState() =>
+      _RedesImInShopCArdButtonState();
 }
 
 class _RedesImInShopCArdButtonState extends State<RedesImInShopCArdButton> {
@@ -31,7 +32,8 @@ class _RedesImInShopCArdButtonState extends State<RedesImInShopCArdButton> {
   Widget build(BuildContext context) {
     BasicPageBloc basicPageBloc = BlocProvider.of(context);
     AuthPageBloc authPageBloc = BlocProvider.of(context);
-    return BlocConsumer<ImInShopBloc, ImInShopState>(listener: (context, state) {
+    return BlocConsumer<ImInShopBloc, ImInShopState>(
+        listener: (context, state) {
       if (state is ImInShopOldTokenState) {
         ProfilePage.logout(regBloc: authPageBloc, basicPageBloc: basicPageBloc);
       }
@@ -41,18 +43,30 @@ class _RedesImInShopCArdButtonState extends State<RedesImInShopCArdButton> {
       return InkWell(
         onTap: () async {
           _imInShopBloc.add(ImInShopLoadEvent());
-          String isChoosenAddressesForThisSessionIamInShop = await prefs.getString(SharedKeys.isChoosenAddressesForThisSessionIamInShop);
+          String? isChoosenAddressesForThisSessionIamInShop = await prefs
+              .getString(SharedKeys.isChoosenAddressesForThisSessionIamInShop);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => isChoosenAddressesForThisSessionIamInShop == 'yes' ? RedesImInShopPage() : RedesImInShopBeforePage()),
+            MaterialPageRoute(
+                builder: (context) =>
+                    isChoosenAddressesForThisSessionIamInShop == 'yes'
+                        ? RedesImInShopPage()
+                        : RedesImInShopBeforePage()),
           );
         },
         child: Container(
           padding: EdgeInsets.all(widthRatio(size: 10, context: context)),
           decoration: BoxDecoration(
             color: whiteColor,
-            borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)),
-            boxShadow: [BoxShadow(color: newShadow, offset: Offset(12, 12), blurRadius: 24, spreadRadius: 0)],
+            borderRadius:
+                BorderRadius.circular(heightRatio(size: 10, context: context)),
+            boxShadow: [
+              BoxShadow(
+                  color: newShadow,
+                  offset: Offset(12, 12),
+                  blurRadius: 24,
+                  spreadRadius: 0)
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,8 +80,14 @@ class _RedesImInShopCArdButtonState extends State<RedesImInShopCArdButton> {
                         Container(
                           width: 60,
                           height: 60,
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 5, context: context)), color: newIconBg),
-                          child: Image.asset("assets/images/newPoint.png", height: heightRatio(size: 38, context: context), width: widthRatio(size: 38, context: context), fit: BoxFit.scaleDown),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                  heightRatio(size: 5, context: context)),
+                              color: newIconBg),
+                          child: Image.asset("assets/images/newPoint.png",
+                              height: heightRatio(size: 38, context: context),
+                              width: widthRatio(size: 38, context: context),
+                              fit: BoxFit.scaleDown),
                         ),
                         SizedBox(width: widthRatio(size: 15, context: context)),
                         Expanded(
@@ -76,12 +96,22 @@ class _RedesImInShopCArdButtonState extends State<RedesImInShopCArdButton> {
                             children: [
                               Text(
                                 "iAmInStoreText".tr(),
-                                style: appHeadersTextStyle(fontSize: heightRatio(size: 15, context: context), fontWeight: FontWeight.w700, color: newBlack),
+                                style: appHeadersTextStyle(
+                                    fontSize:
+                                        heightRatio(size: 15, context: context),
+                                    fontWeight: FontWeight.w700,
+                                    color: newBlack),
                               ),
-                              SizedBox(height: heightRatio(size: 5, context: context)),
+                              SizedBox(
+                                  height:
+                                      heightRatio(size: 5, context: context)),
                               Text(
                                 "chooseStoreForImInShopText".tr(),
-                                style: appLabelTextStyle(fontSize: heightRatio(size: 13, context: context), fontWeight: FontWeight.w400, color: newBlackLight),
+                                style: appLabelTextStyle(
+                                    fontSize:
+                                        heightRatio(size: 13, context: context),
+                                    fontWeight: FontWeight.w400,
+                                    color: newBlackLight),
                               ),
                             ],
                           ),
@@ -90,10 +120,16 @@ class _RedesImInShopCArdButtonState extends State<RedesImInShopCArdButton> {
                     ),
                   ),
                   SizedBox(width: widthRatio(size: 10, context: context)),
-                  Icon(Icons.arrow_forward_ios_rounded, color: newRedDark, size: heightRatio(size: 23, context: context)),
+                  Icon(Icons.arrow_forward_ios_rounded,
+                      color: newRedDark,
+                      size: heightRatio(size: 23, context: context)),
                 ],
               ),
-              prefs.getString(SharedKeys.isChoosenAddressesForThisSessionIamInShop) == 'yes' ? RedesImInShopAssortmentsListWidget() : SizedBox() //я в магазине
+              prefs.getString(SharedKeys
+                          .isChoosenAddressesForThisSessionIamInShop) ==
+                      'yes'
+                  ? RedesImInShopAssortmentsListWidget()
+                  : SizedBox() //я в магазине
             ],
           ),
         ),

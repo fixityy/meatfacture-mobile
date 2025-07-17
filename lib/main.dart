@@ -60,8 +60,8 @@ import 'bloc_files/url_for_credit_card_bloc.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(); // Для инициализации Firebase в фоновом режиме
-  log("message.notification.title 👉: ${message.notification.title}");
-  log("message.notification.body 👉: ${message.notification.body}");
+  log("message.notification.title 👉: ${message.notification?.title}");
+  log("message.notification.body 👉: ${message.notification?.body}");
   // Логирование события в Firebase Analytics
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   analytics.logEvent(
@@ -74,7 +74,7 @@ Future<void> backgroundHandler(RemoteMessage message) async {
   );
 }
 
-SharedPreferences prefs;
+late SharedPreferences prefs;
 final addressProvider = AddressesClientProvider();
 
 void main() async {
@@ -83,23 +83,26 @@ void main() async {
   //   // await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
   // }
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await EasyLocalization.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.dark));
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark));
   // WidgetsFlutterBinding();
   await Firebase.initializeApp();
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-  String token = await loadToken();
+  String? token = await loadToken();
 
   prefs = await SharedPreferences.getInstance();
   await prefs.setString(SharedKeys.isChoosenAddressesForThisSession, 'no');
-  await prefs.setString(SharedKeys.isChoosenAddressesForThisSessionIamInShop, 'no');
+  await prefs.setString(
+      SharedKeys.isChoosenAddressesForThisSessionIamInShop, 'no');
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     if (message.notification != null) {
-      log("----------------**************----------------: ${message.notification.title} - ${message.notification.body}");
+      log("----------------**************----------------: ${message.notification?.title} - ${message.notification?.body}");
       // Логирование события в Firebase Analytics
       analytics.logEvent(
         name: "push_received",
@@ -129,7 +132,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 // }
 
 class MyApp extends StatelessWidget {
-  final String token;
+  final String? token;
 
   MyApp({this.token});
 
@@ -141,7 +144,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => CatalogRebuildCubit()),
         BlocProvider(create: (context) => StoriesListBloc()),
         BlocProvider(create: (context) => OrderProcessListBloc()),
-        BlocProvider(create: (context) => SelectedPayCardAndAddressForOrderBloc()),
+        BlocProvider(
+            create: (context) => SelectedPayCardAndAddressForOrderBloc()),
         BlocProvider(create: (context) => AddOrSubtractBonusesBloc()),
         BlocProvider(
             create: (context) => AddressesClientBloc(
@@ -184,20 +188,28 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ReceiptsFavoriteBloc()),
         BlocProvider(
             create: (context) => SecondaryPageBloc(
-                token != null && token == "guest" ? SecondaryCatalogPageState() : SecondaryHomePageState())),
+                token != null && token == "guest"
+                    ? SecondaryCatalogPageState()
+                    : SecondaryHomePageState())),
         BlocProvider(
-            create: (context) =>
-                BasicPageBloc(token == null || token.isEmpty ? RegAndLoginPAge() : MainPage(token: token))),
-        BlocProvider(create: (context) => BannersBloc()..add(LoadBannersEvent())),
+            create: (context) => BasicPageBloc(token == null || token!.isEmpty
+                ? RegAndLoginPAge()
+                : MainPage(token: token!))),
+        BlocProvider(
+            create: (context) => BannersBloc()..add(LoadBannersEvent())),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
-        theme: ThemeData(appBarTheme: AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.light)),
+        theme: ThemeData(
+            useMaterial3: false,
+            appBarTheme:
+                AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.light)),
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        builder: (context, child) =>
-            MediaQuery(data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0), child: child),
+        builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            child: child!),
         debugShowCheckedModeBanner: false,
         home: SplashScreenWithAniamtion(),
       ),

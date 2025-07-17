@@ -27,10 +27,14 @@ import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class InitAddUserAddress extends StatefulWidget {
   final bool isNewAddress;
-  final double heightOfBottomNavBar;
-  final AddressClientModel clientAddressDataModel;
+  final double? heightOfBottomNavBar;
+  final AddressClientModel? clientAddressDataModel;
 
-  const InitAddUserAddress({@required this.heightOfBottomNavBar, this.clientAddressDataModel, this.isNewAddress = true});
+  const InitAddUserAddress({
+    required this.heightOfBottomNavBar,
+    this.clientAddressDataModel,
+    this.isNewAddress = true,
+  });
 
   @override
   _InitAddUserAddressState createState() => _InitAddUserAddressState();
@@ -39,18 +43,20 @@ class InitAddUserAddress extends StatefulWidget {
 class _InitAddUserAddressState extends State<InitAddUserAddress> {
   Completer<YandexMapController> _completer = Completer();
   final double bottomAreaHeight = 180;
-  final TextEditingController _addAddressTextController = TextEditingController();
-  Point myPosition;
-  GeocodingDataModel finalPositionToGo;
+  final TextEditingController _addAddressTextController =
+      TextEditingController();
+  Point? myPosition;
+  GeocodingDataModel? finalPositionToGo;
   bool addressListVisible = false;
-  Timer _timer;
+  Timer? _timer;
   bool isInit = true;
   List<MapObject> myPositionPoint = [];
 
   @override
   void initState() {
     if (!widget.isNewAddress && widget.clientAddressDataModel != null) {
-      _addAddressTextController.text = "${widget.clientAddressDataModel.city}, ${widget.clientAddressDataModel.street} ${widget.clientAddressDataModel.house}";
+      _addAddressTextController.text =
+          "${widget.clientAddressDataModel?.city}, ${widget.clientAddressDataModel?.street} ${widget.clientAddressDataModel?.house}";
     } else {
       _addAddressTextController.clear();
     }
@@ -59,7 +65,8 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
 
   @override
   Widget build(BuildContext context) {
-    AddressesClientBloc _clientAddressBloc = BlocProvider.of<AddressesClientBloc>(context);
+    AddressesClientBloc _clientAddressBloc =
+        BlocProvider.of<AddressesClientBloc>(context);
     SecondaryPageBloc _secondaryPageBloc = BlocProvider.of(context);
     ProfileBloc _profileBloc = BlocProvider.of<ProfileBloc>(context);
     Geocodingbloc _geocodingbloc = BlocProvider.of(context);
@@ -69,15 +76,21 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
       var mylocation = await location.getLocation();
       setState(() {
         addressListVisible = true;
-        myPosition = Point(latitude: mylocation.latitude, longitude: mylocation.longitude);
-        _geocodingbloc.add(GeocodingLoadEvent(latLngOfAddress: Point(latitude: mylocation.latitude, longitude: mylocation.longitude)));
+        myPosition = Point(
+            latitude: mylocation.latitude!, longitude: mylocation.longitude!);
+        _geocodingbloc.add(GeocodingLoadEvent(
+            latLngOfAddress: Point(
+                latitude: mylocation.latitude!,
+                longitude: mylocation.longitude!)));
       });
 
       YandexMapController controller = await _completer.future;
       controller.moveCamera(
           CameraUpdate.newCameraPosition(CameraPosition(
             zoom: 17,
-            target: Point(latitude: myPosition.latitude, longitude: myPosition.longitude),
+            target: Point(
+                latitude: myPosition!.latitude,
+                longitude: myPosition!.longitude),
           )),
           animation: const MapAnimation(duration: 1));
 
@@ -87,30 +100,40 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
             opacity: 1,
             icon: PlacemarkIcon.single(PlacemarkIconStyle(
               scale: 0.5,
-              image: BitmapDescriptor.fromAssetImage("assets/images/mapPointImage.png"),
+              image: BitmapDescriptor.fromAssetImage(
+                  "assets/images/mapPointImage.png"),
             )),
-            point: Point(latitude: myPosition.latitude, longitude: myPosition.longitude),
+            point: Point(
+                latitude: myPosition!.latitude,
+                longitude: myPosition!.longitude),
             mapId: MapObjectId("myPoint"),
           )
         ];
       });
     }
 
-    return BlocBuilder<Geocodingbloc, GeocodingState>(builder: (context, state) {
-      if (state is GeocodingLoadedState && state.isReverse && state.geocodingModel.data.isNotEmpty) {
+    return BlocBuilder<Geocodingbloc, GeocodingState>(
+        builder: (context, state) {
+      if (state is GeocodingLoadedState &&
+          state.isReverse &&
+          state.geocodingModel.data.isNotEmpty) {
         finalPositionToGo = state.geocodingModel.data.first;
         _addAddressTextController.text =
             "${state.geocodingModel.data.first.country} ${state.geocodingModel.data.first.locality ?? ""}  ${state.geocodingModel.data.first.streetName ?? state.geocodingModel.data.first.subLocality ?? ""} ${state.geocodingModel.data.first.streetNumber ?? ""}";
         myAddress =
             "${state.geocodingModel.data.first.locality ?? ""}, ${state.geocodingModel.data.first.streetName ?? state.geocodingModel.data.first.subLocality ?? ""} ${state.geocodingModel.data.first.streetNumber ?? ""}";
       }
-      if (widget.clientAddressDataModel != null && isInit && state is GeocodingLoadedState) {
+      if (widget.clientAddressDataModel != null &&
+          isInit &&
+          state is GeocodingLoadedState) {
         SchedulerBinding.instance.addPostFrameCallback((_) {
           getAddressFromText(geocodingbloc: _geocodingbloc, milliseconds: 10);
           isInit = false;
           addressListVisible = true;
           setState(() {
-            myPosition = Point(latitude: state.geocodingModel.data.first.latitude, longitude: state.geocodingModel.data.first.longitude);
+            myPosition = Point(
+                latitude: state.geocodingModel.data.first.latitude!,
+                longitude: state.geocodingModel.data.first.longitude!);
           });
           finalPositionToGo = state.geocodingModel.data.first;
         });
@@ -118,7 +141,7 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
       return WillPopScope(
         onWillPop: () async {
           if (prefs.getString(SharedKeys.myAddress) != null &&
-              prefs.getString(SharedKeys.myAddress).isNotEmpty &&
+              prefs.getString(SharedKeys.myAddress)?.isNotEmpty == true &&
               prefs.getString(SharedKeys.myAddress) != '') {
             return true;
           } else {
@@ -137,7 +160,9 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
                     mapObjects: myPositionPoint,
                     onMapTap: (argument) async {
                       YandexMapController _controller = await _completer.future;
-                      _controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(zoom: 17, target: argument)),
+                      _controller.moveCamera(
+                          CameraUpdate.newCameraPosition(
+                              CameraPosition(zoom: 17, target: argument)),
                           animation: const MapAnimation(duration: 1));
                       setState(
                         () {
@@ -149,23 +174,35 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
                               opacity: 1,
                               icon: PlacemarkIcon.single(PlacemarkIconStyle(
                                 scale: 0.5,
-                                image: BitmapDescriptor.fromAssetImage("assets/images/mapPointImage.png"),
+                                image: BitmapDescriptor.fromAssetImage(
+                                    "assets/images/mapPointImage.png"),
                               )),
-                              point: Point(latitude: argument.latitude, longitude: argument.longitude),
+                              point: Point(
+                                  latitude: argument.latitude,
+                                  longitude: argument.longitude),
                               mapId: MapObjectId("myPoint"),
                             )
                           ];
                         },
                       );
-                      _geocodingbloc.add(GeocodingLoadEvent(latLngOfAddress: Point(latitude: argument.latitude, longitude: argument.longitude)));
+                      _geocodingbloc.add(GeocodingLoadEvent(
+                          latLngOfAddress: Point(
+                              latitude: argument.latitude,
+                              longitude: argument.longitude)));
                     },
-                    onMapCreated: (YandexMapController yandexMapController) async {
+                    onMapCreated:
+                        (YandexMapController yandexMapController) async {
                       if (!_completer.isCompleted) {
                         _completer.complete(yandexMapController);
                       }
 
-                      yandexMapController.moveCamera(CameraUpdate.newCameraPosition(
-                        CameraPosition(zoom: 12, target: Point(latitude: 45.03100863206145, longitude: 41.94367899999998)),
+                      yandexMapController
+                          .moveCamera(CameraUpdate.newCameraPosition(
+                        CameraPosition(
+                            zoom: 12,
+                            target: Point(
+                                latitude: 45.03100863206145,
+                                longitude: 41.94367899999998)),
                       ));
                     },
                   ),
@@ -176,8 +213,11 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
                         : widget.heightOfBottomNavBar == null
                             ? MediaQuery.of(context).viewInsets.bottom
                             : Platform.isIOS
-                                ? MediaQuery.of(context).viewInsets.bottom - widget.heightOfBottomNavBar - 30
-                                : MediaQuery.of(context).viewInsets.bottom - widget.heightOfBottomNavBar,
+                                ? MediaQuery.of(context).viewInsets.bottom -
+                                    widget.heightOfBottomNavBar! -
+                                    30
+                                : MediaQuery.of(context).viewInsets.bottom -
+                                    widget.heightOfBottomNavBar!,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -187,17 +227,24 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
                                   maxHeight: screenWidth(context) / 2,
                                 ),
                                 child: Container(
-                                  padding: EdgeInsets.only(top: heightRatio(size: 8, context: context)),
+                                  padding: EdgeInsets.only(
+                                      top: heightRatio(
+                                          size: 8, context: context)),
                                   clipBehavior: Clip.hardEdge,
                                   height: state is GeocodingLoadedState
-                                      ? (state.geocodingModel.data.length * heightRatio(size: 40, context: context)).toDouble()
+                                      ? (state.geocodingModel.data.length *
+                                              heightRatio(
+                                                  size: 40, context: context))
+                                          .toDouble()
                                       : 0, ////////////////////////+
                                   // height: state is GeocodingLoadedState ? (state.geocodingModel.data.length * heightRatio(size: 65, context: context)).toDouble() : 0,
                                   width: screenWidth(context),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                                      topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                                      topLeft: Radius.circular(heightRatio(
+                                          size: 15, context: context)),
+                                      topRight: Radius.circular(heightRatio(
+                                          size: 15, context: context)),
                                     ),
                                     color: Colors.white,
                                   ),
@@ -207,35 +254,55 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
                                       return InkWell(
                                         onTap: () async {
                                           setState(() {
-                                            finalPositionToGo = state.geocodingModel.data[index];
+                                            finalPositionToGo = state
+                                                .geocodingModel.data[index];
                                             addressListVisible = false;
-                                            FocusScopeNode currentFocus = FocusScope.of(context);
+                                            FocusScopeNode currentFocus =
+                                                FocusScope.of(context);
                                             currentFocus.unfocus();
 
                                             _addAddressTextController.text =
                                                 "${state.geocodingModel.data[index].country} ${state.geocodingModel.data[index].locality ?? ""}  ${state.geocodingModel.data[index].streetName ?? state.geocodingModel.data[index].subLocality ?? ""} ${state.geocodingModel.data[index].streetNumber ?? ""}";
                                           });
 
-                                          YandexMapController controller = await _completer.future;
+                                          YandexMapController controller =
+                                              await _completer.future;
                                           controller.moveCamera(
-                                            CameraUpdate.newCameraPosition(CameraPosition(
+                                            CameraUpdate.newCameraPosition(
+                                                CameraPosition(
                                               zoom: 12,
                                               target: Point(
-                                                  latitude: state.geocodingModel.data[index].latitude, longitude: state.geocodingModel.data[index].longitude),
+                                                  latitude: state.geocodingModel
+                                                      .data[index].latitude!,
+                                                  longitude: state
+                                                      .geocodingModel
+                                                      .data[index]
+                                                      .longitude!),
                                             )),
-                                            animation: MapAnimation(duration: 1),
+                                            animation:
+                                                MapAnimation(duration: 1),
                                           );
 
                                           setState(() {
                                             myPositionPoint = [
                                               PlacemarkMapObject(
                                                 opacity: 1,
-                                                icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                                                icon: PlacemarkIcon.single(
+                                                    PlacemarkIconStyle(
                                                   scale: 0.5,
-                                                  image: BitmapDescriptor.fromAssetImage("assets/images/mapPointImage.png"),
+                                                  image: BitmapDescriptor
+                                                      .fromAssetImage(
+                                                          "assets/images/mapPointImage.png"),
                                                 )),
                                                 point: Point(
-                                                    latitude: state.geocodingModel.data[index].latitude, longitude: state.geocodingModel.data[index].longitude),
+                                                    latitude: state
+                                                        .geocodingModel
+                                                        .data[index]
+                                                        .latitude!,
+                                                    longitude: state
+                                                        .geocodingModel
+                                                        .data[index]
+                                                        .longitude!),
                                                 mapId: MapObjectId("myPoint"),
                                               )
                                             ];
@@ -246,15 +313,32 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               Container(
-                                                padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 16, context: context)),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: widthRatio(
+                                                        size: 16,
+                                                        context: context)),
                                                 child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
-                                                    SizedBox(height: heightRatio(size: 12, context: context)),
+                                                    SizedBox(
+                                                        height: heightRatio(
+                                                            size: 12,
+                                                            context: context)),
                                                     Text(
                                                         "${state.geocodingModel.data[index].country} ${state.geocodingModel.data[index].locality ?? ""}  ${state.geocodingModel.data[index].streetName ?? state.geocodingModel.data[index].subLocality ?? ""} ${state.geocodingModel.data[index].streetNumber ?? ""}"),
-                                                    SizedBox(height: heightRatio(size: 12, context: context)),
-                                                    index != state.geocodingModel.data.length - 1 ? Divider(height: 0) : const SizedBox(width: double.infinity),
+                                                    SizedBox(
+                                                        height: heightRatio(
+                                                            size: 12,
+                                                            context: context)),
+                                                    index !=
+                                                            state.geocodingModel
+                                                                    .data.length -
+                                                                1
+                                                        ? Divider(height: 0)
+                                                        : const SizedBox(
+                                                            width: double
+                                                                .infinity),
                                                   ],
                                                 ),
                                               ),
@@ -268,11 +352,17 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
                               )
                             : state is GeocodingLoadingState
                                 ? Container(
-                                    height: heightRatio(size: 53, context: context),
-                                    width: widthRatio(size: 53, context: context),
-                                    margin: EdgeInsets.only(bottom: heightRatio(size: 17, context: context)),
+                                    height:
+                                        heightRatio(size: 53, context: context),
+                                    width:
+                                        widthRatio(size: 53, context: context),
+                                    margin: EdgeInsets.only(
+                                        bottom: heightRatio(
+                                            size: 17, context: context)),
                                     color: Colors.transparent,
-                                    child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(mainColor)),
+                                    child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation(mainColor)),
                                   )
                                 : SizedBox(),
                         Container(
@@ -289,73 +379,127 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
                                         finalPositionToGo = null;
                                         addressListVisible = true;
                                       });
-                                      getAddressFromText(geocodingbloc: _geocodingbloc, milliseconds: 1500);
+                                      getAddressFromText(
+                                          geocodingbloc: _geocodingbloc,
+                                          milliseconds: 1500);
                                     },
                                     controller: _addAddressTextController,
                                     cursorColor: mainColor,
-                                    style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                                    style: appLabelTextStyle(
+                                        fontSize: heightRatio(
+                                            size: 16, context: context),
+                                        color: newBlack),
                                     decoration: InputDecoration(
-                                      suffixIcon: _addAddressTextController.text.isNotEmpty
+                                      suffixIcon: _addAddressTextController
+                                              .text.isNotEmpty
                                           ? InkWell(
                                               onTap: () async {
                                                 setState(
                                                   () {
                                                     addressListVisible = false;
-                                                    _addAddressTextController.text = '';
+                                                    _addAddressTextController
+                                                        .text = '';
                                                     finalPositionToGo = null;
-                                                    if (state is GeocodingLoadedState) {
-                                                      state.geocodingModel.data.clear();
+                                                    if (state
+                                                        is GeocodingLoadedState) {
+                                                      state.geocodingModel.data
+                                                          .clear();
                                                     }
                                                   },
                                                 );
                                               },
                                               child: Padding(
-                                                padding: const EdgeInsets.only(right: 6),
+                                                padding: const EdgeInsets.only(
+                                                    right: 6),
                                                 child: SvgPicture.asset(
                                                   'assets/images/closeCircleIcon.svg',
-                                                  width: widthRatio(size: 16, context: context),
-                                                  height: heightRatio(size: 16, context: context),
+                                                  width: widthRatio(
+                                                      size: 16,
+                                                      context: context),
+                                                  height: heightRatio(
+                                                      size: 16,
+                                                      context: context),
                                                   fit: BoxFit.scaleDown,
-                                                  alignment: Alignment.centerRight,
+                                                  alignment:
+                                                      Alignment.centerRight,
                                                 ),
                                               ),
                                             )
                                           : null,
-                                      suffixIconConstraints: BoxConstraints.loose(Size(24, 24)),
-                                      contentPadding: EdgeInsets.only(left: widthRatio(size: 10, context: context)),
-                                      hintText: 'Выберите адрес на карте или введите его',
+                                      suffixIconConstraints:
+                                          BoxConstraints.loose(Size(24, 24)),
+                                      contentPadding: EdgeInsets.only(
+                                          left: widthRatio(
+                                              size: 10, context: context)),
+                                      hintText:
+                                          'Выберите адрес на карте или введите его',
                                       hintStyle: appLabelTextStyle(),
                                       focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(heightRatio(size: 2, context: context)),
-                                        borderSide: BorderSide(color: newRedDark, width: widthRatio(size: 1, context: context)),
+                                        borderRadius: BorderRadius.circular(
+                                            heightRatio(
+                                                size: 2, context: context)),
+                                        borderSide: BorderSide(
+                                            color: newRedDark,
+                                            width: widthRatio(
+                                                size: 1, context: context)),
                                       ),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(heightRatio(size: 2, context: context)),
-                                        borderSide: BorderSide(color: newRedDark, width: widthRatio(size: 1, context: context)),
+                                        borderRadius: BorderRadius.circular(
+                                            heightRatio(
+                                                size: 2, context: context)),
+                                        borderSide: BorderSide(
+                                            color: newRedDark,
+                                            width: widthRatio(
+                                                size: 1, context: context)),
                                       ),
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: heightRatio(size: 20, context: context)),
+                                SizedBox(
+                                    height: heightRatio(
+                                        size: 20, context: context)),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    if (prefs.getString(SharedKeys.myAddress) != null &&
-                                        prefs.getString(SharedKeys.myAddress).isNotEmpty &&
-                                        prefs.getString(SharedKeys.myAddress) != '')
+                                    if (prefs.getString(
+                                                SharedKeys.myAddress) !=
+                                            null &&
+                                        prefs
+                                                .getString(SharedKeys.myAddress)
+                                                ?.isNotEmpty ==
+                                            true &&
+                                        prefs.getString(SharedKeys.myAddress) !=
+                                            '')
                                       Expanded(
                                         child: InkWell(
                                           onTap: () => Navigator.pop(context),
                                           child: Container(
                                             alignment: Alignment.center,
-                                            padding:
-                                                EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
-                                            width: MediaQuery.of(context).size.width,
-                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newBlack),
-                                            margin: EdgeInsets.only(right: widthRatio(size: 12, context: context)),
+                                            padding: EdgeInsets.only(
+                                                top: heightRatio(
+                                                    size: 15, context: context),
+                                                bottom: heightRatio(
+                                                    size: 18,
+                                                    context: context)),
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: newBlack),
+                                            margin: EdgeInsets.only(
+                                                right: widthRatio(
+                                                    size: 12,
+                                                    context: context)),
                                             child: Text(
                                               'Назад',
-                                              style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                                              style: appLabelTextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: heightRatio(
+                                                      size: 16,
+                                                      context: context)),
                                             ),
                                           ),
                                         ),
@@ -364,24 +508,41 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
                                       child: InkWell(
                                         onTap: () async {
                                           setClientAddress(
-                                              clientAddressBloc: _clientAddressBloc, profileBloc: _profileBloc, secondaryPageBloc: _secondaryPageBloc);
+                                              clientAddressBloc:
+                                                  _clientAddressBloc,
+                                              profileBloc: _profileBloc,
+                                              secondaryPageBloc:
+                                                  _secondaryPageBloc);
                                         },
                                         child: Container(
                                           alignment: Alignment.center,
-                                          padding:
-                                              EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
-                                          width: MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
+                                          padding: EdgeInsets.only(
+                                              top: heightRatio(
+                                                  size: 15, context: context),
+                                              bottom: heightRatio(
+                                                  size: 18, context: context)),
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: newRedDark),
                                           child: Text(
                                             'Подтвердить',
-                                            style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                                            style: appLabelTextStyle(
+                                                color: Colors.white,
+                                                fontSize: heightRatio(
+                                                    size: 16,
+                                                    context: context)),
                                           ),
                                         ),
                                       ),
                                     )
                                   ],
                                 ),
-                                SizedBox(height: heightRatio(size: 20, context: context)),
+                                SizedBox(
+                                    height: heightRatio(
+                                        size: 20, context: context)),
                               ],
                             ),
                             width: screenWidth(context),
@@ -402,8 +563,12 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
                     color: Colors.white,
                     // Укажите адрес доставки
                     child: Text(
-                      widget.clientAddressDataModel == null ? "Укажите адрес доставки" : "changeDeliveryAddress".tr(),
-                      style: appLabelTextStyle(color: newBlack, fontSize: heightRatio(size: 18, context: context)),
+                      widget.clientAddressDataModel == null
+                          ? "Укажите адрес доставки"
+                          : "changeDeliveryAddress".tr(),
+                      style: appLabelTextStyle(
+                          color: newBlack,
+                          fontSize: heightRatio(size: 18, context: context)),
                     ),
                   ),
                 ),
@@ -416,10 +581,19 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
                     size: MediaQuery.of(context).viewInsets.bottom == 0
                         ? bottomAreaHeight - 10
                         : widget.heightOfBottomNavBar == null
-                            ? MediaQuery.of(context).viewInsets.bottom + bottomAreaHeight - 10
+                            ? MediaQuery.of(context).viewInsets.bottom +
+                                bottomAreaHeight -
+                                10
                             : Platform.isIOS
-                                ? MediaQuery.of(context).viewInsets.bottom - widget.heightOfBottomNavBar - 50 + bottomAreaHeight - 10
-                                : MediaQuery.of(context).viewInsets.bottom - widget.heightOfBottomNavBar + bottomAreaHeight - 10,
+                                ? MediaQuery.of(context).viewInsets.bottom -
+                                    widget.heightOfBottomNavBar! -
+                                    50 +
+                                    bottomAreaHeight -
+                                    10
+                                : MediaQuery.of(context).viewInsets.bottom -
+                                    widget.heightOfBottomNavBar! +
+                                    bottomAreaHeight -
+                                    10,
                     context: context)),
             child: FloatingActionButton(
               backgroundColor: mainColor,
@@ -429,7 +603,8 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
                   "assets/images/myLocationIcon.svg",
                   color: whiteColor,
                 ),
-                decoration: BoxDecoration(shape: BoxShape.circle, color: mainColor),
+                decoration:
+                    BoxDecoration(shape: BoxShape.circle, color: mainColor),
               ),
               onPressed: () async {
                 getmyPosition();
@@ -441,37 +616,44 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
     });
   }
 
-  void getAddressFromText({@required Geocodingbloc geocodingbloc, @required int milliseconds}) {
+  void getAddressFromText({
+    required Geocodingbloc geocodingbloc,
+    required int milliseconds,
+  }) {
     if (_timer != null) {
-      _timer.cancel();
+      _timer?.cancel();
     }
     _timer = Timer(Duration(milliseconds: milliseconds), () {
-      geocodingbloc.add(GeocodingLoadEvent(address: _addAddressTextController.text));
+      geocodingbloc
+          .add(GeocodingLoadEvent(address: _addAddressTextController.text));
     });
   }
 
   String myAddress = "";
 
   setClientAddress({
-    @required SecondaryPageBloc secondaryPageBloc,
-    @required ProfileBloc profileBloc,
-    @required AddressesClientBloc clientAddressBloc,
+    required SecondaryPageBloc secondaryPageBloc,
+    required ProfileBloc profileBloc,
+    required AddressesClientBloc clientAddressBloc,
   }) async {
-    final AddressesShopBloc addressesShopBloc = BlocProvider.of<AddressesShopBloc>(context);
-    AddressesShopModel nearestStore = null;
+    final AddressesShopBloc addressesShopBloc =
+        BlocProvider.of<AddressesShopBloc>(context);
+    AddressesShopModel? nearestStore = null;
 
     if (finalPositionToGo != null) {
-      log('finalPositionToGo:::::::::::: 📍latitude: ${finalPositionToGo.latitude}, 📍longitude: ${finalPositionToGo.longitude}');
+      log('finalPositionToGo:::::::::::: 📍latitude: ${finalPositionToGo?.latitude}, 📍longitude: ${finalPositionToGo?.longitude}');
       Fluttertoast.showToast(msg: "Подождите...");
       nearestStore = await ShopsListProvider().getNearbyStoreModel(
-        position: Point(latitude: finalPositionToGo.latitude, longitude: finalPositionToGo.longitude),
+        position: Point(
+            latitude: finalPositionToGo!.latitude!,
+            longitude: finalPositionToGo!.longitude!),
       );
-      print('📍 nearestStore======= ' + nearestStore.uuid);
+      print('📍 nearestStore======= ' + (nearestStore?.uuid ?? ''));
     } else {
       Fluttertoast.showToast(msg: "Выберите адрес из списка");
     }
 
-    if (nearestStore.uuid == null) {
+    if (nearestStore?.uuid == null) {
       showModalBottomSheet<dynamic>(
         context: context,
         useSafeArea: true,
@@ -488,26 +670,33 @@ class _InitAddUserAddressState extends State<InitAddUserAddress> {
       if (widget.clientAddressDataModel != null) {
         log('Обновляем адрес клиента::::::::::: changeClientAddressResponse');
         await AddressesClientProvider().changeClientAddressResponse(
-          addressUuid: widget.clientAddressDataModel.uuid,
-          city: finalPositionToGo.locality,
-          house: finalPositionToGo.streetNumber ?? "",
-          title: "${finalPositionToGo.locality}, ${finalPositionToGo.streetName ?? finalPositionToGo.subLocality} ${finalPositionToGo.streetNumber ?? ""}",
-          street: finalPositionToGo.streetName ?? finalPositionToGo.subLocality,
+          addressUuid: widget.clientAddressDataModel!.uuid,
+          city: finalPositionToGo?.locality,
+          house: finalPositionToGo?.streetNumber ?? "",
+          title:
+              "${finalPositionToGo?.locality}, ${finalPositionToGo?.streetName ?? finalPositionToGo?.subLocality} ${finalPositionToGo?.streetNumber ?? ""}",
+          street:
+              finalPositionToGo?.streetName ?? finalPositionToGo?.subLocality,
         );
       } else {
         log('Сохраняем адрес клиента::::::::::: addClientAddressResponse');
         await AddressesClientProvider().addClientAddressResponse(
-          house: finalPositionToGo.streetNumber,
-          city: finalPositionToGo.locality,
-          title: "${finalPositionToGo.locality}, ${finalPositionToGo.streetName ?? finalPositionToGo.subLocality} ${finalPositionToGo.streetNumber ?? ""}",
-          street: finalPositionToGo.streetName ?? finalPositionToGo.subLocality ?? '',
+          house: finalPositionToGo?.streetNumber,
+          city: finalPositionToGo?.locality,
+          title:
+              "${finalPositionToGo?.locality}, ${finalPositionToGo?.streetName ?? finalPositionToGo?.subLocality} ${finalPositionToGo?.streetNumber ?? ""}",
+          street: finalPositionToGo?.streetName ??
+              finalPositionToGo?.subLocality ??
+              '',
         );
       }
 
       // Сохраняем выбранным ближайший магазин
-      addressesShopBloc.add(SelectAddressShopEvent(shopUuid: nearestStore.uuid));
-      log('Сохраняем выбранным ближайший магазин: 📍 ${nearestStore.uuid}');
-      profileBloc.add(ProfileUpdateDataEvent(selectedStoreUserUuid: nearestStore.uuid));
+      addressesShopBloc
+          .add(SelectAddressShopEvent(shopUuid: nearestStore?.uuid));
+      log('Сохраняем выбранным ближайший магазин: 📍 ${nearestStore?.uuid}');
+      profileBloc.add(
+          ProfileUpdateDataEvent(selectedStoreUserUuid: nearestStore?.uuid));
       // }
       profileBloc.add(ProfileLoadEvent());
       clientAddressBloc.add(LoadedAddressesClientEvent());

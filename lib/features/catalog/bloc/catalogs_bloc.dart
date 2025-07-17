@@ -1,26 +1,26 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/features/catalog/models/catalog_list_model.dart';
 import 'package:smart/features/catalog/repositories/catalogs_repository.dart';
 
 abstract class CatalogsEvent {
-  final String catalogUuid;
-  CatalogsEvent({@required this.catalogUuid});
+  final String? catalogUuid;
+  CatalogsEvent({this.catalogUuid});
 }
 
 class CatalogsLoadEvent extends CatalogsEvent {
-  CatalogsLoadEvent({String catalogUuid}) : super(catalogUuid: catalogUuid);
+  CatalogsLoadEvent({String? catalogUuid}) : super(catalogUuid: catalogUuid);
 }
 
 class CatalogstNextPageEvent extends CatalogsEvent {
-  CatalogstNextPageEvent({String catalogUuid}) : super(catalogUuid: catalogUuid);
+  CatalogstNextPageEvent({String? catalogUuid})
+      : super(catalogUuid: catalogUuid);
 }
 
 //states
 
 abstract class CatalogsState {
   final List<CatalogListModel> catalogsList;
-  CatalogsState({@required this.catalogsList});
+  CatalogsState({required this.catalogsList});
 }
 
 class CatalogsInitState extends CatalogsState {
@@ -28,19 +28,23 @@ class CatalogsInitState extends CatalogsState {
 }
 
 class CatalogsLoadingState extends CatalogsState {
-  CatalogsLoadingState({@required List<CatalogListModel> catalogsList}) : super(catalogsList: catalogsList);
+  CatalogsLoadingState({required List<CatalogListModel> catalogsList})
+      : super(catalogsList: catalogsList);
 }
 
 class CatalogsErrorState extends CatalogsState {
-  CatalogsErrorState({@required List<CatalogListModel> catalogsList}) : super(catalogsList: catalogsList);
+  CatalogsErrorState({required List<CatalogListModel> catalogsList})
+      : super(catalogsList: catalogsList);
 }
 
 class CatalogsEmptyState extends CatalogsState {
-  CatalogsEmptyState({@required List<CatalogListModel> catalogsList}) : super(catalogsList: catalogsList);
+  CatalogsEmptyState({required List<CatalogListModel> catalogsList})
+      : super(catalogsList: catalogsList);
 }
 
 class CatalogsLoadedState extends CatalogsState {
-  CatalogsLoadedState({@required List<CatalogListModel> catalogsList}) : super(catalogsList: catalogsList);
+  CatalogsLoadedState({required List<CatalogListModel> catalogsList})
+      : super(catalogsList: catalogsList);
 }
 
 class CatalogsBloc extends Bloc<CatalogsEvent, CatalogsState> {
@@ -56,7 +60,8 @@ class CatalogsBloc extends Bloc<CatalogsEvent, CatalogsState> {
       catalogsList = [];
       yield CatalogsLoadingState(catalogsList: catalogsList);
       try {
-        catalogsList = await getCatalogsFromRepository(catalogUuid: event.catalogUuid);
+        catalogsList =
+            await getCatalogsFromRepository(catalogUuid: event.catalogUuid);
         if (catalogsList.isNotEmpty) {
           yield CatalogsLoadedState(catalogsList: catalogsList);
         } else {
@@ -73,7 +78,8 @@ class CatalogsBloc extends Bloc<CatalogsEvent, CatalogsState> {
         yield CatalogsLoadingState(catalogsList: catalogsList);
         currentPage++;
         try {
-          catalogsList.addAll(await getCatalogsFromRepository(catalogUuid: event.catalogUuid));
+          catalogsList.addAll(
+              await getCatalogsFromRepository(catalogUuid: event.catalogUuid));
           yield CatalogsLoadedState(catalogsList: catalogsList);
         } catch (e) {
           print("error in (CatalogsBloc) class: $e )");
@@ -83,7 +89,11 @@ class CatalogsBloc extends Bloc<CatalogsEvent, CatalogsState> {
     }
   }
 
-  Future<List<CatalogListModel>> getCatalogsFromRepository({String catalogUuid}) async {
-    return await CatalogsRepository(currentPage: currentPage, catalogUuid: catalogUuid).getCatalogsFromRepositoryforPagination();
+  Future<List<CatalogListModel>> getCatalogsFromRepository({
+    String? catalogUuid,
+  }) async {
+    return await CatalogsRepository(
+            currentPage: currentPage, catalogUuid: catalogUuid)
+        .getCatalogsFromRepositoryforPagination();
   }
 }

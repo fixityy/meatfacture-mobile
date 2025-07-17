@@ -6,12 +6,13 @@ class ShimmerHistoryCheckLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-        baseColor: Colors.grey[200],
+        baseColor: Colors.grey[200]!,
         highlightColor: whiteColor,
         child: ListView.builder(
           itemCount: 20,
           itemBuilder: (context, index) => ListTile(
-            title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            title:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Container(
                 color: whiteColor,
                 height: heightRatio(size: 10, context: context),
@@ -27,20 +28,22 @@ class ShimmerHistoryCheckLoader extends StatelessWidget {
               ),
               SizedBox(height: heightRatio(size: 10, context: context)),
             ]),
-            subtitle: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Container(
-                height: heightRatio(size: 10, context: context),
-                color: whiteColor,
-                width: widthRatio(size: 100, context: context),
-                alignment: Alignment.center,
-              ),
-              Container(
-                height: heightRatio(size: 20, context: context),
-                color: whiteColor,
-                width: widthRatio(size: 100, context: context),
-                alignment: Alignment.center,
-              ),
-            ]),
+            subtitle: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: heightRatio(size: 10, context: context),
+                    color: whiteColor,
+                    width: widthRatio(size: 100, context: context),
+                    alignment: Alignment.center,
+                  ),
+                  Container(
+                    height: heightRatio(size: 20, context: context),
+                    color: whiteColor,
+                    width: widthRatio(size: 100, context: context),
+                    alignment: Alignment.center,
+                  ),
+                ]),
           ),
         ));
   }

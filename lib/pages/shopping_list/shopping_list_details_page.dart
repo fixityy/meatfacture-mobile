@@ -5,7 +5,7 @@ import 'package:smart/core/constants/text_styles.dart';
 
 class ShoppingListDetailsPage extends StatelessWidget {
   final String shoppingListName;
-  ShoppingListDetailsPage({@required this.shoppingListName});
+  ShoppingListDetailsPage({required this.shoppingListName});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,13 +24,20 @@ class ShoppingListDetailsPage extends StatelessWidget {
                   children: [
                     SizedBox(width: widthRatio(size: 12, context: context)),
                     InkWell(
-                      child: Container(color: Colors.transparent, child: Icon(Icons.arrow_back_ios_new_rounded, size: heightRatio(size: 20, context: context), color: whiteColor)),
+                      child: Container(
+                          color: Colors.transparent,
+                          child: Icon(Icons.arrow_back_ios_new_rounded,
+                              size: heightRatio(size: 20, context: context),
+                              color: whiteColor)),
                       onTap: () {
                         Navigator.pop(context);
                       },
                     ),
                     SizedBox(width: widthRatio(size: 10, context: context)),
-                    Text(shoppingListName, style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 22, context: context))),
+                    Text(shoppingListName,
+                        style: appHeadersTextStyle(
+                            color: Colors.white,
+                            fontSize: heightRatio(size: 22, context: context))),
                   ],
                 ),
                 SizedBox(height: heightRatio(size: 26, context: context)),
@@ -38,8 +45,10 @@ class ShoppingListDetailsPage extends StatelessWidget {
                 Expanded(
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                      topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                      topLeft: Radius.circular(
+                          heightRatio(size: 15, context: context)),
+                      topRight: Radius.circular(
+                          heightRatio(size: 15, context: context)),
                     ),
                     child: Container(
                       child: ShoppingListDetailsContentWidget(),

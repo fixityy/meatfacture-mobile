@@ -1,5 +1,4 @@
 //Events
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/assortment_comments_model.dart';
 
@@ -10,7 +9,7 @@ abstract class AssortmentCommentsEvent {}
 class AssortmentCommentsLoadEvent extends AssortmentCommentsEvent {
   final String assortmentUuid;
 
-  AssortmentCommentsLoadEvent({@required this.assortmentUuid});
+  AssortmentCommentsLoadEvent({required this.assortmentUuid});
 }
 
 class AssortmentCommentsShowMoreEvent extends AssortmentCommentsEvent {}
@@ -20,7 +19,9 @@ abstract class AssortmentCommentsState {
   AssortmentCommentsModel assortmentCommentsModel =
       AssortmentCommentsModel(data: []);
 
-  AssortmentCommentsState({this.assortmentCommentsModel});
+  AssortmentCommentsState({AssortmentCommentsModel? assortmentCommentsModel})
+      : assortmentCommentsModel =
+            assortmentCommentsModel ?? AssortmentCommentsModel(data: []);
 }
 
 class AssortmentCommentsLoadingState extends AssortmentCommentsState {

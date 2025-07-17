@@ -2,8 +2,8 @@ import 'package:smart/models/meta_model.dart';
 
 class OrderListModel {
   OrderListModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<OrderListDataModel> data;
@@ -22,32 +22,33 @@ class OrderListModel {
 }
 
 class OrderListDataModel {
-  OrderListDataModel(
-      {this.uuid,
-      this.number,
-      this.storeUserUuid,
-      this.storeUserFullName,
-      this.storeUserAddress,
-      this.orderStatusId,
-      this.orderDeliveryTypeId,
-      this.orderPaymentTypeId,
-      this.clientComment,
-      this.clientEmail,
-      this.clientAddressData,
-      this.isPaid,
-      this.deliveryPrice,
-      this.totalDiscountForProducts,
-      this.totalPriceForProductsWithDiscount,
-      this.totalPrice,
-      this.totalWeight,
-      this.totalQuantity,
-      this.plannedDeliveryDatetimeFrom,
-      this.plannedDeliveryDatetimeTo,
-      this.createdAt,
-      this.updatedAt,
-      this.bonusToCharge,
-      this.paidBonus,
-      this.totalBonus});
+  OrderListDataModel({
+    required this.uuid,
+    required this.number,
+    required this.storeUserUuid,
+    required this.storeUserFullName,
+    required this.storeUserAddress,
+    required this.orderStatusId,
+    required this.orderDeliveryTypeId,
+    required this.orderPaymentTypeId,
+    this.clientComment,
+    required this.clientEmail,
+    this.clientAddressData,
+    required this.isPaid,
+    required this.deliveryPrice,
+    required this.totalDiscountForProducts,
+    required this.totalPriceForProductsWithDiscount,
+    required this.totalPrice,
+    required this.totalWeight,
+    this.totalQuantity,
+    required this.plannedDeliveryDatetimeFrom,
+    required this.plannedDeliveryDatetimeTo,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.bonusToCharge,
+    required this.paidBonus,
+    required this.totalBonus,
+  });
 
   String uuid;
   int number;
@@ -57,16 +58,16 @@ class OrderListDataModel {
   String orderStatusId;
   String orderDeliveryTypeId;
   String orderPaymentTypeId;
-  String clientComment;
+  String? clientComment;
   String clientEmail;
-  OrderListClientAddressData clientAddressData;
+  OrderListClientAddressData? clientAddressData;
   bool isPaid;
   double deliveryPrice;
   double totalDiscountForProducts;
   double totalPriceForProductsWithDiscount;
   double totalPrice;
   double totalWeight;
-  double totalQuantity;
+  double? totalQuantity;
   String plannedDeliveryDatetimeFrom;
   String plannedDeliveryDatetimeTo;
   String createdAt;
@@ -126,7 +127,7 @@ class OrderListDataModel {
         "client_comment": clientComment == null ? null : clientComment,
         "client_email": clientEmail,
         "client_address_data":
-            clientAddressData == null ? null : clientAddressData.toJson(),
+            clientAddressData == null ? null : clientAddressData!.toJson(),
         "is_paid": isPaid,
         "delivery_price": deliveryPrice,
         "total_discount_for_products": totalDiscountForProducts,
@@ -147,12 +148,12 @@ class OrderListClientAddressData {
     this.floor,
     this.address,
     this.entrance,
-    this.intercomCode,
+    required this.intercomCode,
     this.apartmentNumber,
   });
 
   dynamic floor;
-  String address;
+  String? address;
   dynamic entrance;
   String intercomCode;
   dynamic apartmentNumber;

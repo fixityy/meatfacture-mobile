@@ -18,7 +18,8 @@ class ContactsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SmartContactsBloc _contactsBloc = BlocProvider.of(context);
-    return BlocBuilder<SmartContactsBloc, SmartContactsState>(builder: (context, state) {
+    return BlocBuilder<SmartContactsBloc, SmartContactsState>(
+        builder: (context, state) {
       if (state is SmartContactsLoadinState) {
         return Center(
           child: CircularProgressIndicator(
@@ -32,8 +33,10 @@ class ContactsWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.only(top: 14, bottom: 14, left: 15, right: 15),
-                decoration: BoxDecoration(color: colorBlack03, shape: BoxShape.circle),
+                padding: const EdgeInsets.only(
+                    top: 14, bottom: 14, left: 15, right: 15),
+                decoration:
+                    BoxDecoration(color: colorBlack03, shape: BoxShape.circle),
                 child: SvgPicture.asset(
                   'assets/images/netErrorIcon.svg',
                   color: Colors.white,
@@ -43,7 +46,10 @@ class ContactsWidget extends StatelessWidget {
               SizedBox(height: heightRatio(size: 14, context: context)),
               Text(
                 "errorText".tr(),
-                style: appHeadersTextStyle(fontSize: heightRatio(size: 18, context: context), color: colorBlack06, fontWeight: FontWeight.w500),
+                style: appHeadersTextStyle(
+                    fontSize: heightRatio(size: 18, context: context),
+                    color: colorBlack06,
+                    fontWeight: FontWeight.w500),
               ),
               SizedBox(height: heightRatio(size: 10, context: context)),
               InkWell(
@@ -52,7 +58,10 @@ class ContactsWidget extends StatelessWidget {
                   color: Colors.transparent,
                   child: Text(
                     "tryAgainText".tr(),
-                    style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), color: mainColor, fontWeight: FontWeight.w500),
+                    style: appHeadersTextStyle(
+                        fontSize: heightRatio(size: 14, context: context),
+                        color: mainColor,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
               ),
@@ -62,7 +71,8 @@ class ContactsWidget extends StatelessWidget {
       }
       if (state is SmartContactsLoadedState) {
         return ListView(
-          padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 16, context: context)),
+          padding: EdgeInsets.symmetric(
+              horizontal: widthRatio(size: 16, context: context)),
           children: [
             // state.socialsListModel.data.isNotEmpty ? SocialsListContent(socialsListModel: state.socialsListModel) : SizedBox(),
             SizedBox(
@@ -70,7 +80,9 @@ class ContactsWidget extends StatelessWidget {
               child: Center(
                 child: Text(
                   'Если вы столкнулись с проблемой или у вас возникли\nвопросы, пожалуйста свяжитесь с поддержкой',
-                  style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: newBlack),
+                  style: appLabelTextStyle(
+                      fontSize: heightRatio(size: 14, context: context),
+                      color: newBlack),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -115,7 +127,8 @@ class ContactsWidget extends StatelessWidget {
             // Divider(color: newGreyECECEC, height: 40),
             InkWell(
               onTap: () async {
-                await Clipboard.setData(ClipboardData(text: state.smartContactsModel.data.email));
+                await Clipboard.setData(ClipboardData(
+                    text: state.smartContactsModel.data.email ?? ''));
                 AppAlert.show(
                   context: context,
                   message: "Эл. почта была успешно скопирована",
@@ -135,14 +148,18 @@ class ContactsWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        state.smartContactsModel.data.email,
-                        style: appLabelTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                        state.smartContactsModel.data.email!,
+                        style: appLabelTextStyle(
+                            fontSize: heightRatio(size: 16, context: context),
+                            color: newBlack),
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: heightRatio(size: 2, context: context)),
                       Text(
                         'По вопросам сотрудничества',
-                        style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: newGrey),
+                        style: appLabelTextStyle(
+                            fontSize: heightRatio(size: 14, context: context),
+                            color: newGrey),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -156,59 +173,87 @@ class ContactsWidget extends StatelessWidget {
                   ? AppButton(
                       text: 'Связаться по Telegram',
                       onPress: () {
-                        log(state.smartContactsModel.data.socialMessengerTelegram);
-                        launchUrl(Uri.parse(state.smartContactsModel.data.socialMessengerTelegram), mode: LaunchMode.externalApplication);
+                        log(state
+                            .smartContactsModel.data.socialMessengerTelegram!);
+                        launchUrl(
+                            Uri.parse(state.smartContactsModel.data
+                                .socialMessengerTelegram!),
+                            mode: LaunchMode.externalApplication);
                       },
                       hasMargin: false,
                       colorButton: newBlue,
                     )
-                  : null,
-            if (state.smartContactsModel.data.socialMessengerTelegram != null) SizedBox(height: heightRatio(size: 12, context: context)),
+                  : const SizedBox.shrink(),
+
+            if (state.smartContactsModel.data.socialMessengerTelegram != null)
+              SizedBox(height: heightRatio(size: 12, context: context)),
             if (state.socialsListModel.data[0].url != null)
-              state.socialsListModel.data.isNotEmpty && state.socialsListModel.data[0].url.isNotEmpty
+              state.socialsListModel.data.isNotEmpty &&
+                      state.socialsListModel.data[0].url.isNotEmpty
                   ? AppButton(
                       text: 'Связаться в Whatsapp',
                       onPress: () {
                         log(state.socialsListModel.data[0].url);
-                        launchUrl(Uri.parse(state.socialsListModel.data[0].url), mode: LaunchMode.externalApplication);
+                        launchUrl(Uri.parse(state.socialsListModel.data[0].url),
+                            mode: LaunchMode.externalApplication);
                       },
                       hasMargin: false,
                       colorButton: newGreen27B568,
                     )
-                  : null,
+                  : const SizedBox.shrink(),
             Divider(color: newGreyECECEC, height: 46),
             Text(
               'Крестьянско-фермерское хозяйство Кондохов Анзор Адамович\nИНН 090101676089',
-              style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), color: newGrey979797, height: 1.3),
+              style: appLabelTextStyle(
+                  fontSize: heightRatio(size: 12, context: context),
+                  color: newGrey979797,
+                  height: 1.3),
               textAlign: TextAlign.start,
             ),
             SizedBox(height: heightRatio(size: 16, context: context)),
             Text(
               'ОГРНИП 312091715800012 от 06.06.2012',
-              style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), color: newGrey979797, height: 1.3),
+              style: appLabelTextStyle(
+                  fontSize: heightRatio(size: 12, context: context),
+                  color: newGrey979797,
+                  height: 1.3),
               textAlign: TextAlign.start,
             ),
             SizedBox(height: heightRatio(size: 16, context: context)),
             Text(
               'Юридический адрес: 127322, Город Москва, вн.тер.г. муниципальный округ Бутырский, ул Фонвизина, д. 18, кв. 525',
-              style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), color: newGrey979797, height: 1.3),
+              style: appLabelTextStyle(
+                  fontSize: heightRatio(size: 12, context: context),
+                  color: newGrey979797,
+                  height: 1.3),
               textAlign: TextAlign.start,
             ),
             SizedBox(height: heightRatio(size: 16, context: context)),
             Text(
               'Фактический адрес: 355 042, г. Ставрополь,\nул. Доваторцев, д. 65, к. А',
-              style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), color: newGrey979797, height: 1.3),
+              style: appLabelTextStyle(
+                  fontSize: heightRatio(size: 12, context: context),
+                  color: newGrey979797,
+                  height: 1.3),
               textAlign: TextAlign.start,
             ),
             SizedBox(height: heightRatio(size: 30, context: context)),
             InkWell(
-              onTap: () => launchUrl(Uri.parse('$apiHead/information.pdf'), mode: LaunchMode.externalApplication),
-              child: Text('Условия возврата и обмена', style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), color: newRedDark)),
+              onTap: () => launchUrl(Uri.parse('$apiHead/information.pdf'),
+                  mode: LaunchMode.externalApplication),
+              child: Text('Условия возврата и обмена',
+                  style: appHeadersTextStyle(
+                      fontSize: heightRatio(size: 14, context: context),
+                      color: newRedDark)),
             ),
             SizedBox(height: heightRatio(size: 15, context: context)),
             InkWell(
-              onTap: () => launchUrl(Uri.parse('$apiHead/policy.pdf'), mode: LaunchMode.externalApplication),
-              child: Text('Порядок обработки персональный данных', style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), color: newRedDark)),
+              onTap: () => launchUrl(Uri.parse('$apiHead/policy.pdf'),
+                  mode: LaunchMode.externalApplication),
+              child: Text('Порядок обработки персональный данных',
+                  style: appHeadersTextStyle(
+                      fontSize: heightRatio(size: 14, context: context),
+                      color: newRedDark)),
             ),
             SizedBox(height: heightRatio(size: 30, context: context)),
             Center(

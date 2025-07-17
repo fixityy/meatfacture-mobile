@@ -6,7 +6,7 @@ class DashedBorderContainer extends StatelessWidget {
   final double dashWidth;
   final double dashSpace;
   final Color color;
-  final BorderRadius borderRadius;
+  final BorderRadius? borderRadius;
   final EdgeInsets padding;
 
   DashedBorderContainer({
@@ -16,7 +16,7 @@ class DashedBorderContainer extends StatelessWidget {
     this.color = Colors.black,
     this.borderRadius,
     this.padding = const EdgeInsets.all(8.0),
-    @required this.child,
+    required this.child,
   }) : assert(child != null);
 
   @override
@@ -42,7 +42,7 @@ class _DashedBorderPainter extends CustomPainter {
   final double dashWidth;
   final double dashSpace;
   final Color color;
-  final BorderRadius borderRadius;
+  final BorderRadius? borderRadius;
 
   _DashedBorderPainter(
     this.strokeWidth,
@@ -63,7 +63,7 @@ class _DashedBorderPainter extends CustomPainter {
 
     final path = Path();
     if (borderRadius != null) {
-      path.addRRect(borderRadius.toRRect(rect));
+      path.addRRect(borderRadius!.toRRect(rect));
     } else {
       path.addRect(rect);
     }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/shopping_list_deatils_model.dart';
 import 'package:smart/repositories/shopping_list_details_repository.dart';
@@ -8,7 +7,7 @@ abstract class ShoppingListDetailsEvent {}
 
 class ShoppingListDetailsLoadEvent extends ShoppingListDetailsEvent {
   final String shoppingListUuid;
-  ShoppingListDetailsLoadEvent({@required this.shoppingListUuid});
+  ShoppingListDetailsLoadEvent({required this.shoppingListUuid});
 }
 
 //states
@@ -24,12 +23,12 @@ class ShoppingListDetailsOldTokenState extends ShoppingListDetailsState {}
 class ShoppingListDetailsErrorState extends ShoppingListDetailsState {
   final String shoppingListUuid;
 
-  ShoppingListDetailsErrorState({@required this.shoppingListUuid});
+  ShoppingListDetailsErrorState({required this.shoppingListUuid});
 }
 
 class ShoppingListDetailsLoadedState extends ShoppingListDetailsState {
   final ShoppingListDeatailsModel shoppingListDeatailsModel;
-  ShoppingListDetailsLoadedState({@required this.shoppingListDeatailsModel});
+  ShoppingListDetailsLoadedState({required this.shoppingListDeatailsModel});
 }
 
 //bloc class

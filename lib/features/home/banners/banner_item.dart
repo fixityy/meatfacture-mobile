@@ -12,7 +12,7 @@ import 'package:smart/utils/custom_cache_manager.dart';
 
 class BannerItem extends StatelessWidget {
   final BannersListDataModel bannersListDataModel;
-  const BannerItem({@required this.bannersListDataModel});
+  const BannerItem({required this.bannersListDataModel});
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -22,12 +22,13 @@ class BannerItem extends StatelessWidget {
             context,
             CupertinoPageRoute(
               builder: (context) => RedesProductDetailsPage(
-                productUuid: bannersListDataModel.referenceUuid,
+                productUuid: bannersListDataModel.referenceUuid!,
               ),
             ),
           );
         } else if (bannersListDataModel.referenceType == "catalog") {
-          if (bannersListDataModel.referenceUuid != null && bannersListDataModel.referenceUuid != "") {
+          if (bannersListDataModel.referenceUuid != null &&
+              bannersListDataModel.referenceUuid != "") {
             Navigator.push(
               context,
               CupertinoPageRoute(
@@ -53,9 +54,13 @@ class BannerItem extends StatelessWidget {
             imageUrl: bannersListDataModel.logoFilePath,
             cacheManager: CustomCacheManager(),
             fit: BoxFit.cover,
-            errorWidget: (context, url, error) => Image.asset("assets/images/notImage.png", fit: BoxFit.contain),
+            errorWidget: (context, url, error) =>
+                Image.asset("assets/images/notImage.png", fit: BoxFit.contain),
           ),
-          if ((bannersListDataModel.name != null && bannersListDataModel.name != "") || (bannersListDataModel.description != null && bannersListDataModel.description != ""))
+          if ((bannersListDataModel.name != null &&
+                  bannersListDataModel.name != "") ||
+              (bannersListDataModel.description != null &&
+                  bannersListDataModel.description != ""))
             Positioned(
               top: heightRatio(size: 24, context: context),
               left: widthRatio(size: 16, context: context),
@@ -65,16 +70,22 @@ class BannerItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (bannersListDataModel.name != null && bannersListDataModel.name != "")
+                    if (bannersListDataModel.name != null &&
+                        bannersListDataModel.name != "")
                       Text(
-                        bannersListDataModel.name,
-                        style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 20, context: context)),
+                        bannersListDataModel.name!,
+                        style: appHeadersTextStyle(
+                            color: Colors.white,
+                            fontSize: heightRatio(size: 20, context: context)),
                       ),
                     SizedBox(height: heightRatio(size: 10, context: context)),
-                    if (bannersListDataModel.description != null && bannersListDataModel.description != "")
+                    if (bannersListDataModel.description != null &&
+                        bannersListDataModel.description != "")
                       Text(
-                        bannersListDataModel.description,
-                        style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 15, context: context)),
+                        bannersListDataModel.description!,
+                        style: appLabelTextStyle(
+                            color: Colors.white,
+                            fontSize: heightRatio(size: 15, context: context)),
                       ),
                   ],
                 ),

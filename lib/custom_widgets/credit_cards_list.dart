@@ -9,7 +9,7 @@ import 'package:smart/core/constants/text_styles.dart';
 import 'credit_card_details.dart';
 
 class CreditCardsList extends StatelessWidget {
-  String getPaySystemByNumber({@required String number}) {
+  String getPaySystemByNumber({required String number}) {
     switch (number[0]) {
       case "2":
         return "assets/images/mir_card.png";
@@ -127,7 +127,12 @@ class CreditCardsList extends StatelessWidget {
     }
   }
 
-  void openCardDetailsBottomSheet({BuildContext context, String paySystem, String mask, @required String cardUuid}) {
+  void openCardDetailsBottomSheet({
+    required BuildContext context,
+    required String paySystem,
+    required String mask,
+    required String cardUuid,
+  }) {
     showModalBottomSheet<dynamic>(
         isScrollControlled: true,
         useSafeArea: true,
@@ -155,10 +160,12 @@ class CreditCardsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CreditCardsListBloc, CreditCardsListState>(
       builder: (context, state) {
-        if (state is CreditCardsListLoadedState && state.cardsListModel.data != null && state.cardsListModel.data.isNotEmpty) {
-          for (var i = 0; i < state.cardsListModel.data.length; i++) {
-            if (state.cardsListModel.data[i].cardMask == null) {
-              state.cardsListModel.data.removeAt(i);
+        if (state is CreditCardsListLoadedState &&
+            state.cardsListModel.data != null &&
+            state.cardsListModel.data!.isNotEmpty) {
+          for (var i = 0; i < state.cardsListModel.data!.length; i++) {
+            if (state.cardsListModel.data![i].cardMask == null) {
+              state.cardsListModel.data!.removeAt(i);
               i--;
             }
           }
@@ -171,12 +178,22 @@ class CreditCardsList extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return Container(
-                      margin: EdgeInsets.only(bottom: heightRatio(size: 10, context: context)),
-                      padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 16, context: context), vertical: heightRatio(size: 10, context: context)),
+                      margin: EdgeInsets.only(
+                          bottom: heightRatio(size: 10, context: context)),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: widthRatio(size: 16, context: context),
+                          vertical: heightRatio(size: 10, context: context)),
                       decoration: BoxDecoration(
                         color: whiteColor,
-                        borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)),
-                        boxShadow: [BoxShadow(color: newShadow, offset: Offset(6, 6), blurRadius: 12, spreadRadius: 0)],
+                        borderRadius: BorderRadius.circular(
+                            heightRatio(size: 10, context: context)),
+                        boxShadow: [
+                          BoxShadow(
+                              color: newShadow,
+                              offset: Offset(6, 6),
+                              blurRadius: 12,
+                              spreadRadius: 0)
+                        ],
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -185,17 +202,33 @@ class CreditCardsList extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Image.asset(
-                                getPaySystemByNumber(number: state.cardsListModel.data[index].cardMask),
+                                getPaySystemByNumber(
+                                    number: state
+                                        .cardsListModel.data![index].cardMask!),
                                 height: heightRatio(size: 28, context: context),
-                                errorBuilder: (context, error, stackTrace) => Text(getPaySystemByNumber(number: state.cardsListModel.data[index].cardMask),
-                                    style: appTextStyle(fontSize: heightRatio(size: 14, context: context), fontWeight: FontWeight.w500)),
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Text(
+                                        getPaySystemByNumber(
+                                            number: state.cardsListModel
+                                                .data![index].cardMask!),
+                                        style: appTextStyle(
+                                            fontSize: heightRatio(
+                                                size: 14, context: context),
+                                            fontWeight: FontWeight.w500)),
                               ),
-                              SizedBox(width: widthRatio(size: 12, context: context)),
+                              SizedBox(
+                                  width:
+                                      widthRatio(size: 12, context: context)),
                               Text(
-                                state.cardsListModel.data[index].cardMask.replaceAll("X", "*").substring(6),
-                                style: appLabelTextStyle(fontSize: 16, color: newBlack),
+                                state.cardsListModel.data![index].cardMask!
+                                    .replaceAll("X", "*")
+                                    .substring(6),
+                                style: appLabelTextStyle(
+                                    fontSize: 16, color: newBlack),
                               ),
-                              SizedBox(width: widthRatio(size: 25, context: context)),
+                              SizedBox(
+                                  width:
+                                      widthRatio(size: 25, context: context)),
                             ],
                           ),
                           InkWell(
@@ -220,10 +253,16 @@ class CreditCardsList extends StatelessWidget {
                             //   }
                             // },
                             onTap: () => openCardDetailsBottomSheet(
-                                cardUuid: state.cardsListModel.data[index].uuid,
+                                cardUuid:
+                                    state.cardsListModel.data![index].uuid,
                                 context: context,
-                                mask: state.cardsListModel.data[index].cardMask.replaceAll("X", "*").substring(6),
-                                paySystem: getPaySystemByNumber(number: state.cardsListModel.data[index].cardMask)),
+                                mask: state
+                                    .cardsListModel.data![index].cardMask!
+                                    .replaceAll("X", "*")
+                                    .substring(6),
+                                paySystem: getPaySystemByNumber(
+                                    number: state.cardsListModel.data![index]
+                                        .cardMask!)),
                             child: SvgPicture.asset(
                               "assets/images/newTrash.svg",
                               height: heightRatio(size: 26, context: context),
@@ -236,7 +275,7 @@ class CreditCardsList extends StatelessWidget {
                       ),
                     );
                   },
-                  itemCount: state.cardsListModel.data.length),
+                  itemCount: state.cardsListModel.data!.length),
             ],
           );
         }

@@ -8,7 +8,7 @@ import 'package:smart/features/recipes/widgets/recipes_carousel_widget.dart';
 
 class RecipesRecommended extends StatelessWidget {
   final ReceiptsListModel receiptsList;
-  const RecipesRecommended({Key key, @required this.receiptsList});
+  const RecipesRecommended({super.key, required this.receiptsList});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +19,20 @@ class RecipesRecommended extends StatelessWidget {
             SizedBox(width: widthRatio(size: 16, context: context)),
             Text(
               'Рекомендованные рецепты',
-              style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+              style: appHeadersTextStyle(
+                  fontSize: heightRatio(size: 16, context: context),
+                  color: newBlack),
             ),
             Spacer(),
             InkWell(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RecipesScreen(isPop: false))),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RecipesScreen(isPop: false))),
               child: Container(
-                decoration: BoxDecoration(color: lightGreyColor, borderRadius: BorderRadius.circular(14)),
+                decoration: BoxDecoration(
+                    color: lightGreyColor,
+                    borderRadius: BorderRadius.circular(14)),
                 child: Padding(
                   padding: EdgeInsets.only(
                     left: widthRatio(size: 12, context: context),
@@ -38,7 +45,9 @@ class RecipesRecommended extends StatelessWidget {
                     children: [
                       Text(
                         'Все',
-                        style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), color: newBlack),
+                        style: appLabelTextStyle(
+                            fontSize: heightRatio(size: 12, context: context),
+                            color: newBlack),
                       ),
                       SizedBox(width: widthRatio(size: 7.54, context: context)),
                       RotationTransition(

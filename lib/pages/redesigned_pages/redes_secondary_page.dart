@@ -5,9 +5,13 @@ import 'package:smart/core/constants/text_styles.dart';
 class RedesSecondaryPage extends StatelessWidget {
   final String upText;
   final Widget contentWidget;
-  final Color BGColor;
+  final Color? BGColor;
 
-  const RedesSecondaryPage({@required this.upText, @required this.contentWidget, this.BGColor});
+  const RedesSecondaryPage({
+    required this.upText,
+    required this.contentWidget,
+    this.BGColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +21,16 @@ class RedesSecondaryPage extends StatelessWidget {
         decoration: BoxDecoration(color: BGColor ?? whiteColor),
         child: Column(children: [
           Container(
-            padding: EdgeInsets.only(top: heightRatio(size: 6, context: context), bottom: heightRatio(size: 20, context: context)),
-            decoration: BoxDecoration(color: whiteColor, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(heightRatio(size: 20, context: context)), bottomRight: Radius.circular(heightRatio(size: 20, context: context)))),
+            padding: EdgeInsets.only(
+                top: heightRatio(size: 6, context: context),
+                bottom: heightRatio(size: 20, context: context)),
+            decoration: BoxDecoration(
+                color: whiteColor,
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(
+                        heightRatio(size: 20, context: context)),
+                    bottomRight: Radius.circular(
+                        heightRatio(size: 20, context: context)))),
             width: screenWidth(context),
             child: SafeArea(
               bottom: false,
@@ -32,7 +44,10 @@ class RedesSecondaryPage extends StatelessWidget {
                       child: InkWell(
                         child: Container(
                           color: Colors.transparent,
-                          padding: EdgeInsets.only(bottom: heightRatio(size: 5, context: context), right: widthRatio(size: 25, context: context), left: widthRatio(size: 15, context: context)),
+                          padding: EdgeInsets.only(
+                              bottom: heightRatio(size: 5, context: context),
+                              right: widthRatio(size: 25, context: context),
+                              left: widthRatio(size: 15, context: context)),
                           child: Icon(
                             Icons.arrow_back_ios_new_rounded,
                             size: heightRatio(size: 25, context: context),
@@ -48,7 +63,9 @@ class RedesSecondaryPage extends StatelessWidget {
                     SizedBox(width: widthRatio(size: 10, context: context)),
                     Text(
                       upText,
-                      style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), fontWeight: FontWeight.w700),
+                      style: appHeadersTextStyle(
+                          fontSize: heightRatio(size: 16, context: context),
+                          fontWeight: FontWeight.w700),
                     )
                   ],
                 ),

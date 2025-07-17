@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class SecondaryPageEvent {}
@@ -6,7 +5,7 @@ abstract class SecondaryPageEvent {}
 class ShoppingListDetailsOpenEvent extends SecondaryPageEvent {
   final String shoppingListName;
 
-  ShoppingListDetailsOpenEvent({@required this.shoppingListName});
+  ShoppingListDetailsOpenEvent({required this.shoppingListName});
 }
 
 class HomeEvent extends SecondaryPageEvent {}
@@ -39,13 +38,13 @@ class FavoritePageOpenEvent extends SecondaryPageEvent {}
 
 class HistoryCheckDetailsPageLoadEvent extends SecondaryPageEvent {
   final String checkNumber;
-  HistoryCheckDetailsPageLoadEvent({@required this.checkNumber});
+  HistoryCheckDetailsPageLoadEvent({required this.checkNumber});
 }
 
 class HistoryOrderDetailsPageLoadEvent extends SecondaryPageEvent {
   final String orderNumber;
 
-  HistoryOrderDetailsPageLoadEvent({@required this.orderNumber});
+  HistoryOrderDetailsPageLoadEvent({required this.orderNumber});
 }
 
 class ProfileSecondaryPageEvent extends SecondaryPageEvent {}
@@ -55,13 +54,13 @@ class ContactsEvent extends SecondaryPageEvent {}
 class ShopsOpenEvent extends SecondaryPageEvent {
   final SecondaryPageEvent secondaryPageEvent;
 
-  ShopsOpenEvent({@required this.secondaryPageEvent});
+  ShopsOpenEvent({required this.secondaryPageEvent});
 }
 
 class ProductDetailsonSecondaryPageEvent extends SecondaryPageEvent {
   final String productsQuantity;
 
-  ProductDetailsonSecondaryPageEvent({@required this.productsQuantity});
+  ProductDetailsonSecondaryPageEvent({required this.productsQuantity});
 }
 
 //states

@@ -35,7 +35,10 @@ class RedesPointsHaveNowCard extends StatelessWidget {
     return BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
       if (state is ProfileLoadedState) {
         return Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 15, context: context)), color: lightGreyColor),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                    heightRatio(size: 15, context: context)),
+                color: lightGreyColor),
             padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,20 +48,26 @@ class RedesPointsHaveNowCard extends StatelessWidget {
                   children: [
                     Text(
                       "totalBonusesText".tr(),
-                      style: appHeadersTextStyle(fontSize: heightRatio(size: 15, context: context), fontWeight: FontWeight.w700),
+                      style: appHeadersTextStyle(
+                          fontSize: heightRatio(size: 15, context: context),
+                          fontWeight: FontWeight.w700),
                     ),
                     InkWell(
                       onTap: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => redesBonusesInstructionPage(headerText: "", context: context),
+                              builder: (context) => redesBonusesInstructionPage(
+                                  headerText: "", context: context),
                             ));
                       },
                       child: Container(
                         child: Text(
                           "FindOutHowToSaveMoreText".tr(),
-                          style: appHeadersTextStyle(fontSize: heightRatio(size: 12, context: context), fontWeight: FontWeight.w600, color: colorDarkRed),
+                          style: appHeadersTextStyle(
+                              fontSize: heightRatio(size: 12, context: context),
+                              fontWeight: FontWeight.w600,
+                              color: colorDarkRed),
                         ),
                       ),
                     )
@@ -67,12 +76,16 @@ class RedesPointsHaveNowCard extends StatelessWidget {
                 SizedBox(height: heightRatio(size: 5, context: context)),
                 Row(
                   children: [
-                    Text(state.profileModel.data.bonusBalance.toString(),
-                        style: appHeadersTextStyle(fontSize: heightRatio(size: 20, context: context), fontWeight: FontWeight.w800, color: mainColor)),
+                    Text(state.profileModel.data!.bonusBalance.toString(),
+                        style: appHeadersTextStyle(
+                            fontSize: heightRatio(size: 20, context: context),
+                            fontWeight: FontWeight.w800,
+                            color: mainColor)),
                     SizedBox(width: widthRatio(size: 5, context: context)),
                     Container(
                       height: heightRatio(size: 25, context: context),
-                      child: SvgPicture.asset('assets/images/bonus_vector.svg', height: heightRatio(size: 25, context: context)),
+                      child: SvgPicture.asset('assets/images/bonus_vector.svg',
+                          height: heightRatio(size: 25, context: context)),
                     )
                   ],
                 )

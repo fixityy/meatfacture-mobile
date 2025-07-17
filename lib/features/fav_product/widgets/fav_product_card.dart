@@ -13,7 +13,7 @@ import 'package:smart/core/constants/text_styles.dart';
 
 class FavProductCard extends StatelessWidget {
   final FavoriteProductDataModel productModel;
-  FavProductCard({@required this.productModel});
+  FavProductCard({required this.productModel});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,8 @@ class FavProductCard extends StatelessWidget {
         Navigator.push(
           context,
           new CupertinoPageRoute(
-            builder: (context) => RedesProductDetailsPage(productUuid: productModel.assortmentUuid),
+            builder: (context) => RedesProductDetailsPage(
+                productUuid: productModel.assortmentUuid),
           ),
         );
       },
@@ -35,9 +36,16 @@ class FavProductCard extends StatelessWidget {
         margin: EdgeInsets.only(top: heightRatio(size: 8, context: context)),
         padding: EdgeInsets.all(widthRatio(size: 12, context: context)),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(heightRatio(size: 15, context: context)),
+          borderRadius:
+              BorderRadius.circular(heightRatio(size: 15, context: context)),
           color: Colors.white,
-          boxShadow: [BoxShadow(color: shadowGrayColor006, spreadRadius: 5, blurRadius: 7, offset: Offset(0, 0))],
+          boxShadow: [
+            BoxShadow(
+                color: shadowGrayColor006,
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 0))
+          ],
         ),
         child: Row(
           children: [
@@ -49,10 +57,20 @@ class FavProductCard extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   height: heightRatio(size: 60, context: context),
                   width: widthRatio(size: 60, context: context),
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)), color: colorBlack03),
-                  child: Image.network(productModel.images.first.path, fit: BoxFit.fitHeight),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                          heightRatio(size: 10, context: context)),
+                      color: colorBlack03),
+                  child: Image.network(productModel.images.first.path,
+                      fit: BoxFit.fitHeight),
                 ),
-                Positioned(right: -6, top: -5, child: redesRotatedBoxForFavProdDiscount(double.parse(productModel.discountPercent).toStringAsFixed(0), context)),
+                Positioned(
+                    right: -6,
+                    top: -5,
+                    child: redesRotatedBoxForFavProdDiscount(
+                        double.parse(productModel.discountPercent)
+                            .toStringAsFixed(0),
+                        context)),
               ],
             ),
             // Container(
@@ -69,14 +87,18 @@ class FavProductCard extends StatelessWidget {
                 children: [
                   Text(
                     productModel.assortmentName,
-                    style: appHeadersTextStyle(fontSize: heightRatio(size: 13, context: context)),
+                    style: appHeadersTextStyle(
+                        fontSize: heightRatio(size: 13, context: context)),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: heightRatio(size: 3, context: context)),
                   Text(
                     validText(activeTo: _activeTo, activeFrom: _activeFrom),
-                    style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), fontWeight: FontWeight.w500, color: colorBlack06),
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 12, context: context),
+                        fontWeight: FontWeight.w500,
+                        color: colorBlack06),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -85,7 +107,10 @@ class FavProductCard extends StatelessWidget {
                     children: [
                       Text(
                         "${productModel.priceWithDiscount.toStringAsFixed(2)} ${"rubleSignText".tr()}/${getAssortmentUnitId(assortmentUnitId: productModel.assortmentUnitId)[1]}",
-                        style: appTextStyle(fontSize: heightRatio(size: 12, context: context), fontWeight: FontWeight.w700, color: mainColor),
+                        style: appTextStyle(
+                            fontSize: heightRatio(size: 12, context: context),
+                            fontWeight: FontWeight.w700,
+                            color: mainColor),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -98,10 +123,16 @@ class FavProductCard extends StatelessWidget {
                             child: Text(
                               productModel.priceWithDiscount != null
                                   ? productModel.currentPrice != null
-                                      ? productModel.currentPrice.toString() + " ₽"
+                                      ? productModel.currentPrice.toString() +
+                                          " ₽"
                                       : ""
                                   : "",
-                              style: appTextStyle(decorationColor: colorBlack04, fontSize: heightRatio(size: 12, context: context), color: colorBlack04, fontWeight: FontWeight.w500),
+                              style: appTextStyle(
+                                  decorationColor: colorBlack04,
+                                  fontSize:
+                                      heightRatio(size: 12, context: context),
+                                  color: colorBlack04,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
                           Positioned(
@@ -109,7 +140,9 @@ class FavProductCard extends StatelessWidget {
                             left: 0,
                             right: 0,
                             bottom: 0,
-                            child: Image.asset("assets/images/line_through_image.png", fit: BoxFit.contain),
+                            child: Image.asset(
+                                "assets/images/line_through_image.png",
+                                fit: BoxFit.contain),
                           )
                         ],
                       ),
@@ -121,12 +154,14 @@ class FavProductCard extends StatelessWidget {
             SizedBox(width: widthRatio(size: 10, context: context)),
             InkWell(
               onTap: () async {
-                if (await BasketProvider().addProductInBasket(productModel.assortmentUuid, 1)) {
+                if (await BasketProvider()
+                    .addProductInBasket(productModel.assortmentUuid, 1)) {
                   _basketListBloc.add(BasketLoadEvent());
                 }
               },
               child: Container(
-                decoration: BoxDecoration(shape: BoxShape.circle, color: newRedDark),
+                decoration:
+                    BoxDecoration(shape: BoxShape.circle, color: newRedDark),
                 padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
                 child: SvgPicture.asset("assets/images/redes_cart_icon.svg"),
               ),
@@ -138,8 +173,9 @@ class FavProductCard extends StatelessWidget {
   }
 }
 
-String validText({DateTime activeTo, DateTime activeFrom}) {
-  String _formedDate = "${activeTo.day < 10 ? ("0" + activeTo.day.toString()) : activeTo.day}.${activeTo.month < 10 ? ("0" + activeTo.month.toString()) : activeTo.month}";
+String validText({required DateTime activeTo, required DateTime activeFrom}) {
+  String _formedDate =
+      "${activeTo.day < 10 ? ("0" + activeTo.day.toString()) : activeTo.day}.${activeTo.month < 10 ? ("0" + activeTo.month.toString()) : activeTo.month}";
   if (activeFrom.isBefore(DateTime.now())) {
     return "${"validForText".tr()} $_formedDate";
   } else if (activeFrom.isAfter(DateTime.now())) {

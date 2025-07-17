@@ -6,7 +6,11 @@ class BasketSettingOrderBtn extends StatelessWidget {
   final String title;
   final bool isActive;
   final VoidCallback onTap;
-  const BasketSettingOrderBtn({@required this.title, this.isActive = false, @required this.onTap});
+  const BasketSettingOrderBtn({
+    required this.title,
+    this.isActive = false,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,37 +28,52 @@ class BasketSettingOrderBtn extends StatelessWidget {
         onTap: onTap,
         title: Text(
           title,
-          style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: newBlack),
+          style: appLabelTextStyle(
+              fontSize: heightRatio(size: 14, context: context),
+              color: newBlack),
         ),
         trailing: isActive == null
-            ? const SizedBox(width: 16, child: Icon(Icons.arrow_forward_ios_rounded, size: 20, color: Colors.grey))
+            ? const SizedBox(
+                width: 16,
+                child: Icon(Icons.arrow_forward_ios_rounded,
+                    size: 20, color: Colors.grey))
             : isActive == true
                 ? Container(
                     width: 20,
                     height: 20,
-                    decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(12)),
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(12)),
                     alignment: Alignment.center,
                     child: Container(
                       width: 18,
                       height: 18,
-                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12)),
                       alignment: Alignment.center,
                       child: Container(
                         width: 14,
                         height: 14,
-                        decoration: BoxDecoration(color: newRedDark, borderRadius: BorderRadius.circular(12)),
+                        decoration: BoxDecoration(
+                            color: newRedDark,
+                            borderRadius: BorderRadius.circular(12)),
                       ),
                     ),
                   )
                 : Container(
                     width: 20,
                     height: 20,
-                    decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(12)),
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(12)),
                     alignment: Alignment.center,
                     child: Container(
                       width: 18,
                       height: 18,
-                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12)),
                     ),
                   ),
         contentPadding: const EdgeInsets.all(0),

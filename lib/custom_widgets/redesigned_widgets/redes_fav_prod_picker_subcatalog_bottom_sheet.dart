@@ -13,7 +13,10 @@ import 'package:smart/core/constants/text_styles.dart';
 class FavProdPickerSubcatalogBottomSheet extends StatelessWidget {
   final String preCataloName;
   final String preCataloUuid;
-  const FavProdPickerSubcatalogBottomSheet({@required this.preCataloName, @required this.preCataloUuid});
+  const FavProdPickerSubcatalogBottomSheet({
+    required this.preCataloName,
+    required this.preCataloUuid,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,8 @@ class FavProdPickerSubcatalogBottomSheet extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     child: Container(
-                      padding: EdgeInsets.only(right: widthRatio(size: 10, context: context)),
+                      padding: EdgeInsets.only(
+                          right: widthRatio(size: 10, context: context)),
                       color: Colors.transparent,
                       child: Icon(
                         Icons.arrow_back_ios_new_rounded,
@@ -59,7 +63,9 @@ class FavProdPickerSubcatalogBottomSheet extends StatelessWidget {
                     child: Text(
                       preCataloName,
                       textAlign: TextAlign.start,
-                      style: appTextStyle(fontSize: heightRatio(size: 20, context: context), fontWeight: FontWeight.w800),
+                      style: appTextStyle(
+                          fontSize: heightRatio(size: 20, context: context),
+                          fontWeight: FontWeight.w800),
                     ),
                   ),
                   InkWell(
@@ -67,8 +73,10 @@ class FavProdPickerSubcatalogBottomSheet extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     child: Container(
-                        padding: EdgeInsets.all(widthRatio(size: 10, context: context)),
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: colorBlack03),
+                        padding: EdgeInsets.all(
+                            widthRatio(size: 10, context: context)),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: colorBlack03),
                         child: SvgPicture.asset(
                           "assets/images/ close_icon.svg",
                           color: colorBlack04,
@@ -85,8 +93,10 @@ class FavProdPickerSubcatalogBottomSheet extends StatelessWidget {
                     context: context,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(heightRatio(size: 25, context: context)),
-                        topRight: Radius.circular(heightRatio(size: 25, context: context)),
+                        topLeft: Radius.circular(
+                            heightRatio(size: 25, context: context)),
+                        topRight: Radius.circular(
+                            heightRatio(size: 25, context: context)),
                       ),
                     ),
                     builder: (BuildContext bc) {
@@ -95,12 +105,17 @@ class FavProdPickerSubcatalogBottomSheet extends StatelessWidget {
               },
               child: Container(
                 margin: EdgeInsets.only(
-                    left: widthRatio(size: 15, context: context), right: widthRatio(size: 15, context: context), top: heightRatio(size: 20, context: context)),
+                    left: widthRatio(size: 15, context: context),
+                    right: widthRatio(size: 15, context: context),
+                    top: heightRatio(size: 20, context: context)),
                 padding: EdgeInsets.only(
                     left: widthRatio(size: 15, context: context),
                     top: heightRatio(size: 10, context: context),
                     bottom: heightRatio(size: 10, context: context)),
-                decoration: BoxDecoration(color: grey04, borderRadius: BorderRadius.circular(heightRatio(size: 50, context: context))),
+                decoration: BoxDecoration(
+                    color: grey04,
+                    borderRadius: BorderRadius.circular(
+                        heightRatio(size: 50, context: context))),
                 child: Row(
                   children: [
                     SvgPicture.asset(
@@ -109,7 +124,10 @@ class FavProdPickerSubcatalogBottomSheet extends StatelessWidget {
                     SizedBox(width: widthRatio(size: 10, context: context)),
                     Text(
                       "findeProductText".tr(),
-                      style: appTextStyle(color: colorBlack04, fontSize: heightRatio(size: 14, context: context), fontWeight: FontWeight.w500),
+                      style: appTextStyle(
+                          color: colorBlack04,
+                          fontSize: heightRatio(size: 14, context: context),
+                          fontWeight: FontWeight.w500),
                     )
                   ],
                 ),
@@ -120,7 +138,8 @@ class FavProdPickerSubcatalogBottomSheet extends StatelessWidget {
               header: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: heightRatio(size: 5, context: context)),
+                    padding: EdgeInsets.only(
+                        top: heightRatio(size: 5, context: context)),
                     child: InkWell(
                       onTap: () {
                         showModalBottomSheet<dynamic>(
@@ -129,8 +148,10 @@ class FavProdPickerSubcatalogBottomSheet extends StatelessWidget {
                             context: context,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(heightRatio(size: 25, context: context)),
-                                topRight: Radius.circular(heightRatio(size: 25, context: context)),
+                                topLeft: Radius.circular(
+                                    heightRatio(size: 25, context: context)),
+                                topRight: Radius.circular(
+                                    heightRatio(size: 25, context: context)),
                               ),
                             ),
                             builder: (BuildContext bc) {
@@ -147,13 +168,15 @@ class FavProdPickerSubcatalogBottomSheet extends StatelessWidget {
                               'assets/images/listIcon.svg',
                               color: Colors.black,
                             ),
-                            SizedBox(width: widthRatio(size: 10, context: context)),
+                            SizedBox(
+                                width: widthRatio(size: 10, context: context)),
                             Text(
                               "Все товары",
                               style: appTextStyle(
                                 color: mainColor,
                                 fontWeight: FontWeight.w500,
-                                fontSize: heightRatio(size: 17, context: context),
+                                fontSize:
+                                    heightRatio(size: 17, context: context),
                               ),
                             ),
                           ],
@@ -172,80 +195,96 @@ class FavProdPickerSubcatalogBottomSheet extends StatelessWidget {
 
               initialLoader: ShimmerLoaderForCatalog(),
               padding: EdgeInsets.only(
-                  left: widthRatio(size: 5, context: context), right: widthRatio(size: 5, context: context), top: heightRatio(size: 5, context: context)),
+                  left: widthRatio(size: 5, context: context),
+                  right: widthRatio(size: 5, context: context),
+                  top: heightRatio(size: 5, context: context)),
               paginationViewType: PaginationViewType.listView,
               // preloadedItems: state.catalogsModel.data,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: 1.3,
                 crossAxisCount: 2,
               ),
-              itemBuilder: (BuildContext context, CatalogListModel subcatalogListModel, int index) => InkWell(
-                  onTap: () {
-                    if (subcatalogListModel.isFinalLevel) {
-                      showModalBottomSheet<dynamic>(
-                          isScrollControlled: true,
-                          useSafeArea: true,
-                          context: context,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(heightRatio(size: 25, context: context)),
-                              topRight: Radius.circular(heightRatio(size: 25, context: context)),
-                            ),
-                          ),
-                          builder: (BuildContext bc) {
-                            return FavProdPickerProductsBottomSheet(
-                              uuid: subcatalogListModel.uuid,
-                              name: subcatalogListModel.name,
-                            );
-                          });
-                    } else {
-                      showModalBottomSheet<dynamic>(
-                          isScrollControlled: true,
-                          useSafeArea: true,
-                          context: context,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(heightRatio(size: 25, context: context)),
-                              topRight: Radius.circular(heightRatio(size: 25, context: context)),
-                            ),
-                          ),
-                          builder: (BuildContext bc) {
-                            return FavProdPickerSubcatalogBottomSheet(preCataloName: subcatalogListModel.name, preCataloUuid: subcatalogListModel.uuid);
-                          });
-                    }
-                  },
-                  child: Container(
-                    child: Column(
-                      children: [
-                        ListTile(
-                          title: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  "${subcatalogListModel.name}  ",
-                                  style: appTextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: heightRatio(size: 17, context: context),
-                                  ),
+              itemBuilder: (BuildContext context,
+                      CatalogListModel subcatalogListModel, int index) =>
+                  InkWell(
+                      onTap: () {
+                        if (subcatalogListModel.isFinalLevel) {
+                          showModalBottomSheet<dynamic>(
+                              isScrollControlled: true,
+                              useSafeArea: true,
+                              context: context,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                      heightRatio(size: 25, context: context)),
+                                  topRight: Radius.circular(
+                                      heightRatio(size: 25, context: context)),
                                 ),
                               ),
-                              Text("${subcatalogListModel.assortmentsCountInStore ?? ""}",
-                                  style: appTextStyle(color: colorBlack04, fontSize: heightRatio(size: 14, context: context))),
-                            ],
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios,
-                            color: colorBlack03,
-                            size: heightRatio(size: 20, context: context),
-                          ),
+                              builder: (BuildContext bc) {
+                                return FavProdPickerProductsBottomSheet(
+                                  uuid: subcatalogListModel.uuid,
+                                  name: subcatalogListModel.name,
+                                );
+                              });
+                        } else {
+                          showModalBottomSheet<dynamic>(
+                              isScrollControlled: true,
+                              useSafeArea: true,
+                              context: context,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                      heightRatio(size: 25, context: context)),
+                                  topRight: Radius.circular(
+                                      heightRatio(size: 25, context: context)),
+                                ),
+                              ),
+                              builder: (BuildContext bc) {
+                                return FavProdPickerSubcatalogBottomSheet(
+                                    preCataloName: subcatalogListModel.name,
+                                    preCataloUuid: subcatalogListModel.uuid);
+                              });
+                        }
+                      },
+                      child: Container(
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "${subcatalogListModel.name}  ",
+                                      style: appTextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: heightRatio(
+                                            size: 17, context: context),
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                      "${subcatalogListModel.assortmentsCountInStore ?? ""}",
+                                      style: appTextStyle(
+                                          color: colorBlack04,
+                                          fontSize: heightRatio(
+                                              size: 14, context: context))),
+                                ],
+                              ),
+                              trailing: Icon(
+                                Icons.arrow_forward_ios,
+                                color: colorBlack03,
+                                size: heightRatio(size: 20, context: context),
+                              ),
+                            ),
+                            Divider()
+                          ],
                         ),
-                        Divider()
-                      ],
-                    ),
-                  )),
+                      )),
               pageFetch: (currentListSize) async {
-                List<CatalogListModel> fechedPage =
-                    await CatalogsRepository(currentPage: currentPage, catalogUuid: preCataloUuid).getCatalogsFromRepositoryforPagination();
+                List<CatalogListModel> fechedPage = await CatalogsRepository(
+                        currentPage: currentPage, catalogUuid: preCataloUuid)
+                    .getCatalogsFromRepositoryforPagination();
                 currentPage++;
                 return fechedPage;
               },

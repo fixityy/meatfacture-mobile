@@ -21,7 +21,7 @@ import 'package:smart/pages/redesigned_pages/redes_product_details_page.dart';
 import 'package:smart/theme/app_alert.dart';
 
 class BasketList extends StatefulWidget {
-  const BasketList({Key key}) : super(key: key);
+  const BasketList({super.key});
 
   @override
   State<BasketList> createState() => _BasketListState();
@@ -29,8 +29,8 @@ class BasketList extends StatefulWidget {
 
 class _BasketListState extends State<BasketList> {
   double kgToAddToBasket = 0;
-  bool isinit;
-  bool isLoadingText;
+  late bool isinit;
+  late bool isLoadingText;
   List<ProductModelForOrderRequest> productModelForOrderRequestList = [];
   final TextEditingController _promoCodeController = TextEditingController();
 
@@ -48,31 +48,40 @@ class _BasketListState extends State<BasketList> {
 
     return BlocBuilder<OrderTypeBloc, OrderTypeState>(
       builder: (context, orderTypeState) {
-        final String orderDeliveryTypeId = orderTypeState is OrderTypePickupState ? "pickup" : "delivery";
-        return BlocBuilder<SelectedPayCardAndAddressForOrderBloc, SelectedPayCardAndAddressForOrderState>(
+        final String orderDeliveryTypeId =
+            orderTypeState is OrderTypePickupState ? "pickup" : "delivery";
+        return BlocBuilder<SelectedPayCardAndAddressForOrderBloc,
+            SelectedPayCardAndAddressForOrderState>(
           builder: (context, selectedPayCardAndAddressForOrderState) {
-            final int subtractBonuses =
-                selectedPayCardAndAddressForOrderState is SelectedPayCardAndAddressForOrderLoadedState //
-                    ? selectedPayCardAndAddressForOrderState.apartmentNumber ?? 0
-                    : 0;
-            return BlocBuilder<AddOrSubtractBonusesBloc, AddOrSubtractBonusesState>(
+            final int subtractBonuses = selectedPayCardAndAddressForOrderState
+                    is SelectedPayCardAndAddressForOrderLoadedState //
+                ? selectedPayCardAndAddressForOrderState.apartmentNumber ?? 0
+                : 0;
+            return BlocBuilder<AddOrSubtractBonusesBloc,
+                AddOrSubtractBonusesState>(
               builder: (context, addOrSubtractBonusesState) {
                 return BlocBuilder<BasketListBloc, BasketState>(
                   builder: (context, state) {
                     void _setProductsForCalculation() {
                       if (state is BasketLoadedState) {
                         productModelForOrderRequestList.clear();
-                        state.basketListModel.data.map((e) {
-                          if ((e.assortment.priceWithDiscount != null || e.assortment.currentPrice != null) &&
+                        state.basketListModel.data!.map((e) {
+                          if ((e.assortment.priceWithDiscount != null ||
+                                  e.assortment.currentPrice != null) &&
                               e.assortment.quantityInStore != null) {
-                            return ProductModelForOrderRequest(assortmentUuid: e.assortment.uuid, quantity: e.quantity);
+                            return ProductModelForOrderRequest(
+                                assortmentUuid: e.assortment.uuid,
+                                quantity: e.quantity);
                           }
                         });
-                        for (var item in state.basketListModel.data) {
-                          if ((item.assortment.priceWithDiscount != null || item.assortment.currentPrice != null) &&
+                        for (var item in state.basketListModel.data!) {
+                          if ((item.assortment.priceWithDiscount != null ||
+                                  item.assortment.currentPrice != null) &&
                               item.assortment.quantityInStore != null) {
-                            productModelForOrderRequestList.add(ProductModelForOrderRequest(
-                                assortmentUuid: item.assortment.uuid, quantity: item.quantity));
+                            productModelForOrderRequestList.add(
+                                ProductModelForOrderRequest(
+                                    assortmentUuid: item.assortment.uuid,
+                                    quantity: item.quantity));
                           }
                         }
                       }
@@ -89,48 +98,76 @@ class _BasketListState extends State<BasketList> {
                               return Padding(
                                 padding: const EdgeInsets.only(left: 16),
                                 child: Text(
-                                  calculateState.orderCalculateResponseModel != null
-                                      ? calculateState.orderCalculateResponseModel.data.products.length == 1
+                                  calculateState.orderCalculateResponseModel !=
+                                          null
+                                      ? calculateState
+                                                  .orderCalculateResponseModel!
+                                                  .data
+                                                  .products
+                                                  .length ==
+                                              1
                                           ? "Всего: 1 товар"
-                                          : calculateState.orderCalculateResponseModel.data.products.length > 1 &&
-                                                  calculateState.orderCalculateResponseModel.data.products.length < 5
-                                              ? "Всего: ${calculateState.orderCalculateResponseModel.data.products.length} товара"
-                                              : "Всего: ${calculateState.orderCalculateResponseModel.data.products.length} товаров"
+                                          : calculateState
+                                                          .orderCalculateResponseModel!
+                                                          .data
+                                                          .products
+                                                          .length >
+                                                      1 &&
+                                                  calculateState
+                                                          .orderCalculateResponseModel!
+                                                          .data
+                                                          .products
+                                                          .length <
+                                                      5
+                                              ? "Всего: ${calculateState.orderCalculateResponseModel!.data.products.length} товара"
+                                              : "Всего: ${calculateState.orderCalculateResponseModel!.data.products.length} товаров"
                                       : "",
-                                  style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context)),
+                                  style: appHeadersTextStyle(
+                                      fontSize: heightRatio(
+                                          size: 16, context: context)),
                                 ),
                               );
                             },
                           ),
-                          SizedBox(height: heightRatio(size: 15, context: context)),
+                          SizedBox(
+                              height: heightRatio(size: 15, context: context)),
                           ListView.builder(
                             padding: EdgeInsets.only(
                                 left: widthRatio(size: 15, context: context),
                                 right: widthRatio(size: 15, context: context)),
-                            itemCount: state.basketListModel.data.length,
+                            itemCount: state.basketListModel.data!.length,
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
                               return BlocBuilder<BasketListBloc, BasketState>(
                                 buildWhen: (previous, current) {
-                                  if (previous is BasketLoadedState && current is BasketLoadedState) {
-                                    return index < current.basketListModel.data.length &&
-                                        previous.basketListModel.data[index] != current.basketListModel.data[index];
+                                  if (previous is BasketLoadedState &&
+                                      current is BasketLoadedState) {
+                                    return index <
+                                            current
+                                                .basketListModel.data!.length &&
+                                        previous.basketListModel.data![index] !=
+                                            current
+                                                .basketListModel.data![index];
                                   }
                                   return false;
                                 },
                                 builder: (context, basketState) {
                                   if (basketState is BasketLoadedState) {
-                                    if (index >= basketState.basketListModel.data.length) {
+                                    if (index >=
+                                        basketState
+                                            .basketListModel.data!.length) {
                                       return SizedBox(); // Защита от выхода за пределы списка
                                     }
-                                    final item = basketState.basketListModel.data[index];
+                                    final item = basketState
+                                        .basketListModel.data![index];
                                     return InkWell(
                                       onTap: () {
                                         Navigator.push(
                                           context,
                                           new CupertinoPageRoute(
-                                            builder: (context) => RedesProductDetailsPage(
+                                            builder: (context) =>
+                                                RedesProductDetailsPage(
                                               isFromBasket: true,
                                               productUuid: item.assortment.uuid,
                                             ),
@@ -138,15 +175,19 @@ class _BasketListState extends State<BasketList> {
                                         );
                                       },
                                       child: BasketListItem(
-                                        addOrSubtractBonusesState: addOrSubtractBonusesState,
+                                        addOrSubtractBonusesState:
+                                            addOrSubtractBonusesState,
                                         basketListBloc: _basketListBloc,
                                         index: index,
                                         item: item,
                                         orderCalculateBloc: _orderCalculateBloc,
-                                        selectedPayCardAndAddressForOrderState: selectedPayCardAndAddressForOrderState,
+                                        selectedPayCardAndAddressForOrderState:
+                                            selectedPayCardAndAddressForOrderState,
                                         state: state,
-                                        productModelForOrderRequestList: productModelForOrderRequestList,
-                                        orderDeliveryTypeId: orderDeliveryTypeId,
+                                        productModelForOrderRequestList:
+                                            productModelForOrderRequestList,
+                                        orderDeliveryTypeId:
+                                            orderDeliveryTypeId,
                                         subtractBonuses: subtractBonuses,
                                       ),
                                     );
@@ -159,25 +200,41 @@ class _BasketListState extends State<BasketList> {
                           // SizedBox(height: heightRatio(size: 8, context: context)),
                           BlocBuilder<OrderCalculateBloc, OrderCalculateState>(
                             builder: (context, calculateState) {
-                              String appliedPromoCode = calculateState is OrderCalculateLoadedState &&
-                                      calculateState.orderCalculateResponseModel?.data?.promocode != null
-                                  ? calculateState.orderCalculateResponseModel.data.promocode
-                                  : null;
+                              String? appliedPromoCode =
+                                  calculateState is OrderCalculateLoadedState &&
+                                          calculateState
+                                                  .orderCalculateResponseModel
+                                                  ?.data
+                                                  ?.promocode !=
+                                              null
+                                      ? calculateState
+                                          .orderCalculateResponseModel!
+                                          .data
+                                          .promocode
+                                      : null;
 
                               return Column(
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 16),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text('Общая сумма:',
                                             style: appLabelTextStyle(
-                                                fontSize: heightRatio(size: 16, context: context),
+                                                fontSize: heightRatio(
+                                                    size: 16, context: context),
                                                 color: Colors.black)),
                                         Spacer(),
-                                        if (state.orderCalculateResponseModel != null &&
-                                            state.orderCalculateResponseModel.data.totalDiscountForProducts > 0)
+                                        if (state.orderCalculateResponseModel !=
+                                                null &&
+                                            state
+                                                    .orderCalculateResponseModel!
+                                                    .data
+                                                    .totalDiscountForProducts! >
+                                                0)
                                           Stack(
                                             //цена перечеркнутая
                                             alignment: Alignment.center,
@@ -186,21 +243,31 @@ class _BasketListState extends State<BasketList> {
                                                 text: TextSpan(
                                                   children: [
                                                     TextSpan(
-                                                      text: (state.orderCalculateResponseModel.data
-                                                                  .totalDiscountForProducts +
-                                                              state.orderCalculateResponseModel.data
-                                                                  .totalPriceForProductsWithDiscount)
+                                                      text: (state
+                                                                  .orderCalculateResponseModel!
+                                                                  .data
+                                                                  .totalDiscountForProducts! +
+                                                              state
+                                                                  .orderCalculateResponseModel!
+                                                                  .data
+                                                                  .totalPriceForProductsWithDiscount!)
                                                           .toStringAsFixed(0),
                                                       style: appLabelTextStyle(
-                                                          fontSize: heightRatio(size: 12, context: context),
+                                                          fontSize: heightRatio(
+                                                              size: 12,
+                                                              context: context),
                                                           color: newGrey),
                                                     ),
                                                     TextSpan(
-                                                      text: " ${"rubleSignText".tr()}",
+                                                      text:
+                                                          " ${"rubleSignText".tr()}",
                                                       style: appTextStyle(
-                                                          fontSize: heightRatio(size: 12, context: context),
+                                                          fontSize: heightRatio(
+                                                              size: 12,
+                                                              context: context),
                                                           color: newGrey,
-                                                          fontWeight: FontWeight.w700),
+                                                          fontWeight:
+                                                              FontWeight.w700),
                                                     )
                                                   ],
                                                 ),
@@ -210,33 +277,47 @@ class _BasketListState extends State<BasketList> {
                                                 left: 0,
                                                 right: 0,
                                                 bottom: 0,
-                                                child: Image.asset("assets/images/line_through_image.png",
+                                                child: Image.asset(
+                                                    "assets/images/line_through_image.png",
                                                     fit: BoxFit.contain),
                                               )
                                             ],
                                           ),
-                                        SizedBox(width: widthRatio(size: 16, context: context)),
-                                        if (state.orderCalculateResponseModel != null)
+                                        SizedBox(
+                                            width: widthRatio(
+                                                size: 16, context: context)),
+                                        if (state.orderCalculateResponseModel !=
+                                            null)
                                           RichText(
                                             text: TextSpan(
                                               children: <TextSpan>[
                                                 TextSpan(
                                                   text: appliedPromoCode != null
-                                                      ? calculateState.orderCalculateResponseModel.data
-                                                          .totalPriceForProductsWithDiscount
+                                                      ? calculateState
+                                                          .orderCalculateResponseModel!
+                                                          .data
+                                                          .totalPriceForProductsWithDiscount!
                                                           .toStringAsFixed(0)
-                                                      : state.orderCalculateResponseModel.data
-                                                          .totalPriceForProductsWithDiscount
+                                                      : state
+                                                          .orderCalculateResponseModel!
+                                                          .data
+                                                          .totalPriceForProductsWithDiscount!
                                                           .toStringAsFixed(0),
                                                   style: appHeadersTextStyle(
-                                                      fontSize: heightRatio(size: 16, context: context)),
+                                                      fontSize: heightRatio(
+                                                          size: 16,
+                                                          context: context)),
                                                 ),
                                                 TextSpan(
-                                                  text: ' ${"rubleSignText".tr()}',
+                                                  text:
+                                                      ' ${"rubleSignText".tr()}',
                                                   style: appTextStyle(
-                                                      fontSize: heightRatio(size: 16, context: context),
+                                                      fontSize: heightRatio(
+                                                          size: 16,
+                                                          context: context),
                                                       color: Colors.black,
-                                                      fontWeight: FontWeight.bold),
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                               ],
                                             ),
@@ -244,7 +325,9 @@ class _BasketListState extends State<BasketList> {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(height: heightRatio(size: 24, context: context)),
+                                  SizedBox(
+                                      height: heightRatio(
+                                          size: 24, context: context)),
                                   // if (appliedPromoCode != null)
                                   // Padding(
                                   //   padding: EdgeInsets.symmetric(horizontal: 16),
@@ -298,19 +381,26 @@ class _BasketListState extends State<BasketList> {
                                   // ),
                                   if (appliedPromoCode != null)
                                     Padding(
-                                      padding: EdgeInsets.only(bottom: heightRatio(size: 16, context: context)),
+                                      padding: EdgeInsets.only(
+                                          bottom: heightRatio(
+                                              size: 16, context: context)),
                                       child: Row(
                                         children: [
-                                          SizedBox(width: widthRatio(size: 16, context: context)),
+                                          SizedBox(
+                                              width: widthRatio(
+                                                  size: 16, context: context)),
                                           Text(
                                             'Применен промокод: ',
                                             style: appLabelTextStyle(
-                                                fontSize: heightRatio(size: 16, context: context), color: Colors.black),
+                                                fontSize: heightRatio(
+                                                    size: 16, context: context),
+                                                color: Colors.black),
                                           ),
                                           Text(
                                             ' $appliedPromoCode',
                                             style: appTextStyle(
-                                                fontSize: heightRatio(size: 16, context: context),
+                                                fontSize: heightRatio(
+                                                    size: 16, context: context),
                                                 fontWeight: FontWeight.w700),
                                           ),
                                         ],
@@ -319,8 +409,10 @@ class _BasketListState extends State<BasketList> {
                                   GestureDetector(
                                     onTap: () {
                                       if (appliedPromoCode != null) {
-                                        _orderCalculateBloc.updatePromoCode(null);
-                                        BlocProvider.of<BasketListBloc>(context).add(BasketLoadEvent());
+                                        _orderCalculateBloc
+                                            .updatePromoCode(null);
+                                        BlocProvider.of<BasketListBloc>(context)
+                                            .add(BasketLoadEvent());
                                       } else {
                                         showModalBottomSheet<dynamic>(
                                             isScrollControlled: true,
@@ -328,123 +420,260 @@ class _BasketListState extends State<BasketList> {
                                             context: context,
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(heightRatio(size: 25, context: context)),
-                                                topRight: Radius.circular(heightRatio(size: 25, context: context)),
+                                                topLeft: Radius.circular(
+                                                    heightRatio(
+                                                        size: 25,
+                                                        context: context)),
+                                                topRight: Radius.circular(
+                                                    heightRatio(
+                                                        size: 25,
+                                                        context: context)),
                                               ),
                                             ),
                                             builder: (BuildContext bc) {
                                               bool isPromoCodeSend = false;
-                                              double bottomSizedBox = MediaQuery.of(bc).viewInsets.bottom > 0
-                                                  ? 0
-                                                  : heightRatio(size: 24, context: context);
-                                              return BlocListener<OrderCalculateBloc, OrderCalculateState>(
-                                                listener: (context, orderCalcState) {
-                                                  if (orderCalcState is OrderCalculateLoadedState &&
-                                                      orderCalcState.orderCalculateResponseModel?.data?.promocode !=
+                                              double bottomSizedBox =
+                                                  MediaQuery.of(bc)
+                                                              .viewInsets
+                                                              .bottom >
+                                                          0
+                                                      ? 0
+                                                      : heightRatio(
+                                                          size: 24,
+                                                          context: context);
+                                              return BlocListener<
+                                                  OrderCalculateBloc,
+                                                  OrderCalculateState>(
+                                                listener:
+                                                    (context, orderCalcState) {
+                                                  if (orderCalcState
+                                                          is OrderCalculateLoadedState &&
+                                                      orderCalcState
+                                                              .orderCalculateResponseModel
+                                                              ?.data
+                                                              ?.promocode !=
                                                           null) {
                                                     Navigator.pop(context);
-                                                    BlocProvider.of<BasketListBloc>(context)
-                                                        .add(BasketLoadEvent()); // Обновляем корзину
-                                                    String appliedPromoCode =
-                                                        orderCalcState.orderCalculateResponseModel?.data?.promocode;
+                                                    BlocProvider.of<
+                                                                BasketListBloc>(
+                                                            context)
+                                                        .add(
+                                                            BasketLoadEvent()); // Обновляем корзину
+                                                    String? appliedPromoCode =
+                                                        orderCalcState
+                                                            .orderCalculateResponseModel
+                                                            ?.data
+                                                            ?.promocode;
                                                     AppAlert.show(
                                                       context: context,
-                                                      message: 'Промокод “$appliedPromoCode” успешно применен',
+                                                      message:
+                                                          'Промокод “$appliedPromoCode” успешно применен',
                                                       sec: 8,
-                                                      isPushToContactsWidget: true,
-                                                      svgName: 'promocode_percent.svg',
+                                                      isPushToContactsWidget:
+                                                          true,
+                                                      svgName:
+                                                          'promocode_percent.svg',
                                                     );
                                                   }
                                                 },
                                                 child: Padding(
                                                   padding: EdgeInsets.only(
-                                                    bottom: MediaQuery.of(context).viewInsets.bottom,
-                                                    left: widthRatio(size: 22, context: context),
-                                                    right: widthRatio(size: 22, context: context),
+                                                    bottom:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets
+                                                            .bottom,
+                                                    left: widthRatio(
+                                                        size: 22,
+                                                        context: context),
+                                                    right: widthRatio(
+                                                        size: 22,
+                                                        context: context),
                                                   ),
-                                                  child: BlocBuilder<OrderCalculateBloc, OrderCalculateState>(
-                                                    builder: (context, orderCalculateState) {
+                                                  child: BlocBuilder<
+                                                      OrderCalculateBloc,
+                                                      OrderCalculateState>(
+                                                    builder: (context,
+                                                        orderCalculateState) {
                                                       return Column(
-                                                        mainAxisSize: MainAxisSize.min,
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         children: [
-                                                          SizedBox(height: heightRatio(size: 25, context: context)),
+                                                          SizedBox(
+                                                              height: heightRatio(
+                                                                  size: 25,
+                                                                  context:
+                                                                      context)),
                                                           Center(
-                                                            child: Text('Активировать промокод',
+                                                            child: Text(
+                                                                'Активировать промокод',
                                                                 style: appHeadersTextStyle(
-                                                                    fontSize: heightRatio(size: 20, context: context),
-                                                                    color: newBlack),
-                                                                textAlign: TextAlign.center),
+                                                                    fontSize: heightRatio(
+                                                                        size:
+                                                                            20,
+                                                                        context:
+                                                                            context),
+                                                                    color:
+                                                                        newBlack),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center),
                                                           ),
-                                                          SizedBox(height: heightRatio(size: 24, context: context)),
-                                                          Text('Введите промокод для активации',
+                                                          SizedBox(
+                                                              height: heightRatio(
+                                                                  size: 24,
+                                                                  context:
+                                                                      context)),
+                                                          Text(
+                                                              'Введите промокод для активации',
                                                               style: appLabelTextStyle(
-                                                                  fontSize: heightRatio(size: 15, context: context),
-                                                                  color: grey6D6D6D)),
-                                                          SizedBox(height: heightRatio(size: 16, context: context)),
+                                                                  fontSize: heightRatio(
+                                                                      size: 15,
+                                                                      context:
+                                                                          context),
+                                                                  color:
+                                                                      grey6D6D6D)),
+                                                          SizedBox(
+                                                              height: heightRatio(
+                                                                  size: 16,
+                                                                  context:
+                                                                      context)),
                                                           Container(
                                                             padding: EdgeInsets.symmetric(
-                                                                horizontal: widthRatio(size: 16, context: context)),
+                                                                horizontal:
+                                                                    widthRatio(
+                                                                        size:
+                                                                            16,
+                                                                        context:
+                                                                            context)),
                                                             decoration: BoxDecoration(
-                                                                border: Border.all(color: grey04, width: 1),
-                                                                borderRadius: BorderRadius.circular(5)),
+                                                                border: Border.all(
+                                                                    color:
+                                                                        grey04,
+                                                                    width: 1),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5)),
                                                             child: TextField(
                                                               // textCapitalization: TextCapitalization.sentences,
                                                               style: appTextStyle(
-                                                                  fontSize: heightRatio(size: 18, context: context)),
-                                                              controller: _promoCodeController,
-                                                              decoration: InputDecoration(
-                                                                border: InputBorder.none,
-                                                                hintText: "Введите промокод для активации",
+                                                                  fontSize: heightRatio(
+                                                                      size: 18,
+                                                                      context:
+                                                                          context)),
+                                                              controller:
+                                                                  _promoCodeController,
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                border:
+                                                                    InputBorder
+                                                                        .none,
+                                                                hintText:
+                                                                    "Введите промокод для активации",
                                                                 hintStyle: appTextStyle(
-                                                                    fontSize: heightRatio(size: 18, context: context),
-                                                                    color: colorBlack03),
+                                                                    fontSize: heightRatio(
+                                                                        size:
+                                                                            18,
+                                                                        context:
+                                                                            context),
+                                                                    color:
+                                                                        colorBlack03),
                                                               ),
                                                             ),
                                                           ),
-                                                          if (orderCalculateState is OrderCalculateLoadedState &&
-                                                              (orderCalculateState.orderCalculateResponseModel?.data
+                                                          if (orderCalculateState
+                                                                  is OrderCalculateLoadedState &&
+                                                              (orderCalculateState
+                                                                          .orderCalculateResponseModel
+                                                                          ?.data
                                                                           ?.promocode ==
                                                                       null &&
-                                                                  _promoCodeController.text.isNotEmpty &&
+                                                                  _promoCodeController
+                                                                      .text
+                                                                      .isNotEmpty &&
                                                                   isPromoCodeSend))
-                                                            Text('Неверный или устаревший промокод',
+                                                            Text(
+                                                                'Неверный или устаревший промокод',
                                                                 style: appLabelTextStyle(
-                                                                    fontSize: heightRatio(size: 15, context: context),
-                                                                    color: newRedDark)),
-                                                          SizedBox(height: heightRatio(size: 16, context: context)),
+                                                                    fontSize: heightRatio(
+                                                                        size:
+                                                                            15,
+                                                                        context:
+                                                                            context),
+                                                                    color:
+                                                                        newRedDark)),
+                                                          SizedBox(
+                                                              height: heightRatio(
+                                                                  size: 16,
+                                                                  context:
+                                                                      context)),
                                                           InkWell(
                                                             onTap: () async {
-                                                              String promoCode = _promoCodeController.text.trim();
-                                                              isPromoCodeSend = true;
-                                                              _orderCalculateBloc.updatePromoCode(promoCode);
-                                                              _orderCalculateBloc.add(
+                                                              String promoCode =
+                                                                  _promoCodeController
+                                                                      .text
+                                                                      .trim();
+                                                              isPromoCodeSend =
+                                                                  true;
+                                                              _orderCalculateBloc
+                                                                  .updatePromoCode(
+                                                                      promoCode);
+                                                              _orderCalculateBloc
+                                                                  .add(
                                                                 OrderCalculateLoadEvent(
-                                                                  orderDeliveryTypeId: "delivery",
-                                                                  orderPaymentTypeId: "online",
+                                                                  orderDeliveryTypeId:
+                                                                      "delivery",
+                                                                  orderPaymentTypeId:
+                                                                      "online",
                                                                   productModelForOrderRequestList:
                                                                       productModelForOrderRequestList,
                                                                 ),
                                                               );
                                                             },
                                                             child: Container(
-                                                              alignment: Alignment.center,
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
                                                               padding: EdgeInsets.only(
-                                                                  top: heightRatio(size: 15, context: context),
-                                                                  bottom: heightRatio(size: 18, context: context)),
-                                                              width: MediaQuery.of(context).size.width,
+                                                                  top: heightRatio(
+                                                                      size: 15,
+                                                                      context:
+                                                                          context),
+                                                                  bottom: heightRatio(
+                                                                      size: 18,
+                                                                      context:
+                                                                          context)),
+                                                              width:
+                                                                  MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width,
                                                               decoration: BoxDecoration(
-                                                                  borderRadius: BorderRadius.circular(5),
-                                                                  color: newRedDark),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5),
+                                                                  color:
+                                                                      newRedDark),
                                                               child: Text(
                                                                 'Применить',
                                                                 style: appLabelTextStyle(
-                                                                    fontSize: heightRatio(size: 18, context: context),
-                                                                    color: Colors.white),
+                                                                    fontSize: heightRatio(
+                                                                        size:
+                                                                            18,
+                                                                        context:
+                                                                            context),
+                                                                    color: Colors
+                                                                        .white),
                                                               ),
                                                             ),
                                                           ),
-                                                          SizedBox(height: bottomSizedBox),
+                                                          SizedBox(
+                                                              height:
+                                                                  bottomSizedBox),
                                                         ],
                                                       );
                                                     },
@@ -452,38 +681,50 @@ class _BasketListState extends State<BasketList> {
                                                 ),
                                               );
                                             }).then((value) {
-                                          context.read<BasketListBloc>().add(BasketLoadEvent());
+                                          context
+                                              .read<BasketListBloc>()
+                                              .add(BasketLoadEvent());
                                         });
                                       }
                                     },
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
                                       child: DashedBorderContainer(
                                         color: newBlack,
                                         dashWidth: 6,
                                         dashSpace: 3,
                                         padding: EdgeInsets.all(12),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              appliedPromoCode == null ? 'ВВЕДИТЕ ПРОМОКОД' : 'ОТМЕНИТЬ ПРОМОКОД',
+                                              appliedPromoCode == null
+                                                  ? 'ВВЕДИТЕ ПРОМОКОД'
+                                                  : 'ОТМЕНИТЬ ПРОМОКОД',
                                               style: appHeadersTextStyle(
-                                                fontSize: heightRatio(size: 16, context: context),
+                                                fontSize: heightRatio(
+                                                    size: 16, context: context),
                                               ),
                                             ),
                                             Container(
                                               width: 30,
                                               height: 30,
                                               decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(20), color: redE60D2E),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: redE60D2E),
                                               child: SvgPicture.asset(
                                                 appliedPromoCode == null
                                                     ? "assets/images/coupon_arrow.svg"
                                                     : "assets/images/coupon_close.svg",
-                                                height: heightRatio(size: 18, context: context),
-                                                width: widthRatio(size: 21, context: context),
+                                                height: heightRatio(
+                                                    size: 18, context: context),
+                                                width: widthRatio(
+                                                    size: 21, context: context),
                                                 fit: BoxFit.scaleDown,
                                               ),
                                             )
@@ -556,12 +797,16 @@ class _BasketListState extends State<BasketList> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.shopping_cart,
-                                color: colorBlack03, size: heightRatio(size: 70, context: context)),
-                            SizedBox(height: heightRatio(size: 10, context: context)),
+                                color: colorBlack03,
+                                size: heightRatio(size: 70, context: context)),
+                            SizedBox(
+                                height:
+                                    heightRatio(size: 10, context: context)),
                             Text("emptyBasketText".tr(),
                                 textAlign: TextAlign.center,
                                 style: appHeadersTextStyle(
-                                    fontSize: heightRatio(size: 22, context: context),
+                                    fontSize:
+                                        heightRatio(size: 22, context: context),
                                     color: colorBlack06,
                                     fontWeight: FontWeight.w500)),
                           ],
@@ -572,7 +817,9 @@ class _BasketListState extends State<BasketList> {
                       return Container(
                         height: heightRatio(size: 384, context: context),
                         alignment: Alignment.center,
-                        child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(newRedDark)),
+                        child: CircularProgressIndicator(
+                            valueColor:
+                                new AlwaysStoppedAnimation<Color>(newRedDark)),
                       );
                     }
                     if (state is BasketErrorState) {
@@ -583,25 +830,37 @@ class _BasketListState extends State<BasketList> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
-                              decoration: BoxDecoration(color: colorBlack03, shape: BoxShape.circle),
-                              child: SvgPicture.asset('assets/images/netErrorIcon.svg',
-                                  color: Colors.white, height: heightRatio(size: 30, context: context)),
+                              padding: EdgeInsets.all(
+                                  widthRatio(size: 15, context: context)),
+                              decoration: BoxDecoration(
+                                  color: colorBlack03, shape: BoxShape.circle),
+                              child: SvgPicture.asset(
+                                  'assets/images/netErrorIcon.svg',
+                                  color: Colors.white,
+                                  height:
+                                      heightRatio(size: 30, context: context)),
                             ),
-                            SizedBox(height: heightRatio(size: 15, context: context)),
+                            SizedBox(
+                                height:
+                                    heightRatio(size: 15, context: context)),
                             Text("errorText".tr(),
                                 style: appHeadersTextStyle(
-                                    fontSize: heightRatio(size: 18, context: context),
+                                    fontSize:
+                                        heightRatio(size: 18, context: context),
                                     color: colorBlack06,
                                     fontWeight: FontWeight.w500)),
-                            SizedBox(height: heightRatio(size: 10, context: context)),
+                            SizedBox(
+                                height:
+                                    heightRatio(size: 10, context: context)),
                             InkWell(
-                              onTap: () => _basketListBloc.add(BasketLoadEvent()),
+                              onTap: () =>
+                                  _basketListBloc.add(BasketLoadEvent()),
                               child: Container(
                                 color: Colors.transparent,
                                 child: Text("tryAgainText".tr(),
                                     style: appHeadersTextStyle(
-                                        fontSize: heightRatio(size: 14, context: context),
+                                        fontSize: heightRatio(
+                                            size: 14, context: context),
                                         color: mainColor,
                                         fontWeight: FontWeight.w500)),
                               ),
@@ -610,7 +869,10 @@ class _BasketListState extends State<BasketList> {
                         ),
                       );
                     }
-                    return Container(height: 100, alignment: Alignment.center, child: Text("errorText".tr()));
+                    return Container(
+                        height: 100,
+                        alignment: Alignment.center,
+                        child: Text("errorText".tr()));
                   },
                 );
               },
@@ -621,12 +883,13 @@ class _BasketListState extends State<BasketList> {
     );
   }
 
-  void initSlidableAnimation({BuildContext context}) async {
-    if (await prefs.getBool("hasBasketListIn") == null || await prefs.getBool("hasBasketListIn") == false) {
+  void initSlidableAnimation({required BuildContext context}) async {
+    if (await prefs.getBool("hasBasketListIn") == null ||
+        await prefs.getBool("hasBasketListIn") == false) {
       prefs.setBool("hasBasketListIn", true);
       final slidable = Slidable.of(context);
-      slidable.open(actionType: SlideActionType.secondary);
-      Timer(Duration(milliseconds: 1500), () => slidable.close());
+      slidable?.openEndActionPane();
+      Timer(Duration(milliseconds: 1500), () => slidable?.close());
     }
   }
 }

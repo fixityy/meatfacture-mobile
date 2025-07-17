@@ -2,12 +2,12 @@ import 'package:smart/services/services.dart';
 
 // Shopsrepository
 class AddressesShopRepo {
-  final String searchText;
-  final bool hasParking;
-  final bool hasReadyMeals;
-  final bool hasAtms;
-  final bool isfavorite;
-  final bool isOpenNow;
+  final String? searchText;
+  final bool? hasParking;
+  final bool? hasReadyMeals;
+  final bool? hasAtms;
+  final bool? isfavorite;
+  final bool? isOpenNow;
   ShopsListProvider _shopsListProvider = ShopsListProvider();
 
   AddressesShopRepo({

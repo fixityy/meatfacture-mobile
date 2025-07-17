@@ -21,12 +21,12 @@ class StoryPageViewItem extends StatefulWidget {
 
 class _StoryPageViewItemState extends State<StoryPageViewItem> {
   final controller = StoryController();
-  List<StoryItem> storyItems;
+  late List<StoryItem> storyItems;
   int currentIndex = 0;
   bool isTimerMove = false;
   Color textColor = blackColor;
 
-  setSharedStoriesList({@required String sotryId}) async {
+  setSharedStoriesList({required String sotryId}) async {
     SharedPreferences _shared = await SharedPreferences.getInstance();
     List<String> storiesList = await _shared.getStringList('storiesList') ?? [];
     if (storiesList.contains(sotryId) != true) {
@@ -97,7 +97,9 @@ class _StoryPageViewItemState extends State<StoryPageViewItem> {
                                       color: colorBlack03,
                                       alignment: Alignment.center,
                                       child: CircularProgressIndicator(
-                                        valueColor: AlwaysStoppedAnimation<Color>(mainColor),
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                mainColor),
                                       ),
                                     );
                             },
@@ -113,14 +115,26 @@ class _StoryPageViewItemState extends State<StoryPageViewItem> {
                       children: [
                         Text(
                           e.title ?? "",
-                          style: appTextStyle(color: e.textColor == null || e.textColor.isEmpty ? blackColor : Color(int.parse("0xff${e.textColor.replaceAll("#", "")}")), fontSize: heightRatio(size: 36, context: context), fontWeight: FontWeight.w800),
+                          style: appTextStyle(
+                              color: e.textColor == null || e.textColor.isEmpty
+                                  ? blackColor
+                                  : Color(int.parse(
+                                      "0xff${e.textColor.replaceAll("#", "")}")),
+                              fontSize: heightRatio(size: 36, context: context),
+                              fontWeight: FontWeight.w800),
                         ),
                         SizedBox(
                           height: heightRatio(size: 16, context: context),
                         ),
                         Text(
                           e.text ?? "",
-                          style: appTextStyle(fontSize: heightRatio(size: 22, context: context), color: e.textColor == null ? blackColor : Color(int.parse("0xff${e.textColor.replaceAll("#", "")}")), fontWeight: FontWeight.w500),
+                          style: appTextStyle(
+                              fontSize: heightRatio(size: 22, context: context),
+                              color: e.textColor == null
+                                  ? blackColor
+                                  : Color(int.parse(
+                                      "0xff${e.textColor.replaceAll("#", "")}")),
+                              fontWeight: FontWeight.w500),
                         ),
                       ],
                     )))
@@ -133,9 +147,10 @@ class _StoryPageViewItemState extends State<StoryPageViewItem> {
         //Tabs List Builder
         StoryView(
             inline: true,
-            onStoryShow: (value) {
+            onStoryShow: (value, _) {
               if (isTimerMove) {
-                if (currentIndex < widget.storiesListDataModel.tabs.length - 1) {
+                if (currentIndex <
+                    widget.storiesListDataModel.tabs.length - 1) {
                   currentIndex++;
                 }
               } else {
@@ -164,11 +179,13 @@ class _StoryPageViewItemState extends State<StoryPageViewItem> {
                 },
                 child: Container(
                   color: Colors.transparent,
-                  child: SvgPicture.asset("assets/images/close_button_for_story.svg"),
+                  child: SvgPicture.asset(
+                      "assets/images/close_button_for_story.svg"),
                 ),
               ),
             )),
-        widget.storiesListDataModel.tabs.length > 0 && widget.storiesListDataModel.tabs[currentIndex].url != null
+        widget.storiesListDataModel.tabs.length > 0 &&
+                widget.storiesListDataModel.tabs[currentIndex].url != null
             ? Positioned(
                 left: widthRatio(size: 16, context: context),
                 right: widthRatio(size: 16, context: context),
@@ -178,9 +195,13 @@ class _StoryPageViewItemState extends State<StoryPageViewItem> {
                     print(currentIndex + 1);
                   },
                   child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(widthRatio(size: 12, context: context)), color: whiteColor),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                            widthRatio(size: 12, context: context)),
+                        color: whiteColor),
                     alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(vertical: heightRatio(size: 16, context: context)),
+                    padding: EdgeInsets.symmetric(
+                        vertical: heightRatio(size: 16, context: context)),
                     child: Text(tr("moreText")),
                   ),
                 ))

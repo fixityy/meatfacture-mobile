@@ -13,17 +13,21 @@ import 'package:smart/core/constants/text_styles.dart';
 
 class FavProdSearchProductsBottomSheet extends StatefulWidget {
   @override
-  State<FavProdSearchProductsBottomSheet> createState() => _FavProdSearchProductsBottomSheetState();
+  State<FavProdSearchProductsBottomSheet> createState() =>
+      _FavProdSearchProductsBottomSheetState();
 }
 
-class _FavProdSearchProductsBottomSheetState extends State<FavProdSearchProductsBottomSheet> {
-  GlobalKey<PaginationViewState> assormentsPaginationViewkey = GlobalKey<PaginationViewState>();
+class _FavProdSearchProductsBottomSheetState
+    extends State<FavProdSearchProductsBottomSheet> {
+  GlobalKey<PaginationViewState> assormentsPaginationViewkey =
+      GlobalKey<PaginationViewState>();
 
   bool isLoading = true;
-  final TextEditingController _assortmentsSearchTextController = TextEditingController();
-  Timer _timer;
+  final TextEditingController _assortmentsSearchTextController =
+      TextEditingController();
+  Timer? _timer;
   FocusNode _focusNodeForSearch = new FocusNode();
-  String searchText;
+  String? searchText;
   int currentPage = 1;
 
   @override
@@ -62,7 +66,8 @@ class _FavProdSearchProductsBottomSheetState extends State<FavProdSearchProducts
                       Navigator.pop(context);
                     },
                     child: Container(
-                      padding: EdgeInsets.only(right: widthRatio(size: 10, context: context)),
+                      padding: EdgeInsets.only(
+                          right: widthRatio(size: 10, context: context)),
                       color: Colors.transparent,
                       child: Icon(
                         Icons.arrow_back_ios_new_rounded,
@@ -74,7 +79,9 @@ class _FavProdSearchProductsBottomSheetState extends State<FavProdSearchProducts
                   Expanded(
                     child: Text(
                       "searchingText".tr(),
-                      style: appTextStyle(fontSize: heightRatio(size: 20, context: context), fontWeight: FontWeight.w800),
+                      style: appTextStyle(
+                          fontSize: heightRatio(size: 20, context: context),
+                          fontWeight: FontWeight.w800),
                     ),
                   ),
                   InkWell(
@@ -82,8 +89,10 @@ class _FavProdSearchProductsBottomSheetState extends State<FavProdSearchProducts
                       Navigator.pop(context);
                     },
                     child: Container(
-                        padding: EdgeInsets.all(widthRatio(size: 10, context: context)),
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: colorBlack03),
+                        padding: EdgeInsets.all(
+                            widthRatio(size: 10, context: context)),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: colorBlack03),
                         child: SvgPicture.asset(
                           "assets/images/ close_icon.svg",
                           color: colorBlack04,
@@ -93,9 +102,18 @@ class _FavProdSearchProductsBottomSheetState extends State<FavProdSearchProducts
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: widthRatio(size: 15, context: context), right: widthRatio(size: 15, context: context), top: heightRatio(size: 20, context: context)),
-              padding: EdgeInsets.only(left: widthRatio(size: 15, context: context), top: heightRatio(size: 10, context: context), bottom: heightRatio(size: 10, context: context)),
-              decoration: BoxDecoration(color: grey04, borderRadius: BorderRadius.circular(heightRatio(size: 50, context: context))),
+              margin: EdgeInsets.only(
+                  left: widthRatio(size: 15, context: context),
+                  right: widthRatio(size: 15, context: context),
+                  top: heightRatio(size: 20, context: context)),
+              padding: EdgeInsets.only(
+                  left: widthRatio(size: 15, context: context),
+                  top: heightRatio(size: 10, context: context),
+                  bottom: heightRatio(size: 10, context: context)),
+              decoration: BoxDecoration(
+                  color: grey04,
+                  borderRadius: BorderRadius.circular(
+                      heightRatio(size: 50, context: context))),
               child: Row(
                 children: [
                   SvgPicture.asset(
@@ -114,13 +132,16 @@ class _FavProdSearchProductsBottomSheetState extends State<FavProdSearchProducts
                               searchText = value;
                             }
                           });
-                          if (assormentsPaginationViewkey.currentState != null) {
+                          if (assormentsPaginationViewkey.currentState !=
+                              null) {
                             if (_timer != null) {
-                              _timer.cancel();
+                              _timer!.cancel();
                             }
                             _timer = Timer(Duration(milliseconds: 600), () {
-                              if (assormentsPaginationViewkey.currentState != null) {
-                                assormentsPaginationViewkey.currentState.refresh();
+                              if (assormentsPaginationViewkey.currentState !=
+                                  null) {
+                                assormentsPaginationViewkey.currentState
+                                    ?.refresh();
                               }
                             });
                           }
@@ -149,32 +170,42 @@ class _FavProdSearchProductsBottomSheetState extends State<FavProdSearchProducts
                           // ),
                           border: InputBorder.none,
                           hintText: 'findeProductText'.tr(),
-                          hintStyle: appTextStyle(color: colorBlack04, fontSize: heightRatio(size: 14, context: context), fontWeight: FontWeight.w500),
+                          hintStyle: appTextStyle(
+                              color: colorBlack04,
+                              fontSize: heightRatio(size: 14, context: context),
+                              fontWeight: FontWeight.w500),
                         )),
                   ),
                 ],
               ),
             ),
             Expanded(
-                child: searchText == null || searchText.isEmpty
+                child: searchText == null || searchText!.isEmpty
                     ? Container(color: Colors.white)
                     : PaginationView<AssortmentsListModel>(
                         key: assormentsPaginationViewkey,
                         initialLoader: ShimmerLoaderForCatalog(),
-                        padding: EdgeInsets.only(left: widthRatio(size: 15, context: context), right: widthRatio(size: 15, context: context), top: heightRatio(size: 20, context: context)),
+                        padding: EdgeInsets.only(
+                            left: widthRatio(size: 15, context: context),
+                            right: widthRatio(size: 15, context: context),
+                            top: heightRatio(size: 20, context: context)),
                         paginationViewType: PaginationViewType.gridView,
                         // preloadedItems: state.catalogsModel.data,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1.35,
                           crossAxisCount: 2,
                         ),
-                        itemBuilder: (BuildContext context, AssortmentsListModel assortmentsListModel, int index) => CatalogProductWidget(
+                        itemBuilder: (BuildContext context,
+                                AssortmentsListModel assortmentsListModel,
+                                int index) =>
+                            CatalogProductWidget(
                           isRecomendations: false,
                           isFavoriteProdiuctPicking: true,
                           assortmentsListModel: assortmentsListModel,
                         ),
                         pageFetch: (currentListSize) async {
-                          List<AssortmentsListModel> fechedPage = await AssortmentsRepository(
+                          List<AssortmentsListModel> fechedPage =
+                              await AssortmentsRepository(
                             //*********************  ПОИСК ******************/
                             searchText: searchText,
                             currentPage: currentPage++,
@@ -198,28 +229,44 @@ class _FavProdSearchProductsBottomSheetState extends State<FavProdSearchProducts
                               color: colorBlack03,
                               size: heightRatio(size: 70, context: context),
                             ),
-                            SizedBox(height: heightRatio(size: 10, context: context)),
+                            SizedBox(
+                                height:
+                                    heightRatio(size: 10, context: context)),
                             Text(
                               "nothingFoundText".tr(),
-                              style: appTextStyle(fontSize: heightRatio(size: 18, context: context), color: colorBlack08, fontWeight: FontWeight.w500),
+                              style: appTextStyle(
+                                  fontSize:
+                                      heightRatio(size: 18, context: context),
+                                  color: colorBlack08,
+                                  fontWeight: FontWeight.w500),
                             ),
-                            SizedBox(height: heightRatio(size: 10, context: context)),
+                            SizedBox(
+                                height:
+                                    heightRatio(size: 10, context: context)),
                             Text(
                               "tryagainOrChangeSerchText".tr(),
                               textAlign: TextAlign.center,
-                              style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: colorBlack06, fontWeight: FontWeight.w500),
+                              style: appTextStyle(
+                                  fontSize:
+                                      heightRatio(size: 14, context: context),
+                                  color: colorBlack06,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ],
                         )),
                         bottomLoader: SizedBox(),
                         onError: (dynamic error) => Container(
                           alignment: Alignment.center,
-                          padding: EdgeInsets.only(left: widthRatio(size: 20, context: context), right: widthRatio(size: 20, context: context)),
+                          padding: EdgeInsets.only(
+                              left: widthRatio(size: 20, context: context),
+                              right: widthRatio(size: 20, context: context)),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                              topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                              topLeft: Radius.circular(
+                                  heightRatio(size: 15, context: context)),
+                              topRight: Radius.circular(
+                                  heightRatio(size: 15, context: context)),
                             ),
                           ),
                           child: Center(
@@ -227,43 +274,69 @@ class _FavProdSearchProductsBottomSheetState extends State<FavProdSearchProducts
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
-                                decoration: BoxDecoration(color: colorBlack03, shape: BoxShape.circle),
+                                padding: EdgeInsets.all(
+                                    widthRatio(size: 15, context: context)),
+                                decoration: BoxDecoration(
+                                    color: colorBlack03,
+                                    shape: BoxShape.circle),
                                 child: SvgPicture.asset(
                                   'assets/images/netErrorIcon.svg',
                                   color: Colors.white,
-                                  height: heightRatio(size: 30, context: context),
+                                  height:
+                                      heightRatio(size: 30, context: context),
                                 ),
                               ),
-                              SizedBox(height: heightRatio(size: 15, context: context)),
+                              SizedBox(
+                                  height:
+                                      heightRatio(size: 15, context: context)),
                               Text(
                                 "errorText".tr(),
-                                style: appTextStyle(fontSize: heightRatio(size: 18, context: context), color: colorBlack06, fontWeight: FontWeight.w500),
+                                style: appTextStyle(
+                                    fontSize:
+                                        heightRatio(size: 18, context: context),
+                                    color: colorBlack06,
+                                    fontWeight: FontWeight.w500),
                               ),
-                              SizedBox(height: heightRatio(size: 10, context: context)),
+                              SizedBox(
+                                  height:
+                                      heightRatio(size: 10, context: context)),
                               InkWell(
                                   onTap: () {
                                     setState(() {
                                       currentPage = 1;
                                     });
-                                    if (assormentsPaginationViewkey.currentState != null) {
-                                      assormentsPaginationViewkey.currentState.refresh();
+                                    if (assormentsPaginationViewkey
+                                            .currentState !=
+                                        null) {
+                                      assormentsPaginationViewkey.currentState
+                                          ?.refresh();
                                     }
                                   },
                                   child: Container(
                                     color: Colors.transparent,
-                                    child: Text("tryAgainText".tr(), style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: mainColor, fontWeight: FontWeight.w500)),
+                                    child: Text("tryAgainText".tr(),
+                                        style: appTextStyle(
+                                            fontSize: heightRatio(
+                                                size: 14, context: context),
+                                            color: mainColor,
+                                            fontWeight: FontWeight.w500)),
                                   ))
                             ],
                           )),
                         ),
                         footer: isLoading
                             ? Container(
-                                padding: EdgeInsets.symmetric(vertical: heightRatio(size: 15, context: context)),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: heightRatio(
+                                        size: 15, context: context)),
                                 width: screenHeight(context),
                                 child: Center(
                                   // optional
-                                  child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(mainColor))),
+                                  child: Center(
+                                      child: CircularProgressIndicator(
+                                          valueColor:
+                                              new AlwaysStoppedAnimation<Color>(
+                                                  mainColor))),
                                 ),
                               )
                             : SizedBox(),

@@ -28,7 +28,8 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
     return BlocConsumer<DiverseFoodBloc, DiverseFoodState>(
       listener: (context, state) {
         if (state is DiverseFoodOldTokenState) {
-          ProfilePage.logout(regBloc: _authPageBloc, basicPageBloc: _basicPageBloc);
+          ProfilePage.logout(
+              regBloc: _authPageBloc, basicPageBloc: _basicPageBloc);
         }
       },
       builder: (context, state) {
@@ -65,7 +66,10 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
                       ),
                       Text(
                         'Разнообразное питание',
-                        style: appHeadersTextStyle(fontSize: heightRatio(size: 22, context: context), fontWeight: FontWeight.w700, color: Colors.white),
+                        style: appHeadersTextStyle(
+                            fontSize: heightRatio(size: 22, context: context),
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white),
                       ),
                     ],
                   ),
@@ -75,14 +79,17 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
                   flex: 1,
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                      topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                      topLeft: Radius.circular(
+                          heightRatio(size: 15, context: context)),
+                      topRight: Radius.circular(
+                          heightRatio(size: 15, context: context)),
                     ),
                     child: Container(
                       color: Colors.white,
                       child: Center(
                         child: CircularProgressIndicator(
-                          valueColor: new AlwaysStoppedAnimation<Color>(newRedDark),
+                          valueColor:
+                              new AlwaysStoppedAnimation<Color>(newRedDark),
                         ),
                       ),
                     ),
@@ -107,12 +114,16 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
               upText: "diverseFoodOneLineText".tr(),
               contentWidget: Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(left: widthRatio(size: 20, context: context), right: widthRatio(size: 20, context: context)),
+                padding: EdgeInsets.only(
+                    left: widthRatio(size: 20, context: context),
+                    right: widthRatio(size: 20, context: context)),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                    topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                    topLeft: Radius.circular(
+                        heightRatio(size: 15, context: context)),
+                    topRight: Radius.circular(
+                        heightRatio(size: 15, context: context)),
                   ),
                 ),
                 child: Center(
@@ -120,7 +131,8 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
+                      padding: EdgeInsets.all(
+                          widthRatio(size: 15, context: context)),
                       decoration: BoxDecoration(
                         color: colorBlack03,
                         shape: BoxShape.circle,
@@ -132,7 +144,11 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: heightRatio(size: 15, context: context)),
-                    Text("errorText".tr(), style: appTextStyle(fontSize: heightRatio(size: 18, context: context), color: colorBlack06, fontWeight: FontWeight.w500)),
+                    Text("errorText".tr(),
+                        style: appTextStyle(
+                            fontSize: heightRatio(size: 18, context: context),
+                            color: colorBlack06,
+                            fontWeight: FontWeight.w500)),
                     SizedBox(height: heightRatio(size: 10, context: context)),
                     InkWell(
                         onTap: () {
@@ -140,7 +156,12 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
                         },
                         child: Container(
                           color: Colors.transparent,
-                          child: Text("tryAgainText".tr(), style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: mainColor, fontWeight: FontWeight.w500)),
+                          child: Text("tryAgainText".tr(),
+                              style: appTextStyle(
+                                  fontSize:
+                                      heightRatio(size: 14, context: context),
+                                  color: mainColor,
+                                  fontWeight: FontWeight.w500)),
                         ))
                   ],
                 )),
@@ -151,23 +172,40 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
           if (state.isNotRatedProductsList.meta.total > 3) {
             state.isNotRatedProductsList.data.length = 3;
           }
-          if (state.diverseFoodFutureDiscountModel.data != null && state.diverseFoodPersentListModel.data != null && state.diverseFoodPersentListModel.data.isNotEmpty) {
-            minDiscountPercent = state.diverseFoodFutureDiscountModel.data.discountPercent;
-            for (var i = 0; i < state.diverseFoodPersentListModel.data.length; i++) {
-              if (minDiscountPercent < state.diverseFoodPersentListModel.data[i].discountPercent) {
-                minDiscountPercent = state.diverseFoodPersentListModel.data[i].discountPercent;
-                futurePuchases = state.diverseFoodPersentListModel.data[i].countPurchases;
-                futuretRating = state.diverseFoodPersentListModel.data[i].countRatingScores;
+          if (state.diverseFoodFutureDiscountModel.data != null &&
+              state.diverseFoodPersentListModel.data != null &&
+              state.diverseFoodPersentListModel.data!.isNotEmpty) {
+            minDiscountPercent =
+                state.diverseFoodFutureDiscountModel.data!.discountPercent;
+            for (var i = 0;
+                i < state.diverseFoodPersentListModel.data!.length;
+                i++) {
+              if (minDiscountPercent <
+                  state.diverseFoodPersentListModel.data![i].discountPercent) {
+                minDiscountPercent =
+                    state.diverseFoodPersentListModel.data![i].discountPercent;
+                futurePuchases =
+                    state.diverseFoodPersentListModel.data![i].countPurchases;
+                futuretRating = state
+                    .diverseFoodPersentListModel.data![i].countRatingScores;
                 break;
               }
             }
-          } else if (state.diverseFoodPersentListModel.data != null && state.diverseFoodPersentListModel.data.isNotEmpty) {
-            minDiscountPercent = state.diverseFoodPersentListModel.data.first.discountPercent;
-            for (var i = 0; i < state.diverseFoodPersentListModel.data.length; i++) {
-              if (state.diverseFoodPersentListModel.data[i].discountPercent <= minDiscountPercent) {
-                minDiscountPercent = state.diverseFoodPersentListModel.data[i].discountPercent;
-                futurePuchases = state.diverseFoodPersentListModel.data[i].countPurchases;
-                futuretRating = state.diverseFoodPersentListModel.data[i].countRatingScores;
+          } else if (state.diverseFoodPersentListModel.data != null &&
+              state.diverseFoodPersentListModel.data!.isNotEmpty) {
+            minDiscountPercent =
+                state.diverseFoodPersentListModel.data!.first.discountPercent;
+            for (var i = 0;
+                i < state.diverseFoodPersentListModel.data!.length;
+                i++) {
+              if (state.diverseFoodPersentListModel.data![i].discountPercent <=
+                  minDiscountPercent) {
+                minDiscountPercent =
+                    state.diverseFoodPersentListModel.data![i].discountPercent;
+                futurePuchases =
+                    state.diverseFoodPersentListModel.data![i].countPurchases;
+                futuretRating = state
+                    .diverseFoodPersentListModel.data![i].countRatingScores;
               }
             }
           }
@@ -202,7 +240,10 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
                       ),
                       Text(
                         'Разнообразное питание',
-                        style: appHeadersTextStyle(fontSize: heightRatio(size: 22, context: context), fontWeight: FontWeight.w700, color: Colors.white),
+                        style: appHeadersTextStyle(
+                            fontSize: heightRatio(size: 22, context: context),
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white),
                       ),
                     ],
                   ),
@@ -212,23 +253,31 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
                   flex: 1,
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                      topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                      topLeft: Radius.circular(
+                          heightRatio(size: 15, context: context)),
+                      topRight: Radius.circular(
+                          heightRatio(size: 15, context: context)),
                     ),
                     child: Container(
                       color: Colors.white,
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            if (state.diverseFoodPresentDiscountModel.data.isEmpty)
+                            if (state
+                                .diverseFoodPresentDiscountModel.data.isEmpty)
                               Container(
                                 padding: EdgeInsets.only(
                                   top: heightRatio(size: 25, context: context),
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "youHaveNoDiscountOnText".tr() + getMonthName(month: DateTime.now().month),
-                                  style: appLabelTextStyle(fontSize: heightRatio(size: 15, context: context), fontWeight: FontWeight.w400, color: newBlack),
+                                  "youHaveNoDiscountOnText".tr() +
+                                      getMonthName(month: DateTime.now().month),
+                                  style: appLabelTextStyle(
+                                      fontSize: heightRatio(
+                                          size: 15, context: context),
+                                      fontWeight: FontWeight.w400,
+                                      color: newBlack),
                                 ),
                               )
                             else
@@ -237,20 +286,34 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
                                 children: [
                                   Text(
                                     "${"yourDiscountForText".tr()} ${getMonthName(month: DateTime.now().month)}",
-                                    style: appLabelTextStyle(fontSize: heightRatio(size: 15, context: context), fontWeight: FontWeight.w400, color: newBlack),
+                                    style: appLabelTextStyle(
+                                        fontSize: heightRatio(
+                                            size: 15, context: context),
+                                        fontWeight: FontWeight.w400,
+                                        color: newBlack),
                                   ),
-                                  SizedBox(width: widthRatio(size: 10, context: context)),
-                                  redesRotatedBoxForDiscount("${state.diverseFoodPresentDiscountModel.data.first.discountPercent}", context)
+                                  SizedBox(
+                                      width: widthRatio(
+                                          size: 10, context: context)),
+                                  redesRotatedBoxForDiscount(
+                                      "${state.diverseFoodPresentDiscountModel.data.first.discountPercent}",
+                                      context)
                                 ],
                               ),
-                            SizedBox(height: heightRatio(size: 30, context: context)),
+                            SizedBox(
+                                height:
+                                    heightRatio(size: 30, context: context)),
                             Container(
                               width: double.infinity,
-                              margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 16, context: context)),
-                              padding: EdgeInsets.all(widthRatio(size: 21, context: context)),
+                              margin: EdgeInsets.symmetric(
+                                  horizontal:
+                                      widthRatio(size: 16, context: context)),
+                              padding: EdgeInsets.all(
+                                  widthRatio(size: 21, context: context)),
                               decoration: BoxDecoration(
                                 color: whiteColor,
-                                borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)),
+                                borderRadius: BorderRadius.circular(
+                                    heightRatio(size: 10, context: context)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: newShadow,
@@ -268,7 +331,8 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
                                         TextSpan(
                                           text: "Сейчас вы копите скидку ",
                                           style: appHeadersTextStyle(
-                                            fontSize: heightRatio(size: 16, context: context),
+                                            fontSize: heightRatio(
+                                                size: 16, context: context),
                                             fontWeight: FontWeight.w700,
                                             color: newBlack,
                                           ),
@@ -276,15 +340,20 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
                                         TextSpan(
                                           text: "to".tr() + " ",
                                           style: appHeadersTextStyle(
-                                            fontSize: heightRatio(size: 16, context: context),
+                                            fontSize: heightRatio(
+                                                size: 16, context: context),
                                             fontWeight: FontWeight.w700,
                                             color: newBlack,
                                           ),
                                         ),
                                         TextSpan(
-                                          text: getMonthName(month: DateTime.now().month == 12 ? 1 : DateTime.now().month + 1),
+                                          text: getMonthName(
+                                              month: DateTime.now().month == 12
+                                                  ? 1
+                                                  : DateTime.now().month + 1),
                                           style: appHeadersTextStyle(
-                                            fontSize: heightRatio(size: 16, context: context),
+                                            fontSize: heightRatio(
+                                                size: 16, context: context),
                                             fontWeight: FontWeight.w700,
                                             color: newRedDark,
                                           ),
@@ -301,18 +370,22 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            SizedBox(height: heightRatio(size: 20, context: context)),
+                            SizedBox(
+                                height:
+                                    heightRatio(size: 20, context: context)),
                             // как работает акция?:
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                horizontal: widthRatio(size: 16, context: context),
+                                horizontal:
+                                    widthRatio(size: 16, context: context),
                               ),
                               child: InkWell(
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => HowWorkDiverseFoodScreen(),
+                                      builder: (context) =>
+                                          HowWorkDiverseFoodScreen(),
                                     ),
                                   );
                                 },
@@ -357,15 +430,19 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
                                         ),
                                         child: SvgPicture.asset(
                                           "assets/images/newPercent.svg",
-                                          width: widthRatio(size: 34, context: context),
+                                          width: widthRatio(
+                                              size: 34, context: context),
                                           fit: BoxFit.scaleDown,
                                         ),
                                       ),
-                                      SizedBox(width: widthRatio(size: 20, context: context)),
+                                      SizedBox(
+                                          width: widthRatio(
+                                              size: 20, context: context)),
                                       Text(
                                         "howWorkDiscountText".tr() + "?",
                                         style: appHeadersTextStyle(
-                                          fontSize: heightRatio(size: 16, context: context),
+                                          fontSize: heightRatio(
+                                              size: 16, context: context),
                                           color: newBlack,
                                         ),
                                       ),
@@ -373,70 +450,118 @@ class RedesDiverseFoodIsActiveContent extends StatelessWidget {
                                       Icon(
                                         Icons.arrow_forward_ios_rounded,
                                         color: newRedDark,
-                                        size: heightRatio(size: 23, context: context),
+                                        size: heightRatio(
+                                            size: 23, context: context),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(height: heightRatio(size: 20, context: context)),
+                            SizedBox(
+                                height:
+                                    heightRatio(size: 20, context: context)),
                             //Если есть товары для оценки:
                             if (state.isNotRatedProductsList.meta.total > 0)
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: widthRatio(size: 16, context: context),
+                                  horizontal:
+                                      widthRatio(size: 16, context: context),
                                 ),
-                                child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                  SizedBox(height: heightRatio(size: 20, context: context)),
-                                  // Text(
-                                  //   "leftToRateText".tr(),
-                                  //   style: appTextStyle(
-                                  //       fontSize: widthRatio(
-                                  //           size: 18, context: context),
-                                  //       fontWeight: FontWeight.w700),
-                                  // ),
-                                  Text(
-                                    "У вас есть ${state.isNotRatedProductsList.meta.total} товаров на оценку:",
-                                    style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
-                                  ),
-                                  SizedBox(height: heightRatio(size: 16, context: context)),
-                                  ...state.isNotRatedProductsList.data.map((e) => RedesDiverseFoodAssortmentToRateCard(productModel: e)).toList(),
-                                  SizedBox(height: heightRatio(size: 15, context: context)),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) {
-                                          return RedesSecondaryPage(upText: "purchasesPerMonthText".tr(), contentWidget: RedesDiverseFoodAssortmnetsToRateContent());
-                                        },
-                                      ));
-                                    },
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      padding: EdgeInsets.symmetric(vertical: widthRatio(size: 16, context: context)),
-                                      decoration: BoxDecoration(color: lightGreyColor, borderRadius: BorderRadius.circular(widthRatio(size: 5, context: context))),
-                                      child: Text(
-                                        "showAllYourPurchasedProductsText".tr(),
-                                        style: appLabelTextStyle(fontSize: heightRatio(size: 13, context: context), color: newRedDark),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                          height: heightRatio(
+                                              size: 20, context: context)),
+                                      // Text(
+                                      //   "leftToRateText".tr(),
+                                      //   style: appTextStyle(
+                                      //       fontSize: widthRatio(
+                                      //           size: 18, context: context),
+                                      //       fontWeight: FontWeight.w700),
+                                      // ),
+                                      Text(
+                                        "У вас есть ${state.isNotRatedProductsList.meta.total} товаров на оценку:",
+                                        style: appHeadersTextStyle(
+                                            fontSize: heightRatio(
+                                                size: 16, context: context),
+                                            color: newBlack),
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(height: heightRatio(size: 50, context: context)),
-                                ]),
+                                      SizedBox(
+                                          height: heightRatio(
+                                              size: 16, context: context)),
+                                      ...state.isNotRatedProductsList.data
+                                          .map((e) =>
+                                              RedesDiverseFoodAssortmentToRateCard(
+                                                  productModel: e))
+                                          .toList(),
+                                      SizedBox(
+                                          height: heightRatio(
+                                              size: 15, context: context)),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(
+                                            builder: (context) {
+                                              return RedesSecondaryPage(
+                                                  upText:
+                                                      "purchasesPerMonthText"
+                                                          .tr(),
+                                                  contentWidget:
+                                                      RedesDiverseFoodAssortmnetsToRateContent());
+                                            },
+                                          ));
+                                        },
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: widthRatio(
+                                                  size: 16, context: context)),
+                                          decoration: BoxDecoration(
+                                              color: lightGreyColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      widthRatio(
+                                                          size: 5,
+                                                          context: context))),
+                                          child: Text(
+                                            "showAllYourPurchasedProductsText"
+                                                .tr(),
+                                            style: appLabelTextStyle(
+                                                fontSize: heightRatio(
+                                                    size: 13, context: context),
+                                                color: newRedDark),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                          height: heightRatio(
+                                              size: 50, context: context)),
+                                    ]),
                               )
                             else
                               Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  SizedBox(height: heightRatio(size: 30, context: context)),
-                                  SvgPicture.asset('assets/images/variedNutrition.svg', width: widthRatio(size: 115, context: context)),
-                                  SizedBox(height: heightRatio(size: 20, context: context)),
+                                  SizedBox(
+                                      height: heightRatio(
+                                          size: 30, context: context)),
+                                  SvgPicture.asset(
+                                      'assets/images/variedNutrition.svg',
+                                      width: widthRatio(
+                                          size: 115, context: context)),
+                                  SizedBox(
+                                      height: heightRatio(
+                                          size: 20, context: context)),
                                   Text(
                                     "noProductsToEvaluateYetText".tr(),
                                     textAlign: TextAlign.center,
                                     style: appHeadersTextStyle(
-                                      fontSize: heightRatio(size: 16, context: context),
+                                      fontSize: heightRatio(
+                                          size: 16, context: context),
                                     ),
                                   ),
                                 ],

@@ -7,7 +7,11 @@ class SecondaryPage extends StatelessWidget {
   final Widget contentWidget;
   final bgColor;
 
-  const SecondaryPage({@required this.upText, @required this.contentWidget, this.bgColor});
+  const SecondaryPage({
+    required this.upText,
+    required this.contentWidget,
+    this.bgColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +22,13 @@ class SecondaryPage extends StatelessWidget {
         child: SafeArea(
             child: Container(
           alignment: Alignment.center,
-          child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             SizedBox(height: heightRatio(size: 12, context: context)),
             Container(
-              margin: EdgeInsets.only(bottom: heightRatio(size: 20, context: context), left: widthRatio(size: 15, context: context)),
+              margin: EdgeInsets.only(
+                  bottom: heightRatio(size: 20, context: context),
+                  left: widthRatio(size: 15, context: context)),
               child: Row(
                 children: [
                   InkWell(
@@ -41,7 +48,10 @@ class SecondaryPage extends StatelessWidget {
                   SizedBox(width: widthRatio(size: 10, context: context)),
                   Text(
                     upText,
-                    style: appHeadersTextStyle(color: whiteColor, fontSize: heightRatio(size: 22, context: context), fontWeight: FontWeight.w600),
+                    style: appHeadersTextStyle(
+                        color: whiteColor,
+                        fontSize: heightRatio(size: 22, context: context),
+                        fontWeight: FontWeight.w600),
                   )
                 ],
               ),
@@ -49,8 +59,10 @@ class SecondaryPage extends StatelessWidget {
             Expanded(
               child: ClipRRect(
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                  topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                  topLeft:
+                      Radius.circular(heightRatio(size: 15, context: context)),
+                  topRight:
+                      Radius.circular(heightRatio(size: 15, context: context)),
                 ),
                 child: Container(color: Colors.white, child: contentWidget),
               ),

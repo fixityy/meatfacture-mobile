@@ -12,7 +12,7 @@ class OrderProcessItemModel {
   String orderPaymentTypeId;
   String clientComment;
   String clientEmail;
-  OrderClientAddressDataModel clientAddressData;
+  OrderClientAddressDataModel? clientAddressData;
   bool isPaid;
   double deliveryPrice;
   double totalDiscountForProducts;
@@ -31,37 +31,38 @@ class OrderProcessItemModel {
   String promocode;
 
   OrderProcessItemModel({
-    this.uuid,
-    this.number,
-    this.storeUserUuid,
-    this.storeUserFullName,
-    this.storeUserAddress,
-    this.storePhone,
-    this.orderStatusId,
-    this.orderDeliveryTypeId,
-    this.orderPaymentTypeId,
-    this.clientComment,
-    this.clientEmail,
+    required this.uuid,
+    required this.number,
+    required this.storeUserUuid,
+    required this.storeUserFullName,
+    required this.storeUserAddress,
+    required this.storePhone,
+    required this.orderStatusId,
+    required this.orderDeliveryTypeId,
+    required this.orderPaymentTypeId,
+    required this.clientComment,
+    required this.clientEmail,
     this.clientAddressData,
-    this.isPaid,
-    this.deliveryPrice,
-    this.totalDiscountForProducts,
-    this.totalPriceForProductsWithDiscount,
-    this.courierPhone,
-    this.totalPrice,
-    this.totalWeight,
-    this.totalQuantity,
-    this.totalBonus,
-    this.paidBonus,
-    this.bonusToCharge,
-    this.plannedDeliveryDatetimeFrom,
-    this.plannedDeliveryDatetimeTo,
-    this.createdAt,
-    this.updatedAt,
-    this.promocode,
+    required this.isPaid,
+    required this.deliveryPrice,
+    required this.totalDiscountForProducts,
+    required this.totalPriceForProductsWithDiscount,
+    required this.courierPhone,
+    required this.totalPrice,
+    required this.totalWeight,
+    required this.totalQuantity,
+    required this.totalBonus,
+    required this.paidBonus,
+    required this.bonusToCharge,
+    required this.plannedDeliveryDatetimeFrom,
+    required this.plannedDeliveryDatetimeTo,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.promocode,
   });
 
-  factory OrderProcessItemModel.fromJson(Map<String, dynamic> json) => OrderProcessItemModel(
+  factory OrderProcessItemModel.fromJson(Map<String, dynamic> json) =>
+      OrderProcessItemModel(
         uuid: json["uuid"],
         number: json["number"],
         storeUserUuid: json["store_user_uuid"],
@@ -73,11 +74,15 @@ class OrderProcessItemModel {
         orderPaymentTypeId: json["order_payment_type_id"],
         clientComment: json["client_comment"],
         clientEmail: json["client_email"],
-        clientAddressData: json["clientAddressData"] == null ? null : OrderClientAddressDataModel.fromJson(json["client_address_data"]),
+        clientAddressData: json["clientAddressData"] == null
+            ? null
+            : OrderClientAddressDataModel.fromJson(json["client_address_data"]),
         isPaid: json["is_paid"],
         deliveryPrice: _toDouble(json["delivery_price"]),
-        totalDiscountForProducts: _toDouble(json["total_discount_for_products"]),
-        totalPriceForProductsWithDiscount: _toDouble(json["total_price_for_products_with_discount"]),
+        totalDiscountForProducts:
+            _toDouble(json["total_discount_for_products"]),
+        totalPriceForProductsWithDiscount:
+            _toDouble(json["total_price_for_products_with_discount"]),
         courierPhone: json["courier_phone"],
         totalPrice: _toDouble(json["total_price"]),
         totalWeight: _toDouble(json["total_weight"]),
@@ -104,11 +109,13 @@ class OrderProcessItemModel {
         "order_payment_type_id": orderPaymentTypeId,
         "client_comment": clientComment,
         "client_email": clientEmail,
-        "client_address_data": clientAddressData == null ? null : clientAddressData.toJson(),
+        "client_address_data":
+            clientAddressData == null ? null : clientAddressData?.toJson(),
         "is_paid": isPaid,
         "delivery_price": deliveryPrice,
         "total_discount_for_products": totalDiscountForProducts,
-        "total_price_for_products_with_discount": totalPriceForProductsWithDiscount,
+        "total_price_for_products_with_discount":
+            totalPriceForProductsWithDiscount,
         "courier_phone": courierPhone,
         "total_price": totalPrice,
         "total_weight": totalWeight,

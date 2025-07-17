@@ -11,26 +11,35 @@ class BasketSettingOrderBottomSheet extends StatefulWidget {
   final bool isPickup;
   final VoidCallback onTap;
 
-  const BasketSettingOrderBottomSheet({Key key, @required this.isPickup, @required this.onTap}) : super(key: key);
+  const BasketSettingOrderBottomSheet({
+    super.key,
+    required this.isPickup,
+    required this.onTap,
+  });
   @override
-  State<BasketSettingOrderBottomSheet> createState() => _BasketSettingOrderBottomSheetState();
+  State<BasketSettingOrderBottomSheet> createState() =>
+      _BasketSettingOrderBottomSheetState();
 }
 
-class _BasketSettingOrderBottomSheetState extends State<BasketSettingOrderBottomSheet> {
-  bool isTabCall;
-  String typeText;
+class _BasketSettingOrderBottomSheetState
+    extends State<BasketSettingOrderBottomSheet> {
+  late bool isTabCall;
+  late String typeText;
 
   @override
   void initState() {
     super.initState();
     isTabCall = prefs.getBool(SharedKeys.basketSettingsIsTabCall) ?? true;
-    typeText = prefs.getString(SharedKeys.basketSettingsTypeText) ?? 'Доставить заказ лично';
+    typeText = prefs.getString(SharedKeys.basketSettingsTypeText) ??
+        'Доставить заказ лично';
   }
 
   @override
   Widget build(BuildContext context) {
     log('isPickup: ${widget.isPickup}');
-    double bottomSizedBox = MediaQuery.of(context).viewInsets.bottom > 0 ? 0 : heightRatio(size: 32, context: context);
+    double bottomSizedBox = MediaQuery.of(context).viewInsets.bottom > 0
+        ? 0
+        : heightRatio(size: 32, context: context);
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -43,18 +52,23 @@ class _BasketSettingOrderBottomSheetState extends State<BasketSettingOrderBottom
           SizedBox(height: heightRatio(size: 25, context: context)),
           Text(
             'Настройки заказа',
-            style: appHeadersTextStyle(fontSize: heightRatio(size: 20, context: context), color: newBlack),
+            style: appHeadersTextStyle(
+                fontSize: heightRatio(size: 20, context: context),
+                color: newBlack),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: heightRatio(size: 16, context: context)),
           Text(
             'Что делать если товара нет в наличии',
-            style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: newBlack),
+            style: appLabelTextStyle(
+                fontSize: heightRatio(size: 14, context: context),
+                color: newBlack),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: heightRatio(size: 12, context: context)),
           ClipRRect(
-            borderRadius: BorderRadius.circular(heightRatio(size: 12, context: context)),
+            borderRadius:
+                BorderRadius.circular(heightRatio(size: 12, context: context)),
             child: Container(
               height: 40,
               decoration: BoxDecoration(color: grey04),
@@ -70,14 +84,25 @@ class _BasketSettingOrderBottomSheetState extends State<BasketSettingOrderBottom
                       child: Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          boxShadow: isTabCall ? [BoxShadow(color: Colors.black12, offset: Offset(-3, 4), blurRadius: 10, spreadRadius: 0)] : null,
-                          borderRadius: BorderRadius.circular(heightRatio(size: 12, context: context)),
+                          boxShadow: isTabCall
+                              ? [
+                                  BoxShadow(
+                                      color: Colors.black12,
+                                      offset: Offset(-3, 4),
+                                      blurRadius: 10,
+                                      spreadRadius: 0)
+                                ]
+                              : null,
+                          borderRadius: BorderRadius.circular(
+                              heightRatio(size: 12, context: context)),
                           color: isTabCall ? newRedDark : Colors.transparent,
                         ),
                         child: Text(
                           'Позвонить',
                           textAlign: TextAlign.center,
-                          style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), color: isTabCall ? whiteColor : Colors.black),
+                          style: appHeadersTextStyle(
+                              fontSize: heightRatio(size: 14, context: context),
+                              color: isTabCall ? whiteColor : Colors.black),
                         ),
                       ),
                     ),
@@ -91,13 +116,24 @@ class _BasketSettingOrderBottomSheetState extends State<BasketSettingOrderBottom
                       child: Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          boxShadow: isTabCall ? null : [BoxShadow(color: Colors.black12, offset: Offset(-3, 4), blurRadius: 10, spreadRadius: 0)],
-                          borderRadius: BorderRadius.circular(heightRatio(size: 12, context: context)),
+                          boxShadow: isTabCall
+                              ? null
+                              : [
+                                  BoxShadow(
+                                      color: Colors.black12,
+                                      offset: Offset(-3, 4),
+                                      blurRadius: 10,
+                                      spreadRadius: 0)
+                                ],
+                          borderRadius: BorderRadius.circular(
+                              heightRatio(size: 12, context: context)),
                           color: isTabCall ? Colors.transparent : newRedDark,
                         ),
                         child: Text(
                           'Не звонить',
-                          style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), color: isTabCall ? Colors.black : whiteColor),
+                          style: appHeadersTextStyle(
+                              fontSize: heightRatio(size: 14, context: context),
+                              color: isTabCall ? Colors.black : whiteColor),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -109,11 +145,17 @@ class _BasketSettingOrderBottomSheetState extends State<BasketSettingOrderBottom
           ),
           SizedBox(height: heightRatio(size: 12, context: context)),
           Text(
-            isTabCall ? 'Позвонить и согласовать изменение заказа' : 'Удалить товары из заказа',
-            style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: newBlack),
+            isTabCall
+                ? 'Позвонить и согласовать изменение заказа'
+                : 'Удалить товары из заказа',
+            style: appLabelTextStyle(
+                fontSize: heightRatio(size: 14, context: context),
+                color: newBlack),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: heightRatio(size: widget.isPickup ? 40 : 20, context: context)),
+          SizedBox(
+              height: heightRatio(
+                  size: widget.isPickup ? 40 : 20, context: context)),
           if (!widget.isPickup)
             Column(
               children: [
@@ -123,7 +165,9 @@ class _BasketSettingOrderBottomSheetState extends State<BasketSettingOrderBottom
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Оставить заказ у двери?',
-                    style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                    style: appHeadersTextStyle(
+                        fontSize: heightRatio(size: 16, context: context),
+                        color: newBlack),
                     textAlign: TextAlign.left,
                   ),
                 ),
@@ -138,7 +182,10 @@ class _BasketSettingOrderBottomSheetState extends State<BasketSettingOrderBottom
                 ),
                 BasketSettingOrderBtn(
                   title: 'Оставить у двери и позвонить по телефону',
-                  isActive: typeText == 'Оставить у двери и позвонить по телефону' ? true : false,
+                  isActive:
+                      typeText == 'Оставить у двери и позвонить по телефону'
+                          ? true
+                          : false,
                   onTap: () {
                     typeText = 'Оставить у двери и позвонить по телефону';
                     setState(() {});
@@ -146,7 +193,9 @@ class _BasketSettingOrderBottomSheetState extends State<BasketSettingOrderBottom
                 ),
                 BasketSettingOrderBtn(
                   title: 'Просто оставить заказ у двери',
-                  isActive: typeText == 'Просто оставить заказ у двери' ? true : false,
+                  isActive: typeText == 'Просто оставить заказ у двери'
+                      ? true
+                      : false,
                   onTap: () {
                     typeText = 'Просто оставить заказ у двери';
                     setState(() {});
@@ -158,18 +207,25 @@ class _BasketSettingOrderBottomSheetState extends State<BasketSettingOrderBottom
           InkWell(
             onTap: () async {
               print('Сохранили $isTabCall и $typeText');
-              await prefs.setBool(SharedKeys.basketSettingsIsTabCall, isTabCall);
-              await prefs.setString(SharedKeys.basketSettingsTypeText, typeText);
+              await prefs.setBool(
+                  SharedKeys.basketSettingsIsTabCall, isTabCall);
+              await prefs.setString(
+                  SharedKeys.basketSettingsTypeText, typeText);
               widget.onTap();
             },
             child: Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
+              padding: EdgeInsets.only(
+                  top: heightRatio(size: 15, context: context),
+                  bottom: heightRatio(size: 18, context: context)),
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5), color: newRedDark),
               child: Text(
                 'Сохранить',
-                style: appLabelTextStyle(fontSize: heightRatio(size: 18, context: context), color: Colors.white),
+                style: appLabelTextStyle(
+                    fontSize: heightRatio(size: 18, context: context),
+                    color: Colors.white),
               ),
             ),
           ),

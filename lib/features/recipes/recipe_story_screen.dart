@@ -8,7 +8,13 @@ import 'package:smart/features/recipes/widgets/recipe_story_overlay.dart';
 import 'package:video_player/video_player.dart';
 
 class RecipeStoryScreen extends StatefulWidget {
-  RecipeStoryScreen({this.duration, this.image, this.title, this.text, this.textColor});
+  RecipeStoryScreen({
+    required this.duration,
+    required this.image,
+    required this.title,
+    required this.text,
+    required this.textColor,
+  });
 
   final String image;
   final String title;
@@ -21,12 +27,13 @@ class RecipeStoryScreen extends StatefulWidget {
 }
 
 class _RecipeStoryScreenState extends State<RecipeStoryScreen> {
-  VideoPlayerController _controller;
+  late VideoPlayerController _controller;
 
   @override
   void initState() {
     super.initState();
-    if (lookupMimeType(widget.image) != 'image/png' || lookupMimeType(widget.image) != 'image/jpeg') {
+    if (lookupMimeType(widget.image) != 'image/png' ||
+        lookupMimeType(widget.image) != 'image/jpeg') {
       // _controller = VideoPlayerController.network(
       //   widget.image,
       //   videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
@@ -48,12 +55,14 @@ class _RecipeStoryScreenState extends State<RecipeStoryScreen> {
     Size size = MediaQuery.of(context).size;
     double width = size.width;
     double height = size.height;
-    return lookupMimeType(widget.image) == 'image/png' || lookupMimeType(widget.image) == 'image/jpeg'
+    return lookupMimeType(widget.image) == 'image/png' ||
+            lookupMimeType(widget.image) == 'image/jpeg'
         ? Stack(
             children: [
               SizedBox(
                 width: double.maxFinite,
-                child: Image.network(widget.image, alignment: Alignment.center, fit: BoxFit.cover),
+                child: Image.network(widget.image,
+                    alignment: Alignment.center, fit: BoxFit.cover),
               ),
               Positioned(
                 top: heightRatio(size: 126, context: context),
@@ -71,7 +80,8 @@ class _RecipeStoryScreenState extends State<RecipeStoryScreen> {
                             fontSize: heightRatio(size: 20, context: context),
                           ),
                         ),
-                        SizedBox(width: widthRatio(size: 9.0, context: context)),
+                        SizedBox(
+                            width: widthRatio(size: 9.0, context: context)),
                         // widget.duration != null && widget.duration > 0
                         //     ? Container(
                         //   padding: EdgeInsets.symmetric(
@@ -97,7 +107,10 @@ class _RecipeStoryScreenState extends State<RecipeStoryScreen> {
                     Text(
                       widget.text,
                       textAlign: TextAlign.center,
-                      style: appHeadersTextStyle(color: HexColor(widget.textColor), fontSize: 33.0, fontWeight: FontWeight.w400),
+                      style: appHeadersTextStyle(
+                          color: HexColor(widget.textColor),
+                          fontSize: 33.0,
+                          fontWeight: FontWeight.w400),
                     ),
                   ],
                 ),
@@ -111,7 +124,8 @@ class _RecipeStoryScreenState extends State<RecipeStoryScreen> {
                     padding: EdgeInsets.all(6.0),
                     width: widthRatio(size: 28.0, context: context),
                     height: heightRatio(size: 28.0, context: context),
-                    decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.grey),
                     child: SvgPicture.asset(
                       'assets/images/exit_from_slides_button.svg',
                       color: Colors.white,
@@ -127,7 +141,9 @@ class _RecipeStoryScreenState extends State<RecipeStoryScreen> {
                 child: InkWell(
                   onTap: () {
                     setState(() {
-                      _controller.value.isPlaying ? _controller.pause() : _controller.play();
+                      _controller.value.isPlaying
+                          ? _controller.pause()
+                          : _controller.play();
                     });
                   },
                   child: Container(
@@ -139,7 +155,8 @@ class _RecipeStoryScreenState extends State<RecipeStoryScreen> {
                         children: <Widget>[
                           VideoPlayer(_controller),
                           RecipeStoryOverlay(controller: _controller),
-                          VideoProgressIndicator(_controller, allowScrubbing: true),
+                          VideoProgressIndicator(_controller,
+                              allowScrubbing: true),
                           Positioned(
                             top: 10.0,
                             right: 20.0,
@@ -150,8 +167,10 @@ class _RecipeStoryScreenState extends State<RecipeStoryScreen> {
                               child: Container(
                                 padding: EdgeInsets.all(6.0),
                                 width: widthRatio(size: 28.0, context: context),
-                                height: heightRatio(size: 28.0, context: context),
-                                decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+                                height:
+                                    heightRatio(size: 28.0, context: context),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle, color: Colors.grey),
                                 child: SvgPicture.asset(
                                   'assets/images/exit_from_slides_button.svg',
                                   color: Colors.white,

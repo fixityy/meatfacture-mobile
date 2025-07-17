@@ -4,8 +4,8 @@ class DeleteProfileModel {
     this.data,
   });
 
-  bool success;
-  DeleteProfileDataModel data;
+  bool? success;
+  DeleteProfileDataModel? data;
 
   factory DeleteProfileModel.fromJson(Map<String, dynamic> json) =>
       DeleteProfileModel(
@@ -15,14 +15,14 @@ class DeleteProfileModel {
 
   Map<String, dynamic> toJson() => {
         "success": success,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }
 
 class DeleteProfileDataModel {
   DeleteProfileDataModel({
-    this.newMark,
-    this.markDeletedAt,
+    required this.newMark,
+    required this.markDeletedAt,
   });
 
   bool newMark;

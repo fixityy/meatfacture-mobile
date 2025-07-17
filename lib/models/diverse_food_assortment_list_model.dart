@@ -3,8 +3,8 @@ import 'package:smart/models/meta_model.dart';
 
 class DiverseFoodAssortmentListModel {
   DiverseFoodAssortmentListModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<DiverseFoodAssortmentListDataModel> data;
@@ -25,26 +25,26 @@ class DiverseFoodAssortmentListModel {
 
 class DiverseFoodAssortmentListDataModel {
   DiverseFoodAssortmentListDataModel({
-    this.source,
-    this.sourceId,
-    this.sourceLine,
-    this.sourceLineId,
-    this.productUuid,
-    this.assortment,
-    this.quantity,
+    required this.source,
+    required this.sourceId,
+    required this.sourceLine,
+    required this.sourceLineId,
+    required this.productUuid,
+    required this.assortment,
+    required this.quantity,
     this.totalWeight,
-    this.priceWithDiscount,
-    this.discount,
+    required this.priceWithDiscount,
+    required this.discount,
     this.originalPrice,
     this.totalDiscount,
     this.totalBonus,
     this.paidBonus,
     this.discountableType,
-    this.discountTypeColor,
-    this.discountTypeName,
+    required this.discountTypeColor,
+    required this.discountTypeName,
     this.rating,
-    this.ratingComment,
-    this.createdAt,
+    required this.ratingComment,
+    required this.createdAt,
   });
 
   String source;
@@ -54,17 +54,17 @@ class DiverseFoodAssortmentListDataModel {
   String productUuid;
   Assortment assortment;
   String quantity;
-  double totalWeight;
+  double? totalWeight;
   String priceWithDiscount;
   String discount;
-  double originalPrice;
-  double totalDiscount;
+  double? originalPrice;
+  double? totalDiscount;
   dynamic totalBonus;
   dynamic paidBonus;
   dynamic discountableType;
   String discountTypeColor;
   String discountTypeName;
-  double rating;
+  double? rating;
   String ratingComment;
   String createdAt;
 
@@ -127,18 +127,18 @@ class DiverseFoodAssortmentListDataModel {
 
 class Assortment {
   Assortment({
-    this.uuid,
-    this.name,
-    this.catalogUuid,
-    this.catalogName,
+    required this.uuid,
+    required this.name,
+    required this.catalogUuid,
+    required this.catalogName,
     this.rating,
-    this.images,
+    required this.images,
   });
   String uuid;
   String name;
   String catalogUuid;
   String catalogName;
-  double rating;
+  double? rating;
   List<ImageModel> images;
 
   factory Assortment.fromJson(Map<String, dynamic> json) => Assortment(

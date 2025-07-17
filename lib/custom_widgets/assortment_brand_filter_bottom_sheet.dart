@@ -14,10 +14,12 @@ import 'package:smart/core/constants/text_styles.dart';
 // ignore: must_be_immutable
 class AssortmentBrandFilterBottomSheet extends StatefulWidget {
   @override
-  _AssortmentBrandFilterBottomSheetState createState() => _AssortmentBrandFilterBottomSheetState();
+  _AssortmentBrandFilterBottomSheetState createState() =>
+      _AssortmentBrandFilterBottomSheetState();
 }
 
-class _AssortmentBrandFilterBottomSheetState extends State<AssortmentBrandFilterBottomSheet> {
+class _AssortmentBrandFilterBottomSheetState
+    extends State<AssortmentBrandFilterBottomSheet> {
   int i = 1;
   final TextEditingController searchTextController = TextEditingController();
   List<String> _brandsUuidToSend = [];
@@ -54,7 +56,8 @@ class _AssortmentBrandFilterBottomSheetState extends State<AssortmentBrandFilter
             SizedBox(height: heightRatio(size: 15, context: context)),
             Text(
               "brandsText".tr(),
-              style: appTextStyle(fontSize: heightRatio(size: 24, context: context)),
+              style: appTextStyle(
+                  fontSize: heightRatio(size: 24, context: context)),
             ),
 
             SizedBox(height: heightRatio(size: 10, context: context)),
@@ -65,10 +68,16 @@ class _AssortmentBrandFilterBottomSheetState extends State<AssortmentBrandFilter
                   _brandBloc.add(BrandLoadEvent());
                 },
                 controller: searchTextController,
-                decoration: InputDecoration(prefixIcon: Icon(Icons.search_outlined), border: InputBorder.none, hintText: "Найти бренд"),
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search_outlined),
+                    border: InputBorder.none,
+                    hintText: "Найти бренд"),
               ),
               // padding: const EdgeInsets.symmetric(vertical: 10),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 50, context: context)), color: colorBlack03),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                      heightRatio(size: 50, context: context)),
+                  color: colorBlack03),
             ),
             BlocBuilder<BrandBloc, BrandState>(
               builder: (context, state) {
@@ -80,16 +89,26 @@ class _AssortmentBrandFilterBottomSheetState extends State<AssortmentBrandFilter
                       height: heightRatio(size: 170, context: context),
                       alignment: Alignment.centerLeft,
                       child: PaginationView<AssortmentBrandsListDatamodel>(
-                          padding: EdgeInsets.only(top: heightRatio(size: 10, context: context)),
-                          itemBuilder: (context, AssortmentBrandsListDatamodel _assortmentBrandsListDatamodel, int index) => InkWell(
+                          padding: EdgeInsets.only(
+                              top: heightRatio(size: 10, context: context)),
+                          itemBuilder: (context,
+                                  AssortmentBrandsListDatamodel
+                                      _assortmentBrandsListDatamodel,
+                                  int index) =>
+                              InkWell(
                                 onTap: () {
                                   setState(() {
-                                    if (_assortmentBrandsListDatamodel.isSelected) {
-                                      _assortmentBrandsListDatamodel.isSelected = false;
-                                      _brandsUuidToSend.remove(_assortmentBrandsListDatamodel.uuid);
+                                    if (_assortmentBrandsListDatamodel
+                                        .isSelected) {
+                                      _assortmentBrandsListDatamodel
+                                          .isSelected = false;
+                                      _brandsUuidToSend.remove(
+                                          _assortmentBrandsListDatamodel.uuid);
                                     } else {
-                                      _brandsUuidToSend.add(_assortmentBrandsListDatamodel.uuid);
-                                      _assortmentBrandsListDatamodel.isSelected = true;
+                                      _brandsUuidToSend.add(
+                                          _assortmentBrandsListDatamodel.uuid);
+                                      _assortmentBrandsListDatamodel
+                                          .isSelected = true;
                                     }
                                   });
 
@@ -112,33 +131,51 @@ class _AssortmentBrandFilterBottomSheetState extends State<AssortmentBrandFilter
                                 },
                                 child: Container(
                                   child: Padding(
-                                      padding: EdgeInsets.only(bottom: heightRatio(size: 5, context: context)),
+                                      padding: EdgeInsets.only(
+                                          bottom: heightRatio(
+                                              size: 5, context: context)),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(_assortmentBrandsListDatamodel.name, style: notEmptyHintTextStyle),
+                                              Text(
+                                                  _assortmentBrandsListDatamodel
+                                                      .name,
+                                                  style: notEmptyHintTextStyle),
                                               Checkbox(
-                                                  fillColor: MaterialStateProperty.all(mainColor),
-                                                  value: _assortmentBrandsListDatamodel.isSelected,
-                                                  onChanged: (bool value) {
+                                                  fillColor:
+                                                      MaterialStateProperty.all(
+                                                          mainColor),
+                                                  value:
+                                                      _assortmentBrandsListDatamodel
+                                                          .isSelected,
+                                                  onChanged: (bool? value) {
                                                     setState(() {
-                                                      _assortmentBrandsListDatamodel.isSelected = value;
+                                                      _assortmentBrandsListDatamodel
+                                                          .isSelected = value!;
 
                                                       setState(() {
                                                         if (!value) {
-                                                          _brandsUuidToSend.remove(_assortmentBrandsListDatamodel.uuid);
+                                                          _brandsUuidToSend.remove(
+                                                              _assortmentBrandsListDatamodel
+                                                                  .uuid);
                                                         } else {
-                                                          _brandsUuidToSend.add(_assortmentBrandsListDatamodel.uuid);
+                                                          _brandsUuidToSend.add(
+                                                              _assortmentBrandsListDatamodel
+                                                                  .uuid);
                                                         }
                                                       });
                                                     });
                                                   })
                                             ],
                                           ),
-                                          SizedBox(height: heightRatio(size: 5, context: context)),
+                                          SizedBox(
+                                              height: heightRatio(
+                                                  size: 5, context: context)),
                                           Divider()
                                         ],
                                       )),
@@ -146,11 +183,19 @@ class _AssortmentBrandFilterBottomSheetState extends State<AssortmentBrandFilter
                               ),
                           onEmpty: Container(),
                           pageFetch: (currentListSize) async {
-                            AssortmentBrandsListmodel _brandsList = await AssortmentBrandsProvider().getAssortmentBrandsResponse(page: i, searchText: searchTextController.text != "" ? searchTextController.text : null);
+                            AssortmentBrandsListmodel _brandsList =
+                                await AssortmentBrandsProvider()
+                                    .getAssortmentBrandsResponse(
+                                        page: i,
+                                        searchText:
+                                            searchTextController.text != ""
+                                                ? searchTextController.text
+                                                : null);
                             i++;
                             return _brandsList.data;
                           },
-                          onError: (error) => Container(child: Text("errorText".tr()))),
+                          onError: (error) =>
+                              Container(child: Text("errorText".tr()))),
                     ),
                   );
                 }
@@ -169,15 +214,25 @@ class _AssortmentBrandFilterBottomSheetState extends State<AssortmentBrandFilter
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SubcatalogScreen(isSearchPage: false, brandName: _brandsUuidToSend, preCataloName: "brandsText".tr()),
+                        builder: (context) => SubcatalogScreen(
+                            isSearchPage: false,
+                            brandName: _brandsUuidToSend,
+                            preCataloName: "brandsText".tr()),
                       ));
                 }
               },
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: heightRatio(size: 15, context: context)),
+                padding: EdgeInsets.symmetric(
+                    vertical: heightRatio(size: 15, context: context)),
                 alignment: Alignment.center,
-                child: Text("applyText".tr(), style: appTextStyle(fontSize: heightRatio(size: 18, context: context), color: Colors.white)),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)), color: mainColor),
+                child: Text("applyText".tr(),
+                    style: appTextStyle(
+                        fontSize: heightRatio(size: 18, context: context),
+                        color: Colors.white)),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                        heightRatio(size: 10, context: context)),
+                    color: mainColor),
               ),
             ),
             SizedBox(height: heightRatio(size: 10, context: context)),

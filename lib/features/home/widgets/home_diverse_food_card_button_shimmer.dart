@@ -9,7 +9,7 @@ class HomeDiverseFoodCardButtonShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[100],
+      baseColor: Colors.grey[100]!,
       highlightColor: Colors.white,
       child: Column(
         children: [
@@ -32,7 +32,8 @@ class HomeDiverseFoodCardButtonShimmer extends StatelessWidget {
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 color: Colors.grey,
-                borderRadius: BorderRadius.circular(heightRatio(size: 5, context: context)),
+                borderRadius: BorderRadius.circular(
+                    heightRatio(size: 5, context: context)),
               ),
             ),
           ),

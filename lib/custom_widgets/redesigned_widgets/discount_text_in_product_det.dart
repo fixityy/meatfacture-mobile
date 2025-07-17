@@ -10,18 +10,24 @@ import '../../bloc_files/product_details_bloc.dart';
 
 class DiscountTitleText extends StatelessWidget {
   final ProductDetailsLoadedState pDState;
-  const DiscountTitleText({Key key, this.pDState}) : super(key: key);
+  const DiscountTitleText({
+    required this.pDState,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    if (pDState.productDetailsModel.data.discountType.contains("FavoriteAssortment")) {
+    if (pDState.productDetailsModel.data.discountType
+            ?.contains("FavoriteAssortment") ==
+        true) {
       return BlocBuilder<FavoriteProductBloc, FavoriteProductState>(
         builder: (context, favProdstate) {
-          num percent = null;
+          num? percent = null;
           if (favProdstate is FavoriteProductLoadedState) {
             favProdstate.favoriteProductModel.data.forEach(
               (favProd) {
-                if (favProd.assortmentUuid == pDState.productDetailsModel.data.uuid) {
+                if (favProd.assortmentUuid ==
+                    pDState.productDetailsModel.data.uuid) {
                   percent = favProd.discountPercent.toDouble();
                 }
               },
@@ -32,11 +38,15 @@ class DiscountTitleText extends StatelessWidget {
         },
       );
     }
-    if (pDState.productDetailsModel.data.discountType.contains("diverse")) {
+    if (pDState.productDetailsModel.data.discountType?.contains("diverse") ==
+        true) {
       return BlocBuilder<DiverseFoodBloc, DiverseFoodState>(
         builder: (context, diverseState) {
           if (diverseState is DiverseFoodLoadedState) {
-            return titleText(context: context, percent: diverseState.diverseFoodPresentDiscountModel.data.first.discountPercent);
+            return titleText(
+                context: context,
+                percent: diverseState.diverseFoodPresentDiscountModel.data.first
+                    .discountPercent);
           }
           return titleText(context: context);
         },
@@ -45,13 +55,16 @@ class DiscountTitleText extends StatelessWidget {
     return titleText(context: context);
   }
 
-  Widget titleText({num percent, @required BuildContext context}) {
+  Widget titleText({num? percent, required BuildContext context}) {
     return Text(
       pDState.productDetailsModel.data.discountTypeName == null
           ? ""
-          : "${pDState.productDetailsModel.data.discountTypeName}${percent != null ? ". ${"discount".tr()} ${percent.isNaN ? percent : percent.toInt()}% " : ""} ${pDState.productDetailsModel.data.discountActiveTill != null && pDState.productDetailsModel.data.discountActiveTill.isNotEmpty ? "${"validForText".tr().toLowerCase()} ${pDState.productDetailsModel.data.discountActiveTill[8]}${pDState.productDetailsModel.data.discountActiveTill[9]}.${pDState.productDetailsModel.data.discountActiveTill[5]}${pDState.productDetailsModel.data.discountActiveTill[6]}" : ""}",
+          : "${pDState.productDetailsModel.data.discountTypeName}${percent != null ? ". ${"discount".tr()} ${percent.isNaN ? percent : percent.toInt()}% " : ""} ${pDState.productDetailsModel.data.discountActiveTill != null && pDState.productDetailsModel.data.discountActiveTill!.isNotEmpty ? "${"validForText".tr().toLowerCase()} ${pDState.productDetailsModel.data.discountActiveTill![8]}${pDState.productDetailsModel.data.discountActiveTill![9]}.${pDState.productDetailsModel.data.discountActiveTill![5]}${pDState.productDetailsModel.data.discountActiveTill![6]}" : ""}",
       textAlign: TextAlign.center,
-      style: appTextStyle(color: colorBlack04, fontWeight: FontWeight.w500, fontSize: heightRatio(size: 12, context: context)),
+      style: appTextStyle(
+          color: colorBlack04,
+          fontWeight: FontWeight.w500,
+          fontSize: heightRatio(size: 12, context: context)),
     );
   }
 }

@@ -53,24 +53,33 @@ class RedesImInShopPage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          SizedBox(width: widthRatio(size: 20, context: context)),
+                          SizedBox(
+                              width: widthRatio(size: 20, context: context)),
                           SvgPicture.asset(
                             'assets/images/newStorBold.svg',
                             color: Colors.white,
                             height: heightRatio(size: 20, context: context),
                             width: widthRatio(size: 22, context: context),
                           ),
-                          SizedBox(width: widthRatio(size: 12, context: context)),
+                          SizedBox(
+                              width: widthRatio(size: 12, context: context)),
                           Text(
                             profileState is ProfileLoadedState
-                                ? profileState.profileModel.data.selectedStoreAddress == null
+                                ? profileState.profileModel.data
+                                            ?.selectedStoreAddress ==
+                                        null
                                     ? 'notSelectedText'.tr()
-                                    : profileState.profileModel.data.selectedStoreAddress
+                                    : profileState.profileModel.data!
+                                        .selectedStoreAddress!
                                 : profileState is ProfileAsGuestState
-                                    ? profileState.shopAddress ?? "notSelectedText".tr()
+                                    ? profileState.shopAddress ??
+                                        "notSelectedText".tr()
                                     : '',
                             textAlign: TextAlign.center,
-                            style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: Colors.white),
+                            style: appLabelTextStyle(
+                                fontSize:
+                                    heightRatio(size: 14, context: context),
+                                color: Colors.white),
                           ),
                         ],
                       ),
@@ -81,14 +90,16 @@ class RedesImInShopPage extends StatelessWidget {
                             height: heightRatio(size: 27, context: context),
                             color: white03,
                           ),
-                          SizedBox(width: widthRatio(size: 15, context: context)),
+                          SizedBox(
+                              width: widthRatio(size: 15, context: context)),
                           SvgPicture.asset(
                             'assets/images/newEdit2.svg',
                             height: heightRatio(size: 26, context: context),
                             width: widthRatio(size: 26, context: context),
                             fit: BoxFit.scaleDown,
                           ),
-                          SizedBox(width: widthRatio(size: 20, context: context)),
+                          SizedBox(
+                              width: widthRatio(size: 20, context: context)),
                         ],
                       ),
                     ],

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class RecipeStoryOverlay extends StatelessWidget {
-  const RecipeStoryOverlay({@required this.controller});
+  const RecipeStoryOverlay({required this.controller});
 
   // static const List<Duration> _exampleCaptionOffsets = <Duration>[
   //   Duration(seconds: -10),

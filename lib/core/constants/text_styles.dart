@@ -9,13 +9,18 @@ TextStyle appTextStyle({
   FontWeight fontWeight = FontWeight.w400,
   TextDecoration decoration = TextDecoration.none,
 }) =>
-    GoogleFonts.roboto(decorationColor: decorationColor, color: color, fontSize: fontSize, fontWeight: fontWeight, decoration: decoration);
+    GoogleFonts.roboto(
+        decorationColor: decorationColor,
+        color: color,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        decoration: decoration);
 
 TextStyle appHeadersTextStyle({
   Color decorationColor = blackColor,
   Color color = Colors.black,
   double fontSize = 14,
-  double height,
+  double? height,
   FontWeight fontWeight = FontWeight.w700,
   TextDecoration decoration = TextDecoration.none,
 }) =>
@@ -33,7 +38,7 @@ TextStyle appLabelTextStyle({
   Color decorationColor = blackColor,
   Color color = newGrey,
   double fontSize = 12,
-  double height,
+  double? height,
   FontWeight fontWeight = FontWeight.w400,
   TextDecoration decoration = TextDecoration.none,
 }) =>

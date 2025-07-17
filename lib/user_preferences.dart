@@ -8,13 +8,13 @@ class UserPreferences {
   }
 
   UserPreferences._ctor();
-  SharedPreferences _prefs;
+  late SharedPreferences _prefs;
 
-  init() async {
-    _prefs = UserPreferences().data;
+  Future<void> init() async {
+    _prefs = await SharedPreferences.getInstance();
   }
 
-  get data {
+  String get data {
     return _prefs.getString(SharedKeys.data) ?? '';
   }
 
@@ -22,7 +22,7 @@ class UserPreferences {
     _prefs.setString(SharedKeys.data, value);
   }
 
-  get token {
+  String get token {
     return _prefs.getString(SharedKeys.data) ?? '';
   }
 

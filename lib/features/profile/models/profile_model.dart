@@ -2,17 +2,17 @@
 import 'package:smart/features/profile/models/profile_data_model.dart';
 
 class ProfileModel {
-  ProfileDataModel data;
+  ProfileDataModel? data;
   ProfileModel({this.data});
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
         data: ProfileDataModel.fromJson(json["data"]),
       );
 
-  Map<String, dynamic> toJson() => {"data": data.toJson()};
+  Map<String, dynamic> toJson() => {"data": data?.toJson()};
 
   ProfileModel copyWith({
-    ProfileDataModel data,
+    ProfileDataModel? data,
   }) {
     return ProfileModel(
       data: data ?? this.data,

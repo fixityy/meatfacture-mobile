@@ -17,22 +17,32 @@ import 'package:smart/core/constants/text_styles.dart';
 
 //Адрес доставки2 (Адреса магазинов2 из корзины)
 class InitAddUserAddressListCart extends StatefulWidget {
-  final String cardUuid;
-  final String orderType;
-  final String payType;
-  final String uuid;
-  final String payCardNumber;
-  final List<ProductModelForOrderRequest> productModelForOrderRequestList;
-  final int subtractBonusesCount;
-  const InitAddUserAddressListCart({this.cardUuid, this.orderType, this.productModelForOrderRequestList, this.uuid, this.payType, this.payCardNumber, this.subtractBonusesCount});
+  final String? cardUuid;
+  final String? orderType;
+  final String? payType;
+  final String? uuid;
+  final String? payCardNumber;
+  final List<ProductModelForOrderRequest>? productModelForOrderRequestList;
+  final int? subtractBonusesCount;
+  const InitAddUserAddressListCart({
+    this.cardUuid,
+    this.orderType,
+    this.productModelForOrderRequestList,
+    this.uuid,
+    this.payType,
+    this.payCardNumber,
+    this.subtractBonusesCount,
+  });
 
   @override
-  State<InitAddUserAddressListCart> createState() => _InitAddUserAddressListCartState();
+  State<InitAddUserAddressListCart> createState() =>
+      _InitAddUserAddressListCartState();
 }
 
-class _InitAddUserAddressListCartState extends State<InitAddUserAddressListCart> {
-  int selectedIndex;
-  String selectedUuid;
+class _InitAddUserAddressListCartState
+    extends State<InitAddUserAddressListCart> {
+  late int selectedIndex;
+  String? selectedUuid;
 
   @override
   void initState() {
@@ -82,22 +92,35 @@ class _InitAddUserAddressListCartState extends State<InitAddUserAddressListCart>
                 width: double.maxFinite,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(heightRatio(size: 15, context: context)), topRight: Radius.circular(heightRatio(size: 15, context: context))),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(
+                          heightRatio(size: 15, context: context)),
+                      topRight: Radius.circular(
+                          heightRatio(size: 15, context: context))),
                 ),
                 child: Stack(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 17, context: context), vertical: heightRatio(size: 25, context: context)),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: widthRatio(size: 17, context: context),
+                          vertical: heightRatio(size: 25, context: context)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Эти магазины доставляют к вам',
-                            style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                            style: appHeadersTextStyle(
+                                fontSize:
+                                    heightRatio(size: 16, context: context),
+                                color: newBlack),
                           ),
-                          SizedBox(height: heightRatio(size: 88, context: context)),
-                          Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(newRedDark))),
+                          SizedBox(
+                              height: heightRatio(size: 88, context: context)),
+                          Center(
+                              child: CircularProgressIndicator(
+                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                      newRedDark))),
                         ],
                       ),
                     ),
@@ -146,12 +169,16 @@ class _InitAddUserAddressListCartState extends State<InitAddUserAddressListCart>
               onTap: () => Navigator.pop(context),
               child: Padding(
                 padding: const EdgeInsets.only(left: 15, right: 12.5),
-                child: Icon(Icons.arrow_back_ios_new_rounded, size: heightRatio(size: 25, context: context), color: whiteColor),
+                child: Icon(Icons.arrow_back_ios_new_rounded,
+                    size: heightRatio(size: 25, context: context),
+                    color: whiteColor),
               ),
             ),
             Text(
               "Адрес доставки",
-              style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 22, context: context)),
+              style: appHeadersTextStyle(
+                  color: Colors.white,
+                  fontSize: heightRatio(size: 22, context: context)),
               textAlign: TextAlign.left,
             ),
           ],
@@ -163,7 +190,8 @@ class _InitAddUserAddressListCartState extends State<InitAddUserAddressListCart>
               context,
               MaterialPageRoute(
                 builder: (context) => AddressesMyDelivery(
-                  productModelForOrderRequestList: widget.productModelForOrderRequestList,
+                  productModelForOrderRequestList:
+                      widget.productModelForOrderRequestList,
                   payCardNumber: widget.payCardNumber,
                   payType: widget.payType,
                   uuid: widget.uuid,
@@ -187,14 +215,20 @@ class _InitAddUserAddressListCartState extends State<InitAddUserAddressListCart>
                 child: BlocBuilder<AddressesClientBloc, ClientAddressState>(
                   builder: (context, state) {
                     String addressText = "Адрес не выбран";
-                    if (state is LoadedClientAddressState && state.selectedAddress != null) {
-                      addressText = (state.selectedAddress.house == null || state.selectedAddress.house == "") ? "${state.selectedAddress.city}, ${state.selectedAddress.street}" : "${state.selectedAddress.city}, ${state.selectedAddress.street} ${state.selectedAddress.house}";
+                    if (state is LoadedClientAddressState &&
+                        state.selectedAddress != null) {
+                      addressText = (state.selectedAddress!.house == null ||
+                              state.selectedAddress!.house == "")
+                          ? "${state.selectedAddress!.city}, ${state.selectedAddress!.street}"
+                          : "${state.selectedAddress!.city}, ${state.selectedAddress!.street} ${state.selectedAddress!.house}";
                     }
                     return Text(
                       addressText,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: appLabelTextStyle(color: whiteColor, fontSize: heightRatio(size: 14, context: context)),
+                      style: appLabelTextStyle(
+                          color: whiteColor,
+                          fontSize: heightRatio(size: 14, context: context)),
                     );
                   },
                 ),
@@ -227,7 +261,10 @@ class _InitAddUserAddressListCartState extends State<InitAddUserAddressListCart>
         width: double.maxFinite,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(heightRatio(size: 15, context: context)), topRight: Radius.circular(heightRatio(size: 15, context: context))),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(heightRatio(size: 15, context: context)),
+              topRight:
+                  Radius.circular(heightRatio(size: 15, context: context))),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,12 +274,15 @@ class _InitAddUserAddressListCartState extends State<InitAddUserAddressListCart>
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
               child: Text(
                 'Эти магазины доставляют к вам',
-                style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                style: appHeadersTextStyle(
+                    fontSize: heightRatio(size: 16, context: context),
+                    color: newBlack),
               ),
             ),
             Expanded(
               child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 17, context: context)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: widthRatio(size: 17, context: context)),
                 itemCount: shopsList.length,
                 itemBuilder: (context, index) {
                   final store = shopsList[index];
@@ -256,12 +296,16 @@ class _InitAddUserAddressListCartState extends State<InitAddUserAddressListCart>
                       print(selectedUuid);
                     },
                     child: InitAddUserAddressItem(
-                      isActive: selectedUuid != null ? store.uuid == selectedUuid : selectedIndex == index,
+                      isActive: selectedUuid != null
+                          ? store.uuid == selectedUuid
+                          : selectedIndex == index,
                       name: store.address,
                       nameId: store.uuid,
                       time: '${store.workHoursFrom} - ${store.workHoursTill}',
                       price: store.deliveryPrice,
-                      thumbnail: store.image != null ? store.image.thumbnails.the1000X1000 : '',
+                      thumbnail: store.image != null
+                          ? store.image!.thumbnails.the1000X1000
+                          : '',
                     ),
                   );
                 },
@@ -273,12 +317,18 @@ class _InitAddUserAddressListCartState extends State<InitAddUserAddressListCart>
 
                 final selectedShop = shopsList[selectedIndex];
                 // Обновляем выбранный магазин:
-                context.read<AddressesShopBloc>().add(SelectAddressShopEvent(shopUuid: selectedShop.uuid));
-                context.read<ProfileBloc>().add(ProfileUpdateDataEvent(selectedStoreUserUuid: selectedShop.uuid)); // Обновляем магазин в профиле вместо фриза
+                context
+                    .read<AddressesShopBloc>()
+                    .add(SelectAddressShopEvent(shopUuid: selectedShop.uuid));
+                context.read<ProfileBloc>().add(ProfileUpdateDataEvent(
+                    selectedStoreUserUuid: selectedShop
+                        .uuid)); // Обновляем магазин в профиле вместо фриза
                 await Future.delayed(Duration(seconds: 1));
 
                 // Обновляем адреса клиента:
-                context.read<AddressesClientBloc>().add(LoadedAddressesClientEvent());
+                context
+                    .read<AddressesClientBloc>()
+                    .add(LoadedAddressesClientEvent());
 
                 // Перезапрашиваем каталог и ассортимент товаров:
                 context.read<CatalogsBloc>().add(CatalogsLoadEvent());
@@ -287,18 +337,23 @@ class _InitAddUserAddressListCartState extends State<InitAddUserAddressListCart>
                 // Перезапрашиваем корзину
                 context.read<BasketListBloc>().add(BasketLoadEvent());
 
-                print('InitAddUserAddressListCart 🏬 Выбранный магазин: ${selectedShop.uuid} - ${selectedShop.address}');
+                print(
+                    'InitAddUserAddressListCart 🏬 Выбранный магазин: ${selectedShop.uuid} - ${selectedShop.address}');
                 Navigator.pop(context);
               },
               child: Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 17, context: context)),
+                margin: EdgeInsets.symmetric(
+                    horizontal: widthRatio(size: 17, context: context)),
                 width: MediaQuery.of(context).size.width,
                 height: heightRatio(size: 54, context: context),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5), color: newRedDark),
                 child: Text(
                   'Подтвердить',
-                  style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                  style: appLabelTextStyle(
+                      color: Colors.white,
+                      fontSize: heightRatio(size: 16, context: context)),
                 ),
               ),
             ),

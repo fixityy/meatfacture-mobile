@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
@@ -16,7 +15,8 @@ import 'addresses_shop_state.dart';
 class AddressesShopBloc extends Bloc<AddressesShopEvent, AddressesShopState> {
   final SharedPreferences prefs;
 
-  AddressesShopBloc({@required this.prefs}) : super(OnMapEmptyAddressesShopState());
+  AddressesShopBloc({required this.prefs})
+      : super(OnMapEmptyAddressesShopState());
 
   @override
   Stream<AddressesShopState> mapEventToState(AddressesShopEvent event) async* {
@@ -32,7 +32,7 @@ class AddressesShopBloc extends Bloc<AddressesShopEvent, AddressesShopState> {
   }
 
   // Получение текущей геолокации пользователя
-  Future<LocationData> getMyLocation() async {
+  Future<LocationData?> getMyLocation() async {
     Location location = Location();
     bool serviceEnabled;
     PermissionStatus permissionGranted;
@@ -54,16 +54,18 @@ class AddressesShopBloc extends Bloc<AddressesShopEvent, AddressesShopState> {
   }
 
   // Поиск ближайшего магазина
-  Future<AddressesShopModel> getNearestStore(LocationData myLocation, AddressesShopListModel loadedShops) async {
+  Future<AddressesShopModel?> getNearestStore(
+      LocationData? myLocation, AddressesShopListModel loadedShops) async {
     final Distance distance = Distance();
-    double minDistance;
-    AddressesShopModel nearestStore;
+    double? minDistance;
+    AddressesShopModel? nearestStore;
     try {
       if (myLocation == null || loadedShops.data.isEmpty) return null;
       for (var shop in loadedShops.data) {
         double currentDistance = distance(
-          LatLng(myLocation.latitude, myLocation.longitude),
-          LatLng(double.tryParse(shop.addressLatitude), double.tryParse(shop.addressLongitude)),
+          LatLng(myLocation.latitude!, myLocation.longitude!),
+          LatLng(double.tryParse(shop.addressLatitude!)!,
+              double.tryParse(shop.addressLongitude!)!),
         );
 
         if (minDistance == null || currentDistance < minDistance) {
@@ -79,7 +81,8 @@ class AddressesShopBloc extends Bloc<AddressesShopEvent, AddressesShopState> {
   }
 
   // Обработка события загрузки магазинов
-  Stream<AddressesShopState> _mapLoadShopsToState(ListAddressesShopEvent event) async* {
+  Stream<AddressesShopState> _mapLoadShopsToState(
+      ListAddressesShopEvent event) async* {
     yield LoadingAddressesShopState();
     try {
       AddressesShopListModel loadedShops = event.loadedModel ??
@@ -93,8 +96,8 @@ class AddressesShopBloc extends Bloc<AddressesShopEvent, AddressesShopState> {
           ).getAllShops();
 
       // Если notNeedToAskLocationAgain = true, то не запрашиваем геолокацию
-      LocationData myLocation = null;
-      AddressesShopModel nearestStore = null;
+      LocationData? myLocation = null;
+      AddressesShopModel? nearestStore = null;
       if (event.notNeedToAskLocationAgain == false) {
         print('event.myLocation = ${event.myLocation}');
         myLocation = event.myLocation ?? await getMyLocation();
@@ -123,7 +126,8 @@ class AddressesShopBloc extends Bloc<AddressesShopEvent, AddressesShopState> {
         log('🏪💾 Итоговый выбранный магазин setString shopUuid: ${selectedShop.uuid}');
         await prefs.setString(SharedKeys.shopUuid, selectedShop.uuid);
         await prefs.setString(SharedKeys.shopAddress, selectedShop.address);
-        await prefs.setString(SharedKeys.shopLogo, selectedShop.image.thumbnails.the1000X1000);
+        await prefs.setString(
+            SharedKeys.shopLogo, selectedShop.image!.thumbnails.the1000X1000);
       }
 
       if (nearestStore != null) {
@@ -149,13 +153,16 @@ class AddressesShopBloc extends Bloc<AddressesShopEvent, AddressesShopState> {
   }
 
   // Обработка загрузки магазинов для карты
-  Stream<AddressesShopState> _mapLoadShopsForMapToState(MapAddressesShopEvent event) async* {
+  Stream<AddressesShopState> _mapLoadShopsForMapToState(
+      MapAddressesShopEvent event) async* {
     yield LoadingMapAddressesShopState();
 
     try {
-      AddressesShopListModel loadedShops = event.loadedModel ?? await AddressesShopRepo().getAllShops();
-      LocationData myLocation = event.myLocation ?? await getMyLocation();
-      AddressesShopModel nearestStore = await getNearestStore(myLocation, loadedShops);
+      AddressesShopListModel loadedShops =
+          event.loadedModel ?? await AddressesShopRepo().getAllShops();
+      LocationData? myLocation = event.myLocation ?? await getMyLocation();
+      AddressesShopModel? nearestStore =
+          await getNearestStore(myLocation, loadedShops);
 
       yield LoadedAddressesShopState(
         hasAtms: event.hasAtms,
@@ -175,17 +182,17 @@ class AddressesShopBloc extends Bloc<AddressesShopEvent, AddressesShopState> {
   }
 
   // Обработка выбора магазина
-  Stream<AddressesShopState> _mapSelectShopToState(SelectAddressShopEvent event) async* {
+  Stream<AddressesShopState> _mapSelectShopToState(
+      SelectAddressShopEvent event) async* {
     if (state is LoadedAddressesShopState) {
       final currentState = state as LoadedAddressesShopState;
       final newSelectedShop = currentState.loadedShopsList.data.firstWhere(
         (shop) => shop.uuid == event.shopUuid,
-        orElse: () => null,
       );
 
       if (newSelectedShop != null) {
         log('💾 setString shopUuid: ${event.shopUuid} / newSelectedShop: $newSelectedShop');
-        await prefs.setString(SharedKeys.shopUuid, event.shopUuid);
+        await prefs.setString(SharedKeys.shopUuid, event.shopUuid ?? '');
         yield currentState.copyWith(selectedShop: newSelectedShop);
       }
     }

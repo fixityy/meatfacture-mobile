@@ -11,7 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 class OrderBnsDelivery extends StatelessWidget {
   final OrderProcessItemModel orderProcessItemModel;
 
-  const OrderBnsDelivery({Key key, this.orderProcessItemModel}) : super(key: key);
+  const OrderBnsDelivery({super.key, required this.orderProcessItemModel});
   @override
   Widget build(BuildContext context) {
     return orderProcessItemModel.orderStatusId != 'delivering'
@@ -20,25 +20,37 @@ class OrderBnsDelivery extends StatelessWidget {
               if (orderProcessItemModel.orderStatusId != 'done')
                 InkWell(
                   onTap: () {
-                    BlocProvider.of<HistoryOrdertDetailsBloc>(context).add(HistoryOrderDetailsLoadEvent(orderId: orderProcessItemModel.uuid));
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return HistoryOrderDetailsPage(orderDate: orderProcessItemModel.number.toString());
+                    BlocProvider.of<HistoryOrdertDetailsBloc>(context).add(
+                        HistoryOrderDetailsLoadEvent(
+                            orderId: orderProcessItemModel.uuid));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return HistoryOrderDetailsPage(
+                          orderDate: orderProcessItemModel.number.toString());
                     }));
                   },
                   child: Container(
                     alignment: Alignment.center,
-                    padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
+                    padding: EdgeInsets.only(
+                        top: heightRatio(size: 15, context: context),
+                        bottom: heightRatio(size: 18, context: context)),
                     width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: newRedDark),
                     child: Text(
                       'Информация о заказе',
-                      style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                      style: appLabelTextStyle(
+                          color: Colors.white,
+                          fontSize: heightRatio(size: 16, context: context)),
                     ),
                   ),
                 ),
-              if (orderProcessItemModel.orderStatusId != 'done' && orderProcessItemModel.orderStatusId == 'collected')
+              if (orderProcessItemModel.orderStatusId != 'done' &&
+                  orderProcessItemModel.orderStatusId == 'collected')
                 SizedBox(height: heightRatio(size: 10, context: context)),
-              if (orderProcessItemModel.orderStatusId == 'done') SizedBox(height: heightRatio(size: 10, context: context)),
+              if (orderProcessItemModel.orderStatusId == 'done')
+                SizedBox(height: heightRatio(size: 10, context: context)),
             ],
           )
         : Column(
@@ -51,8 +63,10 @@ class OrderBnsDelivery extends StatelessWidget {
                     context: context,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(heightRatio(size: 25, context: context)),
-                        topRight: Radius.circular(heightRatio(size: 25, context: context)),
+                        topLeft: Radius.circular(
+                            heightRatio(size: 25, context: context)),
+                        topRight: Radius.circular(
+                            heightRatio(size: 25, context: context)),
                       ),
                     ),
                     builder: (BuildContext bc) {
@@ -66,29 +80,41 @@ class OrderBnsDelivery extends StatelessWidget {
                 },
                 child: Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
+                  padding: EdgeInsets.only(
+                      top: heightRatio(size: 15, context: context),
+                      bottom: heightRatio(size: 18, context: context)),
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: newRedDark),
                   child: Text(
                     'Поддержка',
-                    style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                    style: appLabelTextStyle(
+                        color: Colors.white,
+                        fontSize: heightRatio(size: 16, context: context)),
                   ),
                 ),
               ),
               SizedBox(height: heightRatio(size: 10, context: context)),
               InkWell(
                 onTap: () async {
-                  final Uri launchUri = Uri(scheme: 'tel', path: orderProcessItemModel.courierPhone);
+                  final Uri launchUri = Uri(
+                      scheme: 'tel', path: orderProcessItemModel.courierPhone);
                   await launchUrl(launchUri);
                 },
                 child: Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
+                  padding: EdgeInsets.only(
+                      top: heightRatio(size: 15, context: context),
+                      bottom: heightRatio(size: 18, context: context)),
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newBlack),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5), color: newBlack),
                   child: Text(
                     'Связаться с курьером',
-                    style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                    style: appLabelTextStyle(
+                        color: Colors.white,
+                        fontSize: heightRatio(size: 16, context: context)),
                   ),
                 ),
               ),

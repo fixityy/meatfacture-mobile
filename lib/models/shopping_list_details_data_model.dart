@@ -1,11 +1,15 @@
 import 'package:smart/models/shopping_lists_assortment_model.dart';
 
 class ShoppingListDetailsDataModel {
-  ShoppingListDetailsDataModel({this.uuid, this.name, this.assortments});
+  ShoppingListDetailsDataModel({
+    required this.uuid,
+    required this.name,
+    required this.assortments,
+  });
 
   String uuid;
   String name;
-  List<ShoppingListsAssortmentModel> assortments; 
+  List<ShoppingListsAssortmentModel> assortments;
 
   factory ShoppingListDetailsDataModel.fromJson(Map<String, dynamic> json) =>
       ShoppingListDetailsDataModel(

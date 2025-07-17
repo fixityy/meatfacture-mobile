@@ -1,6 +1,4 @@
 //evens
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/product_details_model.dart';
 import 'package:smart/repositories/product_details_repository.dart';
@@ -10,19 +8,19 @@ abstract class ProductDetailsEvent {}
 class ProductDetailsLoadEvent extends ProductDetailsEvent {
   final String uuid;
 
-  ProductDetailsLoadEvent({@required this.uuid});
+  ProductDetailsLoadEvent({required this.uuid});
 }
 
 class ProductDetailsAddToBasketEvent extends ProductDetailsEvent {
   final ProductDetailsModel productDetailsModel;
 
-  ProductDetailsAddToBasketEvent({@required this.productDetailsModel});
+  ProductDetailsAddToBasketEvent({required this.productDetailsModel});
 }
 
 class ProductDetailsRemoveToBasketEvent extends ProductDetailsEvent {
   final ProductDetailsModel productDetailsModel;
 
-  ProductDetailsRemoveToBasketEvent({@required this.productDetailsModel});
+  ProductDetailsRemoveToBasketEvent({required this.productDetailsModel});
 }
 
 //states
@@ -34,7 +32,7 @@ class ProductDetailsEmptyState extends ProductDetailsState {}
 class ProductDetailsErrorState extends ProductDetailsState {
   final String uuid;
 
-  ProductDetailsErrorState({@required this.uuid});
+  ProductDetailsErrorState({required this.uuid});
 }
 
 class ProductDetailsLoadingState extends ProductDetailsState {}
@@ -42,7 +40,7 @@ class ProductDetailsLoadingState extends ProductDetailsState {}
 class ProductDetailsLoadedState extends ProductDetailsState {
   final ProductDetailsModel productDetailsModel;
 
-  ProductDetailsLoadedState({@required this.productDetailsModel});
+  ProductDetailsLoadedState({required this.productDetailsModel});
 }
 
 class ProductDetailsBloc

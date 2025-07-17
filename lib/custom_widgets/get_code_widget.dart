@@ -21,7 +21,7 @@ import 'package:smart/core/constants/text_styles.dart';
 class GetCodeWidget extends StatefulWidget {
   final String phone;
 
-  GetCodeWidget({@required this.phone});
+  GetCodeWidget({required this.phone});
 
   @override
   _GetCodeWidgetState createState() => _GetCodeWidgetState();
@@ -61,7 +61,7 @@ class _GetCodeWidgetState extends State<GetCodeWidget> {
     }
   }
 
-  Timer timer;
+  late Timer timer;
   int seconds = 10;
 
   void startTimer() {
@@ -100,7 +100,8 @@ class _GetCodeWidgetState extends State<GetCodeWidget> {
     ProfileBloc _profileBloc = BlocProvider.of<ProfileBloc>(context);
     String _token;
     // ignore: close_sinks
-    SecondaryPageBloc _secondaryBloc = BlocProvider.of<SecondaryPageBloc>(context);
+    SecondaryPageBloc _secondaryBloc =
+        BlocProvider.of<SecondaryPageBloc>(context);
     // ignore: close_sinks
     AuthPageBloc _regBloc = BlocProvider.of<AuthPageBloc>(context);
     // ignore: close_sinks
@@ -114,7 +115,9 @@ class _GetCodeWidgetState extends State<GetCodeWidget> {
         child: SingleChildScrollView(
           controller: scrollController,
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: screenHeight(context) - heightRatio(size: 80, context: context)),
+            constraints: BoxConstraints(
+                maxHeight: screenHeight(context) -
+                    heightRatio(size: 80, context: context)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -122,19 +125,30 @@ class _GetCodeWidgetState extends State<GetCodeWidget> {
                 Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 20, context: context)),
-                      child: Text('pleaseConfirmYourPhoneNumberText'.tr() + ' ${widget.phone}', textAlign: TextAlign.center, style: appHeadersTextStyle(fontSize: heightRatio(size: 14, context: context), fontWeight: FontWeight.w500)),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: widthRatio(size: 20, context: context)),
+                      child: Text(
+                          'pleaseConfirmYourPhoneNumberText'.tr() +
+                              ' ${widget.phone}',
+                          textAlign: TextAlign.center,
+                          style: appHeadersTextStyle(
+                              fontSize: heightRatio(size: 14, context: context),
+                              fontWeight: FontWeight.w500)),
                     ),
                     SizedBox(height: heightRatio(size: 30, context: context)),
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 0),
                       child: Focus(
-                        onFocusChange: (value) => _ontextfuildFocusingedcodePage(value),
+                        onFocusChange: (value) =>
+                            _ontextfuildFocusingedcodePage(value),
                         child: PinCodeTextField(
                             mainAxisAlignment: MainAxisAlignment.center,
                             autoFocus: true,
                             focusNode: _focusNodeForPin,
-                            scrollPadding: EdgeInsets.only(bottom: _focusNodeForPin.hasFocus ? MediaQuery.of(context).viewInsets.bottom : 0),
+                            scrollPadding: EdgeInsets.only(
+                                bottom: _focusNodeForPin.hasFocus
+                                    ? MediaQuery.of(context).viewInsets.bottom
+                                    : 0),
                             animationType: AnimationType.fade,
                             keyboardType: TextInputType.number,
                             appContext: context,
@@ -144,22 +158,38 @@ class _GetCodeWidgetState extends State<GetCodeWidget> {
                             enableActiveFill: true,
                             blinkWhenObscuring: true,
                             pinTheme: PinTheme(
-                                fieldOuterPadding: EdgeInsets.symmetric(horizontal: 8),
+                                fieldOuterPadding:
+                                    EdgeInsets.symmetric(horizontal: 8),
                                 fieldHeight: 60,
                                 fieldWidth: 50,
                                 shape: PinCodeFieldShape.box,
-                                borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)),
-                                disabledColor: isPincorrect ? colorBlack03 : secondColorButtonDisableOrangeGradient,
-                                activeFillColor: isPincorrect ? colorBlack03 : secondColorButtonDisableOrangeGradient,
-                                inactiveFillColor: isPincorrect ? colorBlack03 : secondColorButtonDisableOrangeGradient,
-                                selectedFillColor: isPincorrect ? colorBlack03 : secondColorButtonDisableOrangeGradient,
-                                activeColor: isPincorrect ? colorBlack03 : Colors.red,
-                                inactiveColor: isPincorrect ? colorBlack03 : Colors.red,
-                                selectedColor: isPincorrect ? colorBlack03 : Colors.red,
+                                borderRadius: BorderRadius.circular(
+                                    heightRatio(size: 10, context: context)),
+                                disabledColor: isPincorrect
+                                    ? colorBlack03
+                                    : secondColorButtonDisableOrangeGradient,
+                                activeFillColor: isPincorrect
+                                    ? colorBlack03
+                                    : secondColorButtonDisableOrangeGradient,
+                                inactiveFillColor: isPincorrect
+                                    ? colorBlack03
+                                    : secondColorButtonDisableOrangeGradient,
+                                selectedFillColor: isPincorrect
+                                    ? colorBlack03
+                                    : secondColorButtonDisableOrangeGradient,
+                                activeColor:
+                                    isPincorrect ? colorBlack03 : Colors.red,
+                                inactiveColor:
+                                    isPincorrect ? colorBlack03 : Colors.red,
+                                selectedColor:
+                                    isPincorrect ? colorBlack03 : Colors.red,
                                 borderWidth: 0),
                             length: 4,
                             controller: codeController,
-                            textStyle: appTextStyle(color: isPincorrect ? Colors.black : Colors.red, fontSize: widthRatio(size: 24, context: context)),
+                            textStyle: appTextStyle(
+                                color: isPincorrect ? Colors.black : Colors.red,
+                                fontSize:
+                                    widthRatio(size: 24, context: context)),
                             onChanged: (val) async {
                               setState(() {
                                 isPincorrect = true;
@@ -170,11 +200,19 @@ class _GetCodeWidgetState extends State<GetCodeWidget> {
                                 //     msg: 'Подождите...',
                                 //     backgroundColor: Colors.grey,
                                 //     textColor: Colors.black);
-                                _token = await _getTokenByPhoneProvider.getTokenResponse(phone: widget.phone, code: codeController.text);
+                                _token = await _getTokenByPhoneProvider
+                                    .getTokenResponse(
+                                        phone: widget.phone,
+                                        code: codeController.text);
                                 switch (_token) {
                                   case '422':
                                     {
-                                      Fluttertoast.showToast(msg: 'codeMustContainAtLeast4DigitsText'.tr(), backgroundColor: Colors.grey, textColor: Colors.black);
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              'codeMustContainAtLeast4DigitsText'
+                                                  .tr(),
+                                          backgroundColor: Colors.grey,
+                                          textColor: Colors.black);
                                     }
                                     break;
                                   case '400':
@@ -186,7 +224,10 @@ class _GetCodeWidgetState extends State<GetCodeWidget> {
                                     break;
                                   case 'error':
                                     {
-                                      Fluttertoast.showToast(msg: 'errorText'.tr(), backgroundColor: Colors.grey, textColor: Colors.black);
+                                      Fluttertoast.showToast(
+                                          msg: 'errorText'.tr(),
+                                          backgroundColor: Colors.grey,
+                                          textColor: Colors.black);
                                     }
                                     break;
 
@@ -200,7 +241,8 @@ class _GetCodeWidgetState extends State<GetCodeWidget> {
                                       _profileBloc.add(ProfileLoadEvent());
                                       _secondaryBloc.add(HomeEvent());
                                       timer.cancel();
-                                      _basicPageBloc.add(BasicPagesEvent.mainPageEvent);
+                                      _basicPageBloc
+                                          .add(BasicPagesEvent.mainPageEvent);
                                     }
                                 }
                               }
@@ -244,7 +286,10 @@ class _GetCodeWidgetState extends State<GetCodeWidget> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   'wrongCodeText'.tr(),
-                                  style: appHeadersTextStyle(fontSize: widthRatio(size: 12, context: context), color: colorBlack04),
+                                  style: appHeadersTextStyle(
+                                      fontSize: widthRatio(
+                                          size: 12, context: context),
+                                      color: colorBlack04),
                                 ),
                               )
                             : SizedBox(),
@@ -252,7 +297,9 @@ class _GetCodeWidgetState extends State<GetCodeWidget> {
                         seconds <= 0
                             ? InkWell(
                                 onTap: () async {
-                                  bool isLogined = await GetCodeByPhoneProvider().getAuthResponse(phone: widget.phone);
+                                  bool isLogined =
+                                      await GetCodeByPhoneProvider()
+                                          .getAuthResponse(phone: widget.phone);
 
                                   if (isLogined) {
                                     setState(() {
@@ -260,14 +307,27 @@ class _GetCodeWidgetState extends State<GetCodeWidget> {
                                     });
                                     codeController.clear();
                                   } else {
-                                    Fluttertoast.showToast(msg: 'errorText'.tr(), backgroundColor: Colors.grey, textColor: Colors.black);
+                                    Fluttertoast.showToast(
+                                        msg: 'errorText'.tr(),
+                                        backgroundColor: Colors.grey,
+                                        textColor: Colors.black);
                                   }
                                 },
                                 child: Text(
                                   'resendCodeText'.tr(),
-                                  style: appHeadersTextStyle(color: mainColor, fontSize: widthRatio(size: 14, context: context)),
+                                  style: appHeadersTextStyle(
+                                      color: mainColor,
+                                      fontSize: widthRatio(
+                                          size: 14, context: context)),
                                 ))
-                            : Text('sendAgaenText'.tr() + ' $seconds ' + 'secText'.tr(), style: appHeadersTextStyle(color: colorBlack04, fontSize: widthRatio(size: 14, context: context))),
+                            : Text(
+                                'sendAgaenText'.tr() +
+                                    ' $seconds ' +
+                                    'secText'.tr(),
+                                style: appHeadersTextStyle(
+                                    color: colorBlack04,
+                                    fontSize: widthRatio(
+                                        size: 14, context: context))),
                       ],
                     ),
                   ],

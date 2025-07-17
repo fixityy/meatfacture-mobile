@@ -33,13 +33,15 @@ class _HomeIconPromoState extends State<HomeIconPromo> {
   }
 
   void _scrollListener() {
-    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
       _fetchPromoDescriptionsData();
     }
   }
 
   Future<void> _fetchPromoDescriptionsData() async {
-    List<PromoDescriptionsDataModel> newData = await PromoDescriptionsProvider().getPromoDescriptionsResponse(i);
+    List<PromoDescriptionsDataModel> newData =
+        await PromoDescriptionsProvider().getPromoDescriptionsResponse(i);
     setState(() {
       _promoDescriptionsDataList.addAll(newData);
       i++;
@@ -48,10 +50,13 @@ class _HomeIconPromoState extends State<HomeIconPromo> {
 
   @override
   Widget build(BuildContext context) {
-    YellowPromoAssortmentsBloc _yellowPromoAssortmentsBloc = BlocProvider.of(context);
+    YellowPromoAssortmentsBloc _yellowPromoAssortmentsBloc =
+        BlocProvider.of(context);
     return ListView.builder(
       controller: _scrollController,
-      padding: EdgeInsets.symmetric(vertical: heightRatio(size: 15, context: context), horizontal: widthRatio(size: 15, context: context)),
+      padding: EdgeInsets.symmetric(
+          vertical: heightRatio(size: 15, context: context),
+          horizontal: widthRatio(size: 15, context: context)),
       itemCount: _promoDescriptionsDataList.length,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
@@ -59,12 +64,14 @@ class _HomeIconPromoState extends State<HomeIconPromo> {
             switch (_promoDescriptionsDataList[index].uuid) {
               //жц
               case "80d25ffe-528d-4906-ade9-35b33db7d73e":
-                _yellowPromoAssortmentsBloc.add(YellowPromoAssortmentsLoadEvent());
+                _yellowPromoAssortmentsBloc
+                    .add(YellowPromoAssortmentsLoadEvent());
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => SpecialPromoDescPage(
-                      infoText: _promoDescriptionsDataList[index].description ?? "",
+                      infoText:
+                          _promoDescriptionsDataList[index].description ?? "",
                       promotitle: _promoDescriptionsDataList[index].title ?? "",
                       yellowOrGreenPage: 'y',
                       promoName: _promoDescriptionsDataList[index].name ?? "",
@@ -79,7 +86,8 @@ class _HomeIconPromoState extends State<HomeIconPromo> {
                   MaterialPageRoute(
                     builder: (context) => SpecialPromoDescPage(
                       promotitle: _promoDescriptionsDataList[index].title ?? "",
-                      infoText: _promoDescriptionsDataList[index].description ?? "",
+                      infoText:
+                          _promoDescriptionsDataList[index].description ?? "",
                       promoName: _promoDescriptionsDataList[index].name ?? "",
                       yellowOrGreenPage: 'g',
                     ),
@@ -94,18 +102,26 @@ class _HomeIconPromoState extends State<HomeIconPromo> {
                   context: context,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(heightRatio(size: 25, context: context)),
-                      topRight: Radius.circular(heightRatio(size: 25, context: context)),
+                      topLeft: Radius.circular(
+                          heightRatio(size: 25, context: context)),
+                      topRight: Radius.circular(
+                          heightRatio(size: 25, context: context)),
                     ),
                   ),
                   builder: (BuildContext bc) {
                     return Wrap(
                       children: [
                         HomeIconBottomSheet(
-                          infoText: _promoDescriptionsDataList[index].description,
+                          infoText:
+                              _promoDescriptionsDataList[index].description,
                           promoName: _promoDescriptionsDataList[index].title,
                           subtitle: _promoDescriptionsDataList[index].subtitle,
-                          icon: _promoDescriptionsDataList[index].logoFilePath != null ? Image.network(_promoDescriptionsDataList[index].logoFilePath) : null,
+                          icon: _promoDescriptionsDataList[index]
+                                      .logoFilePath !=
+                                  null
+                              ? Image.network(_promoDescriptionsDataList[index]
+                                  .logoFilePath!)
+                              : null,
                         ),
                       ],
                     );
@@ -114,12 +130,22 @@ class _HomeIconPromoState extends State<HomeIconPromo> {
             }
           },
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 11, context: context), vertical: heightRatio(size: 11, context: context)),
-            margin: EdgeInsets.only(bottom: heightRatio(size: 20, context: context)),
+            padding: EdgeInsets.symmetric(
+                horizontal: widthRatio(size: 11, context: context),
+                vertical: heightRatio(size: 11, context: context)),
+            margin: EdgeInsets.only(
+                bottom: heightRatio(size: 20, context: context)),
             decoration: BoxDecoration(
               color: whiteColor,
-              borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context)),
-              boxShadow: [BoxShadow(color: newShadow, offset: Offset(12, 12), blurRadius: 24, spreadRadius: 0)],
+              borderRadius: BorderRadius.circular(
+                  heightRatio(size: 10, context: context)),
+              boxShadow: [
+                BoxShadow(
+                    color: newShadow,
+                    offset: Offset(12, 12),
+                    blurRadius: 24,
+                    spreadRadius: 0)
+              ],
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -128,22 +154,34 @@ class _HomeIconPromoState extends State<HomeIconPromo> {
                     ? Container(
                         width: 60,
                         height: 60,
-                        padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 15, context: context)),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 5, context: context)), color: newIconBg),
-                        child: Image.network(_promoDescriptionsDataList[index].logoFilePath),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: widthRatio(size: 15, context: context)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                heightRatio(size: 5, context: context)),
+                            color: newIconBg),
+                        child: Image.network(
+                            _promoDescriptionsDataList[index].logoFilePath!),
                       )
                     : Container(
                         width: 60,
                         height: 60,
-                        padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 15, context: context)),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 5, context: context)), color: newIconBg),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: widthRatio(size: 15, context: context)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                heightRatio(size: 5, context: context)),
+                            color: newIconBg),
                       ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(left: widthRatio(size: 20, context: context)),
+                    padding: EdgeInsets.only(
+                        left: widthRatio(size: 20, context: context)),
                     child: Text(
                       _promoDescriptionsDataList[index].name,
-                      style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                      style: appHeadersTextStyle(
+                          fontSize: heightRatio(size: 16, context: context),
+                          color: newBlack),
                     ),
                   ),
                 ),

@@ -2,15 +2,17 @@ import 'package:smart/models/meta_model.dart';
 
 class PromoDescriptionsModel {
   PromoDescriptionsModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<PromoDescriptionsDataModel> data;
   MetaModel meta;
 
-  factory PromoDescriptionsModel.fromJson(Map<String, dynamic> json) => PromoDescriptionsModel(
-        data: List<PromoDescriptionsDataModel>.from(json["data"].map((x) => PromoDescriptionsDataModel.fromJson(x))),
+  factory PromoDescriptionsModel.fromJson(Map<String, dynamic> json) =>
+      PromoDescriptionsModel(
+        data: List<PromoDescriptionsDataModel>.from(
+            json["data"].map((x) => PromoDescriptionsDataModel.fromJson(x))),
         meta: MetaModel.fromJson(json["meta"]),
       );
 
@@ -22,14 +24,14 @@ class PromoDescriptionsModel {
 
 class PromoDescriptionsDataModel {
   PromoDescriptionsDataModel({
-    this.uuid,
-    this.name,
-    this.title,
-    this.subtitle,
-    this.description,
-    this.logoFileUuid,
-    this.logoFilePath,
-    this.createdAt,
+    required this.uuid,
+    required this.name,
+    required this.title,
+    required this.subtitle,
+    required this.description,
+    required this.logoFileUuid,
+    required this.logoFilePath,
+    required this.createdAt,
   });
 
   String uuid;
@@ -38,10 +40,11 @@ class PromoDescriptionsDataModel {
   String subtitle;
   String description;
   String logoFileUuid;
-  String logoFilePath;
+  String? logoFilePath;
   String createdAt;
 
-  factory PromoDescriptionsDataModel.fromJson(Map<String, dynamic> json) => PromoDescriptionsDataModel(
+  factory PromoDescriptionsDataModel.fromJson(Map<String, dynamic> json) =>
+      PromoDescriptionsDataModel(
         uuid: json["uuid"],
         name: json["name"],
         title: json["title"],

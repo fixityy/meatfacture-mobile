@@ -26,7 +26,9 @@ class NotificationListWidget extends StatelessWidget {
     return Container(
         alignment: Alignment.topLeft,
         child: PaginationView<NotificationsListDataModel>(
-          padding: EdgeInsets.symmetric(vertical: heightRatio(size: 10, context: context), horizontal: widthRatio(size: 20, context: context)),
+          padding: EdgeInsets.symmetric(
+              vertical: heightRatio(size: 10, context: context),
+              horizontal: widthRatio(size: 20, context: context)),
           paginationViewType: PaginationViewType.listView,
           onError: (dynamic error) => Center(
             child: Text('errorText'.tr()),
@@ -42,8 +44,14 @@ class NotificationListWidget extends StatelessWidget {
               ),
               SizedBox(height: heightRatio(size: 25, context: context)),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 20, context: context)),
-                child: Text("youHasNoGotNotificationsText".tr(), textAlign: TextAlign.center, style: appHeadersTextStyle(fontSize: heightRatio(size: 18, context: context), color: colorBlack06, fontWeight: FontWeight.w500)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: widthRatio(size: 20, context: context)),
+                child: Text("youHasNoGotNotificationsText".tr(),
+                    textAlign: TextAlign.center,
+                    style: appHeadersTextStyle(
+                        fontSize: heightRatio(size: 18, context: context),
+                        color: colorBlack06,
+                        fontWeight: FontWeight.w500)),
               ),
             ],
           )),
@@ -58,14 +66,20 @@ class NotificationListWidget extends StatelessWidget {
             ),
           ),
           pageFetch: (currentListSize) async {
-            NotificationsListModel notificationList = await NotificationsProvider().getNotificationListResponse(page: i);
+            NotificationsListModel notificationList =
+                await NotificationsProvider()
+                    .getNotificationListResponse(page: i);
             i += 1;
             return notificationList.data;
           },
-          itemBuilder: (BuildContext context, NotificationsListDataModel notificationsListDataModel, int index) {
-            DateTime createdAt = dateTimeConverter(notificationsListDataModel.createdAt);
+          itemBuilder: (BuildContext context,
+              NotificationsListDataModel notificationsListDataModel,
+              int index) {
+            DateTime createdAt =
+                dateTimeConverter(notificationsListDataModel.createdAt);
             return InkWell(
-              onTap: () => routeFromNotifications(context, notificationsListDataModel.data.meta),
+              onTap: () => routeFromNotifications(
+                  context, notificationsListDataModel.data.meta),
               child: Container(
                   child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,23 +88,33 @@ class NotificationListWidget extends StatelessWidget {
                   //Title
                   Text(
                     notificationsListDataModel.data.title,
-                    style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: newRedDark),
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 14, context: context),
+                        color: newRedDark),
                   ),
                   SizedBox(height: heightRatio(size: 5, context: context)),
                   //Body
                   Text(
                     notificationsListDataModel.data.body,
-                    style: appLabelTextStyle(fontSize: heightRatio(size: 18, context: context), color: Colors.black),
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 18, context: context),
+                        color: Colors.black),
                   ),
                   SizedBox(height: heightRatio(size: 10, context: context)),
                   //Date
                   Text(
                       createdAt.day == DateTime.now().day
                           ? "${"todayText".tr()}  ${createdAt.hour < 10 ? "0${createdAt.hour}" : createdAt.hour}:${createdAt.minute < 10 ? "0${createdAt.minute}" : createdAt.minute}"
-                          : createdAt == DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 1)
+                          : createdAt ==
+                                  DateTime(
+                                      DateTime.now().year,
+                                      DateTime.now().month,
+                                      DateTime.now().day - 1)
                               ? "${"yesterdayText".tr()}  ${createdAt.hour < 10 ? "0${createdAt.hour}" : createdAt.hour}:${createdAt.minute < 10 ? "0${createdAt.minute}" : createdAt.minute}"
                               : "${createdAt.toFormatedDate()}  ${createdAt.toFormatedTime()}",
-                      style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: colorBlack04)),
+                      style: appLabelTextStyle(
+                          fontSize: heightRatio(size: 14, context: context),
+                          color: colorBlack04)),
                   SizedBox(height: heightRatio(size: 5, context: context)),
                   Divider()
                 ],
@@ -103,8 +127,10 @@ class NotificationListWidget extends StatelessWidget {
   routeFromNotifications(BuildContext context, DataMeta meta) {
     switch (meta.type) {
       case "orders":
-        HistoryOrdertDetailsBloc _historyOrdertDetailsBloc = BlocProvider.of(context);
-        _historyOrdertDetailsBloc.add(HistoryOrderDetailsLoadEvent(orderId: meta.id));
+        HistoryOrdertDetailsBloc _historyOrdertDetailsBloc =
+            BlocProvider.of(context);
+        _historyOrdertDetailsBloc
+            .add(HistoryOrderDetailsLoadEvent(orderId: meta.id));
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => HistoryOrderDetailsPage(
             orderDate: '',
@@ -112,8 +138,10 @@ class NotificationListWidget extends StatelessWidget {
         ));
         break;
       case "receipts":
-        HistoryCheckDetailsBloc _historyCheckDetailsBloc = BlocProvider.of(context);
-        _historyCheckDetailsBloc.add(HistoryCheckDetailsLoadEvent(receiptUuid: meta.id));
+        HistoryCheckDetailsBloc _historyCheckDetailsBloc =
+            BlocProvider.of(context);
+        _historyCheckDetailsBloc
+            .add(HistoryCheckDetailsLoadEvent(receiptUuid: meta.id));
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => HistoryCheckDetailsPage(
             checkDate: '',
@@ -148,10 +176,11 @@ class NotificationListWidget extends StatelessWidget {
         }
         break;
       case "profile":
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfilePage()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => ProfilePage()));
         break;
       case "url":
-        launchUrl(Uri.parse(meta.url));
+        launchUrl(Uri.parse(meta.url!));
         break;
     }
   }

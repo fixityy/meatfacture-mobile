@@ -5,14 +5,19 @@ import 'package:smart/core/constants/text_styles.dart';
 class ProductIngredientMiddleContent extends StatefulWidget {
   final String ingredients;
   final String weght;
-  const ProductIngredientMiddleContent({this.ingredients, this.weght});
+  const ProductIngredientMiddleContent({
+    required this.ingredients,
+    required this.weght,
+  });
 
   @override
-  State<ProductIngredientMiddleContent> createState() => _ProductIngredientMiddleContentState();
+  State<ProductIngredientMiddleContent> createState() =>
+      _ProductIngredientMiddleContentState();
 }
 
-class _ProductIngredientMiddleContentState extends State<ProductIngredientMiddleContent> {
-  String readyIngredients;
+class _ProductIngredientMiddleContentState
+    extends State<ProductIngredientMiddleContent> {
+  late String readyIngredients;
   List<String> ingredientsList = [];
 
   List<String> ingredientsNumbersList = [];
@@ -29,8 +34,11 @@ class _ProductIngredientMiddleContentState extends State<ProductIngredientMiddle
         ingredientsList[0] = ingredientsList[0].replaceAll("Состав:  ", "");
       }
       for (var i = 0; i < ingredientsList.length; i++) {
-        ingredientsNumbersList.add(ingredientsList[i].replaceAll(new RegExp(r'[^0,0-9,9]'), ''));
-        ingredientsList[i] = ingredientsList[i].replaceAll(RegExp(r'[0-9]'), "").replaceAll(",", '');
+        ingredientsNumbersList
+            .add(ingredientsList[i].replaceAll(new RegExp(r'[^0,0-9,9]'), ''));
+        ingredientsList[i] = ingredientsList[i]
+            .replaceAll(RegExp(r'[0-9]'), "")
+            .replaceAll(",", '');
       }
     });
   }

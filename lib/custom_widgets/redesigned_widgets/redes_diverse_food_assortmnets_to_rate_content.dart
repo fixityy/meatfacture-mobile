@@ -16,7 +16,8 @@ class RedesDiverseFoodAssortmnetsToRateContent extends StatelessWidget {
   Widget build(BuildContext context) {
     DiverseFoodBloc _diverseFoodBloc = BlocProvider.of(context);
 
-    return BlocBuilder<DiverseFoodBloc, DiverseFoodState>(builder: (context, state) {
+    return BlocBuilder<DiverseFoodBloc, DiverseFoodState>(
+        builder: (context, state) {
       if (state is DiverseFoodLoadedState) {
         return DefaultTabController(
           length: 2,
@@ -24,20 +25,33 @@ class RedesDiverseFoodAssortmnetsToRateContent extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                  margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 15, context: context)),
-                  padding: EdgeInsets.all(widthRatio(size: 5, context: context)),
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(widthRatio(size: 12, context: context)), color: lightGreyColor),
+                  margin: EdgeInsets.symmetric(
+                      horizontal: widthRatio(size: 15, context: context)),
+                  padding:
+                      EdgeInsets.all(widthRatio(size: 5, context: context)),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                          widthRatio(size: 12, context: context)),
+                      color: lightGreyColor),
                   child: TabBar(
-                      indicator: BoxDecoration(borderRadius: BorderRadius.circular(widthRatio(size: 8, context: context)), color: whiteColor),
+                      indicator: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                              widthRatio(size: 8, context: context)),
+                          color: whiteColor),
                       labelColor: blackColor,
                       unselectedLabelColor: colorBlack04,
-                      labelStyle: appTextStyle(fontSize: heightRatio(size: 13, context: context), fontWeight: FontWeight.w600),
-                      unselectedLabelStyle: appTextStyle(fontSize: heightRatio(size: 13, context: context), fontWeight: FontWeight.w600),
+                      labelStyle: appTextStyle(
+                          fontSize: heightRatio(size: 13, context: context),
+                          fontWeight: FontWeight.w600),
+                      unselectedLabelStyle: appTextStyle(
+                          fontSize: heightRatio(size: 13, context: context),
+                          fontWeight: FontWeight.w600),
                       tabs: [
                         //1
                         Container(
                           alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(vertical: widthRatio(size: 8, context: context)),
+                          padding: EdgeInsets.symmetric(
+                              vertical: widthRatio(size: 8, context: context)),
                           child: Text(
                             "${"leftToRateText".tr()} ${state is DiverseFoodLoadedState ? state.isNotRatedProductsList.meta.total : "0"}",
                           ),
@@ -45,7 +59,8 @@ class RedesDiverseFoodAssortmnetsToRateContent extends StatelessWidget {
                         //2
                         Container(
                           alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(vertical: widthRatio(size: 8, context: context)),
+                          padding: EdgeInsets.symmetric(
+                              vertical: widthRatio(size: 8, context: context)),
                           child: Text(
                             "${"olreadyRateText".tr()} ${state is DiverseFoodLoadedState ? state.isRatedProductsList.meta.total : "0"}",
                           ),
@@ -66,12 +81,15 @@ class RedesDiverseFoodAssortmnetsToRateContent extends StatelessWidget {
       if (state is DiverseFoodErrorState) {
         return Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.only(left: widthRatio(size: 20, context: context), right: widthRatio(size: 20, context: context)),
+          padding: EdgeInsets.only(
+              left: widthRatio(size: 20, context: context),
+              right: widthRatio(size: 20, context: context)),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-              topRight: Radius.circular(heightRatio(size: 15, context: context)),
+              topRight:
+                  Radius.circular(heightRatio(size: 15, context: context)),
             ),
           ),
           child: Center(
@@ -80,7 +98,8 @@ class RedesDiverseFoodAssortmnetsToRateContent extends StatelessWidget {
             children: [
               Container(
                 padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
-                decoration: BoxDecoration(color: colorBlack03, shape: BoxShape.circle),
+                decoration:
+                    BoxDecoration(color: colorBlack03, shape: BoxShape.circle),
                 child: SvgPicture.asset(
                   'assets/images/netErrorIcon.svg',
                   color: Colors.white,
@@ -88,7 +107,11 @@ class RedesDiverseFoodAssortmnetsToRateContent extends StatelessWidget {
                 ),
               ),
               SizedBox(height: heightRatio(size: 15, context: context)),
-              Text("errorText".tr(), style: appTextStyle(fontSize: heightRatio(size: 18, context: context), color: colorBlack06, fontWeight: FontWeight.w500)),
+              Text("errorText".tr(),
+                  style: appTextStyle(
+                      fontSize: heightRatio(size: 18, context: context),
+                      color: colorBlack06,
+                      fontWeight: FontWeight.w500)),
               SizedBox(height: heightRatio(size: 10, context: context)),
               InkWell(
                   onTap: () {
@@ -96,7 +119,11 @@ class RedesDiverseFoodAssortmnetsToRateContent extends StatelessWidget {
                   },
                   child: Container(
                     color: Colors.transparent,
-                    child: Text("tryAgainText".tr(), style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: mainColor, fontWeight: FontWeight.w500)),
+                    child: Text("tryAgainText".tr(),
+                        style: appTextStyle(
+                            fontSize: heightRatio(size: 14, context: context),
+                            color: mainColor,
+                            fontWeight: FontWeight.w500)),
                   ))
             ],
           )),
@@ -113,25 +140,33 @@ class RedesDiverseFoodAssortmnetsToRateContent extends StatelessWidget {
 
 class AssortmnetnViewWidget extends StatefulWidget {
   final bool isRated;
-  AssortmnetnViewWidget({this.isRated});
+  AssortmnetnViewWidget({required this.isRated});
   @override
   State<AssortmnetnViewWidget> createState() => _AssortmnetnViewWidgetState();
 }
 
-class _AssortmnetnViewWidgetState extends State<AssortmnetnViewWidget> with AutomaticKeepAliveClientMixin {
+class _AssortmnetnViewWidgetState extends State<AssortmnetnViewWidget>
+    with AutomaticKeepAliveClientMixin {
   int i = 1;
-  GlobalKey<PaginationViewState> _assortmnetPaginationViewkey = GlobalKey<PaginationViewState>();
+  GlobalKey<PaginationViewState> _assortmnetPaginationViewkey =
+      GlobalKey<PaginationViewState>();
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return PaginationView<DiverseFoodAssortmentListDataModel>(
         initialLoader: ShimmerLoaderForCatalog(),
-        padding: EdgeInsets.only(left: widthRatio(size: 12, context: context), right: widthRatio(size: 12, context: context), top: widthRatio(size: 15, context: context)),
+        padding: EdgeInsets.only(
+            left: widthRatio(size: 12, context: context),
+            right: widthRatio(size: 12, context: context),
+            top: widthRatio(size: 15, context: context)),
         paginationViewType: PaginationViewType.listView,
         // preloadedItems: state.catalogsModel.data,
-        itemBuilder: (BuildContext context, DiverseFoodAssortmentListDataModel listDataModel, int index) => RedesDiverseFoodAssortmentToRateCard(productModel: listDataModel),
+        itemBuilder: (BuildContext context,
+                DiverseFoodAssortmentListDataModel listDataModel, int index) =>
+            RedesDiverseFoodAssortmentToRateCard(productModel: listDataModel),
         pageFetch: (currentListSize) async {
-          DiverseFoodAssortmentListModel fechedPage = await DiverseFoodProvider().diverseFoodAssortmentListResponse(
+          DiverseFoodAssortmentListModel fechedPage =
+              await DiverseFoodProvider().diverseFoodAssortmentListResponse(
             isRated: widget.isRated,
             page: i,
           );
@@ -150,7 +185,10 @@ class _AssortmnetnViewWidgetState extends State<AssortmnetnViewWidget> with Auto
             SizedBox(height: heightRatio(size: 10, context: context)),
             Text(
               "nothingFoundText".tr(),
-              style: appTextStyle(fontSize: heightRatio(size: 18, context: context), color: colorBlack08, fontWeight: FontWeight.w500),
+              style: appTextStyle(
+                  fontSize: heightRatio(size: 18, context: context),
+                  color: colorBlack08,
+                  fontWeight: FontWeight.w500),
             ),
           ],
         )),
@@ -162,12 +200,16 @@ class _AssortmnetnViewWidgetState extends State<AssortmnetnViewWidget> with Auto
         ),
         onError: (dynamic error) => Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.only(left: widthRatio(size: 20, context: context), right: widthRatio(size: 20, context: context)),
+            padding: EdgeInsets.only(
+                left: widthRatio(size: 20, context: context),
+                right: widthRatio(size: 20, context: context)),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                topLeft:
+                    Radius.circular(heightRatio(size: 15, context: context)),
+                topRight:
+                    Radius.circular(heightRatio(size: 15, context: context)),
               ),
             ),
             child: Center(
@@ -175,8 +217,10 @@ class _AssortmnetnViewWidgetState extends State<AssortmnetnViewWidget> with Auto
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
-                  decoration: BoxDecoration(color: colorBlack03, shape: BoxShape.circle),
+                  padding:
+                      EdgeInsets.all(widthRatio(size: 15, context: context)),
+                  decoration: BoxDecoration(
+                      color: colorBlack03, shape: BoxShape.circle),
                   child: SvgPicture.asset(
                     'assets/images/netErrorIcon.svg',
                     color: Colors.white,
@@ -186,7 +230,10 @@ class _AssortmnetnViewWidgetState extends State<AssortmnetnViewWidget> with Auto
                 SizedBox(height: heightRatio(size: 15, context: context)),
                 Text(
                   "errorText".tr(),
-                  style: appTextStyle(fontSize: heightRatio(size: 18, context: context), color: colorBlack06, fontWeight: FontWeight.w500),
+                  style: appTextStyle(
+                      fontSize: heightRatio(size: 18, context: context),
+                      color: colorBlack06,
+                      fontWeight: FontWeight.w500),
                 ),
                 SizedBox(height: heightRatio(size: 10, context: context)),
                 InkWell(
@@ -195,12 +242,16 @@ class _AssortmnetnViewWidgetState extends State<AssortmnetnViewWidget> with Auto
                         i = 1;
                       });
                       if (_assortmnetPaginationViewkey.currentState != null) {
-                        _assortmnetPaginationViewkey.currentState.refresh();
+                        _assortmnetPaginationViewkey.currentState!.refresh();
                       }
                     },
                     child: Container(
                       color: Colors.transparent,
-                      child: Text("tryAgainText".tr(), style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: mainColor, fontWeight: FontWeight.w500)),
+                      child: Text("tryAgainText".tr(),
+                          style: appTextStyle(
+                              fontSize: heightRatio(size: 14, context: context),
+                              color: mainColor,
+                              fontWeight: FontWeight.w500)),
                     ))
               ],
             ))));

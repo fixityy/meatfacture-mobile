@@ -15,36 +15,37 @@ import 'package:smart/core/constants/text_styles.dart';
 // ignore: must_be_immutable
 class ShoppingListProductsItem extends StatefulWidget {
   String uuid;
-  String name;
+  String? name;
   String assortmentUnitId;
-  String weight;
-  double rating;
-  String image;
+  String? weight;
+  double? rating;
+  String? image;
   String thumbnail;
-  int quantity;
-  String currentPrice;
-  double priceWithDiscount;
+  int? quantity;
+  String? currentPrice;
+  double? priceWithDiscount;
   bool isFavorite;
-  bool hasYellowPrice;
+  bool? hasYellowPrice;
 
   ShoppingListProductsItem({
-    Key key,
-    this.uuid,
+    super.key,
+    required this.uuid,
     this.name,
-    this.assortmentUnitId,
+    required this.assortmentUnitId,
     this.weight,
     this.rating,
     this.image,
-    this.thumbnail,
+    required this.thumbnail,
     this.quantity,
     this.currentPrice,
     this.priceWithDiscount,
-    this.isFavorite,
+    required this.isFavorite,
     this.hasYellowPrice,
-  }) : super(key: key);
+  });
 
   @override
-  State<ShoppingListProductsItem> createState() => _ShoppingListProductsItemState();
+  State<ShoppingListProductsItem> createState() =>
+      _ShoppingListProductsItemState();
 }
 
 class _ShoppingListProductsItemState extends State<ShoppingListProductsItem> {
@@ -55,15 +56,19 @@ class _ShoppingListProductsItemState extends State<ShoppingListProductsItem> {
         Navigator.push(
           context,
           new CupertinoPageRoute(
-            builder: (context) => RedesProductDetailsPage(productUuid: widget.uuid),
+            builder: (context) =>
+                RedesProductDetailsPage(productUuid: widget.uuid),
           ),
         );
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 2.5, context: context), vertical: heightRatio(size: 2.5, context: context)),
+        margin: EdgeInsets.symmetric(
+            horizontal: widthRatio(size: 2.5, context: context),
+            vertical: heightRatio(size: 2.5, context: context)),
         decoration: BoxDecoration(
           color: whiteColor,
-          borderRadius: BorderRadius.circular(heightRatio(size: 14, context: context)),
+          borderRadius:
+              BorderRadius.circular(heightRatio(size: 14, context: context)),
         ),
         child: Column(
           // Товар из списка
@@ -75,14 +80,23 @@ class _ShoppingListProductsItemState extends State<ShoppingListProductsItem> {
                   width: double.infinity,
                   height: 161,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(heightRatio(size: 5, context: context)),
-                    color: widget.thumbnail.isNotEmpty ? Colors.transparent : newGrey2,
+                    borderRadius: BorderRadius.circular(
+                        heightRatio(size: 5, context: context)),
+                    color: widget.thumbnail.isNotEmpty
+                        ? Colors.transparent
+                        : newGrey2,
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(heightRatio(size: 5, context: context)),
+                    borderRadius: BorderRadius.circular(
+                        heightRatio(size: 5, context: context)),
                     child: Image(
-                      image: widget.thumbnail.isNotEmpty ? NetworkImage(widget.thumbnail) : AssetImage("assets/images/notImage.png"),
-                      fit: widget.thumbnail.isNotEmpty ? BoxFit.cover : BoxFit.contain,
+                      image: widget.thumbnail.isNotEmpty
+                          ? NetworkImage(widget.thumbnail)
+                          : AssetImage("assets/images/notImage.png")
+                              as ImageProvider,
+                      fit: widget.thumbnail.isNotEmpty
+                          ? BoxFit.cover
+                          : BoxFit.contain,
                     ),
                   ),
                 ),
@@ -92,7 +106,8 @@ class _ShoppingListProductsItemState extends State<ShoppingListProductsItem> {
                   top: 8,
                   child: InkWell(
                     onTap: () async {
-                      if (await AssortmentFilterButton().loadToken() != "guest") {
+                      if (await AssortmentFilterButton().loadToken() !=
+                          "guest") {
                         if (widget.isFavorite) {
                           setState(() {
                             widget.isFavorite = false;
@@ -102,17 +117,26 @@ class _ShoppingListProductsItemState extends State<ShoppingListProductsItem> {
                             widget.isFavorite = true;
                           });
                         }
-                        var _likeResponse = await AddDeleteProductToFavoriteProvider(isLiked: !widget.isFavorite, productUuid: widget.uuid).getisAddProductTofavoriteResponse();
+                        var _likeResponse =
+                            await AddDeleteProductToFavoriteProvider(
+                                    isLiked: !widget.isFavorite,
+                                    productUuid: widget.uuid)
+                                .getisAddProductTofavoriteResponse();
                         if (_likeResponse == "old token") {
                           AuthPageBloc authPageBloc = BlocProvider.of(context);
-                          BlocProvider.of<BasicPageBloc>(context)?.add(ProfilePage.logout(regBloc: authPageBloc, basicPageBloc: BlocProvider.of(context)));
+                          BlocProvider.of<BasicPageBloc>(context)?.add(
+                              ProfilePage.logout(
+                                  regBloc: authPageBloc,
+                                  basicPageBloc: BlocProvider.of(context)));
                         }
                       } else {
                         AssortmentFilterButton().loginOrRegWarning(context);
                       }
                     },
                     child: SvgPicture.asset(
-                      (widget.isFavorite != null && widget.isFavorite) ? "assets/images/newHeartConturActive.svg" : "assets/images/newHeartContur.svg",
+                      (widget.isFavorite != null && widget.isFavorite)
+                          ? "assets/images/newHeartConturActive.svg"
+                          : "assets/images/newHeartContur.svg",
                       width: 18,
                       height: 16,
                     ),
@@ -123,7 +147,10 @@ class _ShoppingListProductsItemState extends State<ShoppingListProductsItem> {
                     bottom: 0,
                     child: Container(
                       padding: EdgeInsets.all(4),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(5)), color: whiteColor),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.only(topRight: Radius.circular(5)),
+                          color: whiteColor),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -132,31 +159,51 @@ class _ShoppingListProductsItemState extends State<ShoppingListProductsItem> {
                             height: heightRatio(size: 12, context: context),
                             width: widthRatio(size: 12, context: context),
                           ),
-                          SizedBox(width: widthRatio(size: 3, context: context)),
+                          SizedBox(
+                              width: widthRatio(size: 3, context: context)),
                           Text(
-                            widget.rating != null ? widget.rating.toString() : '',
-                            style: appHeadersTextStyle(fontSize: 11, color: newGrey),
+                            widget.rating != null
+                                ? widget.rating.toString()
+                                : '',
+                            style: appHeadersTextStyle(
+                                fontSize: 11, color: newGrey),
                           ),
                         ],
                       ),
                     ),
                   ),
-                if (widget.priceWithDiscount != null && widget.currentPrice != null)
+                if (widget.priceWithDiscount != null &&
+                    widget.currentPrice != null)
                   Positioned(
-                    top: heightRatio(size: heightRatio(size: 7, context: context), context: context),
+                    top: heightRatio(
+                        size: heightRatio(size: 7, context: context),
+                        context: context),
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                      decoration: BoxDecoration(color: newYellow, borderRadius: BorderRadius.circular(2)),
+                      decoration: BoxDecoration(
+                          color: newYellow,
+                          borderRadius: BorderRadius.circular(2)),
                       child: Text(
                         // ( (Исходная цена − Цена со скидкой) / Исходная цена) * 100
-                        '-' + (((widget.currentPrice.toDouble() - widget.priceWithDiscount) / widget.currentPrice.toDouble()) * 100).toInt().toString() + '%',
-                        style: appLabelTextStyle(fontSize: 11, color: whiteColor),
+                        '-' +
+                            (((widget.currentPrice!.toDouble()! -
+                                            widget.priceWithDiscount!) /
+                                        widget.currentPrice!.toDouble()!) *
+                                    100)
+                                .toInt()
+                                .toString() +
+                            '%',
+                        style:
+                            appLabelTextStyle(fontSize: 11, color: whiteColor),
                       ),
                     ),
                   ),
               ],
             ),
-            SizedBox(height: heightRatio(size: heightRatio(size: 8, context: context), context: context)),
+            SizedBox(
+                height: heightRatio(
+                    size: heightRatio(size: 8, context: context),
+                    context: context)),
             SizedBox(
               height: heightRatio(size: 33, context: context),
               child: Text(
@@ -164,7 +211,9 @@ class _ShoppingListProductsItemState extends State<ShoppingListProductsItem> {
                 // (isFavorite != null && isFavorite) ? 'true' : 'false',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), color: newBlack),
+                style: appLabelTextStyle(
+                    fontSize: heightRatio(size: 12, context: context),
+                    color: newBlack),
               ),
             ),
             Container(
@@ -172,23 +221,37 @@ class _ShoppingListProductsItemState extends State<ShoppingListProductsItem> {
               padding: EdgeInsets.symmetric(vertical: 8),
               decoration: BoxDecoration(
                 // color: widget.assortmentsListModel.discountTypeColor == null ? colorBlack03 : Color(int.parse("0xff${widget.assortmentsListModel.discountTypeColor}")),
-                color: (widget.hasYellowPrice != null && widget.hasYellowPrice == true) ? newYellow : newRedDark,
-                borderRadius: BorderRadius.circular(heightRatio(size: 4, context: context)),
+                color: (widget.hasYellowPrice != null &&
+                        widget.hasYellowPrice == true)
+                    ? newYellow
+                    : newRedDark,
+                borderRadius: BorderRadius.circular(
+                    heightRatio(size: 4, context: context)),
               ),
               child: RichText(
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      style: appHeadersTextStyle(color: whiteColor, fontSize: heightRatio(size: 12, context: context)),
-                      text: widget.priceWithDiscount == null ? widget.currentPrice.toString() : widget.priceWithDiscount.toString(),
+                      style: appHeadersTextStyle(
+                          color: whiteColor,
+                          fontSize: heightRatio(size: 12, context: context)),
+                      text: widget.priceWithDiscount == null
+                          ? widget.currentPrice.toString()
+                          : widget.priceWithDiscount.toString(),
                     ),
                     TextSpan(
                       text: " ${"rubleSignText".tr()}",
-                      style: appTextStyle(color: whiteColor, fontWeight: FontWeight.w700, fontSize: heightRatio(size: 12, context: context)),
+                      style: appTextStyle(
+                          color: whiteColor,
+                          fontWeight: FontWeight.w700,
+                          fontSize: heightRatio(size: 12, context: context)),
                     ),
                     TextSpan(
-                      style: appHeadersTextStyle(color: whiteColor, fontSize: heightRatio(size: 12, context: context)),
-                      text: "/${getAssortmentUnitId(assortmentUnitId: widget.assortmentUnitId)[1]}",
+                      style: appHeadersTextStyle(
+                          color: whiteColor,
+                          fontSize: heightRatio(size: 12, context: context)),
+                      text:
+                          "/${getAssortmentUnitId(assortmentUnitId: widget.assortmentUnitId)[1]}",
                     ),
                   ],
                 ),

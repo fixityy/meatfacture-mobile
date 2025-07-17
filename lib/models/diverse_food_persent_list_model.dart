@@ -3,7 +3,7 @@ class DiverseFoodPersentListModel {
     this.data,
   });
 
-  List<DiverseFoodPersentListDataModel> data;
+  List<DiverseFoodPersentListDataModel>? data;
 
   factory DiverseFoodPersentListModel.fromJson(Map<String, dynamic> json) =>
       DiverseFoodPersentListModel(
@@ -13,17 +13,17 @@ class DiverseFoodPersentListModel {
                   .map((x) => DiverseFoodPersentListDataModel.fromJson(x))));
 
   Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }
 
 class DiverseFoodPersentListDataModel {
   DiverseFoodPersentListDataModel({
-    this.uuid,
-    this.countPurchases,
-    this.countRatingScores,
-    this.discountPercent,
-    this.isEnabled,
+    required this.uuid,
+    required this.countPurchases,
+    required this.countRatingScores,
+    required this.discountPercent,
+    required this.isEnabled,
   });
 
   String uuid;

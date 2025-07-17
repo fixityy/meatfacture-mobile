@@ -4,16 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/assortments_list_model.dart';
 
 abstract class SearchEvent {
-  final String preCataloUuid;
+  final String? preCataloUuid;
   final uuidForAllProductsInCatalog;
-  final List<String> brandName;
-  String searchText;
-  final bool isFavorite;
-  final bool isPromoAssortment;
-  final bool isRecommendations;
-  final List<String> activeTagsList;
+  final List<String>? brandName;
+  String? searchText;
+  final bool? isFavorite;
+  final bool? isPromoAssortment;
+  final bool? isRecommendations;
+  final List<String>? activeTagsList;
   final bool isAllSubcatalogsWithoutFavorite;
-  String subcatalogUuid;
+  String? subcatalogUuid;
 
   SearchEvent({
     this.preCataloUuid,
@@ -31,16 +31,16 @@ abstract class SearchEvent {
 
 class SearchLoadEvent extends SearchEvent {
   SearchLoadEvent({
-    String preCataloUuid,
-    String uuidForAllProductsInCatalog,
-    List<String> brandName,
-    bool isFavorite,
-    bool isPromoAssortment,
-    bool isRecommendations,
-    String searchText,
-    List<String> activeTagsList,
-    final bool isAllSubcatalogsWithoutFavorite,
-    String subcatalogUuid,
+    String? preCataloUuid,
+    String? uuidForAllProductsInCatalog,
+    List<String>? brandName,
+    bool? isFavorite,
+    bool? isPromoAssortment,
+    bool? isRecommendations,
+    String? searchText,
+    List<String>? activeTagsList,
+    final bool? isAllSubcatalogsWithoutFavorite,
+    String? subcatalogUuid,
   }) : super(
           preCataloUuid: preCataloUuid,
           uuidForAllProductsInCatalog: uuidForAllProductsInCatalog,
@@ -50,21 +50,22 @@ class SearchLoadEvent extends SearchEvent {
           isRecommendations: isRecommendations,
           activeTagsList: activeTagsList,
           searchText: searchText,
-          isAllSubcatalogsWithoutFavorite: isAllSubcatalogsWithoutFavorite,
+          isAllSubcatalogsWithoutFavorite:
+              isAllSubcatalogsWithoutFavorite ?? false,
           subcatalogUuid: subcatalogUuid,
         );
 }
 
 class SearchNextPageEvent extends SearchEvent {
   SearchNextPageEvent({
-    String preCataloUuid,
-    String uuidForAllProductsInCatalog,
-    List<String> brandName,
-    bool isFavorite,
-    bool isPromoAssortment,
-    bool isRecommendations,
-    String searchText,
-    List<String> activeTagsList,
+    String? preCataloUuid,
+    String? uuidForAllProductsInCatalog,
+    List<String>? brandName,
+    bool? isFavorite,
+    bool? isPromoAssortment,
+    bool? isRecommendations,
+    String? searchText,
+    List<String>? activeTagsList,
   }) : super(
           preCataloUuid: preCataloUuid,
           uuidForAllProductsInCatalog: uuidForAllProductsInCatalog,
@@ -81,7 +82,7 @@ class SearchNextPageEvent extends SearchEvent {
 
 abstract class SearchState {
   final List<AssortmentsListModel> assortmentsList;
-  SearchState({@required this.assortmentsList});
+  SearchState({required this.assortmentsList});
 }
 
 class SearchInitState extends SearchState {
@@ -89,20 +90,23 @@ class SearchInitState extends SearchState {
 }
 
 class SearchLoadingState extends SearchState {
-  SearchLoadingState({@required List<AssortmentsListModel> assortmentsList}) : super(assortmentsList: assortmentsList);
+  SearchLoadingState({required List<AssortmentsListModel> assortmentsList})
+      : super(assortmentsList: assortmentsList);
 }
 
 class SearchErrorState extends SearchState {
-  SearchErrorState({@required List<AssortmentsListModel> assortmentsList}) : super(assortmentsList: assortmentsList);
+  SearchErrorState({required List<AssortmentsListModel> assortmentsList})
+      : super(assortmentsList: assortmentsList);
 }
 
 class SearchEmptyState extends SearchState {
-  SearchEmptyState({@required List<AssortmentsListModel> assortmentsList}) : super(assortmentsList: assortmentsList);
+  SearchEmptyState({required List<AssortmentsListModel> assortmentsList})
+      : super(assortmentsList: assortmentsList);
 }
 
 class SearchLoadedState extends SearchState {
   SearchLoadedState({
-    @required List<AssortmentsListModel> assortmentsList,
+    required List<AssortmentsListModel> assortmentsList,
   }) : super(assortmentsList: assortmentsList);
 }
 

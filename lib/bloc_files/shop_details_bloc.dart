@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/features/addresses/addresses_shop/models/addresses_shop_model.dart';
 import 'package:smart/repositories/shops_details_repository.dart';
@@ -13,7 +12,11 @@ class ShopDetailsEnableEvent extends ShopDetailsEvent {
   final String lon;
 
   String storeUuid;
-  ShopDetailsEnableEvent({@required this.storeUuid, @required this.lat, @required this.lon}) : assert(storeUuid != null);
+  ShopDetailsEnableEvent({
+    required this.storeUuid,
+    required this.lat,
+    required this.lon,
+  }) : assert(storeUuid != null);
 }
 
 //states
@@ -26,7 +29,11 @@ class ShopDetailLoadedgState extends ShopDetailsState {
   final String lat;
   final String lon;
   AddressesShopModel shopDetailsLoadedModel;
-  ShopDetailLoadedgState({@required this.lat, @required this.lon, @required this.shopDetailsLoadedModel}) : assert(shopDetailsLoadedModel != null);
+  ShopDetailLoadedgState({
+    required this.lat,
+    required this.lon,
+    required this.shopDetailsLoadedModel,
+  }) : assert(shopDetailsLoadedModel != null);
 }
 
 class ShopDetailsErrorState extends ShopDetailsState {}
@@ -41,8 +48,13 @@ class ShopDetailsBloc extends Bloc<ShopDetailsEvent, ShopDetailsState> {
     if (event is ShopDetailsEnableEvent) {
       yield ShopDetailLoadingState();
       try {
-        final AddressesShopModel _loadedShopDetails = await ShopDetailRepository(uuid: event.storeUuid).getShopDetailsFromRepository();
-        yield ShopDetailLoadedgState(lat: event.lat, lon: event.lon, shopDetailsLoadedModel: _loadedShopDetails);
+        final AddressesShopModel _loadedShopDetails =
+            await ShopDetailRepository(uuid: event.storeUuid)
+                .getShopDetailsFromRepository();
+        yield ShopDetailLoadedgState(
+            lat: event.lat,
+            lon: event.lon,
+            shopDetailsLoadedModel: _loadedShopDetails);
       } catch (_) {
         yield (ShopDetailsErrorState());
       }

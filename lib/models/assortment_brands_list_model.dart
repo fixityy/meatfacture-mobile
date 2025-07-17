@@ -2,12 +2,17 @@
 import 'package:smart/models/meta_model.dart';
 
 class AssortmentBrandsListmodel {
-  AssortmentBrandsListmodel({this.data, this.meta});
+  AssortmentBrandsListmodel({
+    required this.data,
+    required this.meta,
+  });
   List<AssortmentBrandsListDatamodel> data;
   MetaModel meta;
 
-  factory AssortmentBrandsListmodel.fromJson(Map<String, dynamic> json) => AssortmentBrandsListmodel(
-        data: List<AssortmentBrandsListDatamodel>.from(json["data"].map((x) => AssortmentBrandsListDatamodel.fromJson(x))),
+  factory AssortmentBrandsListmodel.fromJson(Map<String, dynamic> json) =>
+      AssortmentBrandsListmodel(
+        data: List<AssortmentBrandsListDatamodel>.from(
+            json["data"].map((x) => AssortmentBrandsListDatamodel.fromJson(x))),
         meta: MetaModel.fromJson(json["meta"]),
       );
 
@@ -22,16 +27,23 @@ class AssortmentBrandsListDatamodel {
   String name;
   String createdAt;
   bool isSelected = false;
-  AssortmentBrandsListDatamodel({this.uuid, this.name, this.createdAt, this.isSelected});
+  AssortmentBrandsListDatamodel({
+    required this.uuid,
+    required this.name,
+    required this.createdAt,
+    this.isSelected = false,
+  });
 
-  factory AssortmentBrandsListDatamodel.fromJson(Map<String, dynamic> json) => AssortmentBrandsListDatamodel(
+  factory AssortmentBrandsListDatamodel.fromJson(Map<String, dynamic> json) =>
+      AssortmentBrandsListDatamodel(
         uuid: json["uuid"],
         name: json["name"],
         isSelected: false,
         createdAt: json["created_at"],
       );
 
-  Map<String, dynamic> toJson() => {"uuid": uuid, "name": name, "created_at": createdAt};
+  Map<String, dynamic> toJson() =>
+      {"uuid": uuid, "name": name, "created_at": createdAt};
 
   @override
   String toString() {

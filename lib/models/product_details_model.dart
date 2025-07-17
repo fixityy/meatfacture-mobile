@@ -19,7 +19,7 @@ import 'package:smart/models/product_details_data_model.dart';
 
 class ProductDetailsModel {
   ProductDetailsModel({
-    this.data,
+    required this.data,
   });
 
   ProductDetailsDataModel data;

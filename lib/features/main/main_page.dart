@@ -43,7 +43,7 @@ import 'package:smart/services/services.dart';
 bool isToFreeFirst = true;
 
 class MainPage extends StatefulWidget {
-  final String token;
+  final String? token;
   const MainPage({this.token});
 
   @override
@@ -51,8 +51,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List<Widget> _mainScreens;
-  PageController _pageController;
+  late List<Widget> _mainScreens;
+  late PageController _pageController;
 
   Map<String, GlobalKey<NavigatorState>> _naviagtorKeys = {
     "homePageKey": GlobalKey<NavigatorState>(),
@@ -158,28 +158,34 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     // checkForUpgrade();
     ImInShopBloc _imInShopBloc = BlocProvider.of(context);
-    AddressesClientBloc _clientAddressBloc = BlocProvider.of<AddressesClientBloc>(context);
+    AddressesClientBloc _clientAddressBloc =
+        BlocProvider.of<AddressesClientBloc>(context);
     _clientAddressBloc.add(LoadedAddressesClientEvent());
     _imInShopBloc.add(ImInShopLoadEvent());
     StoriesListBloc _storiesListBloc = BlocProvider.of(context);
     OrderProcessListBloc _orderProcessListBloc = BlocProvider.of(context);
-    AssortmentRecommendationBloc _assortmentRecommendationBloc = BlocProvider.of<AssortmentRecommendationBloc>(context);
+    AssortmentRecommendationBloc _assortmentRecommendationBloc =
+        BlocProvider.of<AssortmentRecommendationBloc>(context);
     _assortmentRecommendationBloc.add(AssortmentRecommendationsLoadEvent());
     _storiesListBloc.add(StoriesListLoadEvent());
     _orderProcessListBloc.add(OrderPLLoadEvent());
     _mainScreens = [
-      HomeScreen(homePageNavKey: _naviagtorKeys["homePageKey"]),
-      CatalogScreen(paginationViewkey: paginationViewkey, catalogNavKey: _naviagtorKeys["catalogPageKey"]),
-      BasketScreen(basketNavKey: _naviagtorKeys["basketPageKey"]),
+      HomeScreen(homePageNavKey: _naviagtorKeys["homePageKey"]!),
+      CatalogScreen(
+          paginationViewkey: paginationViewkey,
+          catalogNavKey: _naviagtorKeys["catalogPageKey"]!),
+      BasketScreen(basketNavKey: _naviagtorKeys["basketPageKey"]!),
       // BsScreen(basketNavKey: _naviagtorKeys["basketPageKey"]),
       // ShoppingHistoryPage(historyNavKey: _naviagtorKeys["shoppingHistoryPageKey"])
-      ProfilePage(profileNavKey: _naviagtorKeys["profilePageKey"])
+      ProfilePage(profileNavKey: _naviagtorKeys["profilePageKey"]!)
     ];
-    _pageController = PageController(initialPage: widget.token != "guest" ? _currentIndex : 1);
+    _pageController = PageController(
+        initialPage: widget.token != "guest" ? _currentIndex : 1);
     log('MainPage initState end');
   }
 
-  GlobalKey<PaginationViewState> paginationViewkey = GlobalKey<PaginationViewState>();
+  GlobalKey<PaginationViewState> paginationViewkey =
+      GlobalKey<PaginationViewState>();
 
   @override
   Widget build(BuildContext context) {
@@ -193,15 +199,22 @@ class _MainPageState extends State<MainPage> {
         _profileBloc.add(ProfileLoadEvent());
       }
     }
-    LoyaltyCardsListBloc _loyaltyCardsListBloc = BlocProvider.of<LoyaltyCardsListBloc>(context);
-    CreditCardsListBloc _cardsListBloc = BlocProvider.of<CreditCardsListBloc>(context);
-    ShoppingHistoryBloc _shoppingHistoryBloc = BlocProvider.of<ShoppingHistoryBloc>(context);
-    SecondaryPageBloc _bottomNavBloc = BlocProvider.of<SecondaryPageBloc>(context);
+    LoyaltyCardsListBloc _loyaltyCardsListBloc =
+        BlocProvider.of<LoyaltyCardsListBloc>(context);
+    CreditCardsListBloc _cardsListBloc =
+        BlocProvider.of<CreditCardsListBloc>(context);
+    ShoppingHistoryBloc _shoppingHistoryBloc =
+        BlocProvider.of<ShoppingHistoryBloc>(context);
+    SecondaryPageBloc _bottomNavBloc =
+        BlocProvider.of<SecondaryPageBloc>(context);
     TagsBloc _tagsBloc = BlocProvider.of<TagsBloc>(context);
-    AssortmentRecommendationBloc _assortmentRecommendationBloc = BlocProvider.of<AssortmentRecommendationBloc>(context);
+    AssortmentRecommendationBloc _assortmentRecommendationBloc =
+        BlocProvider.of<AssortmentRecommendationBloc>(context);
     BasketListBloc _basketListBloc = BlocProvider.of<BasketListBloc>(context);
-    FavoriteProductBloc _favoriteProductbloc = BlocProvider.of<FavoriteProductBloc>(context);
-    DiverseFoodBloc _diverseFoodBloc = BlocProvider.of<DiverseFoodBloc>(context);
+    FavoriteProductBloc _favoriteProductbloc =
+        BlocProvider.of<FavoriteProductBloc>(context);
+    DiverseFoodBloc _diverseFoodBloc =
+        BlocProvider.of<DiverseFoodBloc>(context);
 
     if (widget.token != "guest") {
       log('MainPage build widget.token != guest 0');
@@ -219,7 +232,10 @@ class _MainPageState extends State<MainPage> {
             _isInit = false;
             SchedulerBinding.instance.addPostFrameCallback(
               (_) => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => InitAddUserAddress(heightOfBottomNavBar: null))),
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          InitAddUserAddress(heightOfBottomNavBar: null))),
             );
           } else {
             // isInit = false;
@@ -234,7 +250,7 @@ class _MainPageState extends State<MainPage> {
               // _pageController.jumpToPage(currentIndex);
             } else if (currentNavState is SecondaryCatalogPageState) {
               if (paginationViewkey.currentState != null) {
-                paginationViewkey.currentState.refresh();
+                paginationViewkey.currentState!.refresh();
               }
               _currentIndex = 1;
               // _pageController.jumpToPage(currentIndex);
@@ -278,17 +294,21 @@ class _MainPageState extends State<MainPage> {
                 }
                 // ignore: unrelated_type_equality_checks
                 if (_isSplashing == false || loadToken() == "guest") {
-                  print('!!! _isSplashing == false || loadToken() == "guest" !!!');
-                  context.read<AddressesShopBloc>().add(ListAddressesShopEvent(notNeedToAskLocationAgain: true));
+                  print(
+                      '!!! _isSplashing == false || loadToken() == "guest" !!!');
+                  context.read<AddressesShopBloc>().add(
+                      ListAddressesShopEvent(notNeedToAskLocationAgain: true));
                   return BlocListener<BasketListBloc, BasketState>(
                     listener: (context, state) {
                       if (state is BasketLoadedState) {
                         log('Main page');
                         if (isToFreeFirst) {
-                          context.read<OrderCalculateBloc>().add(OrderCalculateLoadEvent(
-                              orderDeliveryTypeId: "delivery",
-                              orderPaymentTypeId: "online",
-                              productModelForOrderRequestList: state.productModelForOrderRequestList));
+                          context.read<OrderCalculateBloc>().add(
+                              OrderCalculateLoadEvent(
+                                  orderDeliveryTypeId: "delivery",
+                                  orderPaymentTypeId: "online",
+                                  productModelForOrderRequestList:
+                                      state.productModelForOrderRequestList));
                         }
                         isToFreeFirst = true;
                       }
@@ -296,21 +316,27 @@ class _MainPageState extends State<MainPage> {
                     child: WillPopScope(
                       onWillPop: () async {
                         if (currentNavState is SecondaryHomePageState) {
-                          if (await _naviagtorKeys["homePageKey"].currentState.maybePop()) {
+                          if (await _naviagtorKeys["homePageKey"]!
+                              .currentState!
+                              .maybePop()) {
                           } else {
                             _pageController.jumpToPage(0);
                             _bottomNavBloc.add(HomeEvent());
                           }
                         }
                         if (currentNavState is SecondaryBasketPageState) {
-                          if (await _naviagtorKeys["basketPageKey"].currentState.maybePop()) {
+                          if (await _naviagtorKeys["basketPageKey"]!
+                              .currentState!
+                              .maybePop()) {
                           } else {
                             _pageController.jumpToPage(0);
                             _bottomNavBloc.add(HomeEvent());
                           }
                         }
                         if (currentNavState is SecondaryProfilePageState) {
-                          if (await _naviagtorKeys["profilePageKey"].currentState.maybePop()) {
+                          if (await _naviagtorKeys["profilePageKey"]!
+                              .currentState!
+                              .maybePop()) {
                           } else {
                             _pageController.jumpToPage(0);
                             _bottomNavBloc.add(HomeEvent());
@@ -319,15 +345,22 @@ class _MainPageState extends State<MainPage> {
 
                         if (currentNavState is SecondaryCatalogPageState) {
                           if (profileState is ProfileLoadedState &&
-                              profileState.profileModel.data.selectedStoreUserUuid != null &&
-                              await _naviagtorKeys["catalogPageKey"].currentState.maybePop()) {
+                              profileState.profileModel.data!
+                                      .selectedStoreUserUuid !=
+                                  null &&
+                              await _naviagtorKeys["catalogPageKey"]!
+                                  .currentState!
+                                  .maybePop()) {
                           } else {
-                            _assortmentRecommendationBloc.add(AssortmentRecommendationsLoadEvent());
-                            if (await AssortmentFilterButton().loadToken() != "guest") {
+                            _assortmentRecommendationBloc
+                                .add(AssortmentRecommendationsLoadEvent());
+                            if (await AssortmentFilterButton().loadToken() !=
+                                "guest") {
                               _pageController.jumpToPage(0);
                               _bottomNavBloc.add(HomeEvent());
                             } else {
-                              AssortmentFilterButton().loginOrRegWarning(context);
+                              AssortmentFilterButton()
+                                  .loginOrRegWarning(context);
                             }
                           }
                         }
@@ -336,7 +369,8 @@ class _MainPageState extends State<MainPage> {
                       child: Scaffold(
                           extendBodyBehindAppBar: true,
                           resizeToAvoidBottomInset: false,
-                          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+                          floatingActionButtonLocation:
+                              FloatingActionButtonLocation.centerDocked,
                           floatingActionButton: LoyaltyCardButtonWidget(),
                           bottomNavigationBar: Theme(
                             data: ThemeData(
@@ -348,41 +382,61 @@ class _MainPageState extends State<MainPage> {
                               backgroundColor: Colors.white,
                               elevation: 9.0,
                               onTap: (index) async {
-                                if (await AssortmentFilterButton().loadToken() != "guest") {
+                                if (await AssortmentFilterButton()
+                                        .loadToken() !=
+                                    "guest") {
                                   _currentIndex = index;
                                   if (index == 0) {
-                                    if (_bottomNavBloc.state is SecondaryHomePageState &&
-                                        _naviagtorKeys["homePageKey"].currentState != null &&
-                                        _naviagtorKeys["homePageKey"].currentState.canPop()) {
-                                      _naviagtorKeys["homePageKey"]
-                                          .currentState
-                                          .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+                                    if (_bottomNavBloc.state
+                                            is SecondaryHomePageState &&
+                                        _naviagtorKeys["homePageKey"]!
+                                                .currentState !=
+                                            null &&
+                                        _naviagtorKeys["homePageKey"]!
+                                            .currentState!
+                                            .canPop()) {
+                                      _naviagtorKeys["homePageKey"]!
+                                          .currentState!
+                                          .pushNamedAndRemoveUntil('/login',
+                                              (Route<dynamic> route) => false);
                                     }
                                     _bottomNavBloc.add(HomeEvent());
                                   }
                                   if (index == 1) {
-                                    if (_bottomNavBloc.state is SecondaryCatalogPageState) {
+                                    if (_bottomNavBloc.state
+                                        is SecondaryCatalogPageState) {
                                     } else {
-                                      _assortmentRecommendationBloc.add(AssortmentRecommendationsLoadEvent());
+                                      _assortmentRecommendationBloc.add(
+                                          AssortmentRecommendationsLoadEvent());
                                     }
                                     _bottomNavBloc.add(CatalogEvent());
                                   }
                                   if (index == 3) {
-                                    _assortmentRecommendationBloc.add(AssortmentRecommendationsLoadEvent());
+                                    _assortmentRecommendationBloc.add(
+                                        AssortmentRecommendationsLoadEvent());
                                     _basketListBloc.add(BasketLoadEvent());
                                     _bottomNavBloc.add(BasketPageLoadEvent());
                                   }
                                   if (index == 4) {
-                                    if (_bottomNavBloc.state is SecondaryProfilePageState &&
-                                        _naviagtorKeys["profilePageKey"].currentState != null &&
-                                        _naviagtorKeys["profilePageKey"].currentState.canPop()) {
-                                      _naviagtorKeys["profilePageKey"]
-                                          .currentState
-                                          .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+                                    if (_bottomNavBloc.state
+                                            is SecondaryProfilePageState &&
+                                        _naviagtorKeys["profilePageKey"]!
+                                                .currentState !=
+                                            null &&
+                                        _naviagtorKeys["profilePageKey"]!
+                                            .currentState!
+                                            .canPop()) {
+                                      _naviagtorKeys["profilePageKey"]!
+                                          .currentState!
+                                          .pushNamedAndRemoveUntil('/login',
+                                              (Route<dynamic> route) => false);
                                     } else {
-                                      _loyaltyCardsListBloc.add(LoyaltyCardsListLoadEvent());
-                                      _cardsListBloc.add(CreditCardsListLoadEvent());
-                                      _shoppingHistoryBloc.add(ShoppingHistoryCheckListEvent());
+                                      _loyaltyCardsListBloc
+                                          .add(LoyaltyCardsListLoadEvent());
+                                      _cardsListBloc
+                                          .add(CreditCardsListLoadEvent());
+                                      _shoppingHistoryBloc
+                                          .add(ShoppingHistoryCheckListEvent());
                                       _bottomNavBloc.add(ProfilePageEvent());
                                     }
                                   }
@@ -390,7 +444,8 @@ class _MainPageState extends State<MainPage> {
                                   _bottomNavBloc.add(CatalogEvent());
                                   _pageController.jumpToPage(index);
                                 } else {
-                                  AssortmentFilterButton().loginOrRegWarning(context);
+                                  AssortmentFilterButton()
+                                      .loginOrRegWarning(context);
                                 }
                               },
                               currentIndex: _currentIndex,
@@ -398,24 +453,36 @@ class _MainPageState extends State<MainPage> {
                               items: [
                                 BottomNavigationBarItem(
                                   icon: Padding(
-                                    padding: EdgeInsets.only(bottom: heightRatio(size: 3, context: context)),
+                                    padding: EdgeInsets.only(
+                                        bottom: heightRatio(
+                                            size: 3, context: context)),
                                     child: SvgPicture.asset(
                                       'assets/images/homeIcon.svg',
-                                      color: _currentIndex == 0 ? newRedDark : colorBlack04,
-                                      width: widthRatio(size: 20, context: context),
-                                      height: heightRatio(size: 20, context: context),
+                                      color: _currentIndex == 0
+                                          ? newRedDark
+                                          : colorBlack04,
+                                      width: widthRatio(
+                                          size: 20, context: context),
+                                      height: heightRatio(
+                                          size: 20, context: context),
                                     ),
                                   ),
                                   label: 'mainText'.tr(),
                                 ),
                                 BottomNavigationBarItem(
                                     icon: Padding(
-                                      padding: EdgeInsets.only(bottom: heightRatio(size: 3, context: context)),
+                                      padding: EdgeInsets.only(
+                                          bottom: heightRatio(
+                                              size: 3, context: context)),
                                       child: SvgPicture.asset(
                                         'assets/images/catalogIcon.svg',
-                                        color: _currentIndex == 1 ? newRedDark : colorBlack04,
-                                        width: widthRatio(size: 20, context: context),
-                                        height: heightRatio(size: 20, context: context),
+                                        color: _currentIndex == 1
+                                            ? newRedDark
+                                            : colorBlack04,
+                                        width: widthRatio(
+                                            size: 20, context: context),
+                                        height: heightRatio(
+                                            size: 20, context: context),
                                       ),
                                     ),
                                     label: 'catalogText'.tr()),
@@ -424,7 +491,8 @@ class _MainPageState extends State<MainPage> {
                                   label: '',
                                 ),
                                 BottomNavigationBarItem(
-                                    icon: BlocBuilder<BasketListBloc, BasketState>(builder: (context, state) {
+                                    icon: BlocBuilder<BasketListBloc,
+                                        BasketState>(builder: (context, state) {
                                       if (state is BasketLoadedState) {
                                         int totalQuantity = 0;
                                         // for (var i = 0;
@@ -432,60 +500,90 @@ class _MainPageState extends State<MainPage> {
                                         //     i++) {
                                         //   totalQuantity +=
                                         //       state.basketListModel.data[i].quantity;
-                                        totalQuantity = state.basketListModel.data.length;
+                                        totalQuantity =
+                                            state.basketListModel.data!.length;
 
                                         return Stack(
                                           clipBehavior: Clip.none,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsets.only(bottom: heightRatio(size: 3, context: context)),
+                                              padding: EdgeInsets.only(
+                                                  bottom: heightRatio(
+                                                      size: 3,
+                                                      context: context)),
                                               child: SvgPicture.asset(
                                                 'assets/images/busketIcon.svg',
-                                                color: _currentIndex == 3 ? mainColor : colorBlack04,
-                                                width: widthRatio(size: 20, context: context),
-                                                height: heightRatio(size: 20, context: context),
+                                                color: _currentIndex == 3
+                                                    ? mainColor
+                                                    : colorBlack04,
+                                                width: widthRatio(
+                                                    size: 20, context: context),
+                                                height: heightRatio(
+                                                    size: 20, context: context),
                                               ),
                                             ),
                                             Positioned(
-                                              width: widthRatio(size: 16, context: context),
-                                              height: heightRatio(size: 16, context: context),
-                                              right: widthRatio(size: -10, context: context),
-                                              top: heightRatio(size: -5, context: context),
+                                              width: widthRatio(
+                                                  size: 16, context: context),
+                                              height: heightRatio(
+                                                  size: 16, context: context),
+                                              right: widthRatio(
+                                                  size: -10, context: context),
+                                              top: heightRatio(
+                                                  size: -5, context: context),
                                               child: CircleAvatar(
                                                   backgroundColor: Colors.green,
-                                                  child: Text(totalQuantity.toString(),
+                                                  child: Text(
+                                                      totalQuantity.toString(),
                                                       style: appTextStyle(
-                                                          fontSize: heightRatio(size: 11, context: context),
-                                                          fontWeight: FontWeight.w700,
-                                                          color: Colors.white))),
+                                                          fontSize: heightRatio(
+                                                              size: 11,
+                                                              context: context),
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          color:
+                                                              Colors.white))),
                                             ),
                                           ],
                                         );
                                       }
                                       return Padding(
-                                        padding: EdgeInsets.only(bottom: heightRatio(size: 3, context: context)),
+                                        padding: EdgeInsets.only(
+                                            bottom: heightRatio(
+                                                size: 3, context: context)),
                                         child: SvgPicture.asset(
                                           'assets/images/busketIcon.svg',
-                                          color: _currentIndex == 3 ? newRedDark : colorBlack04,
+                                          color: _currentIndex == 3
+                                              ? newRedDark
+                                              : colorBlack04,
                                         ),
                                       );
                                     }),
                                     label: 'basketText'.tr()),
                                 BottomNavigationBarItem(
                                     icon: Padding(
-                                      padding: EdgeInsets.only(bottom: heightRatio(size: 3, context: context)),
+                                      padding: EdgeInsets.only(
+                                          bottom: heightRatio(
+                                              size: 3, context: context)),
                                       child: SvgPicture.asset(
                                         'assets/images/newProfileIcon.svg',
-                                        color: _currentIndex == 4 ? newRedDark : colorBlack04,
-                                        width: widthRatio(size: 21, context: context),
-                                        height: heightRatio(size: 20, context: context),
+                                        color: _currentIndex == 4
+                                            ? newRedDark
+                                            : colorBlack04,
+                                        width: widthRatio(
+                                            size: 21, context: context),
+                                        height: heightRatio(
+                                            size: 20, context: context),
                                       ),
                                     ),
                                     label: 'Профиль'),
                               ],
-                              selectedLabelStyle: appLabelTextStyle(fontSize: 10),
-                              unselectedLabelStyle: appLabelTextStyle(fontSize: 10),
-                              unselectedItemColor: Color(0xFF6B6F7A).withOpacity(0.68),
+                              selectedLabelStyle:
+                                  appLabelTextStyle(fontSize: 10),
+                              unselectedLabelStyle:
+                                  appLabelTextStyle(fontSize: 10),
+                              unselectedItemColor:
+                                  Color(0xFF6B6F7A).withOpacity(0.68),
                             ),
                           ),
                           body: PageView(

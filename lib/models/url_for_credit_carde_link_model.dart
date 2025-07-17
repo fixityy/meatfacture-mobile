@@ -1,6 +1,6 @@
 class UrlForCreditCardLinkModel {
   UrlForCreditCardLinkModel({
-    this.data,
+    required this.data,
   });
 
   UrlForCreditCardLinkDataModel data;
@@ -17,8 +17,8 @@ class UrlForCreditCardLinkModel {
 
 class UrlForCreditCardLinkDataModel {
   UrlForCreditCardLinkDataModel({
-    this.formUrl,
-    this.orderId,
+    required this.formUrl,
+    required this.orderId,
   });
 
   String formUrl;

@@ -1,6 +1,4 @@
 //events
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/assortments_list_model.dart';
 import 'package:smart/services/services.dart';
@@ -17,7 +15,7 @@ class AssortmentRecommendationsLoadedState
     extends AssortmentRecommendationsState {
   final List<AssortmentsListModel> recommendationlist;
 
-  AssortmentRecommendationsLoadedState({@required this.recommendationlist});
+  AssortmentRecommendationsLoadedState({required this.recommendationlist});
 }
 
 class AssortmentRecommendationsEmptyState

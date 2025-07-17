@@ -22,15 +22,17 @@ import 'package:smart/pages/init_add_user_address_item.dart';
 class AddressesDeliveryAndShops extends StatefulWidget {
   final bool hasBackBtn;
   final bool isPopTwice;
-  const AddressesDeliveryAndShops({Key key, this.hasBackBtn = false, this.isPopTwice = false}) : super(key: key);
+  const AddressesDeliveryAndShops(
+      {super.key, this.hasBackBtn = false, this.isPopTwice = false});
 
   @override
-  State<AddressesDeliveryAndShops> createState() => _AddressesDeliveryAndShopsState();
+  State<AddressesDeliveryAndShops> createState() =>
+      _AddressesDeliveryAndShopsState();
 }
 
 class _AddressesDeliveryAndShopsState extends State<AddressesDeliveryAndShops> {
-  int selectedStoreIndex;
-  String selectedStoreUuid;
+  int? selectedStoreIndex;
+  late String selectedStoreUuid;
 
   @override
   void initState() {
@@ -43,12 +45,13 @@ class _AddressesDeliveryAndShopsState extends State<AddressesDeliveryAndShops> {
     final clientAddressState = context.watch<AddressesClientBloc>().state;
     final shopsState = context.watch<AddressesShopBloc>().state;
 
-    if (clientAddressState is LoadingClientAddressState || shopsState is LoadingAddressesShopState) {
+    if (clientAddressState is LoadingClientAddressState ||
+        shopsState is LoadingAddressesShopState) {
       return _buildLoadingScreen();
     }
 
     if (shopsState is LoadedAddressesShopState) {
-      selectedStoreUuid = shopsState.selectedShop.uuid;
+      selectedStoreUuid = shopsState.selectedShop!.uuid;
       return _buildShopsList(context, shopsState.loadedShopsList.data);
     }
 
@@ -70,26 +73,35 @@ class _AddressesDeliveryAndShopsState extends State<AddressesDeliveryAndShops> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                    topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                    topLeft: Radius.circular(
+                        heightRatio(size: 15, context: context)),
+                    topRight: Radius.circular(
+                        heightRatio(size: 15, context: context)),
                   ),
                 ),
                 child: Stack(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 17, context: context), vertical: heightRatio(size: 25, context: context)),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: widthRatio(size: 17, context: context),
+                          vertical: heightRatio(size: 25, context: context)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Эти магазины доставляют к вам',
-                            style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                            style: appHeadersTextStyle(
+                                fontSize:
+                                    heightRatio(size: 16, context: context),
+                                color: newBlack),
                           ),
-                          SizedBox(height: heightRatio(size: 88, context: context)),
+                          SizedBox(
+                              height: heightRatio(size: 88, context: context)),
                           Center(
                             child: CircularProgressIndicator(
-                              valueColor: new AlwaysStoppedAnimation<Color>(newRedDark),
+                              valueColor:
+                                  new AlwaysStoppedAnimation<Color>(newRedDark),
                             ),
                           ),
                         ],
@@ -123,25 +135,36 @@ class _AddressesDeliveryAndShopsState extends State<AddressesDeliveryAndShops> {
             _buildAddressHeader(context),
             Expanded(
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: heightRatio(size: 25, context: context)),
+                padding: EdgeInsets.symmetric(
+                    vertical: heightRatio(size: 25, context: context)),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(heightRatio(size: 15, context: context)), topRight: Radius.circular(heightRatio(size: 15, context: context))),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(
+                          heightRatio(size: 15, context: context)),
+                      topRight: Radius.circular(
+                          heightRatio(size: 15, context: context))),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 16, context: context)),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: widthRatio(size: 16, context: context)),
                       child: Text(
                         'Эти магазины доставляют к вам',
-                        style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack),
+                        style: appHeadersTextStyle(
+                            fontSize: heightRatio(size: 16, context: context),
+                            color: newBlack),
                       ),
                     ),
                     Expanded(
                       child: ListView.builder(
-                        padding: EdgeInsets.only(bottom: heightRatio(size: 40, context: context), left: widthRatio(size: 16, context: context), right: widthRatio(size: 16, context: context)),
+                        padding: EdgeInsets.only(
+                            bottom: heightRatio(size: 40, context: context),
+                            left: widthRatio(size: 16, context: context),
+                            right: widthRatio(size: 16, context: context)),
                         itemCount: shops.length,
                         itemBuilder: (context, index) {
                           final store = shops[index];
@@ -154,12 +177,17 @@ class _AddressesDeliveryAndShopsState extends State<AddressesDeliveryAndShops> {
                               log('click: $selectedStoreUuid');
                             },
                             child: InitAddUserAddressItem(
-                              isActive: selectedStoreIndex != null ? selectedStoreIndex == index : selectedStoreUuid == store.uuid,
+                              isActive: selectedStoreIndex != null
+                                  ? selectedStoreIndex == index
+                                  : selectedStoreUuid == store.uuid,
                               name: store.address,
                               nameId: store.uuid,
-                              time: '${store.workHoursFrom} - ${store.workHoursTill}',
+                              time:
+                                  '${store.workHoursFrom} - ${store.workHoursTill}',
                               price: store.deliveryPrice,
-                              thumbnail: store.image != null ? store.image.thumbnails.the1000X1000 : '',
+                              thumbnail: store.image != null
+                                  ? store.image!.thumbnails.the1000X1000
+                                  : '',
                             ),
                           );
                         },
@@ -169,20 +197,29 @@ class _AddressesDeliveryAndShopsState extends State<AddressesDeliveryAndShops> {
                       onTap: () async {
                         print('Подтвердить AddressesDeliveryAndShops');
 
-                        if (selectedStoreIndex == null || selectedStoreIndex >= shops.length) {
+                        if (selectedStoreIndex == null ||
+                            selectedStoreIndex! >= shops.length) {
                           Navigator.pop(context);
                           if (widget.isPopTwice) Navigator.pop(context);
                         } else {
-                          final selectedShop = shops[selectedStoreIndex];
+                          final selectedShop = shops[selectedStoreIndex!];
 
                           // Обновляем выбранные адреса:
-                          context.read<AddressesClientBloc>().add(SelectAddressesClientEvent(selectedShop.uuid));
-                          context.read<AddressesShopBloc>().add(SelectAddressShopEvent(shopUuid: selectedShop.uuid));
-                          context.read<ProfileBloc>().add(ProfileUpdateDataEvent(selectedStoreUserUuid: selectedShop.uuid)); // Обновляем магазин в профиле
+                          context.read<AddressesClientBloc>().add(
+                              SelectAddressesClientEvent(selectedShop.uuid));
+                          context.read<AddressesShopBloc>().add(
+                              SelectAddressShopEvent(
+                                  shopUuid: selectedShop.uuid));
+                          context.read<ProfileBloc>().add(
+                              ProfileUpdateDataEvent(
+                                  selectedStoreUserUuid: selectedShop
+                                      .uuid)); // Обновляем магазин в профиле
                           await Future.delayed(Duration(seconds: 1));
 
                           // Обновляем адреса клиента:
-                          context.read<AddressesClientBloc>().add(LoadedAddressesClientEvent());
+                          context
+                              .read<AddressesClientBloc>()
+                              .add(LoadedAddressesClientEvent());
 
                           // Перезапрашиваем каталог и ассортимент товаров:
                           context.read<CatalogsBloc>().add(CatalogsLoadEvent());
@@ -197,13 +234,19 @@ class _AddressesDeliveryAndShopsState extends State<AddressesDeliveryAndShops> {
                       },
                       child: Container(
                         alignment: Alignment.center,
-                        margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 16, context: context)),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: widthRatio(size: 16, context: context)),
                         width: MediaQuery.of(context).size.width,
                         height: heightRatio(size: 54, context: context),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: newRedDark),
                         child: Text(
                           'Подтвердить',
-                          style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                          style: appLabelTextStyle(
+                              color: Colors.white,
+                              fontSize:
+                                  heightRatio(size: 16, context: context)),
                         ),
                       ),
                     ),
@@ -221,8 +264,12 @@ class _AddressesDeliveryAndShopsState extends State<AddressesDeliveryAndShops> {
     return BlocBuilder<AddressesClientBloc, ClientAddressState>(
       builder: (context, state) {
         String addressText = "Адрес не выбран";
-        if (state is LoadedClientAddressState && state.selectedAddress != null) {
-          addressText = (state.selectedAddress.house == null || state.selectedAddress.house == "") ? "${state.selectedAddress.city}, ${state.selectedAddress.street}" : "${state.selectedAddress.city}, ${state.selectedAddress.street} ${state.selectedAddress.house}";
+        if (state is LoadedClientAddressState &&
+            state.selectedAddress != null) {
+          addressText = (state.selectedAddress!.house == null ||
+                  state.selectedAddress!.house == "")
+              ? "${state.selectedAddress!.city}, ${state.selectedAddress!.street}"
+              : "${state.selectedAddress!.city}, ${state.selectedAddress!.street} ${state.selectedAddress!.house}";
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,21 +283,28 @@ class _AddressesDeliveryAndShopsState extends State<AddressesDeliveryAndShops> {
                         onTap: () => Navigator.pop(context),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 15, right: 12.5),
-                          child: Icon(Icons.arrow_back_ios_new_rounded, size: heightRatio(size: 25, context: context), color: whiteColor),
+                          child: Icon(Icons.arrow_back_ios_new_rounded,
+                              size: heightRatio(size: 25, context: context),
+                              color: whiteColor),
                         ),
                       ),
                       Text(
                         "Адрес доставки",
-                        style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 22, context: context)),
+                        style: appHeadersTextStyle(
+                            color: Colors.white,
+                            fontSize: heightRatio(size: 22, context: context)),
                         textAlign: TextAlign.left,
                       ),
                     ],
                   )
                 : Padding(
-                    padding: EdgeInsets.only(left: widthRatio(size: 17, context: context)),
+                    padding: EdgeInsets.only(
+                        left: widthRatio(size: 17, context: context)),
                     child: Text(
                       "Адрес доставки",
-                      style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 22, context: context)),
+                      style: appHeadersTextStyle(
+                          color: Colors.white,
+                          fontSize: heightRatio(size: 22, context: context)),
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -260,13 +314,19 @@ class _AddressesDeliveryAndShopsState extends State<AddressesDeliveryAndShops> {
                 final basketBloc = context.read<BasketListBloc>();
                 final basketState = basketBloc.state;
 
-                if (basketState is BasketLoadedState || basketState is BasketEmptyState) {
+                if (basketState is BasketLoadedState ||
+                    basketState is BasketEmptyState) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => AddressesMyDelivery(
-                        uuid: (state is LoadedClientAddressState) ? state.selectedAddress.uuid : "",
-                        productModelForOrderRequestList: basketState is BasketLoadedState ? basketState.productModelForOrderRequestList : [],
+                        uuid: (state is LoadedClientAddressState)
+                            ? state.selectedAddress!.uuid
+                            : "",
+                        productModelForOrderRequestList:
+                            basketState is BasketLoadedState
+                                ? basketState.productModelForOrderRequestList
+                                : [],
                       ),
                     ),
                   );
@@ -289,7 +349,9 @@ class _AddressesDeliveryAndShopsState extends State<AddressesDeliveryAndShops> {
                       addressText,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: appLabelTextStyle(color: whiteColor, fontSize: heightRatio(size: 14, context: context)),
+                      style: appLabelTextStyle(
+                          color: whiteColor,
+                          fontSize: heightRatio(size: 14, context: context)),
                     ),
                   ),
                   SizedBox(width: widthRatio(size: 15, context: context)),

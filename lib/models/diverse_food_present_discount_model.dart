@@ -2,8 +2,8 @@ import 'package:smart/models/meta_model.dart';
 
 class DiverseFoodPresentDiscountModel {
   DiverseFoodPresentDiscountModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<DiverseFoodPresentDiscountDataModel> data;
@@ -24,13 +24,13 @@ class DiverseFoodPresentDiscountModel {
 
 class DiverseFoodPresentDiscountDataModel {
   DiverseFoodPresentDiscountDataModel({
-    this.uuid,
-    this.clientUuid,
-    this.discountPercent,
-    this.startAt,
-    this.endAt,
-    this.createdAt,
-    this.updatedAt,
+    required this.uuid,
+    required this.clientUuid,
+    required this.discountPercent,
+    required this.startAt,
+    required this.endAt,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   String uuid;

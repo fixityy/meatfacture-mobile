@@ -16,13 +16,20 @@ class SetWeigtForProductInBasketBottomSheet extends StatefulWidget {
   final int kg;
   final bool isupdate;
 
-  const SetWeigtForProductInBasketBottomSheet({@required this.productUuid, @required this.gr, @required this.kg, @required this.isupdate});
+  const SetWeigtForProductInBasketBottomSheet({
+    required this.productUuid,
+    required this.gr,
+    required this.kg,
+    required this.isupdate,
+  });
 
   @override
-  State<SetWeigtForProductInBasketBottomSheet> createState() => _SetWeigtForProductInBasketBottomSheetState();
+  State<SetWeigtForProductInBasketBottomSheet> createState() =>
+      _SetWeigtForProductInBasketBottomSheetState();
 }
 
-class _SetWeigtForProductInBasketBottomSheetState extends State<SetWeigtForProductInBasketBottomSheet> {
+class _SetWeigtForProductInBasketBottomSheetState
+    extends State<SetWeigtForProductInBasketBottomSheet> {
   final TextEditingController kgTextController = TextEditingController();
   final TextEditingController grTextController = TextEditingController();
   double kgToAddToBasket = 0;
@@ -55,14 +62,17 @@ class _SetWeigtForProductInBasketBottomSheetState extends State<SetWeigtForProdu
       ),
       child: Container(
         height: heightRatio(size: 280, context: context),
-        margin: EdgeInsets.only(bottom: heightRatio(size: 32, context: context)),
+        margin:
+            EdgeInsets.only(bottom: heightRatio(size: 32, context: context)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: heightRatio(size: 25, context: context)),
             Text(
               'editWeightOfProductText'.tr(),
-              style: appHeadersTextStyle(fontSize: heightRatio(size: 20, context: context), color: newBlack),
+              style: appHeadersTextStyle(
+                  fontSize: heightRatio(size: 20, context: context),
+                  color: newBlack),
             ),
             // Container(
             //   margin: const EdgeInsets.only(left: 25, top: 20, bottom: 2),
@@ -81,9 +91,14 @@ class _SetWeigtForProductInBasketBottomSheetState extends State<SetWeigtForProdu
                       children: [
                         Container(
                           width: 72,
-                          padding: EdgeInsets.only(bottom: heightRatio(size: 8, context: context)),
+                          padding: EdgeInsets.only(
+                              bottom: heightRatio(size: 8, context: context)),
                           decoration: BoxDecoration(
-                            border: Border(bottom: BorderSide(color: newGrey, width: widthRatio(size: 1, context: context))),
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: newGrey,
+                                    width:
+                                        widthRatio(size: 1, context: context))),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -91,17 +106,27 @@ class _SetWeigtForProductInBasketBottomSheetState extends State<SetWeigtForProdu
                             children: [
                               Text(
                                 _selectedKg.toString(),
-                                style: appLabelTextStyle(color: _selectedKg == 0 ? newGrey : newBlack, fontSize: heightRatio(size: 18, context: context)),
+                                style: appLabelTextStyle(
+                                    color:
+                                        _selectedKg == 0 ? newGrey : newBlack,
+                                    fontSize: heightRatio(
+                                        size: 18, context: context)),
                               ),
                               Text(
                                 "kgText".tr(),
-                                style: appLabelTextStyle(color: _selectedKg == 0 ? newGrey : newBlack, fontSize: heightRatio(size: 18, context: context)),
+                                style: appLabelTextStyle(
+                                    color:
+                                        _selectedKg == 0 ? newGrey : newBlack,
+                                    fontSize: heightRatio(
+                                        size: 18, context: context)),
                               ),
                             ],
                           ),
                         ),
                         Icon(
-                          _selectedKgOpened ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                          _selectedKgOpened
+                              ? Icons.keyboard_arrow_up
+                              : Icons.keyboard_arrow_down,
                           color: newRedDark,
                           size: heightRatio(size: 24, context: context),
                         ),
@@ -115,33 +140,46 @@ class _SetWeigtForProductInBasketBottomSheetState extends State<SetWeigtForProdu
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(heightRatio(size: 15, context: context)),
-                                  topRight: Radius.circular(heightRatio(size: 15, context: context)),
+                                  topLeft: Radius.circular(
+                                      heightRatio(size: 15, context: context)),
+                                  topRight: Radius.circular(
+                                      heightRatio(size: 15, context: context)),
                                 )),
-                            padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 20, context: context)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    widthRatio(size: 20, context: context)),
                             height: heightRatio(size: 296, context: context),
                             child: Column(
                               children: [
                                 SizedBox(
-                                  height: heightRatio(size: 220, context: context),
+                                  height:
+                                      heightRatio(size: 220, context: context),
                                   child: CupertinoPicker(
                                     magnification: 1.22,
                                     squeeze: 1.2,
                                     useMagnifier: true,
-                                    itemExtent: heightRatio(size: 50, context: context),
-                                    scrollController: FixedExtentScrollController(initialItem: _selectedKg),
+                                    itemExtent:
+                                        heightRatio(size: 50, context: context),
+                                    scrollController:
+                                        FixedExtentScrollController(
+                                            initialItem: _selectedKg),
                                     onSelectedItemChanged: (index) {
                                       setState(() {
                                         _selectedKg = index;
                                       });
-                                      kgTextController.text = _selectedKg.toString();
+                                      kgTextController.text =
+                                          _selectedKg.toString();
                                     },
                                     children: List.generate(
                                       21,
                                       (index) => Center(
                                         child: Text(
                                           '$index кг',
-                                          style: GoogleFonts.roboto(fontSize: heightRatio(size: 18, context: context), fontWeight: FontWeight.w300, color: newBlack),
+                                          style: GoogleFonts.roboto(
+                                              fontSize: heightRatio(
+                                                  size: 18, context: context),
+                                              fontWeight: FontWeight.w300,
+                                              color: newBlack),
                                         ),
                                       ),
                                     ),
@@ -153,15 +191,24 @@ class _SetWeigtForProductInBasketBottomSheetState extends State<SetWeigtForProdu
                                   },
                                   style: ElevatedButton.styleFrom(
                                     alignment: Alignment.center,
-                                    padding: EdgeInsets.only(top: heightRatio(size: 16, context: context), bottom: heightRatio(size: 19, context: context)),
-                                    minimumSize: Size(MediaQuery.of(context).size.width, 0),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                                    padding: EdgeInsets.only(
+                                        top: heightRatio(
+                                            size: 16, context: context),
+                                        bottom: heightRatio(
+                                            size: 19, context: context)),
+                                    minimumSize: Size(
+                                        MediaQuery.of(context).size.width, 0),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5)),
                                     backgroundColor: newRedDark,
                                     elevation: 0,
                                   ),
                                   child: Text(
                                     'Подтвердить',
-                                    style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                                    style: appLabelTextStyle(
+                                        color: Colors.white,
+                                        fontSize: heightRatio(
+                                            size: 16, context: context)),
                                   ),
                                 ),
                               ],
@@ -184,23 +231,32 @@ class _SetWeigtForProductInBasketBottomSheetState extends State<SetWeigtForProdu
                     children: [
                       Container(
                         width: widthRatio(size: 72, context: context),
-                        padding: EdgeInsets.only(bottom: heightRatio(size: 8, context: context)),
+                        padding: EdgeInsets.only(
+                            bottom: heightRatio(size: 8, context: context)),
                         decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(color: newGrey, width: 1)),
+                          border: Border(
+                              bottom: BorderSide(color: newGrey, width: 1)),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              _selectedG < 10 ? (_selectedG * 100).toString() : _selectedG.toString(),
-                              style: appLabelTextStyle(color: _selectedG == 0 ? newGrey : newBlack, fontSize: heightRatio(size: 18, context: context), fontWeight: FontWeight.w400),
+                              _selectedG < 10
+                                  ? (_selectedG * 100).toString()
+                                  : _selectedG.toString(),
+                              style: appLabelTextStyle(
+                                  color: _selectedG == 0 ? newGrey : newBlack,
+                                  fontSize:
+                                      heightRatio(size: 18, context: context),
+                                  fontWeight: FontWeight.w400),
                             ),
                             Text(
                               "grText".tr(),
                               style: appLabelTextStyle(
                                 color: _selectedG == 0 ? newGrey : newBlack,
-                                fontSize: heightRatio(size: 18, context: context),
+                                fontSize:
+                                    heightRatio(size: 18, context: context),
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -208,7 +264,9 @@ class _SetWeigtForProductInBasketBottomSheetState extends State<SetWeigtForProdu
                         ),
                       ),
                       Icon(
-                        _selectedGOpened ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                        _selectedGOpened
+                            ? Icons.keyboard_arrow_up
+                            : Icons.keyboard_arrow_down,
                         color: newRedDark,
                         size: heightRatio(size: 24, context: context),
                       ),
@@ -222,20 +280,26 @@ class _SetWeigtForProductInBasketBottomSheetState extends State<SetWeigtForProdu
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(heightRatio(size: 25, context: context)),
-                                topRight: Radius.circular(heightRatio(size: 25, context: context)),
+                                topLeft: Radius.circular(
+                                    heightRatio(size: 25, context: context)),
+                                topRight: Radius.circular(
+                                    heightRatio(size: 25, context: context)),
                               )),
-                          padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 20, context: context)),
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  widthRatio(size: 20, context: context)),
                           height: heightRatio(size: 296, context: context),
                           child: Column(
                             children: [
                               SizedBox(
-                                height: heightRatio(size: 220, context: context),
+                                height:
+                                    heightRatio(size: 220, context: context),
                                 child: CupertinoPicker(
                                   magnification: 1.22,
                                   squeeze: 1.2,
                                   useMagnifier: true,
-                                  itemExtent: heightRatio(size: 50, context: context),
+                                  itemExtent:
+                                      heightRatio(size: 50, context: context),
                                   scrollController: FixedExtentScrollController(
                                     initialItem: _selectedG,
                                   ),
@@ -243,14 +307,19 @@ class _SetWeigtForProductInBasketBottomSheetState extends State<SetWeigtForProdu
                                     setState(() {
                                       _selectedG = index * 100;
                                     });
-                                    grTextController.text = _selectedG.toString();
+                                    grTextController.text =
+                                        _selectedG.toString();
                                   },
                                   children: List.generate(
                                     10,
                                     (index) => Center(
                                       child: Text(
                                         '${index * 100} г',
-                                        style: GoogleFonts.roboto(fontSize: heightRatio(size: 18, context: context), fontWeight: FontWeight.w300, color: Colors.black),
+                                        style: GoogleFonts.roboto(
+                                            fontSize: heightRatio(
+                                                size: 18, context: context),
+                                            fontWeight: FontWeight.w300,
+                                            color: Colors.black),
                                       ),
                                     ),
                                   ),
@@ -262,15 +331,24 @@ class _SetWeigtForProductInBasketBottomSheetState extends State<SetWeigtForProdu
                                 },
                                 style: ElevatedButton.styleFrom(
                                   alignment: Alignment.center,
-                                  padding: EdgeInsets.only(top: heightRatio(size: 16, context: context), bottom: heightRatio(size: 19, context: context)),
-                                  minimumSize: Size(MediaQuery.of(context).size.width, 0),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                                  padding: EdgeInsets.only(
+                                      top: heightRatio(
+                                          size: 16, context: context),
+                                      bottom: heightRatio(
+                                          size: 19, context: context)),
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width, 0),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5)),
                                   backgroundColor: newRedDark,
                                   elevation: 0,
                                 ),
                                 child: Text(
                                   'Подтвердить',
-                                  style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                                  style: appLabelTextStyle(
+                                      color: Colors.white,
+                                      fontSize: heightRatio(
+                                          size: 16, context: context)),
                                 ),
                               ),
                             ],
@@ -297,35 +375,58 @@ class _SetWeigtForProductInBasketBottomSheetState extends State<SetWeigtForProdu
             SizedBox(height: heightRatio(size: 20, context: context)),
             InkWell(
               onTap: () async {
-                kgToAddToBasket = double.parse(kgTextController.text.isEmpty ? "0" : kgTextController.text.replaceAll(",", ".")) + (double.parse(grTextController.text.isEmpty ? "0" : grTextController.text) / 1000);
-                if ((kgTextController.text.isEmpty || kgTextController.text == "0") && (grTextController.text.isEmpty || grTextController.text == "0")) {
-                  if (await BasketProvider().reomoveProductFromBasket(widget.productUuid)) {
+                kgToAddToBasket = double.parse(kgTextController.text.isEmpty
+                        ? "0"
+                        : kgTextController.text.replaceAll(",", ".")) +
+                    (double.parse(grTextController.text.isEmpty
+                            ? "0"
+                            : grTextController.text) /
+                        1000);
+                if ((kgTextController.text.isEmpty ||
+                        kgTextController.text == "0") &&
+                    (grTextController.text.isEmpty ||
+                        grTextController.text == "0")) {
+                  if (await BasketProvider()
+                      .reomoveProductFromBasket(widget.productUuid)) {
                     _basketListBloc.add(BasketLoadEvent());
                   }
                   Navigator.pop(context, ["0", "0", false]);
                 } else {
                   if (widget.isupdate) {
-                    if (await BasketProvider().updateProductInBasket(productUuid: widget.productUuid, quantity: kgToAddToBasket)) {
+                    if (await BasketProvider().updateProductInBasket(
+                        productUuid: widget.productUuid,
+                        quantity: kgToAddToBasket)) {
                       _basketListBloc.add(BasketLoadEvent());
                     }
                   } else {
-                    if (await BasketProvider().addProductInBasket(widget.productUuid, kgToAddToBasket)) {
+                    if (await BasketProvider().addProductInBasket(
+                        widget.productUuid, kgToAddToBasket)) {
                       _basketListBloc.add(BasketLoadEvent());
                     }
                   }
                 }
-                Navigator.pop(context, [kgTextController.text.replaceAll(",", "."), grTextController.text, true]);
+                Navigator.pop(context, [
+                  kgTextController.text.replaceAll(",", "."),
+                  grTextController.text,
+                  true
+                ]);
               },
               child: Container(
                 // Стиль кнопки
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
-                margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 20, context: context)),
+                padding: EdgeInsets.only(
+                    top: heightRatio(size: 15, context: context),
+                    bottom: heightRatio(size: 18, context: context)),
+                margin: EdgeInsets.symmetric(
+                    horizontal: widthRatio(size: 20, context: context)),
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newRedDark),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5), color: newRedDark),
                 child: Text(
                   'Добавить в корзину',
-                  style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context)),
+                  style: appLabelTextStyle(
+                      color: Colors.white,
+                      fontSize: heightRatio(size: 16, context: context)),
                 ),
               ),
             ),
@@ -334,18 +435,26 @@ class _SetWeigtForProductInBasketBottomSheetState extends State<SetWeigtForProdu
               onTap: () async {
                 // _weightOfProductBloc
                 //     .add(WeightOfProductDeleteFromBasketEvent());
-                if (await BasketProvider().reomoveProductFromBasket(widget.productUuid)) {
+                if (await BasketProvider()
+                    .reomoveProductFromBasket(widget.productUuid)) {
                   _basketListBloc.add(BasketLoadEvent());
                 }
                 Navigator.pop(context, ["0", "0", false]);
               },
               child: Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(top: heightRatio(size: 15, context: context), bottom: heightRatio(size: 18, context: context)),
-                margin: EdgeInsets.symmetric(horizontal: widthRatio(size: 20, context: context)),
+                padding: EdgeInsets.only(
+                    top: heightRatio(size: 15, context: context),
+                    bottom: heightRatio(size: 18, context: context)),
+                margin: EdgeInsets.symmetric(
+                    horizontal: widthRatio(size: 20, context: context)),
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: newBlack),
-                child: Text('Вернуться назад', style: appLabelTextStyle(color: Colors.white, fontSize: heightRatio(size: 16, context: context))),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5), color: newBlack),
+                child: Text('Вернуться назад',
+                    style: appLabelTextStyle(
+                        color: Colors.white,
+                        fontSize: heightRatio(size: 16, context: context))),
               ),
             ),
           ],

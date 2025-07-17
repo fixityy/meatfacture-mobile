@@ -4,15 +4,17 @@ import 'package:smart/core/constants/source.dart';
 
 class FavoriteProductModel {
   FavoriteProductModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<FavoriteProductDataModel> data;
   MetaModel meta;
 
-  factory FavoriteProductModel.fromJson(Map<String, dynamic> json) => FavoriteProductModel(
-        data: List<FavoriteProductDataModel>.from(json["data"].map((x) => FavoriteProductDataModel.fromJson(x))),
+  factory FavoriteProductModel.fromJson(Map<String, dynamic> json) =>
+      FavoriteProductModel(
+        data: List<FavoriteProductDataModel>.from(
+            json["data"].map((x) => FavoriteProductDataModel.fromJson(x))),
         meta: MetaModel.fromJson(json["meta"]),
       );
 
@@ -26,47 +28,50 @@ class FavoriteProductDataModel {
   FavoriteProductDataModel({
     this.uuid,
     this.clientUuid,
-    this.assortmentUuid,
-    this.assortmentName,
-    this.discountPercent,
-    this.activeFrom,
-    this.activeTo,
+    required this.assortmentUuid,
+    required this.assortmentName,
+    required this.discountPercent,
+    required this.activeFrom,
+    required this.activeTo,
     this.createdAt,
     this.updatedAt,
-    this.images,
-    this.assortmentUnitId,
-    this.priceWithDiscount,
+    required this.images,
+    required this.assortmentUnitId,
+    required this.priceWithDiscount,
     this.currentPrice,
   });
 
-  String uuid;
-  String clientUuid;
+  String? uuid;
+  String? clientUuid;
   double priceWithDiscount;
-  double currentPrice;
+  double? currentPrice;
   String assortmentUuid;
   String assortmentName;
   String discountPercent;
   String activeFrom;
   String activeTo;
-  String createdAt;
-  String updatedAt;
+  String? createdAt;
+  String? updatedAt;
   String assortmentUnitId;
   List<ImageModel> images;
 
-  factory FavoriteProductDataModel.fromJson(Map<String, dynamic> json) => FavoriteProductDataModel(
-      uuid: json["uuid"],
-      currentPrice: json["current_price"].toString().toDouble(),
-      assortmentUnitId: json["assortment_unit_id"],
-      clientUuid: json["client_uuid"],
-      images: List<ImageModel>.from(json["images"].map((x) => ImageModel.fromJson(x))),
-      assortmentUuid: json["assortment_uuid"],
-      assortmentName: json["assortment_name"],
-      discountPercent: json["discount_percent"],
-      activeFrom: json["active_from"],
-      activeTo: json["active_to"],
-      createdAt: json["created_at"],
-      updatedAt: json["updated_at"],
-      priceWithDiscount: json["price_with_discount"].toString().toDouble());
+  factory FavoriteProductDataModel.fromJson(Map<String, dynamic> json) =>
+      FavoriteProductDataModel(
+          uuid: json["uuid"],
+          currentPrice: json["current_price"].toString().toDouble(),
+          assortmentUnitId: json["assortment_unit_id"],
+          clientUuid: json["client_uuid"],
+          images: List<ImageModel>.from(
+              json["images"].map((x) => ImageModel.fromJson(x))),
+          assortmentUuid: json["assortment_uuid"],
+          assortmentName: json["assortment_name"],
+          discountPercent: json["discount_percent"],
+          activeFrom: json["active_from"],
+          activeTo: json["active_to"],
+          createdAt: json["created_at"],
+          updatedAt: json["updated_at"],
+          priceWithDiscount:
+              json["price_with_discount"].toString().toDouble()!);
 
   Map<String, dynamic> toJson() => {
         "uuid": uuid,

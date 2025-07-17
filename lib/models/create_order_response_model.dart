@@ -2,7 +2,7 @@ import 'order_calculate_response_model.dart';
 
 class OrderCreateResponseModel {
   OrderCreateResponseModel({
-    this.data,
+    required this.data,
   });
 
   CreateOrderResponseDataModel data;
@@ -19,36 +19,36 @@ class OrderCreateResponseModel {
 
 class CreateOrderResponseDataModel {
   CreateOrderResponseDataModel({
-    this.uuid,
-    this.storeUserUuid,
-    this.storeUserFullName,
-    this.storeUserAddress,
-    this.orderStatusId,
-    this.orderDeliveryTypeId,
-    this.orderPaymentTypeId,
-    this.clientComment,
-    this.clientEmail,
+    required this.uuid,
+    required this.storeUserUuid,
+    required this.storeUserFullName,
+    required this.storeUserAddress,
+    required this.orderStatusId,
+    required this.orderDeliveryTypeId,
+    required this.orderPaymentTypeId,
+    required this.clientComment,
+    required this.clientEmail,
     this.clientAddressData,
-    this.isPaid,
-    this.deliveryPrice,
-    this.totalDiscountForProducts,
+    required this.isPaid,
+    required this.deliveryPrice,
+    required this.totalDiscountForProducts,
     this.totalPriceForProductsWithDiscount,
-    this.totalPrice,
-    this.totalWeight,
+    required this.totalPrice,
+    required this.totalWeight,
     this.totalQuantity,
-    this.plannedDeliveryDatetimeFrom,
-    this.plannedDeliveryDatetimeTo,
-    this.createdAt,
-    this.updatedAt,
-    this.products,
+    required this.plannedDeliveryDatetimeFrom,
+    required this.plannedDeliveryDatetimeTo,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.products,
     this.number,
-    this.totalBonus,
-    this.paidBonus,
-    this.bonusToCharge,
-    this.maxBonusToPaid,
+    required this.totalBonus,
+    required this.paidBonus,
+    required this.bonusToCharge,
+    required this.maxBonusToPaid,
   });
 
-  int number;
+  int? number;
   String uuid;
   String storeUserUuid;
   String storeUserFullName;
@@ -58,14 +58,14 @@ class CreateOrderResponseDataModel {
   String orderPaymentTypeId;
   String clientComment;
   String clientEmail;
-  OrderClientAddressDataModel clientAddressData;
+  OrderClientAddressDataModel? clientAddressData;
   bool isPaid;
   double deliveryPrice;
   double totalDiscountForProducts;
-  double totalPriceForProductsWithDiscount;
+  double? totalPriceForProductsWithDiscount;
   double totalPrice;
   double totalWeight;
-  double totalQuantity;
+  double? totalQuantity;
   String plannedDeliveryDatetimeFrom;
   String plannedDeliveryDatetimeTo;
   String createdAt;
@@ -133,7 +133,7 @@ class CreateOrderResponseDataModel {
         "client_email": clientEmail,
         "number": number == null ? null : number,
         "client_address_data":
-            clientAddressData == null ? null : clientAddressData.toJson(),
+            clientAddressData == null ? null : clientAddressData!.toJson(),
         "is_paid": isPaid,
         "delivery_price": deliveryPrice,
         "total_discount_for_products": totalDiscountForProducts,
@@ -152,11 +152,11 @@ class CreateOrderResponseDataModel {
 
 class OrderClientAddressDataModel {
   OrderClientAddressDataModel({
-    this.address,
-    this.floor,
-    this.entrance,
-    this.apartmentNumber,
-    this.intercomCode,
+    required this.address,
+    required this.floor,
+    required this.entrance,
+    required this.apartmentNumber,
+    required this.intercomCode,
   });
 
   String address;
@@ -185,26 +185,26 @@ class OrderClientAddressDataModel {
 
 class OrderProductModel {
   OrderProductModel({
-    this.uuid,
-    this.orderUuid,
-    this.productUuid,
-    this.assortment,
+    required this.uuid,
+    required this.orderUuid,
+    required this.productUuid,
+    required this.assortment,
     this.quantity,
-    this.totalWeight,
-    this.priceWithDiscount,
-    this.discount,
-    this.totalDiscount,
-    this.totalAmountWithDiscount,
-    this.discountableType,
-    this.createdAt,
-    this.updatedAt,
+    required this.totalWeight,
+    required this.priceWithDiscount,
+    required this.discount,
+    required this.totalDiscount,
+    required this.totalAmountWithDiscount,
+    required this.discountableType,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   String uuid;
   String orderUuid;
   String productUuid;
   OrderCalculateAssortmentModel assortment;
-  double quantity;
+  double? quantity;
   double totalWeight;
   double priceWithDiscount;
   double discount;

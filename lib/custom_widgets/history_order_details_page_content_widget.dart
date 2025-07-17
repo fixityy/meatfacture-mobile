@@ -17,7 +17,12 @@ import '../pages/redesigned_pages/redes_product_details_page.dart';
 class HistoryOrderDetailsPageContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    void openSendMarkForProductBottomSheet({String checkLineUuid, String checkUuid, double rating, String comment}) {
+    void openSendMarkForProductBottomSheet({
+      required String checkLineUuid,
+      required String checkUuid,
+      double? rating,
+      required String comment,
+    }) {
       showModalBottomSheet<dynamic>(
         isScrollControlled: false,
         context: context,
@@ -64,78 +69,132 @@ class HistoryOrderDetailsPageContentWidget extends StatelessWidget {
           //     .plannedDeliveryDatetimeFrom
           //     .replaceAll("+0300", "+0000"));
 
-          DateTime _plannedDeliveryDatetimeTo =
-              DateTime.parse(state.orderDetailsAndCalculateResponseModel.data.plannedDeliveryDatetimeTo.replaceAll("+0300", "+0000"));
+          DateTime _plannedDeliveryDatetimeTo = DateTime.parse(state
+              .orderDetailsAndCalculateResponseModel
+              .data
+              .plannedDeliveryDatetimeTo
+              .replaceAll("+0300", "+0000"));
           return SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 23),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("dateAndTimeOfOrderText".tr(), style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: colorBlack04)),
-                SizedBox(height: heightRatio(size: 3, context: context)),
-                Text("${_plannedDeliveryDatetimeTo.toFormatedDate()}  ${_plannedDeliveryDatetimeTo.toFormatedTime()}",
-                    style: appLabelTextStyle(fontSize: heightRatio(size: 18, context: context), fontWeight: FontWeight.w400, color: Colors.black)),
-                SizedBox(height: heightRatio(size: 12, context: context)),
-                Text("purchaseAmountText".tr(), style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: colorBlack04)),
-                SizedBox(height: heightRatio(size: 3, context: context)),
-                Text("${state.orderDetailsAndCalculateResponseModel.data.totalPrice} р",
-                    style: appLabelTextStyle(fontSize: heightRatio(size: 18, context: context), color: Colors.black)),
-                SizedBox(height: heightRatio(size: 12, context: context)),
-                Text(state.orderDetailsAndCalculateResponseModel.data.orderDeliveryTypeId == "pickup" ? "storeAddressText".tr() : "Адрес доставки",
-                    style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: colorBlack04)),
+                Text("dateAndTimeOfOrderText".tr(),
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 14, context: context),
+                        color: colorBlack04)),
                 SizedBox(height: heightRatio(size: 3, context: context)),
                 Text(
-                    state.orderDetailsAndCalculateResponseModel.data.orderDeliveryTypeId == "pickup"
-                        ? state.orderDetailsAndCalculateResponseModel.data.storeUserAddress
-                        : state.orderDetailsAndCalculateResponseModel.data.clientAddressData != null
-                            ? "${state.orderDetailsAndCalculateResponseModel.data.clientAddressData.address}"
+                    "${_plannedDeliveryDatetimeTo.toFormatedDate()}  ${_plannedDeliveryDatetimeTo.toFormatedTime()}",
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 18, context: context),
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black)),
+                SizedBox(height: heightRatio(size: 12, context: context)),
+                Text("purchaseAmountText".tr(),
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 14, context: context),
+                        color: colorBlack04)),
+                SizedBox(height: heightRatio(size: 3, context: context)),
+                Text(
+                    "${state.orderDetailsAndCalculateResponseModel.data.totalPrice} р",
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 18, context: context),
+                        color: Colors.black)),
+                SizedBox(height: heightRatio(size: 12, context: context)),
+                Text(
+                    state.orderDetailsAndCalculateResponseModel.data
+                                .orderDeliveryTypeId ==
+                            "pickup"
+                        ? "storeAddressText".tr()
+                        : "Адрес доставки",
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 14, context: context),
+                        color: colorBlack04)),
+                SizedBox(height: heightRatio(size: 3, context: context)),
+                Text(
+                    state.orderDetailsAndCalculateResponseModel.data
+                                .orderDeliveryTypeId ==
+                            "pickup"
+                        ? state.orderDetailsAndCalculateResponseModel.data
+                            .storeUserAddress
+                        : state.orderDetailsAndCalculateResponseModel.data
+                                    .clientAddressData !=
+                                null
+                            ? "${state.orderDetailsAndCalculateResponseModel.data.clientAddressData!.address}"
                             : "",
-                    style: appLabelTextStyle(fontSize: heightRatio(size: 18, context: context), color: Colors.black)),
+                    style: appLabelTextStyle(
+                        fontSize: heightRatio(size: 18, context: context),
+                        color: Colors.black)),
                 //Charge bonuses
-                if (state.orderDetailsAndCalculateResponseModel.data.bonusToCharge != null &&
-                    state.orderDetailsAndCalculateResponseModel.data.bonusToCharge != 0)
+                if (state.orderDetailsAndCalculateResponseModel.data
+                            .bonusToCharge !=
+                        null &&
+                    state.orderDetailsAndCalculateResponseModel.data
+                            .bonusToCharge !=
+                        0)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: heightRatio(size: 12, context: context)),
                       Text(
                         "purchaseBonusesEarnedText".tr(),
-                        style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: colorBlack04),
+                        style: appLabelTextStyle(
+                            fontSize: heightRatio(size: 14, context: context),
+                            color: colorBlack04),
                       ),
                       SizedBox(height: heightRatio(size: 3, context: context)),
                       Text(
                         "${state.orderDetailsAndCalculateResponseModel.data.bonusToCharge} бонусов",
-                        style: appLabelTextStyle(fontSize: heightRatio(size: 18, context: context), color: Colors.black),
+                        style: appLabelTextStyle(
+                            fontSize: heightRatio(size: 18, context: context),
+                            color: Colors.black),
                       ),
                     ],
                   ),
 
                 //Paid bonuses
-                if (state.orderDetailsAndCalculateResponseModel.data.paidBonus != null && state.orderDetailsAndCalculateResponseModel.data.paidBonus != 0)
+                if (state.orderDetailsAndCalculateResponseModel.data
+                            .paidBonus !=
+                        null &&
+                    state.orderDetailsAndCalculateResponseModel.data
+                            .paidBonus !=
+                        0)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: heightRatio(size: 12, context: context)),
                       Text("paidBonusesForThePurchaseText".tr(),
-                          style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: colorBlack04)),
+                          style: appLabelTextStyle(
+                              fontSize: heightRatio(size: 14, context: context),
+                              color: colorBlack04)),
                       SizedBox(height: heightRatio(size: 3, context: context)),
                       Text(
                         "-${state.orderDetailsAndCalculateResponseModel.data.paidBonus} бонусов",
-                        style: appLabelTextStyle(fontSize: heightRatio(size: 18, context: context), color: Colors.black),
+                        style: appLabelTextStyle(
+                            fontSize: heightRatio(size: 18, context: context),
+                            color: Colors.black),
                       ),
                     ],
                   ),
                 SizedBox(height: heightRatio(size: 28, context: context)),
                 Text(
-                  state.orderDetailsAndCalculateResponseModel.data.orderStatusId == "done" ? 'Оцените ваши покупки' : "yourPurchasesText".tr(),
-                  style: appHeadersTextStyle(fontSize: heightRatio(size: 24, context: context), color: Colors.black),
+                  state.orderDetailsAndCalculateResponseModel.data
+                              .orderStatusId ==
+                          "done"
+                      ? 'Оцените ваши покупки'
+                      : "yourPurchasesText".tr(),
+                  style: appHeadersTextStyle(
+                      fontSize: heightRatio(size: 24, context: context),
+                      color: Colors.black),
                 ),
                 SizedBox(height: heightRatio(size: 20, context: context)),
                 ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: state.orderDetailsAndCalculateResponseModel.data.products.length,
+                  itemCount: state.orderDetailsAndCalculateResponseModel.data
+                      .products.length,
                   itemBuilder: (context, index) => InkWell(
                     onTap: () {
                       //тут я не знаю откуда брать количество
@@ -143,7 +202,12 @@ class HistoryOrderDetailsPageContentWidget extends StatelessWidget {
                         context,
                         new CupertinoPageRoute(
                           builder: (context) => RedesProductDetailsPage(
-                            productUuid: state.orderDetailsAndCalculateResponseModel.data.products[index].assortment.uuid,
+                            productUuid: state
+                                .orderDetailsAndCalculateResponseModel
+                                .data
+                                .products[index]
+                                .assortment
+                                .uuid,
                           ),
                         ),
                       );
@@ -151,30 +215,57 @@ class HistoryOrderDetailsPageContentWidget extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: heightRatio(size: 10, context: context)),
+                        SizedBox(
+                            height: heightRatio(size: 10, context: context)),
                         Stack(
                           children: [
                             Card(
                               shadowColor: Colors.white,
                               elevation: 0,
                               clipBehavior: Clip.hardEdge,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(widthRatio(size: 8, context: context))),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      widthRatio(size: 8, context: context))),
                               color: colorBlack03,
-                              child: state.orderDetailsAndCalculateResponseModel.data.products[index].assortment.images.isNotEmpty
+                              child: state
+                                      .orderDetailsAndCalculateResponseModel
+                                      .data
+                                      .products[index]
+                                      .assortment
+                                      .images
+                                      .isNotEmpty
                                   ? CachedNetworkImage(
-                                      imageUrl: state.orderDetailsAndCalculateResponseModel.data.products[index].assortment.images[0].path,
+                                      imageUrl: state
+                                          .orderDetailsAndCalculateResponseModel
+                                          .data
+                                          .products[index]
+                                          .assortment
+                                          .images[0]
+                                          .path,
                                       cacheManager: CustomCacheManager(),
                                       fit: BoxFit.cover,
-                                      errorWidget: (context, url, error) => Image.asset("assets/images/notImage.png", fit: BoxFit.contain),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                              "assets/images/notImage.png",
+                                              fit: BoxFit.contain),
                                       useOldImageOnUrlChange: true,
-                                      height: heightRatio(size: 100, context: context),
-                                      width: widthRatio(size: 89, context: context),
+                                      height: heightRatio(
+                                          size: 100, context: context),
+                                      width: widthRatio(
+                                          size: 89, context: context),
                                     )
                                   : Container(
-                                      height: heightRatio(size: 100, context: context),
-                                      width: widthRatio(size: 89, context: context),
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 20, context: context))),
-                                      child: Image.asset("assets/images/notImage.png", fit: BoxFit.cover),
+                                      height: heightRatio(
+                                          size: 100, context: context),
+                                      width: widthRatio(
+                                          size: 89, context: context),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                              heightRatio(
+                                                  size: 20, context: context))),
+                                      child: Image.asset(
+                                          "assets/images/notImage.png",
+                                          fit: BoxFit.cover),
                                     ),
                             ),
                             //product's bonuses to charge
@@ -209,119 +300,297 @@ class HistoryOrderDetailsPageContentWidget extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(height: heightRatio(size: 2, context: context)),
+                              SizedBox(
+                                  height:
+                                      heightRatio(size: 2, context: context)),
                               Container(
                                 height: heightRatio(size: 40, context: context),
                                 alignment: Alignment.topLeft,
-                                child: Text(state.orderDetailsAndCalculateResponseModel.data.products[index].assortment.name,
-                                    maxLines: 3, style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: Colors.black)),
+                                child: Text(
+                                    state.orderDetailsAndCalculateResponseModel
+                                        .data.products[index].assortment.name,
+                                    maxLines: 3,
+                                    style: appLabelTextStyle(
+                                        fontSize: heightRatio(
+                                            size: 14, context: context),
+                                        color: Colors.black)),
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  state.orderDetailsAndCalculateResponseModel.data.orderStatusId == "done" &&
-                                          state.orderDetailsAndCalculateResponseModel.data.products[index].quantity > 0
+                                  state.orderDetailsAndCalculateResponseModel
+                                                  .data.orderStatusId ==
+                                              "done" &&
+                                          state.orderDetailsAndCalculateResponseModel
+                                                  .data.products[index].quantity >
+                                              0
                                       ? InkWell(
                                           onTap: () {
-                                            if (state.orderDetailsAndCalculateResponseModel.data.totalQuantity != 0) {
+                                            if (state
+                                                    .orderDetailsAndCalculateResponseModel
+                                                    .data
+                                                    .totalQuantity !=
+                                                0) {
                                               openSendMarkForProductBottomSheet(
-                                                comment: state.orderDetailsAndCalculateResponseModel.data.products[index].ratingComment ?? "  ",
-                                                rating: state.orderDetailsAndCalculateResponseModel.data.products[index].rating != null
-                                                    ? state.orderDetailsAndCalculateResponseModel.data.products[index].rating.toDouble()
+                                                comment: state
+                                                        .orderDetailsAndCalculateResponseModel
+                                                        .data
+                                                        .products[index]
+                                                        .ratingComment ??
+                                                    "  ",
+                                                rating: state
+                                                            .orderDetailsAndCalculateResponseModel
+                                                            .data
+                                                            .products[index]
+                                                            .rating !=
+                                                        null
+                                                    ? state
+                                                        .orderDetailsAndCalculateResponseModel
+                                                        .data
+                                                        .products[index]
+                                                        .rating!
+                                                        .toDouble()
                                                     : null,
-                                                checkUuid: state.orderDetailsAndCalculateResponseModel.data.uuid,
-                                                checkLineUuid: state.orderDetailsAndCalculateResponseModel.data.products[index].uuid,
+                                                checkUuid: state
+                                                    .orderDetailsAndCalculateResponseModel
+                                                    .data
+                                                    .uuid,
+                                                checkLineUuid: state
+                                                    .orderDetailsAndCalculateResponseModel
+                                                    .data
+                                                    .products[index]
+                                                    .uuid,
                                               );
                                             }
                                           },
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               SvgPicture.asset(
-                                                state.orderDetailsAndCalculateResponseModel.data.products[index].rating != null &&
-                                                        state.orderDetailsAndCalculateResponseModel.data.products[index].rating > 0
+                                                state
+                                                                .orderDetailsAndCalculateResponseModel
+                                                                .data
+                                                                .products[index]
+                                                                .rating !=
+                                                            null &&
+                                                        state
+                                                                .orderDetailsAndCalculateResponseModel
+                                                                .data
+                                                                .products[index]
+                                                                .rating! >
+                                                            0
                                                     ? 'assets/images/activeStar.svg'
                                                     : 'assets/images/star.svg',
-                                                width: widthRatio(size: 20, context: context),
-                                                height: heightRatio(size: 20, context: context),
+                                                width: widthRatio(
+                                                    size: 20, context: context),
+                                                height: heightRatio(
+                                                    size: 20, context: context),
                                               ),
-                                              SizedBox(width: widthRatio(size: 3, context: context)),
+                                              SizedBox(
+                                                  width: widthRatio(
+                                                      size: 3,
+                                                      context: context)),
                                               SvgPicture.asset(
-                                                state.orderDetailsAndCalculateResponseModel.data.products[index].rating != null &&
-                                                        state.orderDetailsAndCalculateResponseModel.data.products[index].rating > 1
+                                                state
+                                                                .orderDetailsAndCalculateResponseModel
+                                                                .data
+                                                                .products[index]
+                                                                .rating !=
+                                                            null &&
+                                                        state
+                                                                .orderDetailsAndCalculateResponseModel
+                                                                .data
+                                                                .products[index]
+                                                                .rating! >
+                                                            1
                                                     ? 'assets/images/activeStar.svg'
                                                     : 'assets/images/star.svg',
-                                                width: widthRatio(size: 20, context: context),
-                                                height: heightRatio(size: 20, context: context),
+                                                width: widthRatio(
+                                                    size: 20, context: context),
+                                                height: heightRatio(
+                                                    size: 20, context: context),
                                               ),
-                                              SizedBox(width: widthRatio(size: 3, context: context)),
+                                              SizedBox(
+                                                  width: widthRatio(
+                                                      size: 3,
+                                                      context: context)),
                                               SvgPicture.asset(
-                                                state.orderDetailsAndCalculateResponseModel.data.products[index].rating != null &&
-                                                        state.orderDetailsAndCalculateResponseModel.data.products[index].rating > 2
+                                                state
+                                                                .orderDetailsAndCalculateResponseModel
+                                                                .data
+                                                                .products[index]
+                                                                .rating !=
+                                                            null &&
+                                                        state
+                                                                .orderDetailsAndCalculateResponseModel
+                                                                .data
+                                                                .products[index]
+                                                                .rating! >
+                                                            2
                                                     ? 'assets/images/activeStar.svg'
                                                     : 'assets/images/star.svg',
-                                                width: widthRatio(size: 20, context: context),
-                                                height: heightRatio(size: 20, context: context),
+                                                width: widthRatio(
+                                                    size: 20, context: context),
+                                                height: heightRatio(
+                                                    size: 20, context: context),
                                               ),
-                                              SizedBox(width: widthRatio(size: 3, context: context)),
+                                              SizedBox(
+                                                  width: widthRatio(
+                                                      size: 3,
+                                                      context: context)),
                                               SvgPicture.asset(
-                                                state.orderDetailsAndCalculateResponseModel.data.products[index].rating != null &&
-                                                        state.orderDetailsAndCalculateResponseModel.data.products[index].rating > 3
+                                                state
+                                                                .orderDetailsAndCalculateResponseModel
+                                                                .data
+                                                                .products[index]
+                                                                .rating !=
+                                                            null &&
+                                                        state
+                                                                .orderDetailsAndCalculateResponseModel
+                                                                .data
+                                                                .products[index]
+                                                                .rating! >
+                                                            3
                                                     ? 'assets/images/activeStar.svg'
                                                     : 'assets/images/star.svg',
-                                                width: widthRatio(size: 20, context: context),
-                                                height: heightRatio(size: 20, context: context),
+                                                width: widthRatio(
+                                                    size: 20, context: context),
+                                                height: heightRatio(
+                                                    size: 20, context: context),
                                               ),
-                                              SizedBox(width: widthRatio(size: 3, context: context)),
+                                              SizedBox(
+                                                  width: widthRatio(
+                                                      size: 3,
+                                                      context: context)),
                                               SvgPicture.asset(
-                                                state.orderDetailsAndCalculateResponseModel.data.products[index].rating != null &&
-                                                        state.orderDetailsAndCalculateResponseModel.data.products[index].rating > 4
+                                                state
+                                                                .orderDetailsAndCalculateResponseModel
+                                                                .data
+                                                                .products[index]
+                                                                .rating !=
+                                                            null &&
+                                                        state
+                                                                .orderDetailsAndCalculateResponseModel
+                                                                .data
+                                                                .products[index]
+                                                                .rating! >
+                                                            4
                                                     ? 'assets/images/activeStar.svg'
                                                     : 'assets/images/star.svg',
-                                                width: widthRatio(size: 20, context: context),
-                                                height: heightRatio(size: 20, context: context),
+                                                width: widthRatio(
+                                                    size: 20, context: context),
+                                                height: heightRatio(
+                                                    size: 20, context: context),
                                               ),
                                             ],
                                           ),
                                         )
                                       : SizedBox(),
 
-                                  SizedBox(width: widthRatio(size: 10, context: context)),
+                                  SizedBox(
+                                      width: widthRatio(
+                                          size: 10, context: context)),
                                   //price area
                                   Container(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
-                                        (state.orderDetailsAndCalculateResponseModel.data.products[index].originalPrice != null ||
-                                                    state.orderDetailsAndCalculateResponseModel.data.products[index].price != null) &&
-                                                state.orderDetailsAndCalculateResponseModel.data.products[index].uuid != null
+                                        (state
+                                                            .orderDetailsAndCalculateResponseModel
+                                                            .data
+                                                            .products[index]
+                                                            .originalPrice !=
+                                                        null ||
+                                                    state
+                                                            .orderDetailsAndCalculateResponseModel
+                                                            .data
+                                                            .products[index]
+                                                            .price !=
+                                                        null) &&
+                                                state
+                                                        .orderDetailsAndCalculateResponseModel
+                                                        .data
+                                                        .products[index]
+                                                        .uuid !=
+                                                    null
                                             ? Container(
-                                                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 5,
+                                                        vertical: 3),
                                                 // margin: EdgeInsets
                                                 //     .only(
                                                 //         right:
                                                 //             15),
                                                 decoration: BoxDecoration(
-                                                  color: state.orderDetailsAndCalculateResponseModel.data.products[index].discountTypeColor == null
+                                                  color: state
+                                                              .orderDetailsAndCalculateResponseModel
+                                                              .data
+                                                              .products[index]
+                                                              .discountTypeColor ==
+                                                          null
                                                       ? colorBlack03
                                                       : Color(int.parse(
                                                           "0xff${state.orderDetailsAndCalculateResponseModel.data.products[index].discountTypeColor}")),
-                                                  borderRadius: BorderRadius.circular(heightRatio(size: 4, context: context)),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          heightRatio(
+                                                              size: 4,
+                                                              context:
+                                                                  context)),
                                                 ),
                                                 child: RichText(
                                                   text: TextSpan(
                                                     children: <TextSpan>[
                                                       TextSpan(
-                                                        text: state.orderDetailsAndCalculateResponseModel.data.products[index].price == null
-                                                            ? state.orderDetailsAndCalculateResponseModel.data.products[index].originalPrice.toStringAsFixed(2)
-                                                            : state.orderDetailsAndCalculateResponseModel.data.products[index].price.toStringAsFixed(2),
-                                                        style: appLabelTextStyle(
-                                                          fontSize: heightRatio(size: 12, context: context),
-                                                          color: (state.orderDetailsAndCalculateResponseModel.data.products[index].originalPrice != null ||
-                                                                      state.orderDetailsAndCalculateResponseModel.data.products[index].price != null) &&
-                                                                  state.orderDetailsAndCalculateResponseModel.data.products[index].quantity != null
+                                                        text: state
+                                                                    .orderDetailsAndCalculateResponseModel
+                                                                    .data
+                                                                    .products[
+                                                                        index]
+                                                                    .price ==
+                                                                null
+                                                            ? state
+                                                                .orderDetailsAndCalculateResponseModel
+                                                                .data
+                                                                .products[index]
+                                                                .originalPrice!
+                                                                .toStringAsFixed(
+                                                                    2)
+                                                            : state
+                                                                .orderDetailsAndCalculateResponseModel
+                                                                .data
+                                                                .products[index]
+                                                                .price!
+                                                                .toStringAsFixed(
+                                                                    2),
+                                                        style:
+                                                            appLabelTextStyle(
+                                                          fontSize: heightRatio(
+                                                              size: 12,
+                                                              context: context),
+                                                          color: (state.orderDetailsAndCalculateResponseModel.data.products[index].originalPrice !=
+                                                                          null ||
+                                                                      state
+                                                                              .orderDetailsAndCalculateResponseModel
+                                                                              .data
+                                                                              .products[
+                                                                                  index]
+                                                                              .price !=
+                                                                          null) &&
+                                                                  state
+                                                                          .orderDetailsAndCalculateResponseModel
+                                                                          .data
+                                                                          .products[
+                                                                              index]
+                                                                          .quantity !=
+                                                                      null
                                                               ? Colors.black
                                                               : colorBlack04,
                                                         ),
@@ -329,23 +598,60 @@ class HistoryOrderDetailsPageContentWidget extends StatelessWidget {
                                                       TextSpan(
                                                         text: " ₽",
                                                         style: appTextStyle(
-                                                          fontSize: heightRatio(size: 12, context: context),
-                                                          color: (state.orderDetailsAndCalculateResponseModel.data.products[index].originalPrice != null ||
-                                                                      state.orderDetailsAndCalculateResponseModel.data.products[index].price != null) &&
-                                                                  state.orderDetailsAndCalculateResponseModel.data.products[index].quantity != null
+                                                          fontSize: heightRatio(
+                                                              size: 12,
+                                                              context: context),
+                                                          color: (state.orderDetailsAndCalculateResponseModel.data.products[index].originalPrice !=
+                                                                          null ||
+                                                                      state
+                                                                              .orderDetailsAndCalculateResponseModel
+                                                                              .data
+                                                                              .products[
+                                                                                  index]
+                                                                              .price !=
+                                                                          null) &&
+                                                                  state
+                                                                          .orderDetailsAndCalculateResponseModel
+                                                                          .data
+                                                                          .products[
+                                                                              index]
+                                                                          .quantity !=
+                                                                      null
                                                               ? Colors.black
                                                               : colorBlack04,
                                                         ),
                                                       ),
                                                       TextSpan(
-                                                        text: state.orderDetailsAndCalculateResponseModel.data.products[index].price == null
+                                                        text: state
+                                                                    .orderDetailsAndCalculateResponseModel
+                                                                    .data
+                                                                    .products[
+                                                                        index]
+                                                                    .price ==
+                                                                null
                                                             ? "/${getAssortmentUnitId(assortmentUnitId: state.orderDetailsAndCalculateResponseModel.data.products[index].assortment.assortmentUnitId ?? "")[1]}"
                                                             : "/${getAssortmentUnitId(assortmentUnitId: state.orderDetailsAndCalculateResponseModel.data.products[index].assortment.assortmentUnitId ?? "")[1]}",
-                                                        style: appLabelTextStyle(
-                                                          fontSize: heightRatio(size: 12, context: context),
-                                                          color: (state.orderDetailsAndCalculateResponseModel.data.products[index].originalPrice != null ||
-                                                                      state.orderDetailsAndCalculateResponseModel.data.products[index].price != null) &&
-                                                                  state.orderDetailsAndCalculateResponseModel.data.products[index].quantity != null
+                                                        style:
+                                                            appLabelTextStyle(
+                                                          fontSize: heightRatio(
+                                                              size: 12,
+                                                              context: context),
+                                                          color: (state.orderDetailsAndCalculateResponseModel.data.products[index].originalPrice !=
+                                                                          null ||
+                                                                      state
+                                                                              .orderDetailsAndCalculateResponseModel
+                                                                              .data
+                                                                              .products[
+                                                                                  index]
+                                                                              .price !=
+                                                                          null) &&
+                                                                  state
+                                                                          .orderDetailsAndCalculateResponseModel
+                                                                          .data
+                                                                          .products[
+                                                                              index]
+                                                                          .quantity !=
+                                                                      null
                                                               ? Colors.black
                                                               : colorBlack04,
                                                         ),
@@ -355,31 +661,61 @@ class HistoryOrderDetailsPageContentWidget extends StatelessWidget {
                                                 ),
                                               )
                                             : SizedBox(
-                                                height: heightRatio(size: 34, context: context),
+                                                height: heightRatio(
+                                                    size: 34, context: context),
                                               ),
                                         SizedBox(
-                                          height: heightRatio(size: 5, context: context),
+                                          height: heightRatio(
+                                              size: 5, context: context),
                                         ),
-                                        state.orderDetailsAndCalculateResponseModel.data.products[index].discountableType != null
+                                        state
+                                                    .orderDetailsAndCalculateResponseModel
+                                                    .data
+                                                    .products[index]
+                                                    .discountableType !=
+                                                null
                                             ? Container(
                                                 child: Stack(
                                                   alignment: Alignment.center,
                                                   children: [
                                                     Container(
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       child: Text(
-                                                          state.orderDetailsAndCalculateResponseModel.data.products[index].uuid != null
-                                                              ? state.orderDetailsAndCalculateResponseModel.data.products[index].price != null
-                                                                  ? state.orderDetailsAndCalculateResponseModel.data.products[index].originalPrice != null
-                                                                      ? state.orderDetailsAndCalculateResponseModel.data.products[index].originalPrice
+                                                          state
+                                                                      .orderDetailsAndCalculateResponseModel
+                                                                      .data
+                                                                      .products[
+                                                                          index]
+                                                                      .uuid !=
+                                                                  null
+                                                              ? state
+                                                                          .orderDetailsAndCalculateResponseModel
+                                                                          .data
+                                                                          .products[
+                                                                              index]
+                                                                          .price !=
+                                                                      null
+                                                                  ? state.orderDetailsAndCalculateResponseModel.data.products[index].originalPrice !=
+                                                                          null
+                                                                      ? state
+                                                                              .orderDetailsAndCalculateResponseModel
+                                                                              .data
+                                                                              .products[index]
+                                                                              .originalPrice!
                                                                               .toStringAsFixed(2) +
                                                                           " ₽"
                                                                       : ""
                                                                   : ""
                                                               : "",
                                                           style: appTextStyle(
-                                                            decorationColor: colorBlack04,
-                                                            fontSize: heightRatio(size: 12, context: context),
+                                                            decorationColor:
+                                                                colorBlack04,
+                                                            fontSize:
+                                                                heightRatio(
+                                                                    size: 12,
+                                                                    context:
+                                                                        context),
                                                             color: colorBlack04,
                                                           )),
                                                     ),
@@ -396,14 +732,18 @@ class HistoryOrderDetailsPageContentWidget extends StatelessWidget {
                                                   ],
                                                 ),
                                               )
-                                            : SizedBox(height: heightRatio(size: 14, context: context)),
+                                            : SizedBox(
+                                                height: heightRatio(
+                                                    size: 14,
+                                                    context: context)),
                                       ],
                                     ),
                                   )
                                 ],
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   // if (state.orderDetailsAndCalculateResponseModel.data.products[index].assortment.assortmentWeight != null && state.orderDetailsAndCalculateResponseModel.data.products[index].assortment.assortmentWeight != 0)
                                   //   Text(
@@ -417,17 +757,41 @@ class HistoryOrderDetailsPageContentWidget extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      if (state.orderDetailsAndCalculateResponseModel.data.products[index].assortment.rating != null)
+                                      if (state
+                                              .orderDetailsAndCalculateResponseModel
+                                              .data
+                                              .products[index]
+                                              .assortment
+                                              .rating !=
+                                          null)
                                         SvgPicture.asset(
                                           "assets/images/activeStar.svg",
-                                          height: heightRatio(size: 15, context: context),
+                                          height: heightRatio(
+                                              size: 15, context: context),
                                         ),
-                                      SizedBox(width: widthRatio(size: 5, context: context)),
+                                      SizedBox(
+                                          width: widthRatio(
+                                              size: 5, context: context)),
                                       Text(
-                                        state.orderDetailsAndCalculateResponseModel.data.products[index].assortment.rating != null
-                                            ? state.orderDetailsAndCalculateResponseModel.data.products[index].assortment.rating.toString()
+                                        state
+                                                    .orderDetailsAndCalculateResponseModel
+                                                    .data
+                                                    .products[index]
+                                                    .assortment
+                                                    .rating !=
+                                                null
+                                            ? state
+                                                .orderDetailsAndCalculateResponseModel
+                                                .data
+                                                .products[index]
+                                                .assortment
+                                                .rating
+                                                .toString()
                                             : '',
-                                        style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), color: colorBlack04),
+                                        style: appLabelTextStyle(
+                                            fontSize: heightRatio(
+                                                size: 12, context: context),
+                                            color: colorBlack04),
                                       )
                                     ],
                                   ),
@@ -436,12 +800,18 @@ class HistoryOrderDetailsPageContentWidget extends StatelessWidget {
                                       children: <TextSpan>[
                                         TextSpan(
                                           text:
-                                              "x${state.orderDetailsAndCalculateResponseModel.data.products[index].quantity % 1 == 0 ? state.orderDetailsAndCalculateResponseModel.data.products[index].quantity.toInt() : state.orderDetailsAndCalculateResponseModel.data.products[index].quantity} (${state.orderDetailsAndCalculateResponseModel.data.products[index].totalAmountWithDiscount.toStringAsFixed(2)} ",
-                                          style: appLabelTextStyle(fontSize: heightRatio(size: 14, context: context), color: newBlack),
+                                              "x${state.orderDetailsAndCalculateResponseModel.data.products[index].quantity % 1 == 0 ? state.orderDetailsAndCalculateResponseModel.data.products[index].quantity.toInt() : state.orderDetailsAndCalculateResponseModel.data.products[index].quantity} (${state.orderDetailsAndCalculateResponseModel.data.products[index].totalAmountWithDiscount!.toStringAsFixed(2)} ",
+                                          style: appLabelTextStyle(
+                                              fontSize: heightRatio(
+                                                  size: 14, context: context),
+                                              color: newBlack),
                                         ),
                                         TextSpan(
                                           text: '₽)',
-                                          style: appTextStyle(fontSize: heightRatio(size: 14, context: context), color: newBlack),
+                                          style: appTextStyle(
+                                              fontSize: heightRatio(
+                                                  size: 14, context: context),
+                                              color: newBlack),
                                         ),
                                       ],
                                     ),
@@ -452,7 +822,8 @@ class HistoryOrderDetailsPageContentWidget extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: heightRatio(size: 10, context: context)),
+                        SizedBox(
+                            height: heightRatio(size: 10, context: context)),
                         Divider(),
                       ],
                     ),

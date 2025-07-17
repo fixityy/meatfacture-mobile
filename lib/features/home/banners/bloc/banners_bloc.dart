@@ -7,7 +7,7 @@ import 'package:smart/features/home/models/banners_list_model.dart';
 import 'package:smart/services/services.dart';
 
 class BannersBloc extends Bloc<BannersEvent, BannersState> {
-  BannersListModel _cachedBanners;
+  BannersListModel? _cachedBanners;
 
   BannersBloc() : super(BannersInitial());
 
@@ -16,7 +16,7 @@ class BannersBloc extends Bloc<BannersEvent, BannersState> {
     if (event is LoadBannersEvent) {
       // Если баннеры уже загружены, возвращаем их из кэша
       if (_cachedBanners != null) {
-        yield BannersLoaded(_cachedBanners);
+        yield BannersLoaded(_cachedBanners!);
         return;
       }
 

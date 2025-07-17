@@ -15,7 +15,7 @@ class OrderProcess extends StatefulWidget {
 }
 
 class _OrderProcessState extends State<OrderProcess> {
-  OrderProcessListModel orderProcessListModel;
+  OrderProcessListModel? orderProcessListModel;
   bool _isProcessing = false; // Флаг для блокировки повторных кликов
 
   Widget build(BuildContext context) {
@@ -31,11 +31,13 @@ class _OrderProcessState extends State<OrderProcess> {
         //     child: CircularProgressIndicator(),
         //   );
         // }
-        if (orderProcessListModel == null || orderProcessListModel.data.isEmpty) {
+        if (orderProcessListModel == null ||
+            orderProcessListModel!.data.isEmpty) {
           return SizedBox();
         } else {
           return Padding(
-            padding: EdgeInsets.only(top: heightRatio(size: 15, context: context)),
+            padding:
+                EdgeInsets.only(top: heightRatio(size: 15, context: context)),
             child: InkWell(
               onTap: () async {
                 if (_isProcessing) return; // Блокируем повторный клик
@@ -48,8 +50,13 @@ class _OrderProcessState extends State<OrderProcess> {
                 context.read<OrderProcessListBloc>().add(OrderPLRefreshEvent());
 
                 // Подписываемся на изменения состояния, чтобы дождаться обновления данных
-                final newState = await context.read<OrderProcessListBloc>().stream.firstWhere(
-                      (state) => state is OrderPLLoadedState || state is OrderPLErrorState,
+                final newState = await context
+                    .read<OrderProcessListBloc>()
+                    .stream
+                    .firstWhere(
+                      (state) =>
+                          state is OrderPLLoadedState ||
+                          state is OrderPLErrorState,
                     );
 
                 setState(() {
@@ -59,8 +66,9 @@ class _OrderProcessState extends State<OrderProcess> {
                 if (newState is OrderPLLoadedState) {
                   orderProcessListModel = newState.orderProcessListModel;
 
-                  if (orderProcessListModel.data.length == 1) {
-                    orderProcessBottomSheet(context, orderProcessListModel.data[0]);
+                  if (orderProcessListModel!.data.length == 1) {
+                    orderProcessBottomSheet(
+                        context, orderProcessListModel!.data[0]);
                   } else {
                     Navigator.push(
                       context,
@@ -68,7 +76,8 @@ class _OrderProcessState extends State<OrderProcess> {
                         builder: (context) => AppScreen(
                           title: "Выберите заказ для отслеживания",
                           titleSize: 18,
-                          content: OrderProcessChoose(model: orderProcessListModel),
+                          content:
+                              OrderProcessChoose(model: orderProcessListModel!),
                         ),
                       ),
                     );
@@ -82,7 +91,8 @@ class _OrderProcessState extends State<OrderProcess> {
               },
               child: Container(
                 height: heightRatio(size: 102, context: context),
-                padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 16, context: context)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: widthRatio(size: 16, context: context)),
                 decoration: BoxDecoration(
                   color: newBlack,
                   borderRadius: BorderRadius.circular(15),
@@ -97,19 +107,27 @@ class _OrderProcessState extends State<OrderProcess> {
                       children: [
                         Text(
                           'Ваш заказ в процессе',
-                          style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: Colors.white),
+                          style: appHeadersTextStyle(
+                              fontSize: heightRatio(size: 16, context: context),
+                              color: Colors.white),
                         ),
-                        SizedBox(height: heightRatio(size: 10, context: context)),
+                        SizedBox(
+                            height: heightRatio(size: 10, context: context)),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
                               'Посмотреть статус заказа',
-                              style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), color: Colors.white),
+                              style: appLabelTextStyle(
+                                  fontSize:
+                                      heightRatio(size: 12, context: context),
+                                  color: Colors.white),
                             ),
-                            SizedBox(width: widthRatio(size: 6, context: context)),
-                            Icon(Icons.chevron_right_rounded, color: Colors.white, size: 19),
+                            SizedBox(
+                                width: widthRatio(size: 6, context: context)),
+                            Icon(Icons.chevron_right_rounded,
+                                color: Colors.white, size: 19),
                           ],
                         ),
                       ],

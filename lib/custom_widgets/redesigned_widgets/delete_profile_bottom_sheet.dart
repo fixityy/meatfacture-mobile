@@ -16,7 +16,10 @@ import '../../services/services.dart';
 
 //ignore: must_be_immutable
 class DeleteProfileBottomSheet extends StatelessWidget {
-  DeleteProfileBottomSheet({Key key, this.isDeleted}) : super(key: key);
+  DeleteProfileBottomSheet({
+    required this.isDeleted,
+    super.key,
+  });
 
   bool isDeleted;
 
@@ -27,10 +30,12 @@ class DeleteProfileBottomSheet extends StatelessWidget {
     ProfileBloc _profileBloc = BlocProvider.of(context);
     return BlocProvider(
       create: (BuildContext context) => DeleteProfileBloc(),
-      child: BlocBuilder<DeleteProfileBloc, DeleteProfileState>(builder: (context, state) {
+      child: BlocBuilder<DeleteProfileBloc, DeleteProfileState>(
+          builder: (context, state) {
         DeleteProfileBloc _deleteProfileBloc = BlocProvider.of(context);
 
-        if (state is DeleteProfileLoadedState && state.deleteProfileModel.success) {
+        if (state is DeleteProfileLoadedState &&
+            state.deleteProfileModel.success == true) {
           _profileBloc.add(ProfileLoadEvent());
           isDeleted = true;
         }
@@ -43,7 +48,11 @@ class DeleteProfileBottomSheet extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.only(left: widthRatio(size: 16, context: context), right: widthRatio(size: 16, context: context), top: heightRatio(size: 20, context: context), bottom: heightRatio(size: 30, context: context)),
+                padding: EdgeInsets.only(
+                    left: widthRatio(size: 16, context: context),
+                    right: widthRatio(size: 16, context: context),
+                    top: heightRatio(size: 20, context: context),
+                    bottom: heightRatio(size: 30, context: context)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -52,7 +61,8 @@ class DeleteProfileBottomSheet extends StatelessWidget {
                       children: [
                         Text(
                           "${"deleteProfileForever".tr()}?",
-                          style: appHeadersTextStyle(fontSize: widthRatio(size: 17, context: context)),
+                          style: appHeadersTextStyle(
+                              fontSize: widthRatio(size: 17, context: context)),
                         ),
                         InkWell(
                           onTap: () => Navigator.pop(context),
@@ -69,12 +79,21 @@ class DeleteProfileBottomSheet extends StatelessWidget {
                         children: [
                           TextSpan(
                             text: "deleteProfileDescription".tr(),
-                            style: appLabelTextStyle(color: colorBlack08, fontSize: widthRatio(size: 12, context: context)),
+                            style: appLabelTextStyle(
+                                color: colorBlack08,
+                                fontSize:
+                                    widthRatio(size: 12, context: context)),
                           ),
                           TextSpan(
                             text: "deleteProfileDescriptionHyperlink".tr(),
-                            recognizer: TapGestureRecognizer()..onTap = () => launchUrl(Uri.parse('$apiHead/policy.pdf'), mode: LaunchMode.externalApplication),
-                            style: appLabelTextStyle(color: newRedDark, fontSize: widthRatio(size: 12, context: context)),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => launchUrl(
+                                  Uri.parse('$apiHead/policy.pdf'),
+                                  mode: LaunchMode.externalApplication),
+                            style: appLabelTextStyle(
+                                color: newRedDark,
+                                fontSize:
+                                    widthRatio(size: 12, context: context)),
                           ),
                         ],
                       ),
@@ -82,7 +101,8 @@ class DeleteProfileBottomSheet extends StatelessWidget {
                     SizedBox(height: heightRatio(size: 16, context: context)),
                     Text(
                       "haventChangedYourMind".tr(),
-                      style: appHeadersTextStyle(fontSize: widthRatio(size: 14, context: context)),
+                      style: appHeadersTextStyle(
+                          fontSize: widthRatio(size: 14, context: context)),
                     ),
                     SizedBox(height: heightRatio(size: 30, context: context)),
                     AppButton(
@@ -90,7 +110,8 @@ class DeleteProfileBottomSheet extends StatelessWidget {
                       colorButton: newRedDark,
                       hasMargin: false,
                       onPress: () {
-                        _deleteProfileBloc.add(DeleteProfileStartEvent(context));
+                        _deleteProfileBloc
+                            .add(DeleteProfileStartEvent(context));
                       },
                     ),
                     SizedBox(height: heightRatio(size: 8, context: context)),

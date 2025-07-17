@@ -1,5 +1,4 @@
 //ebents
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart/models/diverse_food_assortment_list_model.dart';
 import 'package:smart/models/diverse_food_future_discount_model.dart';
@@ -33,14 +32,15 @@ class DiverseFoodLoadedState extends DiverseFoodState {
   final DiverseFoodAssortmentListModel isNotRatedProductsList;
   final PromoDescriptionsDataModel dFDescription;
 
-  DiverseFoodLoadedState(
-      {@required this.dFDescription,
-      @required this.isRatedProductsList,
-      @required this.isNotRatedProductsList,
-      @required this.diverseFoodPersentListModel,
-      @required this.diverseFoodFutureDiscountModel,
-      @required this.diverseFoodPresentDiscountModel,
-      @required this.diverseFoodStatsModel});
+  DiverseFoodLoadedState({
+    required this.dFDescription,
+    required this.isRatedProductsList,
+    required this.isNotRatedProductsList,
+    required this.diverseFoodPersentListModel,
+    required this.diverseFoodFutureDiscountModel,
+    required this.diverseFoodPresentDiscountModel,
+    required this.diverseFoodStatsModel,
+  });
 }
 
 //bloc

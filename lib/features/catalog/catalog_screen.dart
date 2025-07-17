@@ -29,14 +29,18 @@ class CatalogScreen extends StatefulWidget {
   final GlobalKey<NavigatorState> catalogNavKey;
   final GlobalKey<PaginationViewState> paginationViewkey;
 
-  const CatalogScreen({@required this.catalogNavKey, @required this.paginationViewkey});
+  const CatalogScreen({
+    required this.catalogNavKey,
+    required this.paginationViewkey,
+  });
 
   @override
   State<CatalogScreen> createState() => _CatalogScreenState();
 }
 
-class _CatalogScreenState extends State<CatalogScreen> with AutomaticKeepAliveClientMixin {
-  CatalogsBloc catalogsBloc;
+class _CatalogScreenState extends State<CatalogScreen>
+    with AutomaticKeepAliveClientMixin {
+  late CatalogsBloc catalogsBloc;
   bool _isWantKeepAlive = true;
 
   @override
@@ -46,16 +50,19 @@ class _CatalogScreenState extends State<CatalogScreen> with AutomaticKeepAliveCl
   }
 
   Future<void> _checkIsChoosenAddressesForThisSession() async {
-    String isChoosenAddressesForThisSession = prefs.getString(SharedKeys.isChoosenAddressesForThisSession);
+    String isChoosenAddressesForThisSession =
+        prefs.getString(SharedKeys.isChoosenAddressesForThisSession)!;
     if (isChoosenAddressesForThisSession == 'no') {
-      print(isChoosenAddressesForThisSession + '**************isChoosenAddressesForThisSession********************');
+      print(isChoosenAddressesForThisSession +
+          '**************isChoosenAddressesForThisSession********************');
       await Future.delayed(Duration(seconds: 1));
       await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) => CatalogAddressConfirmationDialog(
           // при клике на изменить адрес доставки:
-          onChangeAddressDelivery: () => _checkIsChoosenAddressesForThisSession(),
+          onChangeAddressDelivery: () =>
+              _checkIsChoosenAddressesForThisSession(),
         ),
       );
     }
@@ -90,8 +97,10 @@ class _CatalogScreenState extends State<CatalogScreen> with AutomaticKeepAliveCl
       },
       child: BlocBuilder<CatalogRebuildCubit, CatalogRebuildState>(
         builder: (context, state) {
-          AssortmentFiltersBloc _assortmentFiltersBloc = BlocProvider.of<AssortmentFiltersBloc>(context);
-          _assortmentFiltersBloc.add(AssortmentFiltersLoadEvent(isFavorite: false));
+          AssortmentFiltersBloc _assortmentFiltersBloc =
+              BlocProvider.of<AssortmentFiltersBloc>(context);
+          _assortmentFiltersBloc
+              .add(AssortmentFiltersLoadEvent(isFavorite: false));
           return Navigator(
             key: widget.catalogNavKey,
             onGenerateRoute: (settings) => MaterialPageRoute(
@@ -109,21 +118,28 @@ class _CatalogScreenState extends State<CatalogScreen> with AutomaticKeepAliveCl
                             left: widthRatio(size: 15, context: context)),
                         child: Column(
                           children: [
-                            SizedBox(height: heightRatio(size: 5, context: context)),
+                            SizedBox(
+                                height: heightRatio(size: 5, context: context)),
                             Row(
                               children: [
                                 Expanded(
                                   child: Text(
                                     "Общий каталог",
-                                    style: appHeadersTextStyle(color: Colors.white, fontSize: heightRatio(size: 22, context: context)),
+                                    style: appHeadersTextStyle(
+                                        color: Colors.white,
+                                        fontSize: heightRatio(
+                                            size: 22, context: context)),
                                   ),
                                 ),
                                 AssortmentSearchButton(
-                                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  onTap: () => Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
                                     return SubcatalogScreen(isSearchPage: true);
                                   })),
                                 ),
-                                SizedBox(width: widthRatio(size: 6, context: context)),
+                                SizedBox(
+                                    width:
+                                        widthRatio(size: 6, context: context)),
                                 AssortmentFilterButton(), //фильтры
                               ],
                             ),
@@ -131,38 +147,58 @@ class _CatalogScreenState extends State<CatalogScreen> with AutomaticKeepAliveCl
                               onTap: () async {
                                 await Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => AddressesDeliveryAndShops()),
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AddressesDeliveryAndShops()),
                                 );
                               },
                               child: Row(
                                 children: [
                                   SvgPicture.asset('assets/images/newStor.svg',
-                                      color: Colors.white, height: heightRatio(size: 14, context: context), width: widthRatio(size: 16, context: context)),
-                                  SizedBox(width: widthRatio(size: 12, context: context)),
-                                  BlocBuilder<AddressesShopBloc, AddressesShopState>(
+                                      color: Colors.white,
+                                      height: heightRatio(
+                                          size: 14, context: context),
+                                      width: widthRatio(
+                                          size: 16, context: context)),
+                                  SizedBox(
+                                      width: widthRatio(
+                                          size: 12, context: context)),
+                                  BlocBuilder<AddressesShopBloc,
+                                      AddressesShopState>(
                                     builder: (context, shopState) {
                                       String shopAddress = "";
-                                      if (shopState is LoadedAddressesShopState && shopState.selectedShop != null) {
-                                        shopAddress = shopState.selectedShop.address;
+                                      if (shopState
+                                              is LoadedAddressesShopState &&
+                                          shopState.selectedShop != null) {
+                                        shopAddress =
+                                            shopState.selectedShop!.address;
                                       }
                                       return Text(
                                         shopAddress,
                                         textAlign: TextAlign.center,
-                                        style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), color: Colors.white),
+                                        style: appLabelTextStyle(
+                                            fontSize: heightRatio(
+                                                size: 12, context: context),
+                                            color: Colors.white),
                                       );
                                     },
                                   ),
-                                  SizedBox(width: widthRatio(size: 15, context: context)),
+                                  SizedBox(
+                                      width: widthRatio(
+                                          size: 15, context: context)),
                                   SvgPicture.asset(
                                     'assets/images/newEdit2.svg',
-                                    height: heightRatio(size: 26, context: context),
-                                    width: widthRatio(size: 26, context: context),
+                                    height:
+                                        heightRatio(size: 26, context: context),
+                                    width:
+                                        widthRatio(size: 26, context: context),
                                     fit: BoxFit.scaleDown,
                                   ),
                                 ],
                               ),
                             ),
-                            SizedBox(height: heightRatio(size: 4, context: context)),
+                            SizedBox(
+                                height: heightRatio(size: 4, context: context)),
                           ],
                         ),
                       ),
@@ -172,8 +208,10 @@ class _CatalogScreenState extends State<CatalogScreen> with AutomaticKeepAliveCl
                           decoration: BoxDecoration(
                             color: whiteColor,
                             borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(heightRatio(size: 15, context: context)),
-                              topLeft: Radius.circular(heightRatio(size: 15, context: context)),
+                              topRight: Radius.circular(
+                                  heightRatio(size: 15, context: context)),
+                              topLeft: Radius.circular(
+                                  heightRatio(size: 15, context: context)),
                             ),
                           ),
                           child: Stack(
@@ -182,8 +220,10 @@ class _CatalogScreenState extends State<CatalogScreen> with AutomaticKeepAliveCl
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: widthRatio(size: 16, context: context),
-                                      vertical: heightRatio(size: 8, context: context),
+                                      horizontal: widthRatio(
+                                          size: 16, context: context),
+                                      vertical: heightRatio(
+                                          size: 8, context: context),
                                     ),
                                     child: OrderProcess(),
                                   ), //Ваш заказ в процессе
@@ -191,9 +231,13 @@ class _CatalogScreenState extends State<CatalogScreen> with AutomaticKeepAliveCl
                                     builder: (context, state) {
                                       if (state is ReceiptsLoadingState) {
                                         return Container(
-                                          height: heightRatio(size: 200, context: context),
+                                          height: heightRatio(
+                                              size: 200, context: context),
                                           alignment: Alignment.center,
-                                          child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(newRedDark)),
+                                          child: CircularProgressIndicator(
+                                              valueColor:
+                                                  new AlwaysStoppedAnimation<
+                                                      Color>(newRedDark)),
                                         );
                                       }
                                       if (state is ReceiptsLoadedState) {
@@ -201,32 +245,77 @@ class _CatalogScreenState extends State<CatalogScreen> with AutomaticKeepAliveCl
                                           children: [
                                             Row(
                                               children: [
-                                                SizedBox(width: widthRatio(size: 16, context: context)),
-                                                Text("Рецепты", style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: newBlack)),
+                                                SizedBox(
+                                                    width: widthRatio(
+                                                        size: 16,
+                                                        context: context)),
+                                                Text("Рецепты",
+                                                    style: appHeadersTextStyle(
+                                                        fontSize: heightRatio(
+                                                            size: 16,
+                                                            context: context),
+                                                        color: newBlack)),
                                                 Spacer(),
                                                 InkWell(
-                                                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RecipesScreen())),
+                                                  onTap: () => Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              RecipesScreen())),
                                                   child: Container(
-                                                    decoration: BoxDecoration(color: lightGreyColor, borderRadius: BorderRadius.circular(14)),
+                                                    decoration: BoxDecoration(
+                                                        color: lightGreyColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(14)),
                                                     child: Padding(
                                                       padding: EdgeInsets.only(
-                                                        left: widthRatio(size: 12, context: context),
-                                                        right: widthRatio(size: 10, context: context),
-                                                        top: heightRatio(size: 4, context: context),
-                                                        bottom: heightRatio(size: 4, context: context),
+                                                        left: widthRatio(
+                                                            size: 12,
+                                                            context: context),
+                                                        right: widthRatio(
+                                                            size: 10,
+                                                            context: context),
+                                                        top: heightRatio(
+                                                            size: 4,
+                                                            context: context),
+                                                        bottom: heightRatio(
+                                                            size: 4,
+                                                            context: context),
                                                       ),
                                                       child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: [
                                                           Text("Все",
-                                                              style: appLabelTextStyle(fontSize: heightRatio(size: 12, context: context), color: newBlack)),
-                                                          SizedBox(width: widthRatio(size: 7.54, context: context)),
+                                                              style: appLabelTextStyle(
+                                                                  fontSize: heightRatio(
+                                                                      size: 12,
+                                                                      context:
+                                                                          context),
+                                                                  color:
+                                                                      newBlack)),
+                                                          SizedBox(
+                                                              width: widthRatio(
+                                                                  size: 7.54,
+                                                                  context:
+                                                                      context)),
                                                           RotationTransition(
-                                                            turns: AlwaysStoppedAnimation(180 / 360),
-                                                            child: SvgPicture.asset(
+                                                            turns:
+                                                                AlwaysStoppedAnimation(
+                                                                    180 / 360),
+                                                            child: SvgPicture
+                                                                .asset(
                                                               'assets/images/arrow_back.svg',
-                                                              width: widthRatio(size: 4.31, context: context),
-                                                              height: heightRatio(size: 7.54, context: context),
+                                                              width: widthRatio(
+                                                                  size: 4.31,
+                                                                  context:
+                                                                      context),
+                                                              height: heightRatio(
+                                                                  size: 7.54,
+                                                                  context:
+                                                                      context),
                                                             ),
                                                           ),
                                                         ],
@@ -234,11 +323,19 @@ class _CatalogScreenState extends State<CatalogScreen> with AutomaticKeepAliveCl
                                                     ),
                                                   ),
                                                 ),
-                                                SizedBox(width: widthRatio(size: 16, context: context)),
+                                                SizedBox(
+                                                    width: widthRatio(
+                                                        size: 16,
+                                                        context: context)),
                                               ],
                                             ),
-                                            SizedBox(height: heightRatio(size: 20, context: context)),
-                                            RecipesCarousel(receiptsList: state.receiptsList),
+                                            SizedBox(
+                                                height: heightRatio(
+                                                    size: 20,
+                                                    context: context)),
+                                            RecipesCarousel(
+                                                receiptsList:
+                                                    state.receiptsList),
                                           ],
                                         );
                                       } else {
@@ -246,15 +343,20 @@ class _CatalogScreenState extends State<CatalogScreen> with AutomaticKeepAliveCl
                                       }
                                     },
                                   ),
-                                  SizedBox(height: heightRatio(size: 24, context: context)),
+                                  SizedBox(
+                                      height: heightRatio(
+                                          size: 24, context: context)),
                                   BlocBuilder<CatalogsBloc, CatalogsState>(
                                     builder: (context, state) {
                                       if (state.catalogsList.isNotEmpty) {
                                         return Padding(
-                                          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 150),
+                                          padding: const EdgeInsets.only(
+                                              left: 16, right: 16, bottom: 150),
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: state.catalogsList.map<Widget>((catalog) {
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: state.catalogsList
+                                                .map<Widget>((catalog) {
                                               return CatalogLevelsWidget(
                                                 catalogListModel: catalog,
                                                 isFromFavCatalogsList: false,
@@ -264,14 +366,22 @@ class _CatalogScreenState extends State<CatalogScreen> with AutomaticKeepAliveCl
                                         );
                                       } else if (state is CatalogsLoadedState) {
                                         return SizedBox(
-                                          height: heightRatio(size: 250, context: context),
+                                          height: heightRatio(
+                                              size: 250, context: context),
                                           child: Center(
                                             child: Padding(
-                                              padding: EdgeInsets.symmetric(horizontal: widthRatio(size: 30, context: context)),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: widthRatio(
+                                                      size: 30,
+                                                      context: context)),
                                               child: Text(
                                                 'У данного магазина нет каталогов, пожалуйста выберите другой магазин',
                                                 textAlign: TextAlign.center,
-                                                style: appHeadersTextStyle(fontSize: heightRatio(size: 16, context: context), color: Colors.black),
+                                                style: appHeadersTextStyle(
+                                                    fontSize: heightRatio(
+                                                        size: 16,
+                                                        context: context),
+                                                    color: Colors.black),
                                               ),
                                             ),
                                           ),
@@ -286,10 +396,15 @@ class _CatalogScreenState extends State<CatalogScreen> with AutomaticKeepAliveCl
                               BlocBuilder<CatalogsBloc, CatalogsState>(
                                 builder: (context, state) {
                                   if (state.catalogsList.isNotEmpty) {
-                                    return BlocBuilder<OrderTypeBloc, OrderTypeState>(
+                                    return BlocBuilder<OrderTypeBloc,
+                                        OrderTypeState>(
                                       builder: (context, state) {
                                         if (state is OrderTypeDeliveryState) {
-                                          return Positioned(bottom: 0, left: 0, right: 0, child: ToFreeDeliveryWidget());
+                                          return Positioned(
+                                              bottom: 0,
+                                              left: 0,
+                                              right: 0,
+                                              child: ToFreeDeliveryWidget());
                                         } else {
                                           return SizedBox();
                                         }

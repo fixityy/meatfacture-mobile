@@ -16,7 +16,7 @@ class OnboardingPAge extends StatefulWidget {
 }
 
 class _OnboardingPAgeState extends State<OnboardingPAge> {
-  PageController _pageController;
+  late PageController _pageController;
   int currentPage = 0;
   @override
   void initState() {
@@ -29,7 +29,8 @@ class _OnboardingPAgeState extends State<OnboardingPAge> {
     return BlocBuilder<OnboardingBloc, OnboardingState>(
       builder: (context, state) {
         if (state is OnboardingErrorstate) {
-          SchedulerBinding.instance.addPostFrameCallback((_) => Navigator.pop(context));
+          SchedulerBinding.instance
+              .addPostFrameCallback((_) => Navigator.pop(context));
         }
         if (state is OnboardingLoadedstate) {
           return Scaffold(
@@ -45,9 +46,21 @@ class _OnboardingPAgeState extends State<OnboardingPAge> {
                     if (screenHeight(context) >= 790)
                       return Container(
                         clipBehavior: Clip.hardEdge,
-                        margin: EdgeInsets.only(left: widthRatio(size: 20, context: context), right: widthRatio(size: 20, context: context), top: heightRatio(size: 130, context: context), bottom: heightRatio(size: 80, context: context)),
+                        margin: EdgeInsets.only(
+                            left: widthRatio(size: 20, context: context),
+                            right: widthRatio(size: 20, context: context),
+                            top: heightRatio(size: 130, context: context),
+                            bottom: heightRatio(size: 80, context: context)),
                         // alignment: Alignment.center,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(heightRatio(size: 20, context: context)), image: DecorationImage(image: AdvancedNetworkImage(state.onboardingListModel.data[index].logoFilePath, useDiskCache: true), fit: BoxFit.cover)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                heightRatio(size: 20, context: context)),
+                            image: DecorationImage(
+                                image: AdvancedNetworkImage(
+                                    state.onboardingListModel.data[index]
+                                        .logoFilePath,
+                                    useDiskCache: true),
+                                fit: BoxFit.cover)),
                       );
                     else
                       return Container(
@@ -58,7 +71,12 @@ class _OnboardingPAgeState extends State<OnboardingPAge> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           // borderRadius: BorderRadius.circular(20),
-                          image: DecorationImage(image: AdvancedNetworkImage(state.onboardingListModel.data[index].logoFilePath, useDiskCache: true), fit: BoxFit.cover),
+                          image: DecorationImage(
+                              image: AdvancedNetworkImage(
+                                  state.onboardingListModel.data[index]
+                                      .logoFilePath,
+                                  useDiskCache: true),
+                              fit: BoxFit.cover),
                         ),
                       );
                   },
@@ -69,7 +87,8 @@ class _OnboardingPAgeState extends State<OnboardingPAge> {
                       children: [
                         // Text('onboarding'),
                         SafeArea(
-                          child: SvgPicture.asset("assets/images/Logo.svg", height: screenWidth(context) / 4),
+                          child: SvgPicture.asset("assets/images/Logo.svg",
+                              height: screenWidth(context) / 4),
                         ),
                       ],
                     ),
@@ -79,7 +98,8 @@ class _OnboardingPAgeState extends State<OnboardingPAge> {
                   ),
                 Positioned(
                   child: Padding(
-                    padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
+                    padding:
+                        EdgeInsets.all(widthRatio(size: 15, context: context)),
                     child: Column(
                       children: [
                         Row(
@@ -88,18 +108,27 @@ class _OnboardingPAgeState extends State<OnboardingPAge> {
                             state.onboardingListModel.data.length,
                             (index) => InkWell(
                               onTap: () {
-                                _pageController.animateToPage(index, duration: Duration(milliseconds: 600), curve: Curves.ease);
+                                _pageController.animateToPage(index,
+                                    duration: Duration(milliseconds: 600),
+                                    curve: Curves.ease);
                               },
                               child: Container(
                                 width: widthRatio(size: 15, context: context),
                                 height: heightRatio(size: 15, context: context),
-                                margin: EdgeInsets.symmetric(horizontal: screenWidth(context) / widthRatio(size: 40, context: context)),
-                                decoration: BoxDecoration(shape: BoxShape.circle, color: currentPage == index ? mainColor : colorBlack04),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: screenWidth(context) /
+                                        widthRatio(size: 40, context: context)),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: currentPage == index
+                                        ? mainColor
+                                        : colorBlack04),
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(height: heightRatio(size: 25, context: context)),
+                        SizedBox(
+                            height: heightRatio(size: 25, context: context)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -107,33 +136,61 @@ class _OnboardingPAgeState extends State<OnboardingPAge> {
                               child: InkWell(
                                 onTap: () => Navigator.pop(context),
                                 child: Container(
-                                  padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
+                                  padding: EdgeInsets.all(
+                                      widthRatio(size: 15, context: context)),
                                   alignment: Alignment.center,
-                                  decoration: BoxDecoration(color: Colors.transparent, border: Border.all(color: mainColor, width: widthRatio(size: 1.5, context: context)), borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context))),
+                                  decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      border: Border.all(
+                                          color: mainColor,
+                                          width: widthRatio(
+                                              size: 1.5, context: context)),
+                                      borderRadius: BorderRadius.circular(
+                                          heightRatio(
+                                              size: 10, context: context))),
                                   child: Text(
                                     "skipText".tr(),
-                                    style: appTextStyle(fontSize: heightRatio(size: 18, context: context), fontWeight: FontWeight.w500, color: mainColor),
+                                    style: appTextStyle(
+                                        fontSize: heightRatio(
+                                            size: 18, context: context),
+                                        fontWeight: FontWeight.w500,
+                                        color: mainColor),
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(width: widthRatio(size: 12, context: context)),
+                            SizedBox(
+                                width: widthRatio(size: 12, context: context)),
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  if (currentPage < state.onboardingListModel.data.length - 1) {
-                                    _pageController.animateToPage(currentPage + 1, duration: Duration(milliseconds: 600), curve: Curves.ease);
+                                  if (currentPage <
+                                      state.onboardingListModel.data.length -
+                                          1) {
+                                    _pageController.animateToPage(
+                                        currentPage + 1,
+                                        duration: Duration(milliseconds: 600),
+                                        curve: Curves.ease);
                                   } else {
                                     Navigator.pop(context);
                                   }
                                 },
                                 child: Container(
-                                  padding: EdgeInsets.all(widthRatio(size: 15, context: context)),
+                                  padding: EdgeInsets.all(
+                                      widthRatio(size: 15, context: context)),
                                   alignment: Alignment.center,
-                                  decoration: BoxDecoration(color: mainColor, borderRadius: BorderRadius.circular(heightRatio(size: 10, context: context))),
+                                  decoration: BoxDecoration(
+                                      color: mainColor,
+                                      borderRadius: BorderRadius.circular(
+                                          heightRatio(
+                                              size: 10, context: context))),
                                   child: Text(
                                     "nextText".tr(),
-                                    style: appTextStyle(fontSize: heightRatio(size: 18, context: context), fontWeight: FontWeight.w500, color: Colors.white),
+                                    style: appTextStyle(
+                                        fontSize: heightRatio(
+                                            size: 18, context: context),
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white),
                                   ),
                                 ),
                               ),
@@ -154,7 +211,8 @@ class _OnboardingPAgeState extends State<OnboardingPAge> {
           return Container(
             alignment: Alignment.center,
             color: Colors.white,
-            child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(mainColor)),
+            child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(mainColor)),
           );
         }
       },

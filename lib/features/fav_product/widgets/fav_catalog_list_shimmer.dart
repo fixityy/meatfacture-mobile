@@ -9,7 +9,14 @@ class FavCatalogsListShimmer extends StatelessWidget {
   final double height;
   final double spaceY;
 
-  const FavCatalogsListShimmer({Key key, this.crossAxisCount = 3, this.childAspectRatio = 0.67, this.crossAxisSpacing = 11, this.height = 136, this.spaceY = 4}) : super(key: key);
+  const FavCatalogsListShimmer({
+    super.key,
+    this.crossAxisCount = 3,
+    this.childAspectRatio = 0.67,
+    this.crossAxisSpacing = 11,
+    this.height = 136,
+    this.spaceY = 4,
+  });
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,14 +33,15 @@ class FavCatalogsListShimmer extends StatelessWidget {
         ),
         itemCount: 4,
         itemBuilder: (context, index) => Shimmer.fromColors(
-          baseColor: Colors.grey[50],
+          baseColor: Colors.grey[50]!,
           highlightColor: Colors.white,
           child: Container(
             height: heightRatio(size: height, context: context),
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               color: Colors.grey,
-              borderRadius: BorderRadius.circular(heightRatio(size: 5, context: context)),
+              borderRadius:
+                  BorderRadius.circular(heightRatio(size: 5, context: context)),
             ),
           ),
         ),

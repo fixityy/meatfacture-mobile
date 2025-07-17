@@ -3,8 +3,8 @@ import 'package:smart/models/shopping_check_list_data_model.dart';
 
 class ShoppingCheckListModel {
   ShoppingCheckListModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<ShoppingCheckListDataModel> data;

@@ -2,8 +2,8 @@ import 'package:smart/models/meta_model.dart';
 
 class OnboardingListModel {
   OnboardingListModel({
-    this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
   List<OnboardingListDataModel> data;
@@ -24,12 +24,12 @@ class OnboardingListModel {
 
 class OnboardingListDataModel {
   OnboardingListDataModel({
-    this.uuid,
-    this.title,
-    this.sortNumber,
-    this.logoFileUuid,
-    this.logoFilePath,
-    this.createdAt,
+    required this.uuid,
+    required this.title,
+    required this.sortNumber,
+    required this.logoFileUuid,
+    required this.logoFilePath,
+    required this.createdAt,
   });
 
   String uuid;
