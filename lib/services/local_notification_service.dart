@@ -13,7 +13,8 @@ class LocalNotificationService {
     final InitializationSettings initializationSettings =
         InitializationSettings(
             android:
-                AndroidInitializationSettings("@drawable/main_logo_for_notif"));
+                AndroidInitializationSettings("@drawable/main_logo_for_notif"),
+            iOS: DarwinInitializationSettings(requestAlertPermission: true));
     await _notificationsPlugin.initialize(
       initializationSettings,
       // onSelectNotification: (payload) async {

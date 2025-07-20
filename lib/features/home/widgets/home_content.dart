@@ -25,6 +25,7 @@ import 'package:smart/features/home/widgets/home_icon_promo.dart';
 import 'package:smart/features/home/widgets/home_popup_beta_version.dart';
 import 'package:smart/features/recipes/blocs/receipts_bloc/receipts_bloc.dart';
 import 'package:smart/features/recipes/recipes_favorites_screen.dart';
+import 'package:smart/features/recommended_products/widgets/recommended_products_card_button.dart';
 import 'package:smart/main.dart';
 import 'package:smart/order_process/order_process.dart';
 import 'package:smart/pages/secondary_page.dart';
@@ -261,6 +262,8 @@ class _HomeContentState extends State<HomeContent> {
                     FavProductCardButton(), //любимые продукты
                     SizedBox(height: heightRatio(size: 20, context: context)),
                     HomeDiverseFoodCardButton(), // разнообраное питание
+                    SizedBox(height: heightRatio(size: 10, context: context)),
+                    RecommendedProductsCardButton(), //рекомендации продуктов
                     SizedBox(height: heightRatio(size: 20, context: context)),
                     BlocBuilder<ReceiptsBloc, ReceiptsState>(
                       builder: (context, state) {
